@@ -41,6 +41,12 @@ class PartnerSeeder extends Seeder
             $p['updated_at']  = $now;
         }
 
-        DB::table('partners')->insert($partners);
+        if (DB::table('partners')->count() === 0) {
+            DB::table('partners')->insert($partners);
+        } else {
+            foreach ($partners as $p) {
+                DB::table('partners')->updateOrInsert(['nama' => $p['nama']], $p);
+            }
+        }
     }
 }

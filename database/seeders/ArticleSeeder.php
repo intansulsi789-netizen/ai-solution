@@ -76,6 +76,12 @@ class ArticleSeeder extends Seeder
             ],
         ];
 
-        DB::table('articles')->insert($articles);
+        if (DB::table('articles')->count() === 0) {
+            DB::table('articles')->insert($articles);
+        } else {
+            foreach ($articles as $item) {
+                DB::table('articles')->updateOrInsert(['slug' => $item['slug']], $item);
+            }
+        }
     }
 }

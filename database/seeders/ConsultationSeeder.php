@@ -42,6 +42,8 @@ class ConsultationSeeder extends Seeder
             ]
         ];
 
-        \Illuminate\Support\Facades\DB::table('consultations')->insert($consultations);
+        if (\Illuminate\Support\Facades\DB::table('consultations')->count() === 0) {
+            \Illuminate\Support\Facades\DB::table('consultations')->insert($consultations);
+        }
     }
 }

@@ -303,6 +303,12 @@ class ServiceSeeder extends Seeder
             ];
         }
 
-        DB::table('services')->insert($output);
+        if (DB::table('services')->count() === 0) {
+            DB::table('services')->insert($output);
+        } else {
+            foreach ($output as $item) {
+                DB::table('services')->updateOrInsert(['slug' => $item['slug']], $item);
+            }
+        }
     }
 }
