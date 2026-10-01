@@ -1,0 +1,34 @@
+name: ai-solution
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    init: true
+    env_file:
+      - .env.docker
+    ports:
+      - "127.0.0.1:8082:8080"
+    volumes:
+      - ai_solution_sqlite:/var/lib/ai-solution
+      - ai_solution_storage:/app/storage
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test:
+        - CMD
+        - php
+        - -r
+        - "$$context = stream_context_create(['http' => ['timeout' => 2]]); exit(@file_get_contents('http://127.0.0.1:8080/up', false, $$context) === false ? 1 : 0);"
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+volumes:
+  ai_solution_sqlite:
+    name: ai_solution_sqlite
+  ai_solution_storage:
+    name: ai_solution_storage
