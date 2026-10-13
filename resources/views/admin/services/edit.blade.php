@@ -65,7 +65,7 @@
         </div>
     @endif
 
-    <form action="{{ route('admin.services.update', $service->id) }}" method="POST" enctype="multipart/form-data">
+    <form id="form-service" action="{{ route('admin.services.update', $service->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         
@@ -189,11 +189,16 @@ document.getElementById('nama_layanan').addEventListener('input', function() {
     document.getElementById('slug').value = slug;
 });
 
-document.querySelector('form').addEventListener('submit', function(e) {
+const formService = document.getElementById('form-service');
+const hiddenDeskripsiLengkap = document.getElementById('deskripsi_lengkap');
+
+function syncDeskripsiLengkap() {
     let solutions = [];
     document.querySelectorAll('.sol-item').forEach(item => {
-        let title = item.querySelector('.sol-title').value.trim();
-        let desc = item.querySelector('.sol-desc').value.trim();
+        let titleInput = item.querySelector('.sol-title');
+        let descInput = item.querySelector('.sol-desc');
+        let title = titleInput ? titleInput.value.trim() : '';
+        let desc = descInput ? descInput.value.trim() : '';
         if(title || desc) {
             solutions.push({ title: title, desc: desc });
         }
@@ -210,7 +215,19 @@ document.querySelector('form').addEventListener('submit', function(e) {
         benefits: benefits
     };
 
-    document.getElementById('deskripsi_lengkap').value = JSON.stringify(data);
+    if (hiddenDeskripsiLengkap) {
+        hiddenDeskripsiLengkap.value = JSON.stringify(data);
+    }
+}
+
+document.querySelectorAll('.sol-title, .sol-desc, .ben-item').forEach(el => {
+    el.addEventListener('input', syncDeskripsiLengkap);
 });
+
+if (formService) {
+    formService.addEventListener('submit', function(e) {
+        syncDeskripsiLengkap();
+    });
+}
 </script>
 @endsection

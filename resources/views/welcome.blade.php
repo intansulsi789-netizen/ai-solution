@@ -2039,6 +2039,11 @@
         @foreach($services as $index => $service)
         <a href="/layanan/{{ $service['slug'] }}" class="service-card" style="text-decoration: none;">
             <div class="card-number">{{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}</div>
+            @if(!empty($service['image']))
+            <div class="card-thumb" style="width: 100%; height: 140px; border-radius: 14px; overflow: hidden; margin-bottom: 18px; border: 1px solid rgba(255,255,255,0.08);">
+                <img src="{{ Storage::url($service['image']) }}" alt="{{ $service['title'] }}" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            @endif
             <div class="card-icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                     <path d="{{ $service['icon'] }}"></path>
@@ -2046,6 +2051,23 @@
             </div>
             <h3 class="card-title">{{ $service['title'] }}</h3>
             <p class="card-desc">{{ $service['desc'] }}</p>
+
+            @if(!empty($service['solutions']))
+            <div class="card-solutions-preview" style="margin-bottom: 20px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.06); display: flex; flex-direction: column; gap: 8px;">
+                <div style="font-size: 11px; font-weight: 700; color: var(--cyan-neon); letter-spacing: 1px; text-transform: uppercase;">Solusi Kami:</div>
+                @foreach(array_slice($service['solutions'], 0, 4) as $sol)
+                    @if(!empty($sol['title']))
+                    <div style="display: flex; align-items: flex-start; gap: 7px; font-size: 12.5px; color: rgba(255,255,255,0.85); line-height: 1.4;">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--cyan-neon)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top: 2px;">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        <span><strong style="color: #fff;">{{ $sol['title'] }}</strong>@if(!empty($sol['desc']))<span style="display: block; font-size: 11.5px; color: rgba(255,255,255,0.5);">{{ Str::limit($sol['desc'], 55) }}</span>@endif</span>
+                    </div>
+                    @endif
+                @endforeach
+            </div>
+            @endif
+
             <span class="card-btn">
                 Lihat Detail
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
