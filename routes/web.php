@@ -119,13 +119,14 @@ Route::get('/robots.txt', function () {
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 
-// Login (guest only)
+// Shortcut /admin -> /admin/login
+Route::redirect('/admin', '/admin/login');
+
+// Admin Routes
 Route::prefix('admin')->name('admin.')->group(function () {
 
-    Route::middleware('guest')->group(function () {
-        Route::get('/login',  [AdminAuthController::class, 'showLogin'])->name('login');
-        Route::post('/login', [AdminAuthController::class, 'login'])->name('login.post');
-    });
+    Route::get('/login',  [AdminAuthController::class, 'showLogin'])->name('login');
+    Route::post('/login', [AdminAuthController::class, 'login'])->middleware('guest')->name('login.post');
 
     // Protected admin pages — accessible by ALL authenticated admin roles
     Route::middleware('auth')->group(function () {
