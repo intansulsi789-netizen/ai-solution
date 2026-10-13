@@ -2355,8 +2355,8 @@
             <span style="width:7px;height:7px;border-radius:50%;background:var(--cyan-neon);box-shadow:0 0 8px var(--cyan-neon);animation:blink-dot 2s ease infinite;"></span>
             Wawasan Bisnis
         </div>
-        <h2 style="font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(32px,4vw,48px);font-weight:800;letter-spacing:-1px;line-height:1.2;margin-bottom:24px;">Insight &amp; Perkembangan</h2>
-        <p style="font-size:clamp(16px,2vw,19px);color:rgba(255,255,255,0.65);line-height:1.6;">Insight seputar AI, perusahaan, dan perkembangan teknologi untuk membantu bisnis berkembang.</p>
+        <h2 style="font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(32px,4vw,48px);font-weight:800;letter-spacing:-1px;line-height:1.2;margin-bottom:24px;">Value &amp; Perkembangan</h2>
+        <p style="font-size:clamp(16px,2vw,19px);color:rgba(255,255,255,0.65);line-height:1.6;">Value seputar AI, perusahaan, dan perkembangan teknologi untuk membantu bisnis berkembang.</p>
     </div>
 
     <div class="wawasan-grid">
