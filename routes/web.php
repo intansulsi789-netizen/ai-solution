@@ -23,7 +23,14 @@ $getServices = function () {
 
 try {
     $articles = \App\Models\Article::where('is_active', true)->where('status', 'published')->orderBy('created_at', 'desc')->get()->map(function($a) {
-        $isi = json_decode($a->isi_artikel, true) ?? [];
+        $isi = json_decode($a->isi_artikel, true);
+        if (!is_array($isi)) {
+            $isi = [
+                'content' => $a->isi_artikel ?? '',
+                'takeaway' => '',
+                'readTime' => '',
+            ];
+        }
         return [
             'slug'     => $a->slug,
             'title'    => $a->judul,

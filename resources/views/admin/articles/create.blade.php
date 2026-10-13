@@ -54,7 +54,7 @@
     </div>
     @endif
 
-    <form action="{{ route('admin.articles.store') }}" method="POST" enctype="multipart/form-data">
+    <form id="form-article" action="{{ route('admin.articles.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
         <div class="form-grid">
@@ -90,10 +90,16 @@
 
             @php
                 $iaRaw = old('isi_artikel');
-                $ia = json_decode($iaRaw, true) ?: [];
-                $content = $ia['content'] ?? '';
-                $takeaway = $ia['takeaway'] ?? '';
-                $readTime = $ia['readTime'] ?? '';
+                $ia = json_decode($iaRaw, true);
+                if (is_array($ia)) {
+                    $content = $ia['content'] ?? '';
+                    $takeaway = $ia['takeaway'] ?? '';
+                    $readTime = $ia['readTime'] ?? '';
+                } else {
+                    $content = $iaRaw ?: '';
+                    $takeaway = '';
+                    $readTime = '';
+                }
             @endphp
 
             <div class="form-group full-width" style="background: rgba(0,0,0,0.15); padding: 24px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
@@ -174,17 +180,36 @@
     });
 
     // Structured Editor for isi_artikel
-    document.querySelector('form').addEventListener('submit', function(e) {
+    const formArticle = document.getElementById('form-article');
+    const takeawayInput = document.getElementById('ia_takeaway');
+    const hiddenIsiArtikel = document.getElementById('isi_artikel');
+
+    function syncIsiArtikel() {
         let contentHtml = quill.root.innerHTML;
-        if(contentHtml === '<p><br></p>') contentHtml = '';
+        if (contentHtml === '<p><br></p>') contentHtml = '';
+
+        let words = quill.getText().trim().split(/\s+/).filter(Boolean).length;
+        let autoReadTime = Math.max(1, Math.ceil(words / 200)) + ' mnt';
+        let readTime = "{{ $readTime ?? '' }}" || autoReadTime;
 
         let data = {
             content: contentHtml,
-            takeaway: document.getElementById('ia_takeaway') ? document.getElementById('ia_takeaway').value.trim() : "",
-            readTime: "{{ $readTime ?? '' }}"
+            takeaway: takeawayInput ? takeawayInput.value.trim() : "",
+            readTime: readTime
         };
-        document.getElementById('isi_artikel').value = JSON.stringify(data);
-    });
+        hiddenIsiArtikel.value = JSON.stringify(data);
+    }
+
+    quill.on('text-change', syncIsiArtikel);
+    if (takeawayInput) {
+        takeawayInput.addEventListener('input', syncIsiArtikel);
+    }
+
+    if (formArticle) {
+        formArticle.addEventListener('submit', function(e) {
+            syncIsiArtikel();
+        });
+    }
 </script>
 @endpush
 @endsection
