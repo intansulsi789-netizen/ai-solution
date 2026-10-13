@@ -61,13 +61,28 @@ Route::get('/', function () use ($getServices, $articles) {
     return view('welcome', compact('services', 'adminUser', 'partners', 'cmsAbout', 'cmsHomepage', 'cmsContact', 'homepageArticles'));
 });
 
-Route::get('/layanan/{slug}', function ($slug) use ($getServices) {
-    $services    = $getServices();
-    $serviceData = collect($services)->firstWhere('slug', $slug);
+Route::get('/layanan/{slug}', function ($slug) {
+    $s = \App\Models\Service::where('slug', $slug)->where('is_active', true)->first();
 
-    if (!$serviceData) {
+    if (!$s) {
         abort(404);
     }
+
+    $lengkap = json_decode($s->deskripsi_lengkap, true);
+    if (!is_array($lengkap)) {
+        $lengkap = ['solutions' => [], 'benefits' => []];
+    }
+
+    $serviceData = [
+        'id'        => $s->id,
+        'slug'      => $s->slug,
+        'title'     => $s->nama_layanan,
+        'icon'      => $s->icon,
+        'image'     => $s->image,
+        'desc'      => $s->deskripsi_singkat,
+        'solutions' => $lengkap['solutions'] ?? [],
+        'benefits'  => $lengkap['benefits'] ?? [],
+    ];
 
     return view('service-detail', ['service' => $serviceData]);
 });

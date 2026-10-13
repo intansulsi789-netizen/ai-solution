@@ -548,6 +548,7 @@
         <!-- Content -->
         <div class="content-card">
             
+            @if(!empty($service['benefits']) && count(array_filter($service['benefits'])) > 0)
             <h2 class="content-section-title">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="12" cy="12" r="10"></circle>
@@ -559,6 +560,7 @@
             
             <ul class="benefits-list">
                 @foreach($service['benefits'] as $benefit)
+                @if(!empty(trim($benefit)))
                 <li class="benefit-item">
                     <div class="benefit-icon">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -569,8 +571,10 @@
                         {{ $benefit }}
                     </div>
                 </li>
+                @endif
                 @endforeach
             </ul>
+            @endif
 
             <!-- CTA -->
             <div class="cta-box">
