@@ -1,0 +1,52 @@
+name: 🚀 Deploy to VPS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy AI Solution → VPS (Docker)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      # ─────────────────────────────────────────────
+      # 1. Checkout kode dari repository
+      # ─────────────────────────────────────────────
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
+      # ─────────────────────────────────────────────
+      # 2. Deploy ke VPS via SSH
+      #    SSH restricted key akan auto-eksekusi:
+      #    ~/bin/ai-solution-deploy
+      #    yang menjalankan: git pull + docker compose up --build
+      # ─────────────────────────────────────────────
+      - name: 🚀 Trigger deploy on VPS
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: 103.103.23.46
+          username: jogjacreativepro
+          key: ${{ secrets.VPS_DEPLOY_KEY }}
+          port: 22
+          script: echo "deploy triggered"
+
+      # ─────────────────────────────────────────────
+      # 3. Notifikasi hasil
+      # ─────────────────────────────────────────────
+      - name: ✅ Deploy Success
+        if: success()
+        run: |
+          echo "🎉 Deploy berhasil!"
+          echo "   Commit : ${{ github.sha }}"
+          echo "   Branch : ${{ github.ref_name }}"
+          echo "   Waktu  : $(date)"
+          echo "   URL    : https://aisolution.duckdns.org"
+
+      - name: ❌ Deploy Failed
+        if: failure()
+        run: |
+          echo "💥 Deploy GAGAL pada commit ${{ github.sha }}"
+          echo "   Cek log di GitHub Actions tab"
