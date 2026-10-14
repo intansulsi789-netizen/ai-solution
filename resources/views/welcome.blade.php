@@ -1014,7 +1014,7 @@
         .service-card:hover .card-icon { background: linear-gradient(135deg, #00a8ff 0%, #7c3aed 100%); color: white; border-color: transparent; box-shadow: 0 0 20px rgba(0, 168, 255, 0.4); transform: scale(1.05); }
         
         .card-title { font-size: 18px; font-weight: 700; margin-bottom: 12px; color: var(--white); z-index: 2; position: relative; font-family: 'Plus Jakarta Sans', sans-serif; }
-        .card-desc { font-size: 14px; color: rgba(255, 255, 255, 0.6); line-height: 1.6; margin-bottom: 24px; flex-grow: 1; z-index: 2; position: relative; }
+        .card-desc { font-size: 14px; color: rgba(255, 255, 255, 0.6); line-height: 1.6; margin-bottom: 24px; flex-grow: 1; z-index: 2; position: relative; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
         
         .card-btn { margin-top: auto; display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--cyan-neon); background: none; border: none; cursor: pointer; padding: 0; z-index: 2; position: relative; transition: 0.3s; }
         .card-btn svg { width: 14px; height: 14px; transition: transform 0.3s; }
@@ -2045,7 +2045,7 @@
                 </svg>
             </div>
             <h3 class="card-title">{{ $service['title'] }}</h3>
-            <p class="card-desc">{{ $service['desc'] }}</p>
+            <p class="card-desc">{{ \Illuminate\Support\Str::limit($service['desc'], 130) }}</p>
             <span class="card-btn">
                 Lihat Detail
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
