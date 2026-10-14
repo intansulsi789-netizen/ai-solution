@@ -107,7 +107,7 @@
             </div>
             <div class="form-group full-width" style="margin-top: 16px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px;">
                 <label class="form-label">Judul Section Partner</label>
-                <input type="text" name="partner_title" class="form-control" value="{{ old('partner_title', $cms->partner_title) }}" placeholder="Contoh: Mitra & Kolaborasi">
+                <input type="text" name="partner_title" class="form-control" value="{{ old('partner_title', $cms->partner_title ?? 'Mitra & Kolaborasi') }}" placeholder="Contoh: Mitra & Kolaborasi">
             </div>
         </div>
 

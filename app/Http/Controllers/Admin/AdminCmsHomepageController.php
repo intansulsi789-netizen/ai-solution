@@ -13,7 +13,16 @@ class AdminCmsHomepageController extends Controller
     {
         $cms = CmsHomepage::first();
         if (!$cms) {
-            $cms = new CmsHomepage();
+            $cms = new CmsHomepage([
+                'hero_badge' => 'JASA AI UNTUK KEBUTUHAN ANDA',
+                'hero_title' => 'Solusi AI Cerdas Untuk semua pekerjaan',
+                'hero_description' => 'Satu platform AI yang mendukung berbagai profesi dan industri untuk bekerja lebih cepat, lebih cerdas, dan lebih efisien.',
+                'hero_btn1_text' => 'Lihat Layanan AI',
+                'hero_btn1_link' => '#layanan',
+                'hero_btn2_text' => 'Konsultasikan Kebutuhan',
+                'hero_btn2_link' => '#konsultasi',
+                'partner_title' => 'Mitra & Kolaborasi',
+            ]);
         }
         return view('admin.cms.homepage.index', compact('cms'));
     }
@@ -47,6 +56,10 @@ class AdminCmsHomepageController extends Controller
             'hero_btn2_link',
             'partner_title'
         ]);
+
+        if (empty($data['partner_title'])) {
+            $data['partner_title'] = 'Mitra & Kolaborasi';
+        }
 
         if ($request->hasFile('hero_background')) {
             if ($cms->hero_background && Storage::disk('public')->exists($cms->hero_background)) {
