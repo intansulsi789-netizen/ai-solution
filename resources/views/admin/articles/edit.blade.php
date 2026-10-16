@@ -29,14 +29,55 @@
     .check-wrap { display: flex; align-items: center; gap: 10px; }
     .check-wrap input[type=checkbox] { width: 18px; height: 18px; cursor: pointer; accent-color: var(--cyan); }
     .error-box { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); color: #fca5a5; padding: 16px; border-radius: 10px; margin-bottom: 24px; font-size: 14px; }
-    .preview-img { max-height: 140px; object-fit: cover; border-radius: 8px; margin-top: 10px; }
+
+    /* Image Source Tabs */
+    .tab-pills { display: flex; gap: 8px; margin-bottom: 12px; }
+    .tab-pill {
+        padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 600;
+        cursor: pointer; background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.7);
+        border: 1px solid rgba(255,255,255,0.1); transition: all 0.2s;
+    }
+    .tab-pill.active {
+        background: rgba(0, 212, 255, 0.15); color: var(--cyan);
+        border-color: rgba(0, 212, 255, 0.4);
+    }
+    .preview-box {
+        margin-top: 14px; padding: 12px; background: rgba(0,0,0,0.35);
+        border: 1px dashed rgba(255,255,255,0.15); border-radius: 10px;
+        display: flex; align-items: center; gap: 16px;
+    }
+    .preview-img { width: 180px; height: 110px; object-fit: cover; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); }
+
+    /* Status Radio Cards */
+    .status-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 8px; }
+    .status-card {
+        border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.25);
+        border-radius: 10px; padding: 14px; cursor: pointer; transition: all 0.2s;
+        display: flex; align-items: flex-start; gap: 10px;
+    }
+    .status-card:hover { border-color: rgba(0,212,255,0.3); background: rgba(0,212,255,0.03); }
+    .status-card input[type=radio] { margin-top: 3px; accent-color: var(--cyan); }
+    .status-card.selected {
+        border-color: var(--cyan); background: rgba(0,212,255,0.08); box-shadow: 0 0 12px rgba(0,212,255,0.15);
+    }
+    .status-card-title { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 2px; }
+    .status-card-desc { font-size: 11.5px; color: var(--muted); }
+
+    .meta-timestamps {
+        display: flex; gap: 24px; padding: 14px 18px; background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; font-size: 12.5px; color: var(--muted);
+    }
+
     .ql-toolbar.ql-snow { background: #f8fafc; border: 1px solid rgba(255,255,255,0.1) !important; border-radius: 10px 10px 0 0; border-bottom: none !important; padding: 12px !important; }
     .ql-container.ql-snow { border: 1px solid rgba(255,255,255,0.1) !important; border-radius: 0 0 10px 10px; background: rgba(0,0,0,0.25); color: #fff; font-family: 'Inter', sans-serif; font-size: 15px; }
     .ql-editor { min-height: 300px; line-height: 1.6; }
     .ql-editor.ql-blank::before { color: rgba(255,255,255,0.4); }
+
     @media (max-width: 768px) {
         .form-wrap { padding: 24px; }
         .form-grid { grid-template-columns: 1fr; gap: 0; }
+        .status-cards { grid-template-columns: 1fr; }
+        .meta-timestamps { flex-direction: column; gap: 8px; }
     }
 </style>
 
@@ -71,26 +112,73 @@
 
             <div class="form-group">
                 <label class="form-label">Kategori</label>
-                <input type="text" name="kategori" class="form-control" value="{{ old('kategori', $article->kategori) }}">
+                <input type="text" name="kategori" class="form-control" value="{{ old('kategori', $article->kategori) }}" placeholder="Contoh: AI & Bisnis, Machine Learning">
             </div>
+
             <div class="form-group">
-                <label class="form-label">Tanggal</label>
-                <input type="text" name="tanggal" class="form-control" value="{{ old('tanggal', $article->tanggal) }}">
+                <label class="form-label">Sumber Referensi Artikel (Opsional)</label>
+                <input type="text" name="source_name" class="form-control" value="{{ old('source_name', $article->source_name) }}" placeholder="Contoh: Kementerian Perhubungan RI / McKinsey Insight">
             </div>
 
             <div class="form-group full-width">
-                <label class="form-label">Gambar Banner Artikel (Opsional)</label>
-                <input type="file" name="gambar" id="gambar" class="form-control" accept="image/*" style="padding: 9px 16px;">
-                <small style="color: var(--muted); font-size: 12px; margin-top: 4px; display: block;">Format: JPG, PNG, WEBP. Maks 5MB. Kosongkan jika tidak ingin mengubah gambar.</small>
-                @if($article->gambar)
-                    <img id="preview" class="preview-img" src="{{ str_starts_with($article->gambar, 'http') ? $article->gambar : asset('storage/' . $article->gambar) }}" alt="Preview">
-                @else
-                    <img id="preview" class="preview-img" src="" alt="Preview" style="display:none;">
-                @endif
+                <label class="form-label">URL Tautan Sumber (Opsional)</label>
+                <input type="url" name="source_url" class="form-control" value="{{ old('source_url', $article->source_url) }}" placeholder="https://dephub.go.id/berita/...">
+                <small style="color: var(--muted); font-size: 11.5px; margin-top: 4px; display: block;">Tautan langsung ke artikel/laporan rujukan resmi.</small>
+            </div>
+
+            <!-- Banner Image Section -->
+            @php
+                $isCurrentUrl = $article->gambar && (str_starts_with($article->gambar, 'http://') || str_starts_with($article->gambar, 'https://'));
+                $defaultTab = old('image_type', $isCurrentUrl ? 'url' : ($article->gambar ? 'current' : 'upload'));
+                $initialImgSrc = $article->gambar ? ($isCurrentUrl ? $article->gambar : asset('storage/' . $article->gambar)) : '';
+            @endphp
+            <div class="form-group full-width" style="background: rgba(0,0,0,0.18); padding: 20px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.06);">
+                <label class="form-label" style="color: var(--cyan); margin-bottom: 12px;">Gambar Banner Artikel</label>
+
+                <div class="tab-pills">
+                    @if($article->gambar)
+                        <button type="button" class="tab-pill {{ $defaultTab === 'current' ? 'active' : '' }}" id="tab-current">🖼️ Pertahankan Gambar Saat Ini</button>
+                    @endif
+                    <button type="button" class="tab-pill {{ $defaultTab === 'upload' ? 'active' : '' }}" id="tab-upload">📁 Upload dari Komputer</button>
+                    <button type="button" class="tab-pill {{ $defaultTab === 'url' ? 'active' : '' }}" id="tab-url">🌐 URL Gambar Eksternal</button>
+                </div>
+                <input type="hidden" name="image_type" id="image_type" value="{{ $defaultTab }}">
+
+                <!-- Current Notice -->
+                <div id="section-current" style="{{ $defaultTab === 'current' ? '' : 'display:none;' }}">
+                    <p style="font-size: 13px; color: var(--muted); margin-bottom: 8px;">
+                        Gambar banner saat ini tetap digunakan tanpa perubahan.
+                    </p>
+                </div>
+
+                <!-- Upload Input -->
+                <div id="section-upload" style="{{ $defaultTab === 'upload' ? '' : 'display:none;' }}">
+                    <input type="file" name="gambar" id="gambar" class="form-control" accept="image/jpeg,image/png,image/webp,image/jpg" style="padding: 9px 16px;">
+                    <small style="color: var(--muted); font-size: 12px; margin-top: 5px; display: block;">Format: JPG, PNG, WEBP. Maks 5MB. Memilih file baru akan menggantikan gambar lama.</small>
+                </div>
+
+                <!-- URL Input -->
+                <div id="section-url" style="{{ $defaultTab === 'url' ? '' : 'display:none;' }}">
+                    <input type="url" name="gambar_url" id="gambar_url" class="form-control" value="{{ old('gambar_url', $isCurrentUrl ? $article->gambar : '') }}" placeholder="https://images.unsplash.com/... atau URL gambar lainnya">
+                    <small style="color: var(--muted); font-size: 12px; margin-top: 5px; display: block;">Masukkan tautan gambar langsung. Memasukkan URL baru akan menggantikan gambar lama.</small>
+                </div>
+
+                <!-- Preview Area -->
+                <div id="preview-box" class="preview-box" style="{{ $initialImgSrc ? 'display:flex;' : 'display:none;' }}">
+                    <img id="preview-img" class="preview-img" src="{{ $initialImgSrc }}" alt="Preview">
+                    <div>
+                        <div style="font-size: 13px; font-weight: 600; color: #fff; margin-bottom: 4px;" id="preview-title">
+                            {{ $article->gambar ? 'Gambar Aktif' : 'Preview Banner' }}
+                        </div>
+                        <div style="font-size: 12px; color: var(--muted);" id="preview-info">
+                            {{ $isCurrentUrl ? 'URL Eksternal: ' . Str::limit($article->gambar, 50) : ($article->gambar ? 'File tersimpan: ' . $article->gambar : 'Siap digunakan') }}
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="form-group full-width">
-                <label class="form-label">Ringkasan</label>
+                <label class="form-label">Ringkasan Artikel</label>
                 <textarea name="ringkasan" class="form-control" rows="3">{{ old('ringkasan', $article->ringkasan) }}</textarea>
             </div>
 
@@ -109,38 +197,96 @@
             @endphp
 
             <div class="form-group full-width" style="background: rgba(0,0,0,0.15); padding: 24px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
-                <div style="font-size: 14px; font-weight: 700; color: var(--cyan); margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Konten Artikel</div>
-                
+                <div style="font-size: 14px; font-weight: 700; color: var(--cyan); margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Konten &amp; Kesimpulan</div>
+
                 <div class="form-group">
                     <label class="form-label" style="color:#fff;">Isi Artikel</label>
                     <div id="quill-editor">{!! $content !!}</div>
                 </div>
 
                 <div class="form-group" style="margin-bottom: 0;">
-                    <label class="form-label" style="color:#fff;">Key Takeaway (Kesimpulan)</label>
+                    <label class="form-label" style="color:#fff;">Key Takeaway (Kesimpulan Utama)</label>
                     <input type="text" id="ia_takeaway" class="form-control" value="{{ $takeaway }}" placeholder="Contoh: Implementasi AI mempercepat operasional...">
                 </div>
             </div>
-            
+
             <input type="hidden" name="isi_artikel" id="isi_artikel" value="{{ $iaRaw }}">
 
-            <div class="form-group full-width">
-                <label class="form-label">Status Artikel (Draft/Published)</label>
-                <select name="status" class="form-control" style="appearance: auto;">
-                    <option value="draft" {{ old('status', $article->status) == 'draft' ? 'selected' : '' }}>Draft (Simpan Sementara)</option>
-                    <option value="published" {{ old('status', $article->status) == 'published' ? 'selected' : '' }}>Published (Terbitkan)</option>
-                </select>
+            <!-- Status & Penjadwalan -->
+            @php
+                $currentStatus = old('status', $article->status);
+                $initialPubDate = old('published_at', $article->published_at ? $article->published_at->timezone('Asia/Jakarta')->format('Y-m-d\TH:i') : now('Asia/Jakarta')->format('Y-m-d\TH:i'));
+            @endphp
+            <div class="form-group full-width" style="background: rgba(0,0,0,0.18); padding: 22px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.06);">
+                <label class="form-label" style="color: var(--cyan); margin-bottom: 12px;">Status Publikasi &amp; Jadwal</label>
+
+                <div class="status-cards">
+                    <label class="status-card {{ $currentStatus === 'draft' ? 'selected' : '' }}" id="card-draft">
+                        <input type="radio" name="status" value="draft" {{ $currentStatus === 'draft' ? 'checked' : '' }}>
+                        <div>
+                            <div class="status-card-title">Simpan Draft</div>
+                            <div class="status-card-desc">Hanya tersimpan di admin, belum tayang di frontend.</div>
+                        </div>
+                    </label>
+
+                    <label class="status-card {{ $currentStatus === 'published' ? 'selected' : '' }}" id="card-published">
+                        <input type="radio" name="status" value="published" {{ $currentStatus === 'published' ? 'checked' : '' }}>
+                        <div>
+                            <div class="status-card-title">Publish Sekarang</div>
+                            <div class="status-card-desc">Terbitkan langsung dan tayang di website saat ini.</div>
+                        </div>
+                    </label>
+
+                    <label class="status-card {{ $currentStatus === 'scheduled' ? 'selected' : '' }}" id="card-scheduled">
+                        <input type="radio" name="status" value="scheduled" {{ $currentStatus === 'scheduled' ? 'checked' : '' }}>
+                        <div>
+                            <div class="status-card-title">Jadwalkan Publikasi</div>
+                            <div class="status-card-desc">Atur tanggal &amp; jam terbit otomatis di masa mendatang.</div>
+                        </div>
+                    </label>
+                </div>
+
+                <!-- Input Tanggal & Jam Penjadwalan (WIB) -->
+                <div id="scheduled-date-wrap" style="margin-top: 18px; {{ $currentStatus === 'draft' ? 'display:none;' : '' }}">
+                    <label class="form-label" id="date-label">
+                        {{ $currentStatus === 'scheduled' ? 'Jadwal Publikasi Otomatis (WIB) *' : 'Tanggal Publikasi (WIB)' }}
+                    </label>
+                    <input type="datetime-local" name="published_at" id="published_at" class="form-control" style="max-width: 320px;" value="{{ $initialPubDate }}">
+                    <small style="color: var(--muted); font-size: 11.5px; margin-top: 5px; display: block;" id="date-hint">
+                        Zona Waktu: WIB (Asia/Jakarta). Artikel terjadwal otomatis tayang setelah waktu tersebut tercapai.
+                    </small>
+                </div>
             </div>
 
-            <div class="form-group check-wrap full-width" style="margin-top: -10px;">
+            <div class="form-group check-wrap full-width">
                 <input type="checkbox" name="is_active" id="is_active" value="1" {{ old('is_active', $article->is_active) ? 'checked' : '' }}>
-                <label for="is_active" style="font-size: 14px; font-weight: 500; cursor: pointer;">Aktifkan Artikel</label>
+                <label for="is_active" style="font-size: 14px; font-weight: 500; cursor: pointer;">Aktifkan Artikel (Visibilitas Sistem)</label>
+            </div>
+
+            <!-- Metadata info (Timestamps WIB) -->
+            <div class="form-group full-width">
+                <div class="meta-timestamps">
+                    <div>
+                        <strong style="color: #fff;">Dibuat:</strong>
+                        {{ $article->created_at ? $article->created_at->timezone('Asia/Jakarta')->translatedFormat('d F Y, H:i') . ' WIB' : '-' }}
+                    </div>
+                    <div>
+                        <strong style="color: #fff;">Terakhir Diperbarui:</strong>
+                        {{ $article->updated_at ? $article->updated_at->timezone('Asia/Jakarta')->translatedFormat('d F Y, H:i') . ' WIB' : '-' }}
+                    </div>
+                    @if($article->published_at)
+                    <div>
+                        <strong style="color: var(--cyan);">Publikasi:</strong>
+                        {{ $article->published_at->timezone('Asia/Jakarta')->translatedFormat('d F Y, H:i') . ' WIB' }}
+                    </div>
+                    @endif
+                </div>
             </div>
         </div>
 
         <div style="margin-top: 16px; padding-top: 24px; border-top: 1px solid var(--border); text-align: right;">
             <a href="{{ route('admin.articles.index') }}" class="btn-cancel">Batal</a>
-            <button type="submit" class="btn-submit">Simpan Perubahan</button>
+            <button type="submit" class="btn-submit" id="btn-submit-text">Simpan Perubahan</button>
         </div>
     </form>
 </div>
@@ -148,21 +294,137 @@
 @push('scripts')
 <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
 <script>
-    const gambar  = document.getElementById('gambar');
-    const preview = document.getElementById('preview');
-    gambar.addEventListener('change', function() {
-        const file = this.files[0];
-        if (file) {
-            preview.src = URL.createObjectURL(file);
-            preview.style.display = 'block';
-        } else {
-            @if($article->gambar)
-                preview.src = "{{ str_starts_with($article->gambar, 'http') ? $article->gambar : asset('storage/' . $article->gambar) }}";
-            @else
-                preview.style.display = 'none';
-            @endif
-        }
+    // Image Source Tabs & Preview
+    const tabCurrent   = document.getElementById('tab-current');
+    const tabUpload    = document.getElementById('tab-upload');
+    const tabUrl       = document.getElementById('tab-url');
+    const imageType    = document.getElementById('image_type');
+    const secCurrent   = document.getElementById('section-current');
+    const secUpload    = document.getElementById('section-upload');
+    const secUrl       = document.getElementById('section-url');
+    const inputGambar  = document.getElementById('gambar');
+    const inputUrl     = document.getElementById('gambar_url');
+    const previewBox   = document.getElementById('preview-box');
+    const previewImg   = document.getElementById('preview-img');
+    const previewTitle = document.getElementById('preview-title');
+    const previewInfo  = document.getElementById('preview-info');
+
+    const originalImgSrc = "{{ $initialImgSrc }}";
+
+    function resetPillClasses() {
+        if (tabCurrent) tabCurrent.classList.remove('active');
+        tabUpload.classList.remove('active');
+        tabUrl.classList.remove('active');
+        if (secCurrent) secCurrent.style.display = 'none';
+        secUpload.style.display = 'none';
+        secUrl.style.display = 'none';
+    }
+
+    if (tabCurrent) {
+        tabCurrent.addEventListener('click', function() {
+            resetPillClasses();
+            tabCurrent.classList.add('active');
+            imageType.value = 'current';
+            secCurrent.style.display = 'block';
+            if (originalImgSrc) {
+                previewImg.src = originalImgSrc;
+                previewTitle.textContent = 'Gambar Saat Ini (Dipertahankan)';
+                previewInfo.textContent = 'Tidak akan diganti saat disimpan';
+                previewBox.style.display = 'flex';
+            }
+        });
+    }
+
+    tabUpload.addEventListener('click', function() {
+        resetPillClasses();
+        tabUpload.classList.add('active');
+        imageType.value = 'upload';
+        secUpload.style.display = 'block';
+        updateImagePreview();
     });
+
+    tabUrl.addEventListener('click', function() {
+        resetPillClasses();
+        tabUrl.classList.add('active');
+        imageType.value = 'url';
+        secUrl.style.display = 'block';
+        updateImagePreview();
+    });
+
+    function updateImagePreview() {
+        if (imageType.value === 'url') {
+            const urlVal = inputUrl.value.trim();
+            if (urlVal && (urlVal.startsWith('http://') || urlVal.startsWith('https://'))) {
+                previewImg.src = urlVal;
+                previewTitle.textContent = 'Preview Banner (URL Eksternal Baru)';
+                previewInfo.textContent = urlVal.length > 50 ? urlVal.substring(0, 50) + '...' : urlVal;
+                previewBox.style.display = 'flex';
+                previewImg.onerror = function() {
+                    previewInfo.textContent = '⚠️ Gambar tidak dapat dimuat dari URL ini.';
+                };
+            } else if (originalImgSrc) {
+                previewImg.src = originalImgSrc;
+                previewTitle.textContent = 'Gambar Banner Saat Ini';
+                previewInfo.textContent = 'Masukkan URL baru untuk mengganti gambar';
+                previewBox.style.display = 'flex';
+            } else {
+                previewBox.style.display = 'none';
+            }
+        } else if (imageType.value === 'upload') {
+            const file = inputGambar.files[0];
+            if (file) {
+                previewImg.src = URL.createObjectURL(file);
+                previewTitle.textContent = 'Preview Banner (File Baru Terpilih)';
+                previewInfo.textContent = file.name + ' (' + (file.size / 1024).toFixed(1) + ' KB)';
+                previewBox.style.display = 'flex';
+            } else if (originalImgSrc) {
+                previewImg.src = originalImgSrc;
+                previewTitle.textContent = 'Gambar Banner Saat Ini';
+                previewInfo.textContent = 'Pilih file baru untuk mengganti gambar';
+                previewBox.style.display = 'flex';
+            } else {
+                previewBox.style.display = 'none';
+            }
+        }
+    }
+
+    inputGambar.addEventListener('change', updateImagePreview);
+    inputUrl.addEventListener('input', updateImagePreview);
+
+    // Status Cards & Schedule Picker
+    const statusCards   = document.querySelectorAll('.status-card');
+    const scheduledWrap = document.getElementById('scheduled-date-wrap');
+    const dateLabel     = document.getElementById('date-label');
+    const btnSubmitText = document.getElementById('btn-submit-text');
+
+    function syncStatusCard() {
+        const checked = document.querySelector('input[name=status]:checked');
+        statusCards.forEach(c => c.classList.remove('selected'));
+        if (checked) {
+            checked.closest('.status-card').classList.add('selected');
+            if (checked.value === 'scheduled') {
+                scheduledWrap.style.display = 'block';
+                dateLabel.textContent = 'Jadwal Publikasi Otomatis (WIB) *';
+                btnSubmitText.textContent = 'Simpan & Jadwalkan';
+            } else if (checked.value === 'published') {
+                scheduledWrap.style.display = 'block';
+                dateLabel.textContent = 'Tanggal Publikasi (WIB)';
+                btnSubmitText.textContent = 'Publish & Simpan';
+            } else {
+                scheduledWrap.style.display = 'none';
+                btnSubmitText.textContent = 'Simpan Draft';
+            }
+        }
+    }
+
+    statusCards.forEach(c => {
+        c.addEventListener('click', function() {
+            const r = this.querySelector('input[type=radio]');
+            if (r) { r.checked = true; syncStatusCard(); }
+        });
+    });
+    syncStatusCard();
+
     // Quill Initialization
     var quill = new Quill('#quill-editor', {
         theme: 'snow',
@@ -178,8 +440,8 @@
     });
 
     // Structured Editor for isi_artikel
-    const formArticle = document.getElementById('form-article');
-    const takeawayInput = document.getElementById('ia_takeaway');
+    const formArticle      = document.getElementById('form-article');
+    const takeawayInput    = document.getElementById('ia_takeaway');
     const hiddenIsiArtikel = document.getElementById('isi_artikel');
 
     function syncIsiArtikel() {

@@ -567,6 +567,18 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
                 {{ $article['readTime'] }} baca
             </span>
+            @if(!empty($article['source_name']))
+            <span class="article-meta-divider"></span>
+            <span class="article-meta-text">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+                Sumber:
+                @if(!empty($article['source_url']))
+                    <a href="{{ $article['source_url'] }}" target="_blank" rel="noopener noreferrer" style="color:var(--cyan-neon); text-decoration:none;">{{ $article['source_name'] }} ↗</a>
+                @else
+                    {{ $article['source_name'] }}
+                @endif
+            </span>
+            @endif
         </div>
         <h1 class="article-hero-title">{{ $article['title'] }}</h1>
         <p class="article-hero-summary">{{ $article['summary'] }}</p>
@@ -585,6 +597,25 @@
             <div class="article-body">
                 {!! $article['content'] !!}
             </div>
+
+            <!-- Source Reference Box -->
+            @if(!empty($article['source_name']))
+            <div class="article-source-container" style="margin: 32px 0 24px; padding: 18px 22px; background: rgba(0, 212, 255, 0.03); border: 1px solid rgba(0, 212, 255, 0.15); border-radius: 12px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span style="font-size: 18px;">📚</span>
+                    <div>
+                        <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--cyan-neon); font-weight: 700;">Sumber Referensi</div>
+                        <div style="font-size: 14px; font-weight: 600; color: #fff;">{{ $article['source_name'] }}</div>
+                    </div>
+                </div>
+                @if(!empty($article['source_url']))
+                    <a href="{{ $article['source_url'] }}" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--cyan-neon); text-decoration: none; padding: 7px 14px; border-radius: 8px; background: rgba(0, 212, 255, 0.08); border: 1px solid rgba(0, 212, 255, 0.2); transition: all 0.2s;">
+                        Kunjungi Sumber Resmi
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                    </a>
+                @endif
+            </div>
+            @endif
 
             <!-- Highlight Box -->
             @if(isset($article['takeaway']))

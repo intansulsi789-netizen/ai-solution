@@ -19,7 +19,9 @@
         background: linear-gradient(135deg, var(--cyan), var(--purple));
         color: #fff; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px;
         display: inline-flex; align-items: center; gap: 8px; border: none; cursor: pointer;
+        box-shadow: 0 4px 14px rgba(0,212,255,0.25); transition: opacity 0.2s, transform 0.2s;
     }
+    .btn-primary:hover { opacity: 0.95; transform: translateY(-1px); }
     table { width: 100%; border-collapse: collapse; text-align: left; }
     th, td { padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,0.05); vertical-align: middle; }
     th { font-size: 12px; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
@@ -27,18 +29,26 @@
     tr:last-child td { border-bottom: none; }
     .action-btn { color: var(--cyan); text-decoration: none; font-weight: 600; font-size: 13px; }
     .action-btn.del { color: #fca5a5; background: none; border: none; font-weight: 600; font-size: 13px; cursor: pointer; font-family: 'Inter', sans-serif; padding: 0; }
-    .status-badge { padding: 4px 10px; border-radius: 100px; font-size: 11px; font-weight: 700; }
+    .status-badge { padding: 4px 10px; border-radius: 100px; font-size: 11px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; }
     .status-active   { background: rgba(74,222,128,0.15); color: #4ade80; border: 1px solid rgba(74,222,128,0.3); }
     .status-inactive { background: rgba(239,68,68,0.15); color: #fca5a5; border: 1px solid rgba(239,68,68,0.3); }
-    .thumb { width: 56px; height: 40px; object-fit: cover; border-radius: 6px; opacity: 0.85; }
+
+    .status-draft     { background: rgba(234,179,8,0.12); color: #facc15; border: 1px solid rgba(234,179,8,0.3); }
+    .status-published { background: rgba(16,185,129,0.12); color: #34d399; border: 1px solid rgba(16,185,129,0.3); }
+    .status-scheduled { background: rgba(0,212,255,0.15); color: var(--cyan); border: 1px solid rgba(0,212,255,0.35); }
+
+    .thumb { width: 56px; height: 40px; object-fit: cover; border-radius: 6px; opacity: 0.9; border: 1px solid rgba(255,255,255,0.1); }
     .thumb-placeholder { width: 56px; height: 40px; background: rgba(255,255,255,0.05); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.2); font-size: 18px; }
     .cat-pill { display: inline-block; padding: 3px 9px; border-radius: 100px; font-size: 11px; font-weight: 600; background: rgba(124,58,237,0.18); color: #a78bfa; border: 1px solid rgba(124,58,237,0.28); }
+    .source-tag { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; color: var(--muted); margin-top: 4px; }
+    .source-tag a { color: var(--cyan); text-decoration: none; }
+    .source-tag a:hover { text-decoration: underline; }
 </style>
 
 <div class="page-header">
     <div class="page-label">MANAJEMEN</div>
     <h1 class="page-title">Artikel</h1>
-    <p class="page-desc">Kelola artikel & wawasan yang ditampilkan di halaman frontend.</p>
+    <p class="page-desc">Kelola artikel &amp; wawasan yang ditampilkan di halaman frontend.</p>
 </div>
 
 @if(session('success'))
@@ -59,9 +69,9 @@
             <thead>
                 <tr>
                     <th style="width:70px;">Gambar</th>
-                    <th>Judul</th>
+                    <th>Judul &amp; Sumber</th>
                     <th>Kategori</th>
-                    <th>Tanggal</th>
+                    <th>Tanggal / Jadwal (WIB)</th>
                     <th>Status</th>
                     <th style="text-align:right;">Aksi</th>
                 </tr>
@@ -71,29 +81,64 @@
                 <tr>
                     <td>
                         @if($a->gambar)
-                            <img src="{{ str_starts_with($a->gambar, 'http') ? $a->gambar : asset('storage/' . $a->gambar) }}" alt="{{ $a->judul }}" class="thumb">
+                            @php
+                                $imgSrc = (str_starts_with($a->gambar, 'http://') || str_starts_with($a->gambar, 'https://'))
+                                    ? $a->gambar
+                                    : asset('storage/' . $a->gambar);
+                            @endphp
+                            <img src="{{ $imgSrc }}" alt="{{ $a->judul }}" class="thumb">
                         @else
                             <div class="thumb-placeholder">📄</div>
                         @endif
                     </td>
                     <td>
                         <div style="font-weight:600;color:#fff;margin-bottom:2px;">{{ Str::limit($a->judul, 55) }}</div>
-                        <div style="font-size:12px;color:var(--muted);">{{ $a->slug }}</div>
+                        <div style="font-size:12px;color:var(--muted);margin-bottom:2px;">/wawasan/{{ $a->slug }}</div>
+                        @if($a->source_name)
+                            <div class="source-tag">
+                                <span>Sumber:</span>
+                                @if($a->source_url)
+                                    <a href="{{ $a->source_url }}" target="_blank" rel="noopener noreferrer">{{ $a->source_name }} ↗</a>
+                                @else
+                                    <span>{{ $a->source_name }}</span>
+                                @endif
+                            </div>
+                        @endif
                     </td>
                     <td><span class="cat-pill">{{ $a->kategori ?: '-' }}</span></td>
-                    <td style="font-size:12px;color:var(--muted);">{{ $a->tanggal ?: '-' }}</td>
                     <td>
-                        @if($a->is_active)
-                            <span class="status-badge status-active" style="margin-bottom: 4px; display: inline-block;">Aktif</span><br>
+                        @if($a->status === 'scheduled')
+                            <div style="font-size:12.5px;color:var(--cyan);font-weight:600;">
+                                ⏱️ {{ $a->published_at ? $a->published_at->timezone('Asia/Jakarta')->translatedFormat('d M Y, H:i') . ' WIB' : '-' }}
+                            </div>
+                            <div style="font-size:11px;color:var(--muted);">Otomatis terbit saat jadwal tercapai</div>
+                        @elseif($a->status === 'published')
+                            <div style="font-size:12.5px;color:rgba(255,255,255,0.9);">
+                                {{ $a->published_at ? $a->published_at->timezone('Asia/Jakarta')->translatedFormat('d M Y') : ($a->tanggal ?: '-') }}
+                            </div>
+                            @if($a->published_at)
+                                <div style="font-size:11px;color:var(--muted);">{{ $a->published_at->timezone('Asia/Jakarta')->format('H:i') }} WIB</div>
+                            @endif
                         @else
-                            <span class="status-badge status-inactive" style="margin-bottom: 4px; display: inline-block;">Nonaktif</span><br>
+                            <span style="font-size:12px;color:var(--muted);">Belum dipublikasikan</span>
                         @endif
-                        
-                        @if($a->status === 'draft')
-                            <span class="status-badge" style="background: rgba(234,179,8,0.1); color: #facc15; border: 1px solid rgba(234,179,8,0.3);">Draft</span>
-                        @else
-                            <span class="status-badge" style="background: rgba(16,185,129,0.1); color: #34d399; border: 1px solid rgba(16,185,129,0.3);">Published</span>
-                        @endif
+                    </td>
+                    <td>
+                        <div style="display:flex; flex-direction:column; gap:4px; align-items:flex-start;">
+                            @if($a->is_active)
+                                <span class="status-badge status-active">Aktif</span>
+                            @else
+                                <span class="status-badge status-inactive">Nonaktif</span>
+                            @endif
+
+                            @if($a->status === 'draft')
+                                <span class="status-badge status-draft">Draft</span>
+                            @elseif($a->status === 'scheduled')
+                                <span class="status-badge status-scheduled">Terjadwal</span>
+                            @else
+                                <span class="status-badge status-published">Published</span>
+                            @endif
+                        </div>
                     </td>
                     <td style="text-align:right;white-space:nowrap;">
                         <a href="{{ route('admin.articles.edit', $a->id) }}" class="action-btn" style="margin-right:12px;">Edit</a>

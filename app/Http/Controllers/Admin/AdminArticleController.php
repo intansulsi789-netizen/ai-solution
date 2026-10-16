@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Article;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -23,20 +24,71 @@ class AdminArticleController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'judul'       => 'required|string|max:255',
-            'slug'        => 'required|string|unique:articles,slug|max:255',
-            'kategori'    => 'nullable|string|max:100',
-            'tanggal'     => 'nullable|string|max:50',
-            'gambar'      => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
-            'ringkasan'   => 'nullable|string',
-            'isi_artikel' => 'nullable|string',
-            'status'      => 'required|in:draft,published',
+            'judul'        => 'required|string|max:255',
+            'slug'         => 'required|string|unique:articles,slug|max:255',
+            'kategori'     => 'nullable|string|max:100',
+            'source_name'  => 'nullable|string|max:255',
+            'source_url'   => 'nullable|url|max:1000',
+            'image_type'   => 'nullable|in:upload,url',
+            'gambar'       => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
+            'gambar_url'   => 'nullable|url|max:2048',
+            'ringkasan'    => 'nullable|string',
+            'isi_artikel'  => 'nullable|string',
+            'status'       => 'required|in:draft,published,scheduled',
+            'published_at' => 'nullable|date',
+        ], [
+            'judul.required'      => 'Judul artikel wajib diisi.',
+            'slug.required'       => 'Slug URL artikel wajib diisi.',
+            'slug.unique'         => 'Slug sudah digunakan oleh artikel lain.',
+            'source_url.url'      => 'Format URL sumber tidak valid.',
+            'gambar.image'        => 'File yang diunggah harus berupa gambar.',
+            'gambar.mimes'        => 'Format gambar harus jpeg, png, jpg, atau webp.',
+            'gambar.max'          => 'Ukuran gambar maksimal 5MB.',
+            'gambar_url.url'      => 'Format URL gambar eksternal tidak valid.',
+            'status.in'           => 'Status artikel tidak valid.',
         ]);
 
-        $data = $request->only(['judul', 'slug', 'kategori', 'tanggal', 'ringkasan', 'isi_artikel', 'status']);
-        
-        if ($request->hasFile('gambar')) {
+        if ($request->status === 'scheduled' && !$request->filled('published_at')) {
+            return back()->withInput()->withErrors([
+                'published_at' => 'Waktu publikasi terjadwal wajib diisi saat memilih status Jadwalkan.'
+            ]);
+        }
+
+        $data = $request->only([
+            'judul',
+            'slug',
+            'kategori',
+            'source_name',
+            'source_url',
+            'ringkasan',
+            'isi_artikel',
+            'status',
+        ]);
+
+        // Penanganan Gambar (Upload vs URL)
+        $imageType = $request->input('image_type', 'upload');
+        if ($imageType === 'url' && $request->filled('gambar_url')) {
+            $data['gambar'] = trim($request->input('gambar_url'));
+        } elseif ($request->hasFile('gambar')) {
             $data['gambar'] = $request->file('gambar')->store('articles', 'public');
+        } else {
+            $data['gambar'] = null;
+        }
+
+        // Penanganan Status & Tanggal Publikasi (WIB)
+        if ($request->status === 'published') {
+            $pubDate = $request->filled('published_at')
+                ? Carbon::parse($request->published_at, 'Asia/Jakarta')
+                : now('Asia/Jakarta');
+            $data['published_at'] = $pubDate;
+            $data['tanggal']      = $pubDate->locale('id')->translatedFormat('d F Y');
+        } elseif ($request->status === 'scheduled') {
+            $pubDate = Carbon::parse($request->published_at, 'Asia/Jakarta');
+            $data['published_at'] = $pubDate;
+            $data['tanggal']      = $pubDate->locale('id')->translatedFormat('d F Y');
+        } else { // draft
+            $data['published_at'] = null;
+            $data['tanggal']      = null;
         }
 
         $data['is_active'] = $request->has('is_active');
@@ -58,27 +110,85 @@ class AdminArticleController extends Controller
         $article = Article::findOrFail($id);
 
         $request->validate([
-            'judul'       => 'required|string|max:255',
-            'slug'        => 'required|string|unique:articles,slug,' . $article->id . '|max:255',
-            'kategori'    => 'nullable|string|max:100',
-            'tanggal'     => 'nullable|string|max:50',
-            'gambar'      => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
-            'ringkasan'   => 'nullable|string',
-            'isi_artikel' => 'nullable|string',
-            'status'      => 'required|in:draft,published',
+            'judul'        => 'required|string|max:255',
+            'slug'         => 'required|string|unique:articles,slug,' . $article->id . '|max:255',
+            'kategori'     => 'nullable|string|max:100',
+            'source_name'  => 'nullable|string|max:255',
+            'source_url'   => 'nullable|url|max:1000',
+            'image_type'   => 'nullable|in:upload,url,current',
+            'gambar'       => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
+            'gambar_url'   => 'nullable|url|max:2048',
+            'ringkasan'    => 'nullable|string',
+            'isi_artikel'  => 'nullable|string',
+            'status'       => 'required|in:draft,published,scheduled',
+            'published_at' => 'nullable|date',
+        ], [
+            'judul.required'      => 'Judul artikel wajib diisi.',
+            'slug.required'       => 'Slug URL artikel wajib diisi.',
+            'slug.unique'         => 'Slug sudah digunakan oleh artikel lain.',
+            'source_url.url'      => 'Format URL sumber tidak valid.',
+            'gambar.image'        => 'File yang diunggah harus berupa gambar.',
+            'gambar.mimes'        => 'Format gambar harus jpeg, png, jpg, atau webp.',
+            'gambar.max'          => 'Ukuran gambar maksimal 5MB.',
+            'gambar_url.url'      => 'Format URL gambar eksternal tidak valid.',
+            'status.in'           => 'Status artikel tidak valid.',
         ]);
 
-        $data = $request->only(['judul', 'slug', 'kategori', 'tanggal', 'ringkasan', 'isi_artikel', 'status']);
-        
-        if ($request->hasFile('gambar')) {
+        if ($request->status === 'scheduled' && !$request->filled('published_at')) {
+            return back()->withInput()->withErrors([
+                'published_at' => 'Waktu publikasi terjadwal wajib diisi saat memilih status Jadwalkan.'
+            ]);
+        }
+
+        $data = $request->only([
+            'judul',
+            'slug',
+            'kategori',
+            'source_name',
+            'source_url',
+            'ringkasan',
+            'isi_artikel',
+            'status',
+        ]);
+
+        // Penanganan Gambar (Pertahankan gambar lama jika tidak diganti)
+        $imageType = $request->input('image_type');
+        if ($imageType === 'url' && $request->filled('gambar_url')) {
+            // Hapus file fisik lokal lama jika sebelumnya bukan URL
+            if ($article->gambar && !str_starts_with($article->gambar, 'http')) {
+                Storage::disk('public')->delete($article->gambar);
+            }
+            $data['gambar'] = trim($request->input('gambar_url'));
+        } elseif ($request->hasFile('gambar')) {
+            // Hapus file fisik lokal lama
             if ($article->gambar && !str_starts_with($article->gambar, 'http')) {
                 Storage::disk('public')->delete($article->gambar);
             }
             $data['gambar'] = $request->file('gambar')->store('articles', 'public');
+        } else {
+            // Pertahankan gambar lama
+            $data['gambar'] = $article->gambar;
+        }
+
+        // Penanganan Status & Tanggal Publikasi (WIB)
+        if ($request->status === 'published') {
+            $pubDate = $request->filled('published_at')
+                ? Carbon::parse($request->published_at, 'Asia/Jakarta')
+                : ($article->published_at ?? now('Asia/Jakarta'));
+            $data['published_at'] = $pubDate;
+            $data['tanggal']      = $pubDate->locale('id')->translatedFormat('d F Y');
+        } elseif ($request->status === 'scheduled') {
+            $pubDate = Carbon::parse($request->published_at, 'Asia/Jakarta');
+            $data['published_at'] = $pubDate;
+            $data['tanggal']      = $pubDate->locale('id')->translatedFormat('d F Y');
+        } else { // draft
+            $data['published_at'] = null;
+            $data['tanggal']      = null;
         }
 
         $data['is_active'] = $request->has('is_active');
 
+        // created_at TIDAK ditimpa ketika artikel diedit (Eloquent mengelola created_at otomatis)
         $article->update($data);
 
         return redirect()->route('admin.articles.index')

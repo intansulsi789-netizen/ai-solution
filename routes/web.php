@@ -21,33 +21,46 @@ $getServices = function () {
     })->toArray();
 };
 
-try {
-    $articles = \App\Models\Article::where('is_active', true)->where('status', 'published')->orderBy('created_at', 'desc')->get()->map(function($a) {
-        $isi = json_decode($a->isi_artikel, true);
-        if (!is_array($isi)) {
-            $isi = [
-                'content' => $a->isi_artikel ?? '',
-                'takeaway' => '',
-                'readTime' => '',
-            ];
-        }
-        return [
-            'slug'     => $a->slug,
-            'title'    => $a->judul,
-            'category' => $a->kategori,
-            'date'     => $a->tanggal,
-            'readTime' => $isi['readTime'] ?? '',
-            'image'    => $a->gambar ? (str_starts_with($a->gambar, 'http') ? $a->gambar : asset('storage/' . $a->gambar)) : '',
-            'summary'  => $a->ringkasan,
-            'content'  => $isi['content'] ?? '',
-            'takeaway' => $isi['takeaway'] ?? '',
-        ];
-    })->toArray();
-} catch (\Exception $e) {
-    $articles = [];
-}
+/**
+ * Helper untuk mengambil data articles terbit dari DB (published & published_at <= now()).
+ * Dipanggil di dalam closure route agar tidak dieksekusi saat boot/artisan.
+ */
+$getArticles = function () {
+    return \App\Models\Article::published()
+        ->orderByRaw('COALESCE(published_at, created_at) DESC')
+        ->get()
+        ->map(function ($a) {
+            $isi = json_decode($a->isi_artikel, true);
+            if (!is_array($isi)) {
+                $isi = [
+                    'content' => $a->isi_artikel ?? '',
+                    'takeaway' => '',
+                    'readTime' => '',
+                ];
+            }
 
-Route::get('/', function () use ($getServices, $articles) {
+            // Gunakan tanggal publikasi WIB jika tersedia
+            $displayDate = $a->published_at
+                ? $a->published_at->timezone('Asia/Jakarta')->locale('id')->translatedFormat('d F Y')
+                : ($a->tanggal ?: '');
+
+            return [
+                'slug'        => $a->slug,
+                'title'       => $a->judul,
+                'category'    => $a->kategori,
+                'date'        => $displayDate,
+                'source_name' => $a->source_name,
+                'source_url'  => $a->source_url,
+                'readTime'    => $isi['readTime'] ?? '',
+                'image'       => $a->image_url,
+                'summary'     => $a->ringkasan,
+                'content'     => $isi['content'] ?? '',
+                'takeaway'    => $isi['takeaway'] ?? '',
+            ];
+        })->toArray();
+};
+
+Route::get('/', function () use ($getServices, $getArticles) {
     $services    = $getServices();
     $adminUser   = \App\Models\User::first();
     $partners    = \App\Models\Partner::where('is_active', true)->orderBy('urutan', 'asc')->get();
@@ -55,6 +68,7 @@ Route::get('/', function () use ($getServices, $articles) {
     $cmsHomepage = \App\Models\CmsHomepage::first();
     $cmsContact  = \App\Models\CmsContact::first();
 
+    $articles    = $getArticles();
     // limit to 4 latest articles for homepage
     $homepageArticles = array_slice($articles, 0, 4);
 
@@ -87,9 +101,8 @@ Route::get('/layanan/{slug}', function ($slug) {
     return view('service-detail', ['service' => $serviceData]);
 });
 
-
-
-Route::get('/wawasan/{slug}', function ($slug) use ($articles) {
+Route::get('/wawasan/{slug}', function ($slug) use ($getArticles) {
+    $articles = $getArticles();
     $articleData = collect($articles)->firstWhere('slug', $slug);
     if (!$articleData) {
         abort(404);
@@ -122,7 +135,7 @@ Route::post('/konsultasi', function (\Illuminate\Http\Request $request) {
 
 Route::get('/sitemap.xml', function () {
     $services = \App\Models\Service::where('is_active', true)->get();
-    $articles = \App\Models\Article::where('is_active', true)->where('status', 'published')->get();
+    $articles = \App\Models\Article::published()->get();
     
     return response()->view('sitemap', [
         'services' => $services,

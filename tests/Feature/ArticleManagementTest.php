@@ -1,0 +1,221 @@
+<?php
+
+namespace Tests\Feature;
+
+use App\Models\Article;
+use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Storage;
+use Tests\TestCase;
+
+class ArticleManagementTest extends TestCase
+{
+    use DatabaseTransactions;
+
+    protected User $admin;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->admin = User::first();
+    }
+
+    public function test_admin_can_view_articles_index()
+    {
+        $response = $this->actingAs($this->admin)->get(route('admin.articles.index'));
+        $response->assertStatus(200);
+        $response->assertSee('Daftar Artikel');
+    }
+
+    public function test_create_article_with_external_image_url_and_source()
+    {
+        $payload = [
+            'judul'        => 'Artikel Uji Coba URL & Sumber',
+            'slug'         => 'artikel-uji-coba-url-sumber',
+            'kategori'     => 'AI & Inovasi',
+            'source_name'  => 'Kementerian Perhubungan RI',
+            'source_url'   => 'https://dephub.go.id/berita/baca/uji-coba',
+            'image_type'   => 'url',
+            'gambar_url'   => 'https://images.unsplash.com/photo-1518770660439-4636190af475',
+            'ringkasan'    => 'Ringkasan artikel uji coba untuk URL gambar dan sumber.',
+            'isi_artikel'  => json_encode(['content' => '<p>Konten artikel</p>', 'takeaway' => 'Intinya AI hebat', 'readTime' => '3 mnt']),
+            'status'       => 'published',
+            'is_active'    => '1',
+        ];
+
+        $response = $this->actingAs($this->admin)->post(route('admin.articles.store'), $payload);
+        $response->assertRedirect(route('admin.articles.index'));
+
+        $article = Article::where('slug', 'artikel-uji-coba-url-sumber')->first();
+        $this->assertNotNull($article);
+        $this->assertEquals('Kementerian Perhubungan RI', $article->source_name);
+        $this->assertEquals('https://dephub.go.id/berita/baca/uji-coba', $article->source_url);
+        $this->assertEquals('https://images.unsplash.com/photo-1518770660439-4636190af475', $article->gambar);
+        $this->assertEquals('published', $article->status);
+        $this->assertNotNull($article->published_at);
+
+        // Pastikan tampil pada halaman publik detail artikel beserta sumbernya
+        $detailResponse = $this->get('/wawasan/' . $article->slug);
+        $detailResponse->assertStatus(200);
+        $detailResponse->assertSee('Kementerian Perhubungan RI');
+        $detailResponse->assertSee('https://dephub.go.id/berita/baca/uji-coba');
+    }
+
+    public function test_create_article_with_file_upload()
+    {
+        Storage::fake('public');
+
+        // Valid 1x1 PNG binary data (tidak membutuhkan ekstensi PHP GD)
+        $pngData = base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==');
+        $file = UploadedFile::fake()->createWithContent('banner_test.png', $pngData);
+
+        $payload = [
+            'judul'        => 'Artikel Uji Coba Upload Gambar',
+            'slug'         => 'artikel-uji-coba-upload-gambar',
+            'kategori'     => 'Teknologi',
+            'image_type'   => 'upload',
+            'gambar'       => $file,
+            'ringkasan'    => 'Ringkasan upload gambar',
+            'status'       => 'published',
+            'is_active'    => '1',
+        ];
+
+        $response = $this->actingAs($this->admin)->post(route('admin.articles.store'), $payload);
+        $response->assertRedirect(route('admin.articles.index'));
+
+        $article = Article::where('slug', 'artikel-uji-coba-upload-gambar')->first();
+        $this->assertNotNull($article);
+        $this->assertStringStartsWith('articles/', $article->gambar);
+        Storage::disk('public')->assertExists($article->gambar);
+    }
+
+    public function test_create_draft_article_does_not_appear_on_public_pages()
+    {
+        $payload = [
+            'judul'        => 'Artikel Draft Rahasia',
+            'slug'         => 'artikel-draft-rahasia',
+            'status'       => 'draft',
+            'is_active'    => '1',
+        ];
+
+        $response = $this->actingAs($this->admin)->post(route('admin.articles.store'), $payload);
+        $response->assertRedirect(route('admin.articles.index'));
+
+        $article = Article::where('slug', 'artikel-draft-rahasia')->first();
+        $this->assertNotNull($article);
+        $this->assertEquals('draft', $article->status);
+
+        // Halaman detail publik harus 404 untuk draft
+        $detailResponse = $this->get('/wawasan/' . $article->slug);
+        $detailResponse->assertStatus(404);
+    }
+
+    public function test_scheduled_article_does_not_appear_before_due_time_and_publishes_via_artisan()
+    {
+        // Buat artikel yang dijadwalkan 2 jam di masa depan
+        $futureTime = now()->addHours(2);
+
+        $payload = [
+            'judul'        => 'Artikel Masa Depan Terjadwal',
+            'slug'         => 'artikel-masa-depan-terjadwal',
+            'status'       => 'scheduled',
+            'published_at' => $futureTime->format('Y-m-d\TH:i'),
+            'is_active'    => '1',
+        ];
+
+        $response = $this->actingAs($this->admin)->post(route('admin.articles.store'), $payload);
+        $response->assertRedirect(route('admin.articles.index'));
+
+        $article = Article::where('slug', 'artikel-masa-depan-terjadwal')->first();
+        $this->assertNotNull($article);
+        $this->assertEquals('scheduled', $article->status);
+
+        // Sebelum waktu jadwal, tidak boleh bisa diakses publik (404)
+        $detailResponse = $this->get('/wawasan/' . $article->slug);
+        $detailResponse->assertStatus(404);
+
+        // Sekarang kita simulasikan artikel yang waktu jadwalnya sudah lampau (misal 5 menit lalu)
+        $article->update([
+            'published_at' => now()->subMinutes(5)
+        ]);
+
+        // Jalankan artisan scheduler command
+        Artisan::call('articles:publish-scheduled');
+
+        // Refresh artikel dari database
+        $article->refresh();
+        $this->assertEquals('published', $article->status);
+
+        // Setelah dipublikasikan, artikel kini harus bisa diakses publik (200)
+        $detailResponseAfter = $this->get('/wawasan/' . $article->slug);
+        $detailResponseAfter->assertStatus(200);
+        $detailResponseAfter->assertSee('Artikel Masa Depan Terjadwal');
+    }
+
+    public function test_editing_article_preserves_old_image_and_created_at()
+    {
+        $article = Article::create([
+            'judul'        => 'Artikel Asli Lama',
+            'slug'         => 'artikel-asli-lama',
+            'gambar'       => 'https://images.unsplash.com/photo-old-image',
+            'status'       => 'published',
+            'published_at' => now()->subDays(10),
+            'is_active'    => true,
+        ]);
+
+        $originalCreatedAt = $article->created_at->toDateTimeString();
+        $originalGambar = $article->gambar;
+
+        // Edit tanpa mengubah gambar (image_type = current / kosong)
+        $payload = [
+            'judul'        => 'Artikel Asli Lama - Judul Diperbarui',
+            'slug'         => 'artikel-asli-lama',
+            'image_type'   => 'current',
+            'source_name'  => 'Sumber Baru Ditambahkan',
+            'status'       => 'published',
+            'is_active'    => '1',
+        ];
+
+        $response = $this->actingAs($this->admin)->put(route('admin.articles.update', $article->id), $payload);
+        $response->assertRedirect(route('admin.articles.index'));
+
+        $article->refresh();
+        $this->assertEquals('Artikel Asli Lama - Judul Diperbarui', $article->judul);
+        $this->assertEquals($originalGambar, $article->gambar); // Gambar lama tetap dipertahankan
+        $this->assertEquals($originalCreatedAt, $article->created_at->toDateTimeString()); // created_at tidak ditimpa
+        $this->assertEquals('Sumber Baru Ditambahkan', $article->source_name);
+    }
+
+    public function test_invalid_image_url_and_non_image_files_are_rejected()
+    {
+        // 1. Invalid URL
+        $payloadUrl = [
+            'judul'        => 'Artikel URL Invalid',
+            'slug'         => 'artikel-url-invalid',
+            'image_type'   => 'url',
+            'gambar_url'   => 'bukan-url-valid',
+            'status'       => 'draft',
+        ];
+
+        $response = $this->actingAs($this->admin)->post(route('admin.articles.store'), $payloadUrl);
+        $response->assertSessionHasErrors(['gambar_url']);
+
+        // 2. Non-image file upload
+        Storage::fake('public');
+        $pdfFile = UploadedFile::fake()->create('document.pdf', 100);
+
+        $payloadFile = [
+            'judul'        => 'Artikel File Invalid',
+            'slug'         => 'artikel-file-invalid',
+            'image_type'   => 'upload',
+            'gambar'       => $pdfFile,
+            'status'       => 'draft',
+        ];
+
+        $responseFile = $this->actingAs($this->admin)->post(route('admin.articles.store'), $payloadFile);
+        $responseFile->assertSessionHasErrors(['gambar']);
+    }
+}
