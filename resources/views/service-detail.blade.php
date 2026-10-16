@@ -14,6 +14,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $service['title'] }} - AI Solution</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    
+    {{-- Dark & Light Mode Script & Styles --}}
+    @include('partials.theme-script')
+
     <style>
         :root {
             --bg-color: #020818;
@@ -21,6 +25,93 @@
             --purple-neon: #7c3aed;
             --text-main: #ffffff;
             --text-muted: rgba(255, 255, 255, 0.65);
+        }
+
+        /* ==========================================
+           LIGHT MODE OVERRIDES
+        ========================================== */
+        html[data-theme="light"] {
+            --bg-color: #f8fafc;
+            --text-main: #0f172a;
+            --text-muted: #334155;
+            --cyan-neon: #0284c7;
+            --purple-neon: #7c3aed;
+        }
+
+        html[data-theme="light"] body {
+            background-color: #f8fafc;
+            color: #0f172a;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(2, 132, 199, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 85% 30%, rgba(124, 58, 237, 0.05) 0%, transparent 50%);
+        }
+
+        html[data-theme="light"] .btn-back {
+            background: #ffffff;
+            border-color: rgba(15, 23, 42, 0.12);
+            color: #334155;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        html[data-theme="light"] .btn-back:hover {
+            background: #f1f5f9;
+            color: #0f172a;
+        }
+
+        html[data-theme="light"] .detail-title {
+            color: #0f172a;
+        }
+
+        html[data-theme="light"] .detail-desc {
+            color: #475569;
+        }
+
+        html[data-theme="light"] .badge-layanan {
+            background: rgba(2, 132, 199, 0.08);
+            border-color: rgba(2, 132, 199, 0.25);
+            color: #0284c7;
+        }
+
+        html[data-theme="light"] .solution-card,
+        html[data-theme="light"] .benefit-card {
+            background: #ffffff;
+            border: 1px solid rgba(15, 23, 42, 0.10);
+            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05);
+        }
+
+        html[data-theme="light"] .solution-card:hover,
+        html[data-theme="light"] .benefit-card:hover {
+            border-color: rgba(2, 132, 199, 0.40);
+            box-shadow: 0 12px 32px rgba(2, 132, 199, 0.10);
+        }
+
+        html[data-theme="light"] .solution-title,
+        html[data-theme="light"] .benefit-title,
+        html[data-theme="light"] .section-title {
+            color: #0f172a;
+        }
+
+        html[data-theme="light"] .solution-desc,
+        html[data-theme="light"] .benefit-desc {
+            color: #475569;
+        }
+
+        html[data-theme="light"] .bottom-cta-box {
+            background: linear-gradient(135deg, rgba(2, 132, 199, 0.06), rgba(124, 58, 237, 0.06));
+            border-color: rgba(2, 132, 199, 0.20);
+        }
+
+        html[data-theme="light"] .bottom-cta-title {
+            color: #0f172a;
+        }
+
+        html[data-theme="light"] .bottom-cta-desc {
+            color: #475569;
+        }
+
+        html[data-theme="light"] .bottom-cta-btn {
+            background: #0f172a;
+            color: #ffffff;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html, body {
@@ -472,13 +563,14 @@
 
     <!-- Navbar -->
     <nav class="navbar">
-        <a href="/#jasa" class="btn-back">
+        <a href="/#layanan" class="btn-back">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="19" y1="12" x2="5" y2="12"></line>
                 <polyline points="12 19 5 12 12 5"></polyline>
             </svg>
             Kembali ke Layanan
         </a>
+        @include('partials.theme-toggle')
     </nav>
 
     <!-- Detail Container -->

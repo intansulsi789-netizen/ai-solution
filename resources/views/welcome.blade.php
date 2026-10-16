@@ -36,6 +36,9 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     @endif
 
+    {{-- Dark & Light Mode Script & Styles --}}
+    @include('partials.theme-script')
+
     <style>
         /* ==========================================
            RESET & BASE
@@ -68,6 +71,217 @@
             --glass-border: rgba(0, 168, 255, 0.20);
             --glow-blue: rgba(0, 168, 255, 0.35);
             --glow-purple: rgba(124, 58, 237, 0.35);
+        }
+
+        /* ==========================================
+           LIGHT MODE OVERRIDES
+        ========================================== */
+        html[data-theme="light"] {
+            --navy-900: #f8fafc;
+            --navy-800: #ffffff;
+            --navy-700: #f1f5f9;
+            --navy-600: #e2e8f0;
+            --white: #0f172a;
+            --white-80: #334155;
+            --white-60: #475569;
+            --white-40: #64748b;
+            --white-20: rgba(15, 23, 42, 0.15);
+            --white-10: rgba(15, 23, 42, 0.08);
+            --white-05: rgba(15, 23, 42, 0.04);
+            --glass-bg: rgba(255, 255, 255, 0.90);
+            --glass-border: rgba(15, 23, 42, 0.12);
+            --glow-blue: rgba(2, 132, 199, 0.15);
+            --glow-purple: rgba(124, 58, 237, 0.15);
+            --cyan-neon: #0284c7;
+            --blue-electric: #2563eb;
+            --purple-light: #6d28d9;
+        }
+
+        html[data-theme="light"] body {
+            background-color: #f8fafc;
+            color: #0f172a;
+        }
+
+        html[data-theme="light"] .navbar {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+        }
+
+        html[data-theme="light"] .nav-logo-text {
+            color: #0f172a;
+        }
+
+        html[data-theme="light"] .nav-links a {
+            color: #334155;
+        }
+
+        html[data-theme="light"] .nav-links a:hover {
+            color: #0284c7;
+        }
+
+        html[data-theme="light"] .nav-search {
+            background: rgba(15, 23, 42, 0.04);
+            border-color: rgba(15, 23, 42, 0.12);
+            color: #334155;
+        }
+
+        html[data-theme="light"] .nav-search-kbd {
+            background: rgba(15, 23, 42, 0.08);
+            color: #475569;
+        }
+
+        html[data-theme="light"] .nav-hamburger span {
+            background: #0f172a;
+        }
+
+        html[data-theme="light"] .nav-mobile-menu {
+            background: rgba(255, 255, 255, 0.98);
+            border-color: rgba(15, 23, 42, 0.12);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        html[data-theme="light"] .nav-mobile-menu a {
+            color: #0f172a;
+            border-bottom-color: rgba(15, 23, 42, 0.08);
+        }
+
+        html[data-theme="light"] .hero-overlay {
+            background: linear-gradient(
+                135deg,
+                rgba(248, 250, 252, 0.88) 0%,
+                rgba(241, 245, 249, 0.78) 40%,
+                rgba(248, 250, 252, 0.92) 100%
+            );
+        }
+
+        html[data-theme="light"] .hero-title {
+            background: linear-gradient(135deg, #0f172a 0%, #334155 50%, #0284c7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        html[data-theme="light"] .hero-subtitle {
+            color: #334155;
+        }
+
+        html[data-theme="light"] .hero-badge {
+            background: rgba(2, 132, 199, 0.08);
+            border-color: rgba(2, 132, 199, 0.25);
+            color: #0284c7;
+        }
+
+        html[data-theme="light"] .jasa-title,
+        html[data-theme="light"] .tentang-title {
+            background: linear-gradient(135deg, #0f172a 0%, #334155 50%, #0284c7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        html[data-theme="light"] .jasa-subtitle,
+        html[data-theme="light"] .tentang-subtitle {
+            color: #475569;
+        }
+
+        html[data-theme="light"] .service-card,
+        html[data-theme="light"] .article-card,
+        html[data-theme="light"] .flow-card,
+        html[data-theme="light"] .about-card,
+        html[data-theme="light"] .partner-card,
+        html[data-theme="light"] .konsultasi-card {
+            background: #ffffff;
+            border: 1px solid rgba(15, 23, 42, 0.10);
+            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05);
+        }
+
+        html[data-theme="light"] .service-card:hover,
+        html[data-theme="light"] .article-card:hover,
+        html[data-theme="light"] .flow-card:hover {
+            background: #ffffff;
+            border-color: rgba(2, 132, 199, 0.40);
+            box-shadow: 0 16px 36px rgba(2, 132, 199, 0.12);
+        }
+
+        html[data-theme="light"] .service-title,
+        html[data-theme="light"] .article-title,
+        html[data-theme="light"] .flow-text {
+            color: #0f172a;
+        }
+
+        html[data-theme="light"] .service-desc,
+        html[data-theme="light"] .article-desc {
+            color: #475569;
+        }
+
+        html[data-theme="light"] .section-divider-line {
+            background: linear-gradient(90deg, transparent, rgba(15, 23, 42, 0.12), transparent);
+        }
+
+        html[data-theme="light"] .search-modal-container {
+            background: #ffffff;
+            border: 1px solid rgba(15, 23, 42, 0.15);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        html[data-theme="light"] .search-modal-input {
+            background: #f1f5f9;
+            color: #0f172a;
+            border-color: rgba(15, 23, 42, 0.15);
+        }
+
+        html[data-theme="light"] .search-item {
+            color: #334155;
+            border-bottom-color: rgba(15, 23, 42, 0.06);
+        }
+
+        html[data-theme="light"] .search-item:hover {
+            background: #f1f5f9;
+            color: #0284c7;
+        }
+
+        html[data-theme="light"] .search-item-title {
+            color: #0f172a;
+        }
+
+        html[data-theme="light"] .form-input,
+        html[data-theme="light"] .form-textarea,
+        html[data-theme="light"] .form-select {
+            background: #ffffff;
+            border: 1px solid rgba(15, 23, 42, 0.20);
+            color: #0f172a;
+        }
+
+        html[data-theme="light"] .form-label {
+            color: #334155;
+        }
+
+        html[data-theme="light"] .footer-container {
+            background: #f1f5f9;
+            border-top: 1px solid rgba(15, 23, 42, 0.10);
+            color: #475569;
+        }
+
+        html[data-theme="light"] .footer-logo-text {
+            color: #0f172a;
+        }
+
+        html[data-theme="light"] .footer-desc {
+            color: #64748b;
+        }
+
+        html[data-theme="light"] .footer-link {
+            color: #475569;
+        }
+
+        html[data-theme="light"] .footer-link:hover {
+            color: #0284c7;
+        }
+
+        html[data-theme="light"] .footer-bottom {
+            border-top-color: rgba(15, 23, 42, 0.08);
+            color: #64748b;
         }
 
         html {
@@ -1809,6 +2023,8 @@
                 <kbd class="nav-search-kbd">Ctrl K</kbd>
             </button>
 
+            <!-- Theme Toggle Button -->
+            @include('partials.theme-toggle')
 
             <!-- Mobile hamburger -->
             <button class="nav-hamburger" id="hamburger-btn" aria-label="Toggle menu" aria-expanded="false">

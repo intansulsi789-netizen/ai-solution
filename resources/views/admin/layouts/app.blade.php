@@ -6,6 +6,10 @@
     <title>Dashboard Admin — AI Solution</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+    
+    {{-- Dark & Light Mode Script & Styles --}}
+    @include('partials.theme-script')
+
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -20,6 +24,210 @@
             --text:       #f0f4ff;
             --muted:      rgba(255,255,255,0.45);
             --sidebar-w:  240px;
+        }
+
+        /* ==========================================
+           ADMIN LIGHT MODE OVERRIDES
+        ========================================== */
+        html[data-theme="light"] {
+            --bg: #f1f5f9;
+            --sidebar-bg: #ffffff;
+            --surface: #ffffff;
+            --border: rgba(15, 23, 42, 0.12);
+            --border-h: rgba(2, 132, 199, 0.40);
+            --cyan: #0284c7;
+            --purple: #7c3aed;
+            --text: #0f172a;
+            --muted: #64748b;
+        }
+
+        html[data-theme="light"] body {
+            background: #f1f5f9;
+            color: #0f172a;
+        }
+
+        html[data-theme="light"] .sidebar {
+            background: #ffffff;
+            border-right-color: rgba(15, 23, 42, 0.10);
+            box-shadow: 2px 0 20px rgba(0, 0, 0, 0.04);
+        }
+
+        html[data-theme="light"] .sidebar-logo {
+            border-bottom-color: rgba(15, 23, 42, 0.10);
+        }
+
+        html[data-theme="light"] .sidebar-logo-text {
+            color: #0f172a;
+        }
+
+        html[data-theme="light"] .admin-badge {
+            background: rgba(2, 132, 199, 0.08);
+            border-color: rgba(2, 132, 199, 0.20);
+        }
+
+        html[data-theme="light"] .admin-name {
+            color: #0f172a;
+        }
+
+        html[data-theme="light"] .nav-section-label {
+            color: #94a3b8;
+        }
+
+        html[data-theme="light"] .nav-item {
+            color: #475569;
+        }
+
+        html[data-theme="light"] .nav-item:hover,
+        html[data-theme="light"] .nav-item.active {
+            background: rgba(2, 132, 199, 0.10);
+            color: #0284c7;
+        }
+
+        html[data-theme="light"] .cms-accordion-toggle {
+            color: #475569;
+        }
+
+        html[data-theme="light"] .cms-sub-item {
+            color: #64748b;
+        }
+
+        html[data-theme="light"] .cms-sub-item:hover,
+        html[data-theme="light"] .cms-sub-item.active {
+            color: #0284c7;
+            background: rgba(2, 132, 199, 0.08);
+        }
+
+        html[data-theme="light"] .topbar {
+            background: rgba(255, 255, 255, 0.92);
+            border-bottom-color: rgba(15, 23, 42, 0.10);
+            color: #0f172a;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+        }
+
+        html[data-theme="light"] .topbar-title {
+            color: #0f172a;
+        }
+
+        html[data-theme="light"] .quick-search-input {
+            background: #f8fafc;
+            border-color: rgba(15, 23, 42, 0.15);
+            color: #0f172a;
+        }
+
+        html[data-theme="light"] .quick-search-results {
+            background: #ffffff;
+            border-color: rgba(15, 23, 42, 0.15);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.10);
+        }
+
+        html[data-theme="light"] .qs-item {
+            color: #334155;
+        }
+
+        html[data-theme="light"] .qs-item:hover {
+            background: #f1f5f9;
+            color: #0284c7;
+        }
+
+        html[data-theme="light"] .table-container,
+        html[data-theme="light"] .form-wrap,
+        html[data-theme="light"] .form-container,
+        html[data-theme="light"] .stat-card,
+        html[data-theme="light"] .info-card {
+            background: #ffffff;
+            border-color: rgba(15, 23, 42, 0.12);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+            color: #0f172a;
+        }
+
+        html[data-theme="light"] table th {
+            color: #64748b;
+        }
+
+        html[data-theme="light"] table td {
+            color: #1e293b;
+            border-bottom-color: rgba(15, 23, 42, 0.06);
+        }
+
+        html[data-theme="light"] .form-control {
+            background: #ffffff !important;
+            border-color: rgba(15, 23, 42, 0.20) !important;
+            color: #0f172a !important;
+        }
+
+        html[data-theme="light"] .form-control:focus {
+            border-color: #0284c7 !important;
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15) !important;
+        }
+
+        html[data-theme="light"] .form-label {
+            color: #475569;
+        }
+
+        html[data-theme="light"] .status-card {
+            background: #f8fafc;
+            border-color: rgba(15, 23, 42, 0.12);
+        }
+
+        html[data-theme="light"] .status-card.selected {
+            background: rgba(2, 132, 199, 0.08);
+            border-color: #0284c7;
+        }
+
+        html[data-theme="light"] .status-card-title {
+            color: #0f172a;
+        }
+
+        html[data-theme="light"] .tab-pill {
+            background: #f1f5f9;
+            color: #475569;
+            border-color: rgba(15, 23, 42, 0.12);
+        }
+
+        html[data-theme="light"] .tab-pill.active {
+            background: rgba(2, 132, 199, 0.12);
+            color: #0284c7;
+            border-color: #0284c7;
+        }
+
+        html[data-theme="light"] .meta-timestamps {
+            background: #f8fafc;
+            border-color: rgba(15, 23, 42, 0.10);
+            color: #475569;
+        }
+
+        html[data-theme="light"] .meta-timestamps strong {
+            color: #0f172a;
+        }
+
+        html[data-theme="light"] .btn-cancel {
+            border-color: rgba(15, 23, 42, 0.20);
+            color: #475569;
+        }
+
+        html[data-theme="light"] .btn-cancel:hover {
+            background: #f1f5f9;
+            color: #0f172a;
+        }
+
+        html[data-theme="light"] .ql-container.ql-snow {
+            background: #ffffff;
+            border-color: rgba(15, 23, 42, 0.20) !important;
+            color: #0f172a;
+        }
+
+        html[data-theme="light"] .ql-toolbar.ql-snow {
+            background: #f1f5f9;
+            border-color: rgba(15, 23, 42, 0.20) !important;
+        }
+
+        html[data-theme="light"] .preview-box {
+            background: #f8fafc;
+            border-color: rgba(15, 23, 42, 0.15);
+        }
+
+        html[data-theme="light"] #preview-title {
+            color: #0f172a !important;
         }
 
         body {
@@ -907,6 +1115,7 @@
             <div class="quick-search-results" id="quick-search-results"></div>
         </div>
         <div class="topbar-right">
+            @include('partials.theme-toggle')
             <span class="status-dot">System Online</span>
             <span class="topbar-date" id="topbar-date"></span>
         </div>

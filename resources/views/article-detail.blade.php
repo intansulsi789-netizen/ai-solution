@@ -6,6 +6,10 @@
     <title>{{ $article['title'] }} - AI Solution</title>
     <meta name="description" content="{{ $article['summary'] }}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    
+    {{-- Dark & Light Mode Script & Styles --}}
+    @include('partials.theme-script')
+
     <style>
         :root {
             --bg-color: #020818;
@@ -18,6 +22,131 @@
             --text-dim: rgba(255, 255, 255, 0.45);
             --glass-bg: rgba(10, 20, 50, 0.45);
             --glass-border: rgba(0, 168, 255, 0.15);
+        }
+
+        /* ==========================================
+           LIGHT MODE OVERRIDES
+        ========================================== */
+        html[data-theme="light"] {
+            --bg-color: #f8fafc;
+            --navy-800: #ffffff;
+            --cyan-neon: #0284c7;
+            --purple-neon: #7c3aed;
+            --purple-light: #6d28d9;
+            --text-main: #0f172a;
+            --text-muted: #334155;
+            --text-dim: #64748b;
+            --glass-bg: #ffffff;
+            --glass-border: rgba(15, 23, 42, 0.12);
+        }
+
+        html[data-theme="light"] body {
+            background-color: #f8fafc;
+            color: #0f172a;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(2, 132, 199, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 85% 30%, rgba(124, 58, 237, 0.05) 0%, transparent 50%);
+        }
+
+        html[data-theme="light"] .btn-back {
+            background: #ffffff;
+            border-color: rgba(15, 23, 42, 0.12);
+            color: #334155;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        html[data-theme="light"] .btn-back:hover {
+            background: #f1f5f9;
+            color: #0f172a;
+        }
+
+        html[data-theme="light"] .article-hero-title {
+            color: #0f172a;
+        }
+
+        html[data-theme="light"] .article-hero-summary {
+            color: #475569;
+        }
+
+        html[data-theme="light"] .article-category-badge {
+            background: rgba(2, 132, 199, 0.08);
+            border-color: rgba(2, 132, 199, 0.25);
+            color: #0284c7;
+        }
+
+        html[data-theme="light"] .article-body {
+            color: #334155;
+        }
+
+        html[data-theme="light"] .article-body h3,
+        html[data-theme="light"] .article-body strong {
+            color: #0f172a;
+        }
+
+        html[data-theme="light"] .article-body ul li {
+            color: #334155;
+        }
+
+        html[data-theme="light"] .sidebar-card,
+        html[data-theme="light"] .related-card {
+            background: #ffffff;
+            border: 1px solid rgba(15, 23, 42, 0.12);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        html[data-theme="light"] .sidebar-title,
+        html[data-theme="light"] .related-section-title {
+            color: #0f172a;
+        }
+
+        html[data-theme="light"] .sidebar-related-title,
+        html[data-theme="light"] .related-card-title {
+            color: #0f172a;
+        }
+
+        html[data-theme="light"] .toc-list a {
+            color: #475569;
+        }
+
+        html[data-theme="light"] .toc-list a:hover {
+            color: #0284c7;
+            background: rgba(2, 132, 199, 0.08);
+        }
+
+        html[data-theme="light"] .highlight-box {
+            background: rgba(2, 132, 199, 0.05);
+            border-color: rgba(2, 132, 199, 0.25);
+        }
+
+        html[data-theme="light"] .highlight-box-text {
+            color: #1e293b;
+        }
+
+        html[data-theme="light"] .article-source-container {
+            background: rgba(2, 132, 199, 0.05) !important;
+            border-color: rgba(2, 132, 199, 0.25) !important;
+        }
+
+        html[data-theme="light"] .article-source-container div {
+            color: #0f172a !important;
+        }
+
+        html[data-theme="light"] .bottom-cta-box {
+            background: linear-gradient(135deg, rgba(2, 132, 199, 0.06), rgba(124, 58, 237, 0.06));
+            border-color: rgba(2, 132, 199, 0.20);
+        }
+
+        html[data-theme="light"] .bottom-cta-title {
+            color: #0f172a;
+        }
+
+        html[data-theme="light"] .bottom-cta-desc {
+            color: #475569;
+        }
+
+        html[data-theme="light"] .bottom-cta-btn {
+            background: #0f172a;
+            color: #ffffff;
         }
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; }
@@ -551,6 +680,7 @@
             </svg>
             Kembali ke Wawasan
         </a>
+        @include('partials.theme-toggle')
     </nav>
 
     <!-- Hero Header -->

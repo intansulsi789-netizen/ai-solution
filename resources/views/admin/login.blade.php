@@ -6,6 +6,7 @@
     <title>Admin Login — AI Solution</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+    @include('partials.theme-script')
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -17,6 +18,37 @@
             --purple:    #7c3aed;
             --text:      #f0f4ff;
             --muted:     rgba(255,255,255,0.45);
+        }
+
+        html[data-theme="light"] {
+            --bg:        #f1f5f9;
+            --surface:   rgba(255, 255, 255, 0.95);
+            --border:    rgba(148, 163, 184, 0.4);
+            --text:      #0f172a;
+            --muted:     #64748b;
+        }
+
+        html[data-theme="light"] .grid-bg {
+            background-image:
+                linear-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+        }
+        html[data-theme="light"] .logo-text {
+            color: #0f172a;
+        }
+        html[data-theme="light"] .login-card {
+            box-shadow: 0 20px 45px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 1);
+        }
+        html[data-theme="light"] label {
+            color: #334155;
+        }
+        html[data-theme="light"] input[type="password"] {
+            background: #ffffff;
+            border-color: #cbd5e1;
+            color: #0f172a;
+        }
+        html[data-theme="light"] input[type="password"]::placeholder {
+            color: #94a3b8;
         }
 
         body {
@@ -231,6 +263,10 @@
 </head>
 <body>
 <div class="grid-bg"></div>
+
+<div style="position: fixed; top: 20px; right: 20px; z-index: 50;">
+    @include('partials.theme-toggle')
+</div>
 
 <div class="login-wrap">
 
