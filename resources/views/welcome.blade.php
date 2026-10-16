@@ -88,7 +88,7 @@
             --white-20: rgba(15, 23, 42, 0.15);
             --white-10: rgba(15, 23, 42, 0.08);
             --white-05: rgba(15, 23, 42, 0.04);
-            --glass-bg: rgba(255, 255, 255, 0.90);
+            --glass-bg: rgba(255, 255, 255, 0.92);
             --glass-border: rgba(15, 23, 42, 0.12);
             --glow-blue: rgba(2, 132, 199, 0.15);
             --glow-purple: rgba(124, 58, 237, 0.15);
@@ -102,12 +102,19 @@
             color: #0f172a;
         }
 
+        /* Navbar Light Mode */
         html[data-theme="light"] .navbar {
             background: rgba(255, 255, 255, 0.92);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border-bottom: 1px solid rgba(15, 23, 42, 0.08);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+        }
+
+        html[data-theme="light"] .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.97) !important;
+            border-bottom: 1px solid rgba(15, 23, 42, 0.12) !important;
+            box-shadow: 0 4px 24px rgba(15, 23, 42, 0.08) !important;
         }
 
         html[data-theme="light"] .nav-logo-text {
@@ -120,6 +127,7 @@
 
         html[data-theme="light"] .nav-links a:hover {
             color: #0284c7;
+            background: rgba(2, 132, 199, 0.08);
         }
 
         html[data-theme="light"] .nav-search {
@@ -128,9 +136,19 @@
             color: #334155;
         }
 
+        html[data-theme="light"] .nav-search-text {
+            color: #64748b !important;
+        }
+
         html[data-theme="light"] .nav-search-kbd {
             background: rgba(15, 23, 42, 0.08);
             color: #475569;
+            border-color: rgba(15, 23, 42, 0.15);
+        }
+
+        html[data-theme="light"] .nav-hamburger {
+            background: rgba(15, 23, 42, 0.04);
+            border-color: rgba(15, 23, 42, 0.12);
         }
 
         html[data-theme="light"] .nav-hamburger span {
@@ -148,23 +166,35 @@
             border-bottom-color: rgba(15, 23, 42, 0.08);
         }
 
+        /* Hero Light Mode */
         html[data-theme="light"] .hero-overlay {
             background: linear-gradient(
                 135deg,
                 rgba(248, 250, 252, 0.88) 0%,
-                rgba(241, 245, 249, 0.78) 40%,
+                rgba(241, 245, 249, 0.82) 40%,
                 rgba(248, 250, 252, 0.92) 100%
             );
         }
 
-        html[data-theme="light"] .hero-title {
+        html[data-theme="light"] .hero-heading-line1 {
+            color: #0f172a;
+        }
+
+        html[data-theme="light"] .hero-title,
+        html[data-theme="light"] .page-title,
+        html[data-theme="light"] .jasa-title,
+        html[data-theme="light"] .tentang-title {
             background: linear-gradient(135deg, #0f172a 0%, #334155 50%, #0284c7 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        html[data-theme="light"] .hero-subtitle {
-            color: #334155;
+        html[data-theme="light"] .hero-subheading,
+        html[data-theme="light"] .page-subtitle,
+        html[data-theme="light"] .jasa-subtitle,
+        html[data-theme="light"] .section-desc,
+        html[data-theme="light"] .tentang-subtitle {
+            color: #475569;
         }
 
         html[data-theme="light"] .hero-badge {
@@ -173,52 +203,258 @@
             color: #0284c7;
         }
 
-        html[data-theme="light"] .jasa-title,
-        html[data-theme="light"] .tentang-title {
-            background: linear-gradient(135deg, #0f172a 0%, #334155 50%, #0284c7 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        html[data-theme="light"] .hero-bottom-fade {
+            background: linear-gradient(to top, #f8fafc 0%, transparent 100%);
         }
 
-        html[data-theme="light"] .jasa-subtitle,
-        html[data-theme="light"] .tentang-subtitle {
-            color: #475569;
+        html[data-theme="light"] .scroll-indicator span {
+            color: #64748b;
         }
 
-        html[data-theme="light"] .service-card,
-        html[data-theme="light"] .article-card,
-        html[data-theme="light"] .flow-card,
-        html[data-theme="light"] .about-card,
-        html[data-theme="light"] .partner-card,
-        html[data-theme="light"] .konsultasi-card {
+        html[data-theme="light"] .scroll-arrow {
+            border-right-color: #64748b;
+            border-bottom-color: #64748b;
+        }
+
+        html[data-theme="light"] .btn-secondary {
             background: #ffffff;
-            border: 1px solid rgba(15, 23, 42, 0.10);
-            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05);
+            color: #0f172a;
+            border-color: rgba(15, 23, 42, 0.15);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
         }
 
-        html[data-theme="light"] .service-card:hover,
-        html[data-theme="light"] .article-card:hover,
-        html[data-theme="light"] .flow-card:hover {
+        html[data-theme="light"] .btn-secondary:hover {
+            background: #f1f5f9;
+            color: #0284c7;
+            border-color: #0284c7;
+        }
+
+        /* Flow Diagram & Cards */
+        html[data-theme="light"] .section-title {
+            color: #0f172a;
+        }
+
+        html[data-theme="light"] .flow-card {
             background: #ffffff;
-            border-color: rgba(2, 132, 199, 0.40);
-            box-shadow: 0 16px 36px rgba(2, 132, 199, 0.12);
+            border-color: rgba(15, 23, 42, 0.12);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
         }
 
-        html[data-theme="light"] .service-title,
-        html[data-theme="light"] .article-title,
+        html[data-theme="light"] .flow-card.ai-center {
+            background: #ffffff;
+            border-color: #0284c7;
+            box-shadow: 0 6px 24px rgba(2, 132, 199, 0.15);
+        }
+
+        html[data-theme="light"] .flow-icon {
+            background: #f1f5f9;
+            border-color: rgba(15, 23, 42, 0.1);
+        }
+
         html[data-theme="light"] .flow-text {
             color: #0f172a;
         }
 
-        html[data-theme="light"] .service-desc,
-        html[data-theme="light"] .article-desc {
+        /* Service Cards */
+        html[data-theme="light"] .service-card {
+            background: #ffffff;
+            border: 1px solid rgba(15, 23, 42, 0.10);
+            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
+        }
+
+        html[data-theme="light"] .service-card:hover {
+            background: #ffffff;
+            border-color: #0284c7;
+            box-shadow: 0 16px 36px rgba(2, 132, 199, 0.12);
+        }
+
+        html[data-theme="light"] .card-title,
+        html[data-theme="light"] .service-title {
+            color: #0f172a;
+        }
+
+        html[data-theme="light"] .card-desc,
+        html[data-theme="light"] .service-desc {
             color: #475569;
         }
 
+        html[data-theme="light"] .card-number {
+            color: rgba(15, 23, 42, 0.05);
+        }
+
+        html[data-theme="light"] .card-icon {
+            background: rgba(2, 132, 199, 0.08);
+            border-color: rgba(2, 132, 199, 0.25);
+            color: #0284c7;
+        }
+
+        html[data-theme="light"] .card-btn {
+            color: #0284c7;
+        }
+
+        /* Section divider */
         html[data-theme="light"] .section-divider-line {
             background: linear-gradient(90deg, transparent, rgba(15, 23, 42, 0.12), transparent);
         }
 
+        /* Profile & About */
+        html[data-theme="light"] .profile-container {
+            background: #ffffff;
+            border: 1px solid rgba(15, 23, 42, 0.12);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        html[data-theme="light"] .profile-name {
+            color: #0f172a;
+        }
+
+        html[data-theme="light"] .profile-desc {
+            color: #475569;
+        }
+
+        html[data-theme="light"] .profile-photo {
+            border-color: #ffffff;
+        }
+
+        html[data-theme="light"] .social-btn {
+            background: #f1f5f9;
+            border-color: rgba(15, 23, 42, 0.12);
+            color: #64748b;
+        }
+
+        html[data-theme="light"] .social-btn:hover {
+            background: rgba(2, 132, 199, 0.12);
+            border-color: #0284c7;
+            color: #0284c7;
+        }
+
+        /* Logo marquee */
+        html[data-theme="light"] .logo-marquee-wrapper::before {
+            background: linear-gradient(to right, #f8fafc, transparent);
+        }
+
+        html[data-theme="light"] .logo-marquee-wrapper::after {
+            background: linear-gradient(to left, #f8fafc, transparent);
+        }
+
+        /* Article Cards (Homepage) */
+        html[data-theme="light"] .article-card {
+            background: #ffffff;
+            border: 1px solid rgba(15, 23, 42, 0.10);
+            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
+        }
+
+        html[data-theme="light"] .article-card:hover {
+            border-color: #0284c7;
+            box-shadow: 0 16px 36px rgba(2, 132, 199, 0.12);
+        }
+
+        html[data-theme="light"] .article-title {
+            color: #0f172a;
+        }
+
+        html[data-theme="light"] .article-desc {
+            color: #475569;
+        }
+
+        html[data-theme="light"] .article-date {
+            color: #64748b;
+        }
+
+        html[data-theme="light"] .article-btn {
+            color: #0284c7;
+        }
+
+        html[data-theme="light"] .article-category {
+            background: rgba(2, 132, 199, 0.08);
+            border-color: rgba(2, 132, 199, 0.25);
+            color: #0284c7;
+        }
+
+        /* Konsultasi Section */
+        html[data-theme="light"] .konsultasi-card {
+            background: #ffffff;
+            border: 1px solid rgba(15, 23, 42, 0.12);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+        }
+
+        html[data-theme="light"] .konsultasi-title {
+            color: #0f172a;
+        }
+
+        html[data-theme="light"] .konsultasi-desc {
+            color: #475569;
+        }
+
+        /* Modals & Forms */
+        html[data-theme="light"] .modal-box {
+            background: #ffffff;
+            border: 1px solid rgba(15, 23, 42, 0.15);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.15);
+            color: #0f172a;
+        }
+
+        html[data-theme="light"] .modal-title,
+        html[data-theme="light"] .modal-title-text {
+            color: #0f172a;
+        }
+
+        html[data-theme="light"] .modal-subtitle,
+        html[data-theme="light"] .modal-desc {
+            color: #475569;
+        }
+
+        html[data-theme="light"] .modal-form .form-label-c {
+            color: #334155;
+        }
+
+        html[data-theme="light"] .modal-form .form-control-c {
+            background: #ffffff;
+            border-color: #cbd5e1;
+            color: #0f172a;
+        }
+
+        html[data-theme="light"] .modal-form .form-control-c:focus {
+            border-color: #0284c7;
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+        }
+
+        html[data-theme="light"] .modal-form .form-control-c::placeholder {
+            color: #94a3b8;
+        }
+
+        html[data-theme="light"] .modal-close {
+            background: #f1f5f9;
+            border-color: rgba(15, 23, 42, 0.12);
+            color: #475569;
+        }
+
+        html[data-theme="light"] .modal-close:hover {
+            background: #e2e8f0;
+            color: #0f172a;
+        }
+
+        html[data-theme="light"] .modal-success h3 {
+            color: #0f172a;
+        }
+
+        html[data-theme="light"] .modal-success p {
+            color: #475569;
+        }
+
+        html[data-theme="light"] .modal-btn {
+            background: #f1f5f9;
+            border-color: rgba(15, 23, 42, 0.12);
+            color: #0f172a;
+        }
+
+        html[data-theme="light"] .modal-btn:hover {
+            background: rgba(2, 132, 199, 0.1);
+            border-color: #0284c7;
+            color: #0284c7;
+        }
+
+        /* Search Modal */
         html[data-theme="light"] .search-modal-container {
             background: #ffffff;
             border: 1px solid rgba(15, 23, 42, 0.15);
@@ -226,62 +462,111 @@
         }
 
         html[data-theme="light"] .search-modal-input {
-            background: #f1f5f9;
+            background: #f8fafc;
             color: #0f172a;
             border-color: rgba(15, 23, 42, 0.15);
         }
 
-        html[data-theme="light"] .search-item {
-            color: #334155;
-            border-bottom-color: rgba(15, 23, 42, 0.06);
+        html[data-theme="light"] .search-modal-input::placeholder {
+            color: #94a3b8;
         }
 
-        html[data-theme="light"] .search-item:hover {
-            background: #f1f5f9;
-            color: #0284c7;
+        html[data-theme="light"] .search-result-item {
+            color: #0f172a !important;
         }
 
-        html[data-theme="light"] .search-item-title {
-            color: #0f172a;
+        html[data-theme="light"] .search-result-item div:first-child {
+            color: #0f172a !important;
         }
 
-        html[data-theme="light"] .form-input,
-        html[data-theme="light"] .form-textarea,
-        html[data-theme="light"] .form-select {
-            background: #ffffff;
-            border: 1px solid rgba(15, 23, 42, 0.20);
-            color: #0f172a;
+        html[data-theme="light"] .search-result-item div:last-child {
+            color: #64748b !important;
         }
 
-        html[data-theme="light"] .form-label {
-            color: #334155;
+        html[data-theme="light"] .search-result-item:hover {
+            background: #f1f5f9 !important;
         }
 
-        html[data-theme="light"] .footer-container {
+        /* Site Footer */
+        html[data-theme="light"] .site-footer {
             background: #f1f5f9;
             border-top: 1px solid rgba(15, 23, 42, 0.10);
             color: #475569;
         }
 
-        html[data-theme="light"] .footer-logo-text {
+        html[data-theme="light"] .footer-brand-name {
             color: #0f172a;
         }
 
-        html[data-theme="light"] .footer-desc {
-            color: #64748b;
-        }
-
-        html[data-theme="light"] .footer-link {
+        html[data-theme="light"] .footer-brand-desc {
             color: #475569;
         }
 
-        html[data-theme="light"] .footer-link:hover {
+        html[data-theme="light"] .footer-col-title {
+            color: #0f172a;
+        }
+
+        html[data-theme="light"] .footer-nav-list a {
+            color: #475569;
+        }
+
+        html[data-theme="light"] .footer-nav-list a:hover {
+            color: #0284c7;
+        }
+
+        html[data-theme="light"] .footer-contact-item {
+            color: #475569;
+        }
+
+        html[data-theme="light"] .footer-contact-item a {
+            color: #475569;
+        }
+
+        html[data-theme="light"] .footer-contact-item a:hover {
+            color: #0284c7;
+        }
+
+        html[data-theme="light"] .footer-social-link {
+            background: #ffffff;
+            border-color: rgba(15, 23, 42, 0.12);
+            color: #64748b;
+        }
+
+        html[data-theme="light"] .footer-social-link:hover {
+            background: rgba(2, 132, 199, 0.1);
+            border-color: #0284c7;
             color: #0284c7;
         }
 
         html[data-theme="light"] .footer-bottom {
-            border-top-color: rgba(15, 23, 42, 0.08);
+            border-top-color: rgba(15, 23, 42, 0.10);
+        }
+
+        html[data-theme="light"] .footer-copyright {
             color: #64748b;
+        }
+
+        html[data-theme="light"] .footer-bottom-links a {
+            color: #64748b;
+        }
+
+        html[data-theme="light"] .footer-bottom-links a:hover {
+            color: #0284c7;
+        }
+
+        /* Generic light mode inline text safeguards */
+        html[data-theme="light"] p[style*="color:rgba(255,255,255"],
+        html[data-theme="light"] p[style*="color: rgba(255, 255, 255"],
+        html[data-theme="light"] span[style*="color:rgba(255,255,255"],
+        html[data-theme="light"] span[style*="color: rgba(255, 255, 255"] {
+            color: #475569 !important;
+        }
+
+        html[data-theme="light"] h1[style*="color: #fff"],
+        html[data-theme="light"] h2[style*="color: #fff"],
+        html[data-theme="light"] h3[style*="color: #fff"],
+        html[data-theme="light"] h4[style*="color: #fff"] {
+            color: #0f172a !important;
         }
 
         html {
@@ -2355,7 +2640,7 @@
             TENTANG KAMI
         </div>
         <h2 style="font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(32px,4.5vw,56px);font-weight:800;line-height:1.1;letter-spacing:-1.5px;background:linear-gradient(135deg,#ffffff 0%,#a78bfa 45%,#00d4ff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:20px;">{{ $aboutJudul }}</h2>
-        <p style="font-size:clamp(15px,1.8vw,18px);color:rgba(255,255,255,0.65);line-height:1.65;max-width:620px;">{{ $aboutDeskripsi }}</p>
+        <p style="font-size:clamp(15px,1.8vw,18px);color:var(--white-80);line-height:1.65;max-width:620px;">{{ $aboutDeskripsi }}</p>
     </div>
 
     <!-- PROFILE -->
@@ -2433,7 +2718,7 @@
             <h2 style="font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(28px,3.5vw,46px);font-weight:800;letter-spacing:-1px;line-height:1.15;background:linear-gradient(135deg,#ffffff 0%,#a78bfa 45%,#00d4ff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:16px;">
                 Dipercaya oleh Perusahaan Terkemuka
             </h2>
-            <p style="font-size:clamp(15px,1.8vw,18px);color:rgba(255,255,255,0.60);line-height:1.65;max-width:560px;">
+            <p style="font-size:clamp(15px,1.8vw,18px);color:var(--white-80);line-height:1.65;max-width:560px;">
                 Kami berkolaborasi dengan berbagai perusahaan dan institusi dalam membangun solusi berbasis AI yang berdampak nyata.
             </p>
         </div>
@@ -2572,7 +2857,7 @@
             Wawasan Bisnis
         </div>
         <h2 style="font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(32px,4vw,48px);font-weight:800;letter-spacing:-1px;line-height:1.2;margin-bottom:24px;">Value &amp; Perkembangan</h2>
-        <p style="font-size:clamp(16px,2vw,19px);color:rgba(255,255,255,0.65);line-height:1.6;">Value seputar AI, perusahaan, dan perkembangan teknologi untuk membantu bisnis berkembang.</p>
+        <p style="font-size:clamp(16px,2vw,19px);color:var(--white-80);line-height:1.6;">Value seputar AI, perusahaan, dan perkembangan teknologi untuk membantu bisnis berkembang.</p>
     </div>
 
     <div class="wawasan-grid">
@@ -3488,13 +3773,7 @@
     const navbar = document.querySelector('.navbar');
     if (navbar) {
         window.addEventListener('scroll', function() {
-            if (window.scrollY > 30) {
-                navbar.style.background = 'rgba(2, 8, 24, 0.88)';
-                navbar.style.borderBottom = '1px solid rgba(0, 168, 255, 0.18)';
-            } else {
-                navbar.style.background = 'linear-gradient(to bottom, rgba(2, 8, 24, 0.6) 0%, rgba(2, 8, 24, 0.0) 100%)';
-                navbar.style.borderBottom = 'none';
-            }
+            navbar.classList.toggle('scrolled', window.scrollY > 30);
         }, { passive: true });
     }
 

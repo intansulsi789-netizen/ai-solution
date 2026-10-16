@@ -16,8 +16,8 @@
     table { width: 100%; border-collapse: collapse; text-align: left; }
     th, td { padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,0.05); vertical-align: middle; }
     th { font-size: 12px; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
-    td { font-size: 13.5px; color: rgba(255,255,255,0.8); }
-    tr.unread td { color: #fff; font-weight: 600; background: rgba(0,212,255,0.03); }
+    td { font-size: 13.5px; color: var(--text); }
+    tr.unread td { color: var(--text); font-weight: 600; background: rgba(0,212,255,0.03); }
     tr:last-child td { border-bottom: none; }
     .action-btn { color: var(--cyan); text-decoration: none; font-weight: 600; font-size: 13px; margin-right:12px; }
     .action-btn.del { color: #fca5a5; background: none; border: none; font-weight: 600; font-size: 13px; cursor: pointer; font-family: 'Inter', sans-serif; padding: 0; }

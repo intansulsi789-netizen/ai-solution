@@ -17,7 +17,7 @@
     .form-label { display:block;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:8px;letter-spacing:0.5px;text-transform:uppercase; }
     .form-control {
         width:100%; background:rgba(0,0,0,0.25); border:1px solid rgba(255,255,255,0.1);
-        color:#fff; padding:12px 16px; border-radius:10px; font-family:'Inter',sans-serif;
+        color:var(--text); padding:12px 16px; border-radius:10px; font-family:'Inter',sans-serif;
         font-size:14px; transition:border-color 0.2s, box-shadow 0.2s;
     }
     .form-control:focus { outline:none; border-color:var(--cyan); box-shadow:0 0 0 3px rgba(0,212,255,0.08); }
@@ -28,11 +28,11 @@
     .upload-zone p { font-size:13px;color:var(--muted);margin:0; }
     .preview-box { margin-top:16px;padding:16px;background:rgba(0,0,0,0.25);border:1px solid var(--border);border-radius:10px;display:none;align-items:center;gap:16px; }
     .preview-box img { max-height:60px;max-width:160px;object-fit:contain;border-radius:6px;filter:brightness(0) invert(1);opacity:0.85; }
-    .preview-box .preview-name { font-size:13px;color:rgba(255,255,255,0.7); }
+    .preview-box .preview-name { font-size:13px;color:var(--text); }
     .btn-submit { background:linear-gradient(135deg,var(--cyan),var(--purple));color:#fff;padding:13px 32px;border-radius:10px;border:none;font-weight:700;font-size:14px;cursor:pointer;transition:opacity 0.2s, transform 0.2s; }
     .btn-submit:hover { opacity:0.95; transform:translateY(-1px); }
-    .btn-cancel { color:rgba(255,255,255,0.6);padding:13px 24px;font-weight:600;font-size:14px;text-decoration:none;border:1px solid rgba(255,255,255,0.1);border-radius:10px;margin-right:12px;display:inline-block;transition:all 0.2s; }
-    .btn-cancel:hover { background:rgba(255,255,255,0.05);color:#fff; }
+    .btn-cancel { color:var(--muted);padding:13px 24px;font-weight:600;font-size:14px;text-decoration:none;border:1px solid var(--border);border-radius:10px;margin-right:12px;display:inline-block;transition:all 0.2s; }
+    .btn-cancel:hover { background:rgba(0,212,255,0.08);color:var(--text); }
     .check-wrap { display:flex;align-items:center;gap:12px;padding:12px 16px;background:rgba(0,0,0,0.15);border:1px solid rgba(255,255,255,0.08);border-radius:10px;height:46px; }
     .check-wrap input[type=checkbox] { width:18px;height:18px;cursor:pointer;accent-color:var(--cyan); }
     .error-box { background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);color:#fca5a5;padding:16px;border-radius:10px;margin-bottom:24px;font-size:14px; }
@@ -76,7 +76,7 @@
                     <label class="form-label">Status</label>
                     <div class="check-wrap">
                         <input type="checkbox" name="is_active" id="is_active" value="1" {{ old('is_active', true) ? 'checked' : '' }}>
-                        <label for="is_active" style="font-size:13px;font-weight:500;cursor:pointer;color:#fff;margin:0;">Aktif (di Frontend)</label>
+                        <label for="is_active" style="font-size:13px;font-weight:500;cursor:pointer;color:var(--text);margin:0;">Aktif (di Frontend)</label>
                     </div>
                 </div>
             </div>

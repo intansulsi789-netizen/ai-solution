@@ -34,7 +34,7 @@
             --purple-neon: #7c3aed;
             --purple-light: #6d28d9;
             --text-main: #0f172a;
-            --text-muted: #334155;
+            --text-muted: #475569;
             --text-dim: #64748b;
             --glass-bg: #ffffff;
             --glass-border: rgba(15, 23, 42, 0.12);
@@ -44,20 +44,21 @@
             background-color: #f8fafc;
             color: #0f172a;
             background-image: 
-                radial-gradient(circle at 15% 50%, rgba(2, 132, 199, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 85% 30%, rgba(124, 58, 237, 0.05) 0%, transparent 50%);
+                radial-gradient(circle at 15% 50%, rgba(2, 132, 199, 0.04) 0%, transparent 50%),
+                radial-gradient(circle at 85% 30%, rgba(124, 58, 237, 0.04) 0%, transparent 50%);
         }
 
         html[data-theme="light"] .btn-back {
             background: #ffffff;
-            border-color: rgba(15, 23, 42, 0.12);
+            border-color: rgba(15, 23, 42, 0.15);
             color: #334155;
             box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         }
 
         html[data-theme="light"] .btn-back:hover {
             background: #f1f5f9;
-            color: #0f172a;
+            color: #0284c7;
+            border-color: #0284c7;
         }
 
         html[data-theme="light"] .article-hero-title {
@@ -66,6 +67,15 @@
 
         html[data-theme="light"] .article-hero-summary {
             color: #475569;
+        }
+
+        html[data-theme="light"] .article-meta-row,
+        html[data-theme="light"] .article-meta-text {
+            color: #64748b;
+        }
+
+        html[data-theme="light"] .article-meta-divider {
+            background: rgba(15, 23, 42, 0.2);
         }
 
         html[data-theme="light"] .article-category-badge {
@@ -78,20 +88,31 @@
             color: #334155;
         }
 
+        html[data-theme="light"] .article-body h1,
+        html[data-theme="light"] .article-body h2,
         html[data-theme="light"] .article-body h3,
+        html[data-theme="light"] .article-body h4,
         html[data-theme="light"] .article-body strong {
             color: #0f172a;
         }
 
-        html[data-theme="light"] .article-body ul li {
+        html[data-theme="light"] .article-body p,
+        html[data-theme="light"] .article-body ul li,
+        html[data-theme="light"] .article-body ol li {
             color: #334155;
+        }
+
+        html[data-theme="light"] .article-body blockquote {
+            background: #f8fafc;
+            border-left-color: #0284c7;
+            color: #1e293b;
         }
 
         html[data-theme="light"] .sidebar-card,
         html[data-theme="light"] .related-card {
             background: #ffffff;
             border: 1px solid rgba(15, 23, 42, 0.12);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
         }
 
         html[data-theme="light"] .sidebar-title,
@@ -104,6 +125,12 @@
             color: #0f172a;
         }
 
+        html[data-theme="light"] .sidebar-related-cat,
+        html[data-theme="light"] .related-card-cat,
+        html[data-theme="light"] .related-card-date {
+            color: #64748b;
+        }
+
         html[data-theme="light"] .toc-list a {
             color: #475569;
         }
@@ -114,8 +141,8 @@
         }
 
         html[data-theme="light"] .highlight-box {
-            background: rgba(2, 132, 199, 0.05);
-            border-color: rgba(2, 132, 199, 0.25);
+            background: rgba(2, 132, 199, 0.06);
+            border-color: rgba(2, 132, 199, 0.30);
         }
 
         html[data-theme="light"] .highlight-box-text {
@@ -123,8 +150,9 @@
         }
 
         html[data-theme="light"] .article-source-container {
-            background: rgba(2, 132, 199, 0.05) !important;
-            border-color: rgba(2, 132, 199, 0.25) !important;
+            background: #ffffff !important;
+            border-color: rgba(15, 23, 42, 0.12) !important;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
         }
 
         html[data-theme="light"] .article-source-container div {
@@ -132,8 +160,9 @@
         }
 
         html[data-theme="light"] .bottom-cta-box {
-            background: linear-gradient(135deg, rgba(2, 132, 199, 0.06), rgba(124, 58, 237, 0.06));
-            border-color: rgba(2, 132, 199, 0.20);
+            background: #ffffff;
+            border: 1px solid rgba(15, 23, 42, 0.12);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
         }
 
         html[data-theme="light"] .bottom-cta-title {
@@ -145,7 +174,7 @@
         }
 
         html[data-theme="light"] .bottom-cta-btn {
-            background: #0f172a;
+            background: linear-gradient(135deg, #0284c7 0%, #7c3aed 100%);
             color: #ffffff;
         }
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -735,7 +764,7 @@
                     <span style="font-size: 18px;">📚</span>
                     <div>
                         <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--cyan-neon); font-weight: 700;">Sumber Referensi</div>
-                        <div style="font-size: 14px; font-weight: 600; color: #fff;">{{ $article['source_name'] }}</div>
+                        <div style="font-size: 14px; font-weight: 600; color: var(--text-main);">{{ $article['source_name'] }}</div>
                     </div>
                 </div>
                 @if(!empty($article['source_url']))

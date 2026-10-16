@@ -24,7 +24,7 @@
         width: 100%;
         background: rgba(0,0,0,0.25);
         border: 1px solid rgba(255,255,255,0.1);
-        color: #fff;
+        color: var(--text);
         padding: 12px 16px;
         border-radius: 10px;
         font-family: 'Inter', sans-serif;
@@ -39,7 +39,7 @@
     }
     .btn-submit:hover { opacity: 0.95; transform: translateY(-1px); }
     .btn-cancel {
-        background: transparent; color: rgba(255,255,255,0.6); padding: 12px 24px; font-weight: 600; font-size: 14px; cursor: pointer; text-decoration: none; display: inline-block; border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; margin-right: 12px;
+        background: transparent; color: var(--muted); padding: 12px 24px; font-weight: 600; font-size: 14px; cursor: pointer; text-decoration: none; display: inline-block; border: 1px solid var(--border); border-radius: 10px; margin-right: 12px;
     }
     .checkbox-wrap { display: flex; align-items: center; gap: 10px; }
     .checkbox-wrap input { width: 18px; height: 18px; cursor: pointer; }
@@ -113,9 +113,9 @@
                     @foreach($solutions as $idx => $sol)
                     @if($idx < 4)
                     <div class="sol-item" style="background: rgba(0,0,0,0.25); padding: 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05);">
-                        <label class="form-label" style="color: #fff;">Item {{ $idx + 1 }} - Judul</label>
+                        <label class="form-label">Item {{ $idx + 1 }} - Judul</label>
                         <input type="text" class="form-control sol-title" value="{{ $sol['title'] ?? '' }}" style="margin-bottom: 12px;" placeholder="Contoh: Otomatisasi 24/7">
-                        <label class="form-label" style="color: #fff;">Item {{ $idx + 1 }} - Deskripsi</label>
+                        <label class="form-label">Item {{ $idx + 1 }} - Deskripsi</label>
                         <textarea class="form-control sol-desc" rows="2" placeholder="Deskripsi solusi...">{{ $sol['desc'] ?? '' }}</textarea>
                     </div>
                     @endif
@@ -126,7 +126,7 @@
                 <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
                     @foreach($benefits as $idx => $ben)
                     <div style="display: flex; align-items: center;">
-                        <span style="background: rgba(255,255,255,0.1); color: #fff; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 8px; font-weight: 600; margin-right: 12px; font-size: 13px;">{{ $idx + 1 }}</span>
+                        <span style="background: rgba(125,125,125,0.15); color: var(--text); width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 8px; font-weight: 600; margin-right: 12px; font-size: 13px;">{{ $idx + 1 }}</span>
                         <input type="text" class="form-control ben-item" value="{{ $ben }}" placeholder="Contoh: Menghemat biaya operasional">
                     </div>
                     @endforeach

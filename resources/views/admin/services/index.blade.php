@@ -23,7 +23,7 @@
     table { width: 100%; border-collapse: collapse; text-align: left; }
     th, td { padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,0.05); }
     th { font-size: 13px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
-    td { font-size: 14px; color: rgba(255,255,255,0.8); }
+    td { font-size: 14px; color: var(--text); }
     .action-links a { color: var(--cyan); text-decoration: none; margin-right: 12px; font-weight: 600; font-size: 13px; }
     .action-links a.text-danger { color: #fca5a5; }
     .status-badge { padding: 4px 10px; border-radius: 100px; font-size: 11px; font-weight: 700; }
@@ -65,8 +65,8 @@
                 @foreach($services as $s)
                 <tr>
                     <td>{{ $s->nomor }}</td>
-                    <td style="font-weight: 600; color: #fff;">{{ $s->nama_layanan }}</td>
-                    <td><span style="background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 6px; font-size: 12px;">{{ $s->slug }}</span></td>
+                    <td style="font-weight: 600; color: var(--text);">{{ $s->nama_layanan }}</td>
+                    <td><span style="background: rgba(125,125,125,0.12); color: var(--text); padding: 4px 8px; border-radius: 6px; font-size: 12px;">{{ $s->slug }}</span></td>
                     <td>
                         @if($s->is_active)
                             <span class="status-badge status-active">Aktif</span>

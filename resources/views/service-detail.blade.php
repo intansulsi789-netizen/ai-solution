@@ -33,7 +33,7 @@
         html[data-theme="light"] {
             --bg-color: #f8fafc;
             --text-main: #0f172a;
-            --text-muted: #334155;
+            --text-muted: #475569;
             --cyan-neon: #0284c7;
             --purple-neon: #7c3aed;
         }
@@ -42,20 +42,21 @@
             background-color: #f8fafc;
             color: #0f172a;
             background-image: 
-                radial-gradient(circle at 15% 50%, rgba(2, 132, 199, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 85% 30%, rgba(124, 58, 237, 0.05) 0%, transparent 50%);
+                radial-gradient(circle at 15% 50%, rgba(2, 132, 199, 0.04) 0%, transparent 50%),
+                radial-gradient(circle at 85% 30%, rgba(124, 58, 237, 0.04) 0%, transparent 50%);
         }
 
         html[data-theme="light"] .btn-back {
             background: #ffffff;
-            border-color: rgba(15, 23, 42, 0.12);
+            border-color: rgba(15, 23, 42, 0.15);
             color: #334155;
             box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         }
 
         html[data-theme="light"] .btn-back:hover {
             background: #f1f5f9;
-            color: #0f172a;
+            color: #0284c7;
+            border-color: #0284c7;
         }
 
         html[data-theme="light"] .detail-title {
@@ -72,45 +73,85 @@
             color: #0284c7;
         }
 
-        html[data-theme="light"] .solution-card,
-        html[data-theme="light"] .benefit-card {
+        html[data-theme="light"] .solutions-title {
+            color: #0f172a;
+        }
+
+        html[data-theme="light"] .solutions-subtitle {
+            color: #475569;
+        }
+
+        html[data-theme="light"] .solution-card {
             background: #ffffff;
-            border: 1px solid rgba(15, 23, 42, 0.10);
-            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05);
+            border: 1px solid rgba(15, 23, 42, 0.12);
+            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
         }
 
-        html[data-theme="light"] .solution-card:hover,
-        html[data-theme="light"] .benefit-card:hover {
-            border-color: rgba(2, 132, 199, 0.40);
-            box-shadow: 0 12px 32px rgba(2, 132, 199, 0.10);
+        html[data-theme="light"] .solution-card:hover {
+            border-color: #0284c7;
+            box-shadow: 0 12px 32px rgba(2, 132, 199, 0.12);
         }
 
-        html[data-theme="light"] .solution-title,
-        html[data-theme="light"] .benefit-title,
-        html[data-theme="light"] .section-title {
+        html[data-theme="light"] .solution-card-title {
             color: #0f172a;
         }
 
-        html[data-theme="light"] .solution-desc,
-        html[data-theme="light"] .benefit-desc {
+        html[data-theme="light"] .solution-card-desc {
             color: #475569;
         }
 
-        html[data-theme="light"] .bottom-cta-box {
-            background: linear-gradient(135deg, rgba(2, 132, 199, 0.06), rgba(124, 58, 237, 0.06));
-            border-color: rgba(2, 132, 199, 0.20);
+        html[data-theme="light"] .solution-icon {
+            background: rgba(2, 132, 199, 0.08);
+            border-color: rgba(2, 132, 199, 0.2);
+            color: #0284c7;
         }
 
-        html[data-theme="light"] .bottom-cta-title {
+        html[data-theme="light"] .solution-number {
+            background: linear-gradient(135deg, rgba(2, 132, 199, 0.35), rgba(124, 58, 237, 0.25));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        html[data-theme="light"] .content-card {
+            background: #ffffff;
+            border: 1px solid rgba(15, 23, 42, 0.12);
+            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
+        }
+
+        html[data-theme="light"] .content-section-title {
             color: #0f172a;
         }
 
-        html[data-theme="light"] .bottom-cta-desc {
+        html[data-theme="light"] .benefit-item {
+            background: #f8fafc;
+            border-color: rgba(15, 23, 42, 0.08);
+        }
+
+        html[data-theme="light"] .benefit-item:hover {
+            border-color: #0284c7;
+            background: rgba(2, 132, 199, 0.04);
+        }
+
+        html[data-theme="light"] .benefit-text {
+            color: #334155;
+        }
+
+        html[data-theme="light"] .cta-box {
+            background: #ffffff;
+            border: 1px solid rgba(15, 23, 42, 0.12);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+        }
+
+        html[data-theme="light"] .cta-title {
+            color: #0f172a;
+        }
+
+        html[data-theme="light"] .cta-desc {
             color: #475569;
         }
 
-        html[data-theme="light"] .bottom-cta-btn {
-            background: #0f172a;
+        html[data-theme="light"] .btn-cta {
+            background: linear-gradient(135deg, #0284c7 0%, #7c3aed 100%);
             color: #ffffff;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }

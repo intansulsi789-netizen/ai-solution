@@ -25,7 +25,7 @@
     table { width: 100%; border-collapse: collapse; text-align: left; }
     th, td { padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,0.05); vertical-align: middle; }
     th { font-size: 12px; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
-    td { font-size: 13.5px; color: rgba(255,255,255,0.8); }
+    td { font-size: 13.5px; color: var(--text); }
     tr:last-child td { border-bottom: none; }
     .action-btn { color: var(--cyan); text-decoration: none; font-weight: 600; font-size: 13px; }
     .action-btn.del { color: #fca5a5; background: none; border: none; font-weight: 600; font-size: 13px; cursor: pointer; font-family: 'Inter', sans-serif; padding: 0; }
@@ -92,7 +92,7 @@
                         @endif
                     </td>
                     <td>
-                        <div style="font-weight:600;color:#fff;margin-bottom:2px;">{{ Str::limit($a->judul, 55) }}</div>
+                        <div style="font-weight:600;color:var(--text);margin-bottom:2px;">{{ Str::limit($a->judul, 55) }}</div>
                         <div style="font-size:12px;color:var(--muted);margin-bottom:2px;">/wawasan/{{ $a->slug }}</div>
                         @if($a->source_name)
                             <div class="source-tag">
@@ -113,7 +113,7 @@
                             </div>
                             <div style="font-size:11px;color:var(--muted);">Otomatis terbit saat jadwal tercapai</div>
                         @elseif($a->status === 'published')
-                            <div style="font-size:12.5px;color:rgba(255,255,255,0.9);">
+                            <div style="font-size:12.5px;color:var(--text);">
                                 {{ $a->published_at ? $a->published_at->timezone('Asia/Jakarta')->translatedFormat('d M Y') : ($a->tanggal ?: '-') }}
                             </div>
                             @if($a->published_at)

@@ -159,10 +159,10 @@
                     {!! $act['icon'] !!}
                 </div>
                 <div style="flex: 1; min-width: 0; text-align: left;">
-                    <div style="font-weight: 600; font-size: 13px; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                    <div style="font-weight: 600; font-size: 13px; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                         {{ $act['title'] }}
                     </div>
-                    <div style="font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 3px;">
+                    <div style="font-size: 11px; color: var(--muted); margin-top: 3px;">
                         {{ $act['type'] }} &bull; {{ $act['time'] ? $act['time']->diffForHumans() : '-' }}
                     </div>
                 </div>

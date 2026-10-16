@@ -12,7 +12,7 @@
     .form-label { display:block;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:8px;letter-spacing:0.5px;text-transform:uppercase; }
     .form-control {
         width:100%; background:rgba(0,0,0,0.25); border:1px solid rgba(255,255,255,0.1);
-        color:#fff; padding:12px 16px; border-radius:10px; font-family:'Inter',sans-serif;
+        color:var(--text); padding:12px 16px; border-radius:10px; font-family:'Inter',sans-serif;
         font-size:14px; transition:border-color 0.2s, box-shadow 0.2s; resize:vertical;
     }
     .form-control:focus { outline:none; border-color:var(--cyan); box-shadow:0 0 0 3px rgba(0,212,255,0.08); }
@@ -67,8 +67,8 @@
 
 <div class="form-wrap" style="margin-top: 24px;">
     <div class="section-title">File SEO Otomatis</div>
-    <p style="font-size:14px;color:rgba(255,255,255,0.7);margin-bottom:12px;">Sistem telah menghasilkan file SEO dasar secara otomatis:</p>
-    <ul style="list-style-type:disc;margin-left:20px;font-size:14px;color:rgba(255,255,255,0.8);">
+    <p style="font-size:14px;color:var(--muted);margin-bottom:12px;">Sistem telah menghasilkan file SEO dasar secara otomatis:</p>
+    <ul style="list-style-type:disc;margin-left:20px;font-size:14px;color:var(--text);">
         <li style="margin-bottom:8px;"><a href="/sitemap.xml" target="_blank" style="color:var(--cyan);text-decoration:none;font-weight:600;">Sitemap (sitemap.xml)</a> &mdash; Berisi struktur halaman untuk diindeks oleh Google.</li>
         <li><a href="/robots.txt" target="_blank" style="color:var(--cyan);text-decoration:none;font-weight:600;">Robots.txt (/robots.txt)</a> &mdash; Mengatur instruksi crawling dan memblokir akses bot ke area admin.</li>
     </ul>

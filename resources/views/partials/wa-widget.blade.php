@@ -32,6 +32,50 @@
     --wa-muted: rgba(200, 215, 255, 0.55);
 }
 
+html[data-theme="light"] #wa-widget {
+    --wa-bg: #ffffff;
+    --wa-surface: #f8fafc;
+    --wa-border: rgba(15, 23, 42, 0.12);
+    --wa-border-h: #0284c7;
+    --wa-text: #0f172a;
+    --wa-muted: #64748b;
+}
+
+html[data-theme="light"] .wa-header {
+    background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%);
+    border-bottom-color: rgba(2, 132, 199, 0.2);
+}
+
+html[data-theme="light"] .wa-header-name {
+    color: #ffffff;
+}
+
+html[data-theme="light"] .wa-header-status {
+    color: #dcfce7;
+}
+
+html[data-theme="light"] .wa-header-status::before {
+    background: #86efac;
+    box-shadow: 0 0 5px #86efac;
+}
+
+html[data-theme="light"] .wa-option-btn {
+    background: #f8fafc;
+    border-color: rgba(15, 23, 42, 0.10);
+    color: #334155;
+}
+
+html[data-theme="light"] .wa-option-btn:hover {
+    background: rgba(2, 132, 199, 0.08);
+    border-color: #0284c7;
+    color: #0284c7;
+}
+
+html[data-theme="light"] .wa-footer {
+    border-top-color: rgba(15, 23, 42, 0.08);
+    color: #64748b;
+}
+
 /* === Floating Button === */
 #wa-toggle-btn {
     width: 58px;

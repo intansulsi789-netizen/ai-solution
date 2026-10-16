@@ -133,26 +133,217 @@
         html[data-theme="light"] .form-wrap,
         html[data-theme="light"] .form-container,
         html[data-theme="light"] .stat-card,
-        html[data-theme="light"] .info-card {
-            background: #ffffff;
-            border-color: rgba(15, 23, 42, 0.12);
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
-            color: #0f172a;
+        html[data-theme="light"] .info-card,
+        html[data-theme="light"] .detail-card,
+        html[data-theme="light"] .profile-card {
+            background: #ffffff !important;
+            border-color: rgba(15, 23, 42, 0.12) !important;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04) !important;
+            color: #0f172a !important;
+        }
+
+        html[data-theme="light"] .page-title {
+            color: #0f172a !important;
+        }
+
+        html[data-theme="light"] .page-desc {
+            color: #64748b !important;
+        }
+
+        html[data-theme="light"] .table-header h3 {
+            color: #0f172a !important;
         }
 
         html[data-theme="light"] table th {
-            color: #64748b;
+            color: #64748b !important;
+            border-bottom-color: rgba(15, 23, 42, 0.08) !important;
         }
 
         html[data-theme="light"] table td {
-            color: #1e293b;
-            border-bottom-color: rgba(15, 23, 42, 0.06);
+            color: #1e293b !important;
+            border-bottom-color: rgba(15, 23, 42, 0.06) !important;
         }
 
+        html[data-theme="light"] tr.unread td {
+            color: #0f172a !important;
+            background: rgba(2, 132, 199, 0.05) !important;
+        }
+
+        html[data-theme="light"] .stat-value {
+            color: #0f172a !important;
+        }
+
+        html[data-theme="light"] .stat-label {
+            color: #64748b !important;
+        }
+
+        html[data-theme="light"] .info-card-title {
+            color: #0f172a !important;
+        }
+
+        html[data-theme="light"] .menu-link-item {
+            background: #f8fafc !important;
+            border-color: rgba(15, 23, 42, 0.08) !important;
+            color: #334155 !important;
+        }
+
+        html[data-theme="light"] .menu-link-item:hover {
+            background: rgba(2, 132, 199, 0.08) !important;
+            border-color: rgba(2, 132, 199, 0.25) !important;
+            color: #0284c7 !important;
+        }
+
+        html[data-theme="light"] .activity-placeholder {
+            color: #94a3b8 !important;
+        }
+
+        html[data-theme="light"] .activity-placeholder p {
+            color: #64748b !important;
+        }
+
+        /* Partner cards */
+        html[data-theme="light"] .partner-card {
+            background: #ffffff !important;
+            border-color: rgba(15, 23, 42, 0.12) !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04) !important;
+            color: #0f172a !important;
+        }
+
+        html[data-theme="light"] .partner-card:hover {
+            border-color: rgba(2, 132, 199, 0.35) !important;
+            box-shadow: 0 8px 24px rgba(2, 132, 199, 0.10) !important;
+        }
+
+        html[data-theme="light"] .partner-logo-wrap {
+            background: #f8fafc !important;
+        }
+
+        html[data-theme="light"] .partner-logo-wrap img {
+            filter: none !important;
+            opacity: 0.9 !important;
+        }
+
+        html[data-theme="light"] .partner-name {
+            color: #0f172a !important;
+        }
+
+        html[data-theme="light"] .card-urutan {
+            background: #f1f5f9 !important;
+            color: #475569 !important;
+            border: 1px solid rgba(15, 23, 42, 0.08) !important;
+        }
+
+        html[data-theme="light"] .drag-handle span {
+            background: #94a3b8 !important;
+        }
+
+        /* Detail consultation */
+        html[data-theme="light"] .meta-grid {
+            border-bottom-color: rgba(15, 23, 42, 0.08) !important;
+        }
+
+        html[data-theme="light"] .meta-label {
+            color: #64748b !important;
+        }
+
+        html[data-theme="light"] .meta-value {
+            color: #0f172a !important;
+        }
+
+        html[data-theme="light"] .msg-box {
+            background: #f8fafc !important;
+            border-color: rgba(15, 23, 42, 0.12) !important;
+            color: #1e293b !important;
+        }
+
+        html[data-theme="light"] .btn-back {
+            color: #475569 !important;
+            border-color: rgba(15, 23, 42, 0.18) !important;
+        }
+
+        html[data-theme="light"] .btn-back:hover {
+            background: #f1f5f9 !important;
+            color: #0f172a !important;
+        }
+
+        /* Profile page */
+        html[data-theme="light"] .profile-name {
+            color: #0f172a !important;
+        }
+
+        html[data-theme="light"] .profile-email {
+            color: #64748b !important;
+        }
+
+        html[data-theme="light"] .cms-link-box {
+            background: rgba(124, 58, 237, 0.06) !important;
+            border-color: rgba(124, 58, 237, 0.18) !important;
+            color: #475569 !important;
+        }
+
+        html[data-theme="light"] .cms-link-box strong {
+            color: #0f172a !important;
+        }
+
+        html[data-theme="light"] .section-label {
+            border-bottom-color: rgba(15, 23, 42, 0.08) !important;
+        }
+
+        /* Badges */
+        html[data-theme="light"] .status-active,
+        html[data-theme="light"] .badge-active,
+        html[data-theme="light"] .status-published {
+            background: rgba(16, 185, 129, 0.12) !important;
+            color: #047857 !important;
+            border-color: rgba(16, 185, 129, 0.30) !important;
+        }
+
+        html[data-theme="light"] .status-inactive,
+        html[data-theme="light"] .badge-inactive {
+            background: rgba(239, 68, 68, 0.10) !important;
+            color: #dc2626 !important;
+            border-color: rgba(239, 68, 68, 0.28) !important;
+        }
+
+        html[data-theme="light"] .status-draft {
+            background: rgba(217, 119, 6, 0.12) !important;
+            color: #b45309 !important;
+            border-color: rgba(217, 119, 6, 0.28) !important;
+        }
+
+        html[data-theme="light"] .status-scheduled {
+            background: rgba(2, 132, 199, 0.12) !important;
+            color: #0284c7 !important;
+            border-color: rgba(2, 132, 199, 0.28) !important;
+        }
+
+        html[data-theme="light"] .status-read {
+            background: rgba(100, 116, 139, 0.12) !important;
+            color: #475569 !important;
+            border-color: rgba(100, 116, 139, 0.28) !important;
+        }
+
+        html[data-theme="light"] .status-unread {
+            background: rgba(2, 132, 199, 0.12) !important;
+            color: #0284c7 !important;
+            border-color: rgba(2, 132, 199, 0.28) !important;
+        }
+
+        html[data-theme="light"] .cat-pill {
+            background: rgba(124, 58, 237, 0.10) !important;
+            color: #6d28d9 !important;
+            border-color: rgba(124, 58, 237, 0.25) !important;
+        }
+
+        /* Forms */
         html[data-theme="light"] .form-control {
             background: #ffffff !important;
             border-color: rgba(15, 23, 42, 0.20) !important;
             color: #0f172a !important;
+        }
+
+        html[data-theme="light"] .form-control::placeholder {
+            color: #94a3b8 !important;
         }
 
         html[data-theme="light"] .form-control:focus {
@@ -161,73 +352,145 @@
         }
 
         html[data-theme="light"] .form-label {
-            color: #475569;
+            color: #475569 !important;
+        }
+
+        html[data-theme="light"] .form-hint {
+            color: #64748b !important;
         }
 
         html[data-theme="light"] .status-card {
-            background: #f8fafc;
-            border-color: rgba(15, 23, 42, 0.12);
+            background: #f8fafc !important;
+            border-color: rgba(15, 23, 42, 0.12) !important;
         }
 
         html[data-theme="light"] .status-card.selected {
-            background: rgba(2, 132, 199, 0.08);
-            border-color: #0284c7;
+            background: rgba(2, 132, 199, 0.08) !important;
+            border-color: #0284c7 !important;
         }
 
         html[data-theme="light"] .status-card-title {
-            color: #0f172a;
+            color: #0f172a !important;
+        }
+
+        html[data-theme="light"] .status-card-desc {
+            color: #64748b !important;
         }
 
         html[data-theme="light"] .tab-pill {
-            background: #f1f5f9;
-            color: #475569;
-            border-color: rgba(15, 23, 42, 0.12);
+            background: #f1f5f9 !important;
+            color: #475569 !important;
+            border-color: rgba(15, 23, 42, 0.12) !important;
         }
 
         html[data-theme="light"] .tab-pill.active {
-            background: rgba(2, 132, 199, 0.12);
-            color: #0284c7;
-            border-color: #0284c7;
+            background: rgba(2, 132, 199, 0.12) !important;
+            color: #0284c7 !important;
+            border-color: #0284c7 !important;
         }
 
         html[data-theme="light"] .meta-timestamps {
-            background: #f8fafc;
-            border-color: rgba(15, 23, 42, 0.10);
-            color: #475569;
+            background: #f8fafc !important;
+            border-color: rgba(15, 23, 42, 0.10) !important;
+            color: #475569 !important;
         }
 
         html[data-theme="light"] .meta-timestamps strong {
-            color: #0f172a;
+            color: #0f172a !important;
         }
 
         html[data-theme="light"] .btn-cancel {
-            border-color: rgba(15, 23, 42, 0.20);
-            color: #475569;
+            border-color: rgba(15, 23, 42, 0.20) !important;
+            color: #475569 !important;
+            background: transparent !important;
         }
 
         html[data-theme="light"] .btn-cancel:hover {
-            background: #f1f5f9;
-            color: #0f172a;
+            background: #f1f5f9 !important;
+            color: #0f172a !important;
         }
 
         html[data-theme="light"] .ql-container.ql-snow {
-            background: #ffffff;
+            background: #ffffff !important;
             border-color: rgba(15, 23, 42, 0.20) !important;
-            color: #0f172a;
+            color: #0f172a !important;
         }
 
         html[data-theme="light"] .ql-toolbar.ql-snow {
-            background: #f1f5f9;
+            background: #f1f5f9 !important;
             border-color: rgba(15, 23, 42, 0.20) !important;
         }
 
+        html[data-theme="light"] .ql-editor.ql-blank::before {
+            color: #94a3b8 !important;
+        }
+
         html[data-theme="light"] .preview-box {
-            background: #f8fafc;
-            border-color: rgba(15, 23, 42, 0.15);
+            background: #f8fafc !important;
+            border-color: rgba(15, 23, 42, 0.15) !important;
         }
 
         html[data-theme="light"] #preview-title {
             color: #0f172a !important;
+        }
+
+        /* Alerts & Notices */
+        html[data-theme="light"] .error-box {
+            background: #fef2f2 !important;
+            border-color: #fca5a5 !important;
+            color: #b91c1c !important;
+        }
+
+        html[data-theme="light"] .success-box {
+            background: #f0fdf4 !important;
+            border-color: #86efac !important;
+            color: #15803d !important;
+        }
+
+        /* Text safeguard for hardcoded inline styles in child admin views */
+        html[data-theme="light"] table td [style*="color: #fff"],
+        html[data-theme="light"] table td [style*="color:#fff"],
+        html[data-theme="light"] table td [style*="color: #ffffff"],
+        html[data-theme="light"] table td [style*="color:#ffffff"],
+        html[data-theme="light"] .table-container [style*="color: #fff"],
+        html[data-theme="light"] .table-container [style*="color:#fff"],
+        html[data-theme="light"] .form-wrap [style*="color: #fff"],
+        html[data-theme="light"] .form-wrap [style*="color:#fff"],
+        html[data-theme="light"] .partner-card [style*="color: #fff"],
+        html[data-theme="light"] .partner-card [style*="color:#fff"],
+        html[data-theme="light"] .detail-card [style*="color: #fff"],
+        html[data-theme="light"] .detail-card [style*="color:#fff"],
+        html[data-theme="light"] .profile-card [style*="color: #fff"],
+        html[data-theme="light"] .profile-card [style*="color:#fff"],
+        html[data-theme="light"] .info-card [style*="color: #fff"],
+        html[data-theme="light"] .info-card [style*="color:#fff"] {
+            color: #0f172a !important;
+        }
+
+        html[data-theme="light"] table td [style*="color: rgba(255,255,255"],
+        html[data-theme="light"] table td [style*="color:rgba(255,255,255"],
+        html[data-theme="light"] .table-container [style*="color: rgba(255,255,255"],
+        html[data-theme="light"] .table-container [style*="color:rgba(255,255,255"],
+        html[data-theme="light"] .form-wrap [style*="color: rgba(255,255,255"],
+        html[data-theme="light"] .form-wrap [style*="color:rgba(255,255,255"],
+        html[data-theme="light"] .partner-card [style*="color: rgba(255,255,255"],
+        html[data-theme="light"] .partner-card [style*="color:rgba(255,255,255"],
+        html[data-theme="light"] .detail-card [style*="color: rgba(255,255,255"],
+        html[data-theme="light"] .detail-card [style*="color:rgba(255,255,255"],
+        html[data-theme="light"] .profile-card [style*="color: rgba(255,255,255"],
+        html[data-theme="light"] .profile-card [style*="color:rgba(255,255,255"],
+        html[data-theme="light"] .info-card [style*="color: rgba(255,255,255"],
+        html[data-theme="light"] .info-card [style*="color:rgba(255,255,255"] {
+            color: #334155 !important;
+        }
+
+        /* Ensure primary and action buttons keep crisp white text on gradient background */
+        html[data-theme="light"] .btn-primary,
+        html[data-theme="light"] .btn-submit,
+        html[data-theme="light"] .btn-wa,
+        html[data-theme="light"] .btn-primary *,
+        html[data-theme="light"] .btn-submit * {
+            color: #ffffff !important;
         }
 
         body {

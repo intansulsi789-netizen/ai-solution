@@ -20,19 +20,19 @@
         border-bottom: 1px solid rgba(255,255,255,0.08);
     }
     .meta-label { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
-    .meta-value { font-size: 15px; font-weight: 500; color: #fff; }
+    .meta-value { font-size: 15px; font-weight: 500; color: var(--text); }
     .msg-box {
         background: rgba(0,0,0,0.25);
-        border: 1px solid rgba(255,255,255,0.05);
+        border: 1px solid var(--border);
         border-radius: 12px;
         padding: 24px;
         font-size: 15px;
         line-height: 1.6;
-        color: rgba(255,255,255,0.9);
+        color: var(--text);
         white-space: pre-wrap;
     }
-    .btn-back { color:rgba(255,255,255,0.5); padding:10px 20px; font-weight:600; font-size:14px; text-decoration:none; border:1px solid rgba(255,255,255,0.1); border-radius:8px; display:inline-block; transition:all 0.2s; }
-    .btn-back:hover { background:rgba(255,255,255,0.05); color:#fff; }
+    .btn-back { color: var(--muted); padding:10px 20px; font-weight:600; font-size:14px; text-decoration:none; border:1px solid var(--border); border-radius:8px; display:inline-block; transition:all 0.2s; }
+    .btn-back:hover { background: rgba(0,212,255,0.08); color: var(--text); }
     .btn-wa { background:#25D366; color:#fff; padding:10px 20px; border-radius:8px; text-decoration:none; font-weight:600; font-size:14px; display:inline-block; transition:opacity 0.2s; }
     .btn-wa:hover { opacity:0.9; }
 </style>

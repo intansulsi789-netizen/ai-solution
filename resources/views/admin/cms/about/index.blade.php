@@ -17,7 +17,7 @@
     .form-label { display:block;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:8px;letter-spacing:0.5px;text-transform:uppercase; }
     .form-control {
         width:100%; background:rgba(0,0,0,0.25); border:1px solid rgba(255,255,255,0.1);
-        color:#fff; padding:12px 16px; border-radius:10px; font-family:'Inter',sans-serif;
+        color:var(--text); padding:12px 16px; border-radius:10px; font-family:'Inter',sans-serif;
         font-size:14px; transition:border-color 0.2s, box-shadow 0.2s; resize:vertical;
     }
     .form-control:focus { outline:none; border-color:var(--cyan); box-shadow:0 0 0 3px rgba(0,212,255,0.08); }

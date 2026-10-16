@@ -16,7 +16,7 @@
         font-size: 40px; color: rgba(255,255,255,0.5); font-weight: 700;
     }
     .profile-avatar-large img { width: 100%; height: 100%; object-fit: cover; }
-    .profile-name { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+    .profile-name { font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
     .profile-email { font-size: 13px; color: var(--muted); margin-bottom: 12px; }
     .profile-badge {
         display: inline-block; padding: 4px 12px; border-radius: 100px;
@@ -26,7 +26,7 @@
     .cms-link-box {
         margin-top: 20px; padding: 14px; border-radius: 12px;
         background: rgba(124,58,237,0.08); border: 1px solid rgba(124,58,237,0.2);
-        font-size: 12px; color: rgba(255,255,255,0.6); line-height: 1.5; text-align: left;
+        font-size: 12px; color: var(--muted); line-height: 1.5; text-align: left;
     }
     .cms-link-box a { color: #a78bfa; font-weight: 600; text-decoration: none; }
     .cms-link-box a:hover { text-decoration: underline; }
@@ -43,7 +43,7 @@
     .form-label { display:block;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:7px;letter-spacing:0.5px;text-transform:uppercase; }
     .form-control {
         width:100%; background:rgba(0,0,0,0.25); border:1px solid rgba(255,255,255,0.1);
-        color:#fff; padding:12px 14px; border-radius:10px; font-family:'Inter',sans-serif;
+        color:var(--text); padding:12px 14px; border-radius:10px; font-family:'Inter',sans-serif;
         font-size:14px; transition:border-color 0.2s; resize:vertical; box-sizing: border-box;
     }
     .form-control:focus { outline:none; border-color:var(--cyan); box-shadow:0 0 0 3px rgba(0,212,255,0.08); }
@@ -92,7 +92,7 @@
         <span class="profile-badge">{{ $user->role ?? 'Admin' }}</span>
 
         <div class="cms-link-box">
-            <strong style="color:rgba(255,255,255,0.8);">Profil CEO di Homepage?</strong><br>
+            <strong style="color:var(--text);">Profil CEO di Homepage?</strong><br>
             Edit melalui menu
             <a href="{{ route('admin.cms.about.index') }}">CMS → Tentang Kami</a>
         </div>

@@ -50,7 +50,7 @@
     }
     .partner-card:hover .partner-logo-wrap img { opacity: 1; }
     .partner-name {
-        font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.8);
+        font-size: 13px; font-weight: 600; color: var(--text);
         text-align: center; line-height: 1.3;
     }
     .card-meta { display:flex; align-items:center; gap:8px; flex-wrap:wrap; justify-content:center; }

@@ -50,6 +50,21 @@
         html[data-theme="light"] input[type="password"]::placeholder {
             color: #94a3b8;
         }
+        html[data-theme="light"] .card-title {
+            color: #0f172a;
+        }
+        html[data-theme="light"] .card-sub {
+            color: #64748b;
+        }
+        html[data-theme="light"] .remember-row label {
+            color: #64748b;
+        }
+        html[data-theme="light"] .back-link {
+            color: #64748b;
+        }
+        html[data-theme="light"] .back-link:hover {
+            color: #0284c7;
+        }
 
         body {
             background: var(--bg);
