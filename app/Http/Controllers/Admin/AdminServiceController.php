@@ -26,15 +26,17 @@ class AdminServiceController extends Controller
         $request->validate([
             'nama_layanan' => 'required|string|max:255',
             'slug' => 'required|string|unique:services,slug|max:255',
-            'nomor' => 'required|integer',
+            'nomor' => 'nullable|integer',
             'icon' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
             'deskripsi_singkat' => 'nullable|string',
-            'deskripsi_lengkap' => 'nullable|string', // In real form this can be JSON string or text
+            'deskripsi_lengkap' => 'nullable|string',
             'is_active' => 'boolean'
         ]);
 
         $data = $request->all();
+        $data['nomor'] = $request->filled('nomor') ? (int) $request->nomor : ((Service::max('nomor') ?? 0) + 1);
+        $data['icon'] = $request->input('icon', '');
         $data['is_active'] = $request->has('is_active') ? true : false;
         
         if ($request->hasFile('image')) {
@@ -59,7 +61,7 @@ class AdminServiceController extends Controller
         $request->validate([
             'nama_layanan' => 'required|string|max:255',
             'slug' => 'required|string|unique:services,slug,'.$service->id.'|max:255',
-            'nomor' => 'required|integer',
+            'nomor' => 'nullable|integer',
             'icon' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
             'deskripsi_singkat' => 'nullable|string',
@@ -67,6 +69,8 @@ class AdminServiceController extends Controller
         ]);
 
         $data = $request->all();
+        $data['nomor'] = $request->filled('nomor') ? (int) $request->nomor : $service->nomor;
+        $data['icon'] = $request->has('icon') ? $request->icon : ($service->icon ?? '');
         $data['is_active'] = $request->has('is_active') ? true : false;
 
         if ($request->hasFile('image')) {

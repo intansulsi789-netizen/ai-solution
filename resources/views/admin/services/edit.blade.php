@@ -71,42 +71,13 @@
         
         <div class="form-grid">
             <div class="form-group">
-                <label class="form-label">Nomor Urut</label>
-                <input type="number" name="nomor" class="form-control" value="{{ old('nomor', $service->nomor) }}" required>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Nama Layanan</label>
+                <label class="form-label">Nama Layanan *</label>
                 <input type="text" name="nama_layanan" id="nama_layanan" class="form-control" value="{{ old('nama_layanan', $service->nama_layanan) }}" required>
             </div>
 
             <div class="form-group">
-                <label class="form-label">Slug (URL)</label>
-                <input type="text" name="slug" id="slug" class="form-control" value="{{ old('slug', $service->slug) }}" required readonly style="background: rgba(0,0,0,0.5); color: var(--muted); cursor: not-allowed;">
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Pilih Icon Layanan</label>
-                @php 
-                    $currentIcon = old('icon', $service->icon);
-                    $icons = [
-                        'Layers / Stack' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>',
-                        'Data / Analytics' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>',
-                        'Robot / AI' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"></rect><circle cx="12" cy="5" r="2"></circle><path d="M12 7v4"></path><line x1="8" y1="16" x2="8" y2="16"></line><line x1="16" y1="16" x2="16" y2="16"></line></svg>',
-                        'Cloud / Network' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path></svg>',
-                        'Shield / Security' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>',
-                        'Chat / Message' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>',
-                    ];
-                    $isCustom = !in_array($currentIcon, array_values($icons));
-                @endphp
-                <select name="icon" class="form-control">
-                    @foreach($icons as $label => $svg)
-                        <option value="{{ $svg }}" {{ $currentIcon == $svg ? 'selected' : '' }}>{{ $label }}</option>
-                    @endforeach
-                    @if($isCustom && $currentIcon)
-                        <option value="{{ $currentIcon }}" selected>Icon Saat Ini (Kustom)</option>
-                    @endif
-                </select>
+                <label class="form-label">Slug (URL) *</label>
+                <input type="text" name="slug" id="slug" class="form-control" value="{{ old('slug', $service->slug) }}" required>
             </div>
 
             <div class="form-group">

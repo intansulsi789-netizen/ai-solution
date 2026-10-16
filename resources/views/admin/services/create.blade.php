@@ -70,26 +70,16 @@
         
         <div class="form-grid">
             <div class="form-group">
-                <label class="form-label">Nomor Urut</label>
-                <input type="number" name="nomor" class="form-control" value="{{ old('nomor', 0) }}" required>
+                <label class="form-label">Nama Layanan *</label>
+                <input type="text" name="nama_layanan" id="nama_layanan" class="form-control" value="{{ old('nama_layanan') }}" placeholder="Contoh: AI Chatbot Enterprise" required>
             </div>
 
             <div class="form-group">
-                <label class="form-label">Nama Layanan</label>
-                <input type="text" name="nama_layanan" class="form-control" value="{{ old('nama_layanan') }}" required>
+                <label class="form-label">Slug (URL) *</label>
+                <input type="text" name="slug" id="slug" class="form-control" value="{{ old('slug') }}" placeholder="ai-chatbot-enterprise" required>
             </div>
 
-            <div class="form-group">
-                <label class="form-label">Slug (URL)</label>
-                <input type="text" name="slug" class="form-control" value="{{ old('slug') }}" required>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Icon (SVG Path Data)</label>
-                <input type="text" name="icon" class="form-control" value="{{ old('icon') }}">
-            </div>
-
-            <div class="form-group">
+            <div class="form-group full-width">
                 <label class="form-label">Gambar Layanan (Opsional)</label>
                 <input type="file" name="image" class="form-control" accept="image/*" style="padding: 9px 16px;">
                 <small style="color: var(--muted); font-size: 12px; margin-top: 4px; display: block;">Format: JPG, PNG, WEBP. Maks 5MB. Jika dikosongkan, menggunakan gambar bawaan berdasarkan slug.</small>
@@ -161,6 +151,17 @@
 <script>
 const formService = document.getElementById('form-service');
 const hiddenDeskripsiLengkap = document.getElementById('deskripsi_lengkap');
+const namaLayanan = document.getElementById('nama_layanan');
+const slugInput = document.getElementById('slug');
+
+if (namaLayanan && slugInput) {
+    namaLayanan.addEventListener('input', function() {
+        if (!slugInput.dataset.manual) {
+            slugInput.value = this.value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+        }
+    });
+    slugInput.addEventListener('input', function() { this.dataset.manual = true; });
+}
 
 function syncDeskripsiLengkap() {
     let solutions = [];
