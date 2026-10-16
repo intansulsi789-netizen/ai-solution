@@ -253,7 +253,7 @@
 
     <div class="login-card">
         <div class="card-title">Admin Login</div>
-        <div class="card-sub">Masuk ke panel manajemen AI Solution</div>
+        <div class="card-sub">Masukkan sandi untuk mengakses panel manajemen AI Solution</div>
 
         {{-- Error messages --}}
         @if ($errors->any())
@@ -266,32 +266,31 @@
             @csrf
 
             <div class="form-group">
-                <label for="email">Email</label>
-                <input
-                    id="email"
-                    type="email"
-                    name="email"
-                    value="{{ old('email') }}"
-                    placeholder="admin@aisolution.id"
-                    required
-                    autofocus
-                    autocomplete="email"
-                >
-                @error('email')
-                    <div class="field-error">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input
-                    id="password"
-                    type="password"
-                    name="password"
-                    placeholder="••••••••"
-                    required
-                    autocomplete="current-password"
-                >
+                <label for="password">Password Admin</label>
+                <div style="position: relative;">
+                    <input
+                        id="password"
+                        type="password"
+                        name="password"
+                        placeholder="Masukkan sandi admin..."
+                        required
+                        autofocus
+                        autocomplete="current-password"
+                        style="padding-right: 42px;"
+                    >
+                    <button
+                        type="button"
+                        id="toggle-pwd"
+                        onclick="togglePasswordVisibility()"
+                        style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--muted); cursor: pointer; padding: 4px; display: flex; align-items: center;"
+                        title="Tampilkan / Sembunyikan Password"
+                    >
+                        <svg id="eye-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                    </button>
+                </div>
                 @error('password')
                     <div class="field-error">{{ $message }}</div>
                 @enderror
@@ -299,7 +298,7 @@
 
             <div class="remember-row">
                 <input type="checkbox" name="remember" id="remember">
-                <label for="remember">Ingat saya</label>
+                <label for="remember">Ingat sesi saya</label>
             </div>
 
             <button type="submit" class="btn-login" id="btn-admin-login">
@@ -311,6 +310,20 @@
     <a href="/" class="back-link">← Kembali ke halaman utama</a>
 
 </div>
+
+<script>
+    function togglePasswordVisibility() {
+        const pwd = document.getElementById('password');
+        const eye = document.getElementById('eye-icon');
+        if (pwd.type === 'password') {
+            pwd.type = 'text';
+            eye.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
+        } else {
+            pwd.type = 'password';
+            eye.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>';
+        }
+    }
+</script>
 
 </body>
 </html>

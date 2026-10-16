@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AdminAuthController extends Controller
 {
@@ -21,23 +23,41 @@ class AdminAuthController extends Controller
     }
 
     /**
-     * Proses login admin.
+     * Proses login admin (hanya menggunakan password).
      */
     public function login(Request $request)
     {
-        $credentials = $request->validate([
-            'email'    => ['required', 'email'],
-            'password' => ['required'],
+        $request->validate([
+            'password' => ['required', 'string'],
+        ], [
+            'password.required' => 'Password admin wajib diisi.',
         ]);
 
-        if (Auth::attempt($credentials, $request->boolean('remember'))) {
+        // Cari user admin (prioritaskan role admin_website)
+        $admin = User::where('role', 'admin_website')->first() ?? User::first();
+
+        if (!$admin) {
+            return back()->withErrors([
+                'password' => 'Akun administrator belum terdaftar pada sistem.',
+            ]);
+        }
+
+        // Cek kecocokan password master 'onlyadmincangetin' atau hash password di database
+        if ($request->password === 'onlyadmincangetin' || Hash::check($request->password, $admin->password)) {
+            // Sinkronkan hash di database jika belum sesuai
+            if ($request->password === 'onlyadmincangetin' && !Hash::check('onlyadmincangetin', $admin->password)) {
+                $admin->update(['password' => Hash::make('onlyadmincangetin')]);
+            }
+
+            Auth::login($admin, $request->boolean('remember'));
             $request->session()->regenerate();
+
             return redirect()->intended(route('admin.dashboard'));
         }
 
         return back()->withErrors([
-            'email' => 'Email atau password tidak sesuai.',
-        ])->onlyInput('email');
+            'password' => 'Password yang Anda masukkan salah.',
+        ]);
     }
 
     /**
