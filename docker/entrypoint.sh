@@ -20,5 +20,6 @@ fi
 
 php artisan package:discover --ansi >/dev/null
 php artisan storage:link --force >/dev/null 2>&1 || true
+php artisan migrate --force >/dev/null 2>&1 || true
 
 exec "$@"

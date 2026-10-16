@@ -26,38 +26,72 @@ $getServices = function () {
  * Dipanggil di dalam closure route agar tidak dieksekusi saat boot/artisan.
  */
 $getArticles = function () {
-    return \App\Models\Article::published()
-        ->orderByRaw('COALESCE(published_at, created_at) DESC')
-        ->get()
-        ->map(function ($a) {
-            $isi = json_decode($a->isi_artikel, true);
-            if (!is_array($isi)) {
-                $isi = [
-                    'content' => $a->isi_artikel ?? '',
-                    'takeaway' => '',
-                    'readTime' => '',
+    try {
+        return \App\Models\Article::published()
+            ->orderByRaw('COALESCE(published_at, created_at) DESC')
+            ->get()
+            ->map(function ($a) {
+                $isi = json_decode($a->isi_artikel, true);
+                if (!is_array($isi)) {
+                    $isi = [
+                        'content' => $a->isi_artikel ?? '',
+                        'takeaway' => '',
+                        'readTime' => '',
+                    ];
+                }
+
+                // Gunakan tanggal publikasi WIB jika tersedia
+                $displayDate = !empty($a->published_at)
+                    ? $a->published_at->timezone('Asia/Jakarta')->locale('id')->translatedFormat('d F Y')
+                    : ($a->tanggal ?: '');
+
+                return [
+                    'slug'        => $a->slug,
+                    'title'       => $a->judul,
+                    'category'    => $a->kategori,
+                    'date'        => $displayDate,
+                    'source_name' => $a->source_name ?? null,
+                    'source_url'  => $a->source_url ?? null,
+                    'readTime'    => $isi['readTime'] ?? '',
+                    'image'       => $a->image_url,
+                    'summary'     => $a->ringkasan,
+                    'content'     => $isi['content'] ?? '',
+                    'takeaway'    => $isi['takeaway'] ?? '',
                 ];
-            }
-
-            // Gunakan tanggal publikasi WIB jika tersedia
-            $displayDate = $a->published_at
-                ? $a->published_at->timezone('Asia/Jakarta')->locale('id')->translatedFormat('d F Y')
-                : ($a->tanggal ?: '');
-
-            return [
-                'slug'        => $a->slug,
-                'title'       => $a->judul,
-                'category'    => $a->kategori,
-                'date'        => $displayDate,
-                'source_name' => $a->source_name,
-                'source_url'  => $a->source_url,
-                'readTime'    => $isi['readTime'] ?? '',
-                'image'       => $a->image_url,
-                'summary'     => $a->ringkasan,
-                'content'     => $isi['content'] ?? '',
-                'takeaway'    => $isi['takeaway'] ?? '',
-            ];
-        })->toArray();
+            })->toArray();
+    } catch (\Throwable $e) {
+        // Fallback jika database belum memiliki kolom baru
+        try {
+            return \App\Models\Article::where('is_active', true)
+                ->orderBy('created_at', 'DESC')
+                ->get()
+                ->map(function ($a) {
+                    $isi = json_decode($a->isi_artikel, true);
+                    if (!is_array($isi)) {
+                        $isi = [
+                            'content' => $a->isi_artikel ?? '',
+                            'takeaway' => '',
+                            'readTime' => '',
+                        ];
+                    }
+                    return [
+                        'slug'        => $a->slug,
+                        'title'       => $a->judul,
+                        'category'    => $a->kategori,
+                        'date'        => $a->tanggal ?: '',
+                        'source_name' => null,
+                        'source_url'  => null,
+                        'readTime'    => $isi['readTime'] ?? '',
+                        'image'       => $a->image_url,
+                        'summary'     => $a->ringkasan,
+                        'content'     => $isi['content'] ?? '',
+                        'takeaway'    => $isi['takeaway'] ?? '',
+                    ];
+                })->toArray();
+        } catch (\Throwable $fallbackErr) {
+            return [];
+        }
+    }
 };
 
 Route::get('/', function () use ($getServices, $getArticles) {

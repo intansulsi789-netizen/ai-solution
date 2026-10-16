@@ -31,12 +31,20 @@ class Article extends Model
      */
     public function scopePublished($query)
     {
-        return $query->where('is_active', true)
-            ->where('status', 'published')
-            ->where(function ($q) {
+        $query->where('is_active', true);
+
+        if (\Illuminate\Support\Facades\Schema::hasColumn('articles', 'status')) {
+            $query->where('status', 'published');
+        }
+
+        if (\Illuminate\Support\Facades\Schema::hasColumn('articles', 'published_at')) {
+            $query->where(function ($q) {
                 $q->whereNull('published_at')
                   ->orWhere('published_at', '<=', now());
             });
+        }
+
+        return $query;
     }
 
     /**
