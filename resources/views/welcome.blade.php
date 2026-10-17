@@ -314,6 +314,8 @@
 
         html[data-theme="light"] .profile-photo {
             border-color: #ffffff;
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
+            background: #f8fafc;
         }
 
         html[data-theme="light"] .social-btn {
@@ -329,12 +331,41 @@
         }
 
         /* Logo marquee */
+        html[data-theme="light"] .logo-marquee-wrapper {
+            background: radial-gradient(ellipse at center, rgba(2, 132, 199, 0.04) 0%, transparent 75%);
+        }
+
         html[data-theme="light"] .logo-marquee-wrapper::before {
             background: linear-gradient(to right, #f8fafc, transparent);
         }
 
         html[data-theme="light"] .logo-marquee-wrapper::after {
             background: linear-gradient(to left, #f8fafc, transparent);
+        }
+
+        html[data-theme="light"] .logo-item {
+            background: #ffffff;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            border-radius: 14px;
+            padding: 10px 22px;
+            box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03);
+            transition: all 0.3s ease;
+        }
+
+        html[data-theme="light"] .logo-item:hover {
+            border-color: rgba(2, 132, 199, 0.30);
+            box-shadow: 0 6px 20px rgba(2, 132, 199, 0.10);
+            transform: translateY(-2px);
+        }
+
+        html[data-theme="light"] .logo-item img {
+            opacity: 0.95;
+            filter: none;
+        }
+
+        html[data-theme="light"] .logo-item:hover img {
+            opacity: 1;
+            transform: scale(1.04);
         }
 
         /* Article Cards (Homepage) */
@@ -347,6 +378,21 @@
         html[data-theme="light"] .article-card:hover {
             border-color: #0284c7;
             box-shadow: 0 16px 36px rgba(2, 132, 199, 0.12);
+        }
+
+        html[data-theme="light"] .article-img-wrap {
+            background: #f8fafc;
+            border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+        }
+
+        html[data-theme="light"] .article-img {
+            filter: none;
+            opacity: 1;
+        }
+
+        html[data-theme="light"] .article-card:hover .article-img {
+            filter: none;
+            transform: scale(1.05);
         }
 
         html[data-theme="light"] .article-title {

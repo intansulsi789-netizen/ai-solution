@@ -65,6 +65,12 @@
             border-color: rgba(2, 132, 199, 0.20);
         }
 
+        html[data-theme="light"] .admin-avatar {
+            background: #ffffff !important;
+            border: 1px solid rgba(15, 23, 42, 0.12) !important;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05) !important;
+        }
+
         html[data-theme="light"] .admin-name {
             color: #0f172a;
         }
@@ -215,12 +221,104 @@
         }
 
         html[data-theme="light"] .partner-logo-wrap {
-            background: #f8fafc !important;
+            background: #ffffff !important;
+            border: 1px solid rgba(15, 23, 42, 0.08) !important;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.02) !important;
         }
 
         html[data-theme="light"] .partner-logo-wrap img {
             filter: none !important;
-            opacity: 0.9 !important;
+            opacity: 1 !important;
+        }
+
+        /* Partner Form (Edit/Create) */
+        html[data-theme="light"] .current-logo {
+            background: #ffffff !important;
+            border-color: rgba(15, 23, 42, 0.12) !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03) !important;
+        }
+
+        html[data-theme="light"] .current-logo img {
+            filter: none !important;
+            opacity: 1 !important;
+        }
+
+        html[data-theme="light"] .upload-zone {
+            background: #f8fafc !important;
+            border-color: rgba(2, 132, 199, 0.3) !important;
+        }
+
+        html[data-theme="light"] .upload-zone:hover {
+            background: rgba(2, 132, 199, 0.04) !important;
+            border-color: #0284c7 !important;
+        }
+
+        /* Article Images & Thumbnails */
+        html[data-theme="light"] .thumb {
+            border: 1px solid rgba(15, 23, 42, 0.12) !important;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05) !important;
+            opacity: 1 !important;
+            background: #f8fafc !important;
+        }
+
+        html[data-theme="light"] .thumb-placeholder {
+            background: #f1f5f9 !important;
+            border: 1px solid rgba(15, 23, 42, 0.10) !important;
+            color: #94a3b8 !important;
+        }
+
+        /* Image Previews in Admin Forms */
+        html[data-theme="light"] .preview-box {
+            background: #f8fafc !important;
+            border-color: rgba(15, 23, 42, 0.15) !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03) !important;
+        }
+
+        html[data-theme="light"] .preview-box img,
+        html[data-theme="light"] .preview-img {
+            border: 1px solid rgba(15, 23, 42, 0.12) !important;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06) !important;
+            background: #ffffff !important;
+            filter: none !important;
+            opacity: 1 !important;
+        }
+
+        html[data-theme="light"] #preview-title {
+            color: #0f172a !important;
+        }
+
+        /* Profile & CMS Image Previews */
+        html[data-theme="light"] .profile-avatar-large {
+            background: #ffffff !important;
+            border-color: rgba(2, 132, 199, 0.35) !important;
+            box-shadow: 0 8px 24px rgba(2, 132, 199, 0.12), 0 2px 6px rgba(0, 0, 0, 0.04) !important;
+        }
+
+        html[data-theme="light"] .profile-avatar-large img {
+            border-radius: 50% !important;
+        }
+
+        html[data-theme="light"] .photo-preview-wrap {
+            background: #f8fafc !important;
+            border-color: rgba(15, 23, 42, 0.12) !important;
+        }
+
+        html[data-theme="light"] .img-preview {
+            border: 2px solid #0284c7 !important;
+            box-shadow: 0 4px 14px rgba(2, 132, 199, 0.15), 0 2px 6px rgba(0, 0, 0, 0.04) !important;
+            background: #ffffff !important;
+        }
+
+        html[data-theme="light"] #preview_hero_bg {
+            border: 1px solid rgba(15, 23, 42, 0.12) !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06) !important;
+            background: #ffffff !important;
+        }
+
+        html[data-theme="light"] .service-current-img-wrap {
+            border: 1px solid rgba(15, 23, 42, 0.12) !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06) !important;
+            background: #ffffff !important;
         }
 
         html[data-theme="light"] .partner-name {

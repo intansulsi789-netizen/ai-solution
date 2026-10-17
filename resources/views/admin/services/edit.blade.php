@@ -83,7 +83,7 @@
             <div class="form-group">
                 <label class="form-label">Gambar Layanan (Opsional)</label>
                 @if($service->image)
-                    <div style="margin-bottom: 12px; border-radius: 8px; overflow: hidden; max-width: 200px; border: 1px solid rgba(255,255,255,0.1);">
+                    <div class="service-current-img-wrap" style="margin-bottom: 12px; border-radius: 8px; overflow: hidden; max-width: 200px; border: 1px solid rgba(255,255,255,0.1);">
                         <img src="{{ Storage::url($service->image) }}" alt="Current Image" style="width: 100%; display: block;">
                     </div>
                 @endif

@@ -73,6 +73,21 @@
             color: #0284c7;
         }
 
+        html[data-theme="light"] .detail-image-wrap {
+            background: #ffffff;
+            border: 1px solid rgba(15, 23, 42, 0.10);
+            box-shadow: 0 16px 40px rgba(15, 23, 42, 0.07), 0 2px 8px rgba(15, 23, 42, 0.04);
+        }
+
+        html[data-theme="light"] .detail-image-wrap img {
+            border-radius: 24px;
+            object-fit: cover;
+        }
+
+        html[data-theme="light"] .image-glow {
+            box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.04);
+        }
+
         html[data-theme="light"] .solutions-title {
             color: #0f172a;
         }

@@ -69,6 +69,29 @@
             color: #475569;
         }
 
+        html[data-theme="light"] .article-hero-image img {
+            border: 1px solid rgba(15, 23, 42, 0.10);
+            box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08), 0 2px 8px rgba(15, 23, 42, 0.04);
+            background: #ffffff;
+        }
+
+        html[data-theme="light"] .sidebar-related-img {
+            border: 1px solid rgba(15, 23, 42, 0.10);
+            box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+            background: #f1f5f9;
+        }
+
+        html[data-theme="light"] .related-card-img {
+            background: #f8fafc;
+            border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+        }
+
+        html[data-theme="light"] .article-body img {
+            border: 1px solid rgba(15, 23, 42, 0.10);
+            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+            background: #ffffff;
+        }
+
         html[data-theme="light"] .article-meta-row,
         html[data-theme="light"] .article-meta-text {
             color: #64748b;
@@ -326,6 +349,15 @@
         }
         .article-body p {
             margin-bottom: 22px;
+        }
+        .article-body img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 14px;
+            margin: 24px 0;
+            display: block;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
         .article-body h3 {
             font-family: 'Plus Jakarta Sans', sans-serif;
