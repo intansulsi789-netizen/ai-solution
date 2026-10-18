@@ -322,6 +322,34 @@
             background-image: radial-gradient(rgba(2, 132, 199, 0.05) 1px, transparent 1px);
         }
 
+        html[data-theme="light"] .hud-telemetry-badge {
+            background: rgba(255, 255, 255, 0.90);
+            border: 1px solid rgba(2, 132, 199, 0.22);
+            box-shadow: 0 4px 16px rgba(2, 132, 199, 0.08);
+        }
+        html[data-theme="light"] .hud-telemetry-badge-alt {
+            border-color: rgba(124, 58, 237, 0.25);
+            box-shadow: 0 4px 16px rgba(124, 58, 237, 0.08);
+        }
+        html[data-theme="light"] .hud-status-text {
+            color: #0369a1;
+        }
+        html[data-theme="light"] .hud-telemetry-badge-alt .hud-status-text {
+            color: #7c3aed;
+        }
+        html[data-theme="light"] .hud-metric-label {
+            color: #64748b;
+        }
+        html[data-theme="light"] .hud-metric-val {
+            color: #0f172a;
+        }
+        html[data-theme="light"] .hud-laser-line {
+            background: linear-gradient(90deg, transparent, rgba(2, 132, 199, 0.35), transparent);
+        }
+        html[data-theme="light"] .hud-laser-purple .hud-laser-line {
+            background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.35), transparent);
+        }
+
         /* Profile & About */
         html[data-theme="light"] .profile-container {
             background: #ffffff;
@@ -1598,6 +1626,214 @@
             mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 40%, transparent 80%);
             -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 40%, transparent 80%);
         }
+        /* SERVICES HEADER WRAPPER & SIDE HUD DECOR */
+        .services-header-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .services-header-decor {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .services-hud {
+            position: absolute;
+            top: 48%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            width: 200px;
+            pointer-events: none;
+        }
+        .services-hud-left {
+            left: 8px;
+            align-items: flex-start;
+            animation: float-hud-left 7s ease-in-out infinite;
+        }
+        .services-hud-right {
+            right: 8px;
+            align-items: flex-end;
+            animation: float-hud-right 8s ease-in-out infinite;
+        }
+
+        /* Telemetry Badge */
+        .hud-telemetry-badge {
+            background: rgba(10, 20, 55, 0.65);
+            border: 1px solid rgba(0, 212, 255, 0.25);
+            border-radius: 12px;
+            padding: 10px 14px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), 0 0 16px rgba(0, 212, 255, 0.12);
+            width: 175px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hud-telemetry-badge-alt {
+            border-color: rgba(167, 139, 250, 0.28);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), 0 0 16px rgba(124, 58, 237, 0.15);
+        }
+        .hud-telemetry-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 6px;
+        }
+        .hud-status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--cyan-neon);
+            box-shadow: 0 0 8px var(--cyan-neon);
+            animation: blink-dot 1.8s ease infinite;
+        }
+        .hud-status-dot-purple {
+            background: #a78bfa;
+            box-shadow: 0 0 8px #a78bfa;
+        }
+        .hud-status-text {
+            font-family: 'Plus Jakarta Sans', monospace;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--cyan-neon);
+        }
+        .hud-telemetry-badge-alt .hud-status-text {
+            color: #a78bfa;
+        }
+        .hud-telemetry-metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 6px;
+        }
+        .hud-metric-label {
+            font-size: 9px;
+            color: rgba(255, 255, 255, 0.45);
+            letter-spacing: 0.5px;
+        }
+        .hud-metric-val {
+            font-weight: 700;
+            color: #ffffff;
+            font-family: monospace;
+        }
+        .hud-telemetry-bar {
+            width: 100%;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 2px;
+            overflow: hidden;
+            position: relative;
+        }
+        .hud-bar-fill {
+            position: absolute;
+            top: 0; left: 0; bottom: 0;
+            width: 78%;
+            background: linear-gradient(90deg, #00d4ff, #7c3aed);
+            border-radius: 2px;
+            animation: pulse-glow-aura 4s ease-in-out infinite alternate;
+        }
+        .hud-bar-fill-purple {
+            width: 92%;
+            background: linear-gradient(90deg, #7c3aed, #00d4ff);
+        }
+
+        /* HUD Scanner SVG */
+        .hud-scanner-svg {
+            width: 160px;
+            height: 160px;
+            filter: drop-shadow(0 0 12px rgba(0, 212, 255, 0.15));
+        }
+        .hud-ring-outer {
+            transform-origin: 120px 120px;
+            animation: hud-spin-cw 24s linear infinite;
+        }
+        .hud-ring-mid {
+            transform-origin: 120px 120px;
+            animation: hud-spin-ccw 18s linear infinite;
+        }
+        .hud-ring-inner {
+            transform-origin: 120px 120px;
+            animation: hud-spin-cw 12s linear infinite;
+        }
+        .hud-hex-outer {
+            transform-origin: 120px 120px;
+            animation: hud-spin-ccw 28s linear infinite;
+        }
+        .hud-center-node-glow,
+        .hud-center-node-glow-purple {
+            animation: node-pulse 2.5s ease-in-out infinite;
+        }
+
+        /* Horizontal Laser Beam with Data Ticks */
+        .hud-vertical-laser {
+            position: relative;
+            width: 150px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+        }
+        .hud-laser-line {
+            width: 100%;
+            height: 1.5px;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.45), transparent);
+            position: relative;
+        }
+        .hud-laser-purple .hud-laser-line {
+            background: linear-gradient(90deg, transparent, rgba(167, 139, 250, 0.45), transparent);
+        }
+        .hud-laser-runner {
+            position: absolute;
+            top: -1px;
+            left: 0;
+            width: 30px;
+            height: 3px;
+            background: #00d4ff;
+            box-shadow: 0 0 10px #00d4ff;
+            border-radius: 3px;
+            animation: laser-slide-lr 3.5s ease-in-out infinite;
+        }
+        .hud-runner-purple {
+            background: #a78bfa;
+            box-shadow: 0 0 10px #a78bfa;
+            animation: laser-slide-rl 3.8s ease-in-out infinite;
+        }
+        .hud-laser-ticks {
+            position: absolute;
+            top: 6px;
+            left: 10px;
+            right: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .hud-laser-ticks span {
+            width: 1px;
+            height: 6px;
+            background: rgba(0, 212, 255, 0.35);
+        }
+        .hud-laser-purple .hud-laser-ticks span {
+            background: rgba(167, 139, 250, 0.35);
+        }
+
+        @media (max-width: 1280px) {
+            .services-hud { width: 160px; }
+            .hud-telemetry-badge { width: 145px; padding: 8px 10px; }
+            .hud-scanner-svg { width: 125px; height: 125px; }
+            .hud-vertical-laser { width: 125px; }
+        }
+        @media (max-width: 1100px) {
+            .services-header-decor { display: none; }
+        }
+
         .jasa-header { text-align: center; max-width: 900px; margin: 0 auto 60px; display: flex; flex-direction: column; align-items: center; position: relative; z-index: 2; }
         .jasa-badge { display: inline-flex; font-size: 13px; font-weight: 600; color: var(--cyan-neon); letter-spacing: 2px; padding: 6px 16px; background: rgba(0, 168, 255, 0.1); border: 1px solid rgba(0, 168, 255, 0.2); border-radius: 100px; margin-bottom: 24px; box-shadow: 0 0 16px rgba(0, 168, 255, 0.15); }
         .jasa-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(36px, 5vw, 64px); font-weight: 800; line-height: 1.1; letter-spacing: -1.5px; margin-bottom: 24px; background: linear-gradient(135deg, #ffffff 0%, #a78bfa 50%, #00d4ff 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
@@ -2612,6 +2848,34 @@
             0%, 100% { transform: scale(1); opacity: 0.5; }
             50% { transform: scale(1.5); opacity: 1; }
         }
+        @keyframes hud-spin-cw {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        @keyframes hud-spin-ccw {
+            from { transform: rotate(360deg); }
+            to { transform: rotate(0deg); }
+        }
+        @keyframes float-hud-left {
+            0%, 100% { transform: translateY(-50%) translate(0, 0); }
+            50% { transform: translateY(-50%) translate(4px, -12px); }
+        }
+        @keyframes float-hud-right {
+            0%, 100% { transform: translateY(-50%) translate(0, 0); }
+            50% { transform: translateY(-50%) translate(-4px, -14px); }
+        }
+        @keyframes laser-slide-lr {
+            0% { left: 0%; opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { left: calc(100% - 30px); opacity: 0; }
+        }
+        @keyframes laser-slide-rl {
+            0% { left: calc(100% - 30px); opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { left: 0%; opacity: 0; }
+        }
     </style>
 </head>
 <body>
@@ -2907,16 +3171,120 @@
     <div class="services-ambient-glow-2"></div>
     <div class="services-grid-mesh"></div>
     <div id="jasa"></div>
-    <div class="jasa-header">
-        <div class="jasa-badge">LAYANAN AI</div>
-        <h1 class="jasa-title">Solusi AI yang Dirancang untuk Kebutuhan Anda</h1>
-        <p class="jasa-subtitle">Kami membantu merancang dan menerapkan solusi berbasis AI untuk menyederhanakan proses, mengotomatisasi pekerjaan, dan menciptakan hasil yang lebih efektif.</p>
-        <a href="#konsultasi" class="btn-cta">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-            </svg>
-            Konsultasikan Kebutuhan Anda
-        </a>
+    <div class="services-header-wrapper">
+        <div class="services-header-decor" aria-hidden="true">
+            <!-- LEFT SIDE HUD -->
+            <div class="services-hud services-hud-left">
+                <!-- Floating Telemetry Glass Card -->
+                <div class="hud-telemetry-badge">
+                    <div class="hud-telemetry-status">
+                        <span class="hud-status-dot"></span>
+                        <span class="hud-status-text">NEURAL_CORE // v2.8</span>
+                    </div>
+                    <div class="hud-telemetry-metric">
+                        <span class="hud-metric-label">CLUSTER</span>
+                        <span class="hud-metric-val">16 NODES</span>
+                    </div>
+                    <div class="hud-telemetry-bar"><div class="hud-bar-fill"></div></div>
+                </div>
+
+                <!-- Cyber HUD Ring & Scanner Widget SVG -->
+                <svg class="hud-scanner-svg" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Corner Brackets -->
+                    <path d="M10,40 L10,10 L40,10" stroke="rgba(0, 212, 255, 0.45)" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M230,40 L230,10 L200,10" stroke="rgba(0, 212, 255, 0.45)" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M10,200 L10,230 L40,230" stroke="rgba(0, 212, 255, 0.45)" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M230,200 L230,230 L200,230" stroke="rgba(0, 212, 255, 0.45)" stroke-width="1.5" stroke-linecap="round"/>
+
+                    <!-- Outer Dashed Rotating Ring -->
+                    <circle class="hud-ring-outer" cx="120" cy="120" r="88" stroke="rgba(0, 212, 255, 0.4)" stroke-width="1.5" stroke-dasharray="14 10" stroke-linecap="round"/>
+                    
+                    <!-- Mid Segmented Ring (Purple) -->
+                    <circle class="hud-ring-mid" cx="120" cy="120" r="68" stroke="rgba(167, 139, 250, 0.45)" stroke-width="2" stroke-dasharray="40 20 8 20" stroke-linecap="round"/>
+                    
+                    <!-- Inner Glowing Ring -->
+                    <circle class="hud-ring-inner" cx="120" cy="120" r="46" stroke="rgba(0, 212, 255, 0.55)" stroke-width="1.5" stroke-dasharray="6 6"/>
+                    
+                    <!-- Center Crosshair & Core Node -->
+                    <line x1="120" y1="92" x2="120" y2="148" stroke="rgba(0, 212, 255, 0.4)" stroke-width="1"/>
+                    <line x1="92" y1="120" x2="148" y2="120" stroke="rgba(0, 212, 255, 0.4)" stroke-width="1"/>
+                    <circle cx="120" cy="120" r="14" fill="rgba(0, 212, 255, 0.12)" stroke="rgba(0, 212, 255, 0.7)" stroke-width="1.5"/>
+                    <circle class="hud-center-node" cx="120" cy="120" r="5" fill="#00d4ff"/>
+                    <circle class="hud-center-node-glow" cx="120" cy="120" r="10" fill="rgba(0, 212, 255, 0.35)"/>
+                </svg>
+
+                <!-- Horizontal Laser Beam with Data Ticks -->
+                <div class="hud-vertical-laser">
+                    <div class="hud-laser-line"></div>
+                    <div class="hud-laser-runner"></div>
+                    <div class="hud-laser-ticks">
+                        <span></span><span></span><span></span><span></span><span></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT SIDE HUD -->
+            <div class="services-hud services-hud-right">
+                <!-- Floating Telemetry Glass Card -->
+                <div class="hud-telemetry-badge hud-telemetry-badge-alt">
+                    <div class="hud-telemetry-status">
+                        <span class="hud-status-dot hud-status-dot-purple"></span>
+                        <span class="hud-status-text">AI_PIPELINE // ACTIVE</span>
+                    </div>
+                    <div class="hud-telemetry-metric">
+                        <span class="hud-metric-label">LATENCY</span>
+                        <span class="hud-metric-val">&lt; 12MS · 99.9%</span>
+                    </div>
+                    <div class="hud-telemetry-bar hud-bar-purple"><div class="hud-bar-fill hud-bar-fill-purple"></div></div>
+                </div>
+
+                <!-- Cyber Hexagonal Matrix & Target Reticle SVG -->
+                <svg class="hud-scanner-svg" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Corner Brackets -->
+                    <path d="M10,40 L10,10 L40,10" stroke="rgba(167, 139, 250, 0.45)" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M230,40 L230,10 L200,10" stroke="rgba(167, 139, 250, 0.45)" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M10,200 L10,230 L40,230" stroke="rgba(167, 139, 250, 0.45)" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M230,200 L230,230 L200,230" stroke="rgba(167, 139, 250, 0.45)" stroke-width="1.5" stroke-linecap="round"/>
+
+                    <!-- Outer Hexagon Tech Shell -->
+                    <polygon class="hud-hex-outer" points="120,28 198,73 198,167 120,212 42,167 42,73" stroke="rgba(124, 58, 237, 0.4)" stroke-width="1.5" stroke-dasharray="16 8"/>
+
+                    <!-- Mid Orbital Ring -->
+                    <circle class="hud-ring-outer" cx="120" cy="120" r="72" stroke="rgba(0, 212, 255, 0.45)" stroke-width="1.5" stroke-dasharray="24 16"/>
+
+                    <!-- Inner Hexagon -->
+                    <polygon points="120,55 176,87 176,153 120,185 64,153 64,87" stroke="rgba(0, 212, 255, 0.4)" stroke-width="1.2"/>
+
+                    <!-- Center Target Node & Crosshairs -->
+                    <line x1="78" y1="120" x2="162" y2="120" stroke="rgba(167, 139, 250, 0.5)" stroke-width="1"/>
+                    <line x1="120" y1="78" x2="120" y2="162" stroke="rgba(167, 139, 250, 0.5)" stroke-width="1"/>
+                    <circle cx="120" cy="120" r="14" fill="rgba(124, 58, 237, 0.15)" stroke="rgba(167, 139, 250, 0.7)" stroke-width="1.5"/>
+                    <circle class="hud-center-node-purple" cx="120" cy="120" r="5" fill="#a78bfa"/>
+                    <circle class="hud-center-node-glow-purple" cx="120" cy="120" r="10" fill="rgba(167, 139, 250, 0.35)"/>
+                </svg>
+
+                <!-- Horizontal Laser Beam with Data Ticks -->
+                <div class="hud-vertical-laser hud-laser-purple">
+                    <div class="hud-laser-line"></div>
+                    <div class="hud-laser-runner hud-runner-purple"></div>
+                    <div class="hud-laser-ticks">
+                        <span></span><span></span><span></span><span></span><span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="jasa-header">
+            <div class="jasa-badge">LAYANAN AI</div>
+            <h1 class="jasa-title">Solusi AI yang Dirancang untuk Kebutuhan Anda</h1>
+            <p class="jasa-subtitle">Kami membantu merancang dan menerapkan solusi berbasis AI untuk menyederhanakan proses, mengotomatisasi pekerjaan, dan menciptakan hasil yang lebih efektif.</p>
+            <a href="#konsultasi" class="btn-cta">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                </svg>
+                Konsultasikan Kebutuhan Anda
+            </a>
+        </div>
     </div>
 
     <div class="section-header">
