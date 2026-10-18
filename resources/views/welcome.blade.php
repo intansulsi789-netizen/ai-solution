@@ -3362,12 +3362,12 @@
         <!-- Nav right: search + cta -->
         <div class="nav-right">
             <!-- Search bar -->
-            <button class="nav-search" id="nav-search-btn" aria-label="Cari aksi" onclick="document.getElementById('search-modal').style.display='flex'">
+            <button class="nav-search" id="nav-search-btn" aria-label="Cari artikel, layanan AI, atau konten" onclick="document.getElementById('search-modal').style.display='flex'; setTimeout(function(){ document.getElementById('search-input').focus(); }, 60);">
                 <svg class="nav-search-icon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.5"/>
                     <path d="M11 11L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
                 </svg>
-                <span class="nav-search-text">Cari Aksi...</span>
+                <span class="nav-search-text">Cari artikel, layanan...</span>
                 <kbd class="nav-search-kbd">Ctrl K</kbd>
             </button>
 
@@ -4676,31 +4676,33 @@
     position: fixed;
     inset: 0;
     z-index: 9999;
-    background: rgba(2, 8, 24, 0.80);
-    backdrop-filter: blur(8px);
+    background: rgba(2, 8, 24, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     align-items: flex-start;
     justify-content: center;
-    padding-top: 100px;
+    padding-top: 80px;
 " role="dialog" aria-modal="true" aria-label="Pencarian">
-    <div style="
+    <div class="search-modal-container" style="
         width: 100%;
-        max-width: 580px;
-        background: rgba(10, 20, 60, 0.95);
-        border: 1px solid rgba(0,168,255,0.28);
-        border-radius: 18px;
-        padding: 20px;
-        box-shadow: 0 24px 80px rgba(0,0,0,0.60), 0 0 40px rgba(0,168,255,0.12);
+        max-width: 620px;
+        background: linear-gradient(160deg, rgba(10, 20, 60, 0.96) 0%, rgba(6, 12, 38, 0.98) 100%);
+        border: 1px solid rgba(0, 212, 255, 0.35);
+        border-radius: 20px;
+        padding: 22px;
+        box-shadow: 0 25px 80px rgba(0,0,0,0.70), 0 0 50px rgba(0, 212, 255, 0.18);
         margin: 0 16px;
     ">
         <div style="display: flex; align-items: center; gap: 12px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 16px;">
-            <svg width="18" height="18" viewBox="0 0 16 16" fill="none" style="flex-shrink:0; color: rgba(255,255,255,0.50)">
-                <circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.5"/>
-                <path d="M11 11L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <svg width="20" height="20" viewBox="0 0 16 16" fill="none" style="flex-shrink:0; color: #00d4ff;">
+                <circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.6"/>
+                <path d="M11 11L14 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
             </svg>
             <input
                 id="search-input"
+                class="search-modal-input"
                 type="text"
-                placeholder="Cari Aksi..."
+                placeholder="Cari artikel, layanan AI, topik, atau isi web..."
                 autocomplete="off"
                 style="
                     flex: 1;
@@ -4717,15 +4719,26 @@
                 border: 1px solid rgba(255,255,255,0.15);
                 color: rgba(255,255,255,0.60);
                 border-radius: 6px;
-                padding: 3px 8px;
-                font-size: 12px;
+                padding: 4px 9px;
+                font-size: 11px;
                 cursor: pointer;
                 font-family: 'Inter', sans-serif;
             ">ESC</button>
         </div>
-        <div id="search-results" style="padding-top: 8px; max-height: 320px; overflow-y: auto;">
-            <div id="search-placeholder" style="padding: 20px 0; color: rgba(255,255,255,0.40); font-size: 13px; text-align: center;">
-                Ketik untuk mencari fitur, halaman, atau aksi...
+
+        <!-- Quick filter chips -->
+        <div style="display: flex; align-items: center; gap: 8px; overflow-x: auto; padding: 12px 0 8px; border-bottom: 1px dashed rgba(255,255,255,0.08);">
+            <span style="font-size: 11px; color: rgba(255,255,255,0.40); white-space: nowrap;">Cepat:</span>
+            <button type="button" onclick="document.getElementById('search-input').value='artikel'; document.getElementById('search-input').dispatchEvent(new Event('input'));" style="background: rgba(0,212,255,0.08); border: 1px solid rgba(0,212,255,0.22); color: #00d4ff; border-radius: 100px; padding: 3px 10px; font-size: 11px; cursor: pointer; white-space: nowrap;">Semua Artikel</button>
+            <button type="button" onclick="document.getElementById('search-input').value='layanan'; document.getElementById('search-input').dispatchEvent(new Event('input'));" style="background: rgba(124,58,237,0.10); border: 1px solid rgba(124,58,237,0.25); color: #a78bfa; border-radius: 100px; padding: 3px 10px; font-size: 11px; cursor: pointer; white-space: nowrap;">Layanan AI</button>
+            <button type="button" onclick="document.getElementById('search-input').value='vision'; document.getElementById('search-input').dispatchEvent(new Event('input'));" style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.10); color: rgba(255,255,255,0.70); border-radius: 100px; padding: 3px 10px; font-size: 11px; cursor: pointer; white-space: nowrap;">Computer Vision</button>
+            <button type="button" onclick="document.getElementById('search-input').value='nlp'; document.getElementById('search-input').dispatchEvent(new Event('input'));" style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.10); color: rgba(255,255,255,0.70); border-radius: 100px; padding: 3px 10px; font-size: 11px; cursor: pointer; white-space: nowrap;">NLP &amp; Chatbot</button>
+            <button type="button" onclick="document.getElementById('search-input').value='machine learning'; document.getElementById('search-input').dispatchEvent(new Event('input'));" style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.10); color: rgba(255,255,255,0.70); border-radius: 100px; padding: 3px 10px; font-size: 11px; cursor: pointer; white-space: nowrap;">Machine Learning</button>
+        </div>
+
+        <div id="search-results" style="padding-top: 8px; max-height: 350px; overflow-y: auto;">
+            <div id="search-placeholder" style="padding: 24px 0; color: rgba(255,255,255,0.40); font-size: 13px; text-align: center;">
+                Ketik untuk mencari artikel, layanan AI, topik, atau isi web...
             </div>
         </div>
     </div>
@@ -4780,99 +4793,174 @@
     const searchResults = document.getElementById('search-results');
     const searchPlaceholder = document.getElementById('search-placeholder');
 
-    // Define searchable items for the homepage
-    const searchItems = [
-        {
-            label: 'Layanan AI',
-            desc: 'Lihat semua layanan AI kami',
-            url: '/#layanan',
-            keywords: ['layanan', 'service', 'jasa', 'ai', 'solusi'],
-            icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>',
-            category: 'Halaman'
-        },
-        {
-            label: 'Tentang Kami',
-            desc: 'Profil perusahaan & CEO',
-            url: '/#tentang',
-            keywords: ['tentang', 'about', 'profil', 'ceo', 'perusahaan', 'visi', 'misi'],
-            icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>',
-            category: 'Halaman'
-        },
-        {
-            label: 'Wawasan & Artikel',
-            desc: 'Baca artikel dan insight AI',
-            url: '/#wawasan',
-            keywords: ['wawasan', 'artikel', 'blog', 'tulisan', 'insight', 'berita', 'news'],
-            icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>',
-            category: 'Halaman'
-        },
-        {
-            label: 'Hubungi via WhatsApp',
-            desc: 'Chat langsung dengan tim kami',
-            url: '{!! $waUrl !!}',
-            external: true,
-            keywords: ['kontak', 'whatsapp', 'wa', 'chat', 'hubungi', 'telepon', 'contact'],
-            icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.26h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.18 6.18l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>',
-            category: 'Aksi'
-        },
-        {
-            label: 'Mitra & Kolaborasi',
-            desc: 'Partner perusahaan terkemuka',
-            url: '/#tentang',
-            keywords: ['mitra', 'partner', 'kolaborasi', 'logo', 'perusahaan', 'klien'],
-            icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>',
-            category: 'Halaman'
-        },
-        {
-            label: 'Konsultasi Gratis',
-            desc: 'Kirim pesan konsultasi AI',
-            url: '/#konsultasi',
-            keywords: ['konsultasi', 'pesan', 'form', 'kirim', 'tanya', 'gratis', 'bantuan'],
-            icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>',
-            category: 'Aksi'
-        },
-        {
-            label: 'Beranda / Home',
-            desc: 'Kembali ke halaman utama',
-            url: '/',
-            keywords: ['beranda', 'home', 'utama', 'awal', 'homepage'],
-            icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>',
-            category: 'Halaman'
-        },
-        {
-            label: 'Custom AI Solution',
-            desc: 'Solusi AI yang disesuaikan bisnis',
-            url: '/#layanan',
-            keywords: ['custom', 'ai', 'solution', 'solusi', 'bisnis', 'kustom'],
-            icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>',
-            category: 'Layanan'
-        },
-        {
-            label: 'Otomatisasi Proses',
-            desc: 'Otomatis proses bisnis dengan AI',
-            url: '/#layanan',
-            keywords: ['otomatisasi', 'proses', 'otomatis', 'automasi', 'workflow'],
-            icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="20" x2="21" y2="3"></line><polyline points="21 16 21 21 16 21"></polyline><line x1="15" y1="15" x2="21" y2="21"></line><line x1="4" y1="4" x2="9" y2="9"></line></svg>',
-            category: 'Layanan'
-        },
-        {
-            label: 'Konsultasi & Implementasi',
-            desc: 'Mulai kebutuhan hingga penerapan',
-            url: '/#layanan',
-            keywords: ['konsultasi', 'implementasi', 'penerapan', 'mulai'],
-            icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>',
-            category: 'Layanan'
-        },
-        {
-            label: 'Scroll ke Atas',
-            desc: 'Kembali ke bagian atas halaman',
-            url: '#',
-            action: 'scrollTop',
-            keywords: ['atas', 'top', 'scroll', 'kembali', 'naik'],
-            icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>',
-            category: 'Aksi'
+@php
+    $searchData = [];
+
+    // 1. Artikel (Semua artikel aktif / terbit dari database)
+    $searchArticlesList = $articles ?? $homepageArticles ?? [];
+    foreach ($searchArticlesList as $art) {
+        $artTitle = $art['title'] ?? '';
+        $artSummary = $art['summary'] ?? '';
+        $artCategory = $art['category'] ?? 'AI';
+        $artSlug = $art['slug'] ?? '';
+        $artDate = $art['date'] ?? '';
+
+        if (!empty($artTitle) && !empty($artSlug)) {
+            $descClean = !empty($artSummary) ? \Illuminate\Support\Str::limit(strip_tags($artSummary), 85) : 'Artikel seputar ' . $artCategory;
+            $searchData[] = [
+                'label'    => $artTitle,
+                'desc'     => $descClean . ' • ' . $artCategory,
+                'url'      => route('article.detail', ['slug' => $artSlug]),
+                'keywords' => array_values(array_filter(array_unique(array_merge(
+                    explode(' ', strtolower(preg_replace('/[^a-zA-Z0-9 ]/', '', $artTitle))),
+                    explode(' ', strtolower(preg_replace('/[^a-zA-Z0-9 ]/', '', $artSummary))),
+                    ['artikel', 'wawasan', 'baca', 'berita', 'insight', strtolower($artCategory)]
+                )))),
+                'icon'     => '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>',
+                'category' => 'Artikel',
+            ];
         }
+    }
+
+    // 2. Layanan AI (Semua layanan aktif dari DB)
+    $searchServicesList = $services ?? [];
+    foreach ($searchServicesList as $srv) {
+        $srvTitle = $srv['title'] ?? '';
+        $srvDesc = $srv['desc'] ?? '';
+        $srvSlug = $srv['slug'] ?? '';
+        $srvSolutions = is_array($srv['solutions'] ?? null) ? (string)json_encode($srv['solutions']) : (string)($srv['solutions'] ?? '');
+        $srvBenefits = is_array($srv['benefits'] ?? null) ? (string)json_encode($srv['benefits']) : (string)($srv['benefits'] ?? '');
+
+        if (!empty($srvTitle)) {
+            $srvDescClean = !empty($srvDesc) ? \Illuminate\Support\Str::limit(strip_tags($srvDesc), 90) : 'Layanan implementasi solusi AI';
+            $searchData[] = [
+                'label'    => $srvTitle,
+                'desc'     => $srvDescClean,
+                'url'      => !empty($srvSlug) ? url('/layanan/' . $srvSlug) : '/#layanan',
+                'keywords' => array_values(array_filter(array_unique(array_merge(
+                    explode(' ', strtolower(preg_replace('/[^a-zA-Z0-9 ]/', '', $srvTitle))),
+                    explode(' ', strtolower(preg_replace('/[^a-zA-Z0-9 ]/', '', $srvDesc))),
+                    explode(' ', strtolower(preg_replace('/[^a-zA-Z0-9 ]/', '', $srvSolutions))),
+                    explode(' ', strtolower(preg_replace('/[^a-zA-Z0-9 ]/', '', $srvBenefits))),
+                    ['layanan', 'service', 'jasa', 'ai', 'solusi', 'fitur', 'teknologi', 'penerapan', 'bisnis']
+                )))),
+                'icon'     => '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10H12V2z"></path><path d="M12 12 2.1 7.1"></path><path d="M12 12v10"></path></svg>',
+                'category' => 'Layanan AI',
+            ];
+        }
+    }
+
+    // 3. Topik & Kapabilitas Solusi AI Utama
+    $aiTopics = [
+        [
+            'label' => 'Computer Vision & Deteksi Objek',
+            'desc'  => 'Deteksi visual, pengenalan wajah, OCR dokumen, dan analitik video AI',
+            'url'   => '/#layanan',
+            'keywords' => ['computer', 'vision', 'gambar', 'kamera', 'deteksi', 'objek', 'ocr', 'citra', 'visual', 'wajah', 'recognition', 'video'],
+            'icon'  => '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>',
+            'category' => 'Topik AI',
+        ],
+        [
+            'label' => 'Natural Language Processing (NLP) & Chatbot',
+            'desc'  => 'Pemrosesan bahasa alami, customer service bot cerdas, analisis sentimen teks',
+            'url'   => '/#layanan',
+            'keywords' => ['nlp', 'natural', 'language', 'chatbot', 'bot', 'chat', 'bahasa', 'teks', 'sentimen', 'virtual', 'assistant'],
+            'icon'  => '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>',
+            'category' => 'Topik AI',
+        ],
+        [
+            'label' => 'Machine Learning & Predictive Analytics',
+            'desc'  => 'Pemodelan data prediksi, forecasting tren bisnis, churn detection & algoritma cerdas',
+            'url'   => '/#layanan',
+            'keywords' => ['machine', 'learning', 'ml', 'predictive', 'prediksi', 'analytics', 'forecasting', 'data', 'analitik', 'algoritma', 'model'],
+            'icon'  => '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>',
+            'category' => 'Topik AI',
+        ],
+        [
+            'label' => 'Otomatisasi Proses Bisnis (RPA)',
+            'desc'  => 'Automasi pekerjaan manual berulang, integrasi sistem, dan percepatan efisiensi kerja',
+            'url'   => '/#layanan',
+            'keywords' => ['otomasi', 'otomatisasi', 'proses', 'rpa', 'robotic', 'workflow', 'automasi', 'efisiensi', 'operasional'],
+            'icon'  => '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="20" x2="21" y2="3"></line><polyline points="21 16 21 21 16 21"></polyline><line x1="15" y1="15" x2="21" y2="21"></line><line x1="4" y1="4" x2="9" y2="9"></line></svg>',
+            'category' => 'Topik AI',
+        ],
+        [
+            'label' => 'Generative AI & Kustom LLM',
+            'desc'  => 'Integrasi Large Language Model, pembuatan prompt cerdas, dan generator konten AI',
+            'url'   => '/#layanan',
+            'keywords' => ['generative', 'ai', 'llm', 'gpt', 'large', 'language', 'model', 'kustom', 'generator', 'prompt', 'generatif'],
+            'icon'  => '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>',
+            'category' => 'Topik AI',
+        ],
     ];
+    foreach ($aiTopics as $topic) {
+        $searchData[] = $topic;
+    }
+
+    // 4. Mitra & Partner dari database
+    if (isset($partners) && count($partners) > 0) {
+        foreach ($partners as $partner) {
+            $partnerName = $partner->nama_partner ?? '';
+            if (!empty($partnerName)) {
+                $searchData[] = [
+                    'label'    => 'Partner: ' . $partnerName,
+                    'desc'     => 'Kemitraan strategis implementasi teknologi AI',
+                    'url'      => '/#tentang',
+                    'keywords' => ['partner', 'mitra', 'klien', 'kolaborasi', 'perusahaan', strtolower($partnerName)],
+                    'icon'     => '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>',
+                    'category' => 'Mitra',
+                ];
+            }
+        }
+    }
+
+    // 5. Halaman & Aksi Navigasi
+    $searchData[] = [
+        'label'    => 'Wawasan & Semua Artikel AI',
+        'desc'     => 'Eksplorasi seluruh publikasi artikel, wawasan dan tren AI terlengkap',
+        'url'      => route('articles.index'),
+        'keywords' => ['semua', 'artikel', 'wawasan', 'blog', 'daftar', 'berita', 'insight', 'baca', 'publikasi'],
+        'icon'     => '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>',
+        'category' => 'Halaman',
+    ];
+    $searchData[] = [
+        'label'    => 'Tentang AI Solution & Profil CEO',
+        'desc'     => 'Profil perusahaan, visi misi transformasi kecerdasan buatan, dan pimpinan',
+        'url'      => '/#tentang',
+        'keywords' => ['tentang', 'about', 'profil', 'ceo', 'perusahaan', 'visi', 'misi', 'pemimpin', 'intan'],
+        'icon'     => '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>',
+        'category' => 'Halaman',
+    ];
+    $searchData[] = [
+        'label'    => 'Konsultasikan Kebutuhan AI Anda',
+        'desc'     => 'Kirim pesan atau formulir rencana proyek implementasi AI perusahaan',
+        'url'      => '/#konsultasi',
+        'keywords' => ['konsultasi', 'formulir', 'pesan', 'kebutuhan', 'rencana', 'gratis', 'tanya', 'form'],
+        'icon'     => '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>',
+        'category' => 'Aksi',
+    ];
+    $searchData[] = [
+        'label'    => 'Chat Tim Ahli via WhatsApp',
+        'desc'     => 'Konsultasi cepat langsung via WhatsApp dengan tim spesialis AI Solution',
+        'url'      => $waUrl,
+        'external' => true,
+        'keywords' => ['whatsapp', 'wa', 'chat', 'kontak', 'telepon', 'cs', 'hubungi', 'bantuan'],
+        'icon'     => '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.26h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.18 6.18l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>',
+        'category' => 'Aksi',
+    ];
+    $searchData[] = [
+        'label'    => 'Kembali ke Atas / Beranda',
+        'desc'     => 'Scroll ke bagian paling atas landing page AI Solution',
+        'url'      => '#',
+        'action'   => 'scrollTop',
+        'keywords' => ['beranda', 'home', 'atas', 'top', 'awal', 'homepage', 'scroll'],
+        'icon'     => '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>',
+        'category' => 'Aksi',
+    ];
+@endphp
+
+    // Define searchable items dynamically from DB (articles, services, AI topics, partners, pages)
+    const searchItems = {!! json_encode($searchData, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE) !!};
 
     function renderSearchResults(query) {
         if (!searchResults) return;
@@ -4887,34 +4975,65 @@
 
         searchPlaceholder.style.display = 'none';
 
+        var qWords = q.split(/\s+/).filter(Boolean);
+
         var matched = searchItems.filter(function(item) {
-            if (item.label.toLowerCase().indexOf(q) !== -1) return true;
-            if (item.desc.toLowerCase().indexOf(q) !== -1) return true;
-            return item.keywords.some(function(k) { return k.indexOf(q) !== -1; });
+            var labelLower = (item.label || '').toLowerCase();
+            var descLower = (item.desc || '').toLowerCase();
+            var catLower = (item.category || '').toLowerCase();
+            var kwStr = (item.keywords || []).join(' ').toLowerCase();
+            var haystack = labelLower + ' ' + descLower + ' ' + catLower + ' ' + kwStr;
+
+            // Direct substring match
+            if (haystack.indexOf(q) !== -1) return true;
+
+            // Multi-word matching: all typed words must appear in haystack
+            return qWords.every(function(word) {
+                return haystack.indexOf(word) !== -1;
+            });
         });
 
         if (matched.length === 0) {
-            searchResults.innerHTML = '<div style="padding:24px 0;text-align:center;color:rgba(255,255,255,0.40);font-size:13px;">Tidak ada hasil ditemukan</div>';
+            searchResults.innerHTML = '<div style="padding:28px 0;text-align:center;color:rgba(255,255,255,0.45);font-size:13.5px;"><div style="font-size:15px;font-weight:600;margin-bottom:4px;color:rgba(255,255,255,0.70);">Tidak ada hasil untuk "' + query.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '"</div>Coba kata kunci lain seperti "artikel", "layanan", "vision", "nlp", atau "machine learning"</div>';
             return;
         }
 
-        // Group by category
+        // Group by category in prioritized order
+        var order = ['Artikel', 'Layanan AI', 'Topik AI', 'Halaman', 'Mitra', 'Aksi'];
         var groups = {};
         matched.forEach(function(item) {
             if (!groups[item.category]) groups[item.category] = [];
             groups[item.category].push(item);
         });
 
+        var badgeStyles = {
+            'Artikel': 'background:rgba(0,212,255,0.12);color:#00d4ff;border:1px solid rgba(0,212,255,0.3);',
+            'Layanan AI': 'background:rgba(124,58,237,0.14);color:#c084fc;border:1px solid rgba(124,58,237,0.35);',
+            'Topik AI': 'background:rgba(236,72,153,0.12);color:#f472b6;border:1px solid rgba(236,72,153,0.3);',
+            'Halaman': 'background:rgba(59,130,246,0.12);color:#60a5fa;border:1px solid rgba(59,130,246,0.3);',
+            'Mitra': 'background:rgba(245,158,11,0.12);color:#fbbf24;border:1px solid rgba(245,158,11,0.3);',
+            'Aksi': 'background:rgba(16,185,129,0.12);color:#34d399;border:1px solid rgba(16,185,129,0.3);'
+        };
+
         var html = '';
-        Object.keys(groups).forEach(function(cat) {
-            html += '<div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(0,212,255,0.60);padding:8px 12px 4px;">' + cat + '</div>';
+        var sortedCats = Object.keys(groups).sort(function(a, b) {
+            var ia = order.indexOf(a);
+            var ib = order.indexOf(b);
+            if (ia === -1) ia = 999;
+            if (ib === -1) ib = 999;
+            return ia - ib;
+        });
+
+        sortedCats.forEach(function(cat) {
+            var bStyle = badgeStyles[cat] || 'background:rgba(0,212,255,0.10);color:#00d4ff;';
+            html += '<div style="font-size:10.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(0,212,255,0.70);padding:10px 12px 6px;">' + cat + ' (' + groups[cat].length + ')</div>';
             groups[cat].forEach(function(item) {
                 var target = item.external ? ' target="_blank" rel="noopener noreferrer"' : '';
                 var dataAction = item.action ? ' data-action="' + item.action + '"' : '';
-                html += '<a href="' + item.url + '"' + target + dataAction + ' class="search-result-item" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;text-decoration:none;color:rgba(255,255,255,0.80);transition:all 0.15s ease;cursor:pointer;">';
-                html += '<span style="flex-shrink:0;opacity:0.6;">' + item.icon + '</span>';
-                html += '<span style="flex:1;"><div style="font-size:13px;font-weight:500;">' + item.label + '</div><div style="font-size:11px;color:rgba(255,255,255,0.40);margin-top:1px;">' + item.desc + '</div></span>';
-                html += '<span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(0,212,255,0.10);color:rgba(0,212,255,0.80);font-weight:600;">' + cat + '</span>';
+                html += '<a href="' + item.url + '"' + target + dataAction + ' class="search-result-item" style="display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;text-decoration:none;color:rgba(255,255,255,0.88);transition:all 0.15s ease;cursor:pointer;margin-bottom:2px;">';
+                html += '<span style="flex-shrink:0;opacity:0.75;display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,0.04);">' + item.icon + '</span>';
+                html += '<span style="flex:1;min-width:0;"><div style="font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + item.label + '</div><div style="font-size:11.5px;color:rgba(255,255,255,0.48);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + item.desc + '</div></span>';
+                html += '<span style="font-size:10px;padding:3px 9px;border-radius:100px;font-weight:600;white-space:nowrap;' + bStyle + '">' + cat + '</span>';
                 html += '</a>';
             });
         });
@@ -4923,7 +5042,7 @@
 
         // Add hover styles and click handlers
         searchResults.querySelectorAll('.search-result-item').forEach(function(el) {
-            el.addEventListener('mouseenter', function() { this.style.background = 'rgba(0,212,255,0.08)'; });
+            el.addEventListener('mouseenter', function() { this.style.background = 'rgba(0,212,255,0.09)'; });
             el.addEventListener('mouseleave', function() { this.style.background = 'none'; });
             el.addEventListener('click', function(e) {
                 if (this.dataset.action === 'scrollTop') {

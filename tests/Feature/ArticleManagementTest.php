@@ -283,5 +283,17 @@ class ArticleManagementTest extends TestCase
         $detailResponse->assertStatus(200);
         $detailResponse->assertSee('Artikel Integrasi AI Terbaru Otomatis');
     }
+
+    public function test_homepage_search_modal_indexes_articles_and_services()
+    {
+        $response = $this->get('/');
+        $response->assertStatus(200);
+        $response->assertSee('id="search-modal"', false);
+        $response->assertSee('id="search-input"', false);
+        $response->assertSee('Computer Vision', false);
+        $response->assertSee('NLP', false);
+        $response->assertSee('Semua Artikel', false);
+        $response->assertSee('Cari artikel, layanan', false);
+    }
 }
 

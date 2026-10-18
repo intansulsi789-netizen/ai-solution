@@ -106,7 +106,7 @@ Route::get('/', function () use ($getServices, $getArticles) {
     // limit to 3 latest articles for homepage
     $homepageArticles = array_slice($articles, 0, 3);
 
-    return view('welcome', compact('services', 'adminUser', 'partners', 'cmsAbout', 'cmsHomepage', 'cmsContact', 'homepageArticles'));
+    return view('welcome', compact('services', 'adminUser', 'partners', 'cmsAbout', 'cmsHomepage', 'cmsContact', 'homepageArticles', 'articles'));
 });
 
 Route::get('/layanan/{slug}', function ($slug) {
