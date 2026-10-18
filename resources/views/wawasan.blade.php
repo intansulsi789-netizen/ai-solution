@@ -83,17 +83,148 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            background-image:
-                radial-gradient(circle at 15% 15%, rgba(0, 212, 255, 0.06) 0%, transparent 45%),
-                radial-gradient(circle at 85% 25%, rgba(124, 58, 237, 0.06) 0%, transparent 45%);
+            background-color: #020818;
             background-attachment: fixed;
             overflow-x: clip;
+            position: relative;
         }
 
         html[data-theme="light"] body {
-            background-image:
-                radial-gradient(circle at 15% 15%, rgba(2, 132, 199, 0.04) 0%, transparent 45%),
-                radial-gradient(circle at 85% 25%, rgba(124, 58, 237, 0.04) 0%, transparent 45%);
+            background-color: #f8fafc;
+        }
+
+        /* ==========================================
+           FUTURISTIC AMBIENT SCENE & BACKGROUND
+        ========================================== */
+        .wawasan-bg-scene {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .wawasan-aurora {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            will-change: transform, opacity;
+        }
+
+        .aurora-cyan-top {
+            width: 720px;
+            height: 720px;
+            top: -160px;
+            left: -140px;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.20) 0%, rgba(0, 168, 255, 0.08) 45%, transparent 70%);
+            filter: blur(85px);
+            animation: aurora-float-cyan 14s ease-in-out infinite alternate;
+        }
+
+        .aurora-purple-top {
+            width: 780px;
+            height: 780px;
+            top: -140px;
+            right: -160px;
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.22) 0%, rgba(167, 139, 250, 0.10) 45%, transparent 70%);
+            filter: blur(90px);
+            animation: aurora-float-purple 16s ease-in-out infinite alternate;
+        }
+
+        .aurora-pink-mid {
+            width: 680px;
+            height: 560px;
+            top: 48%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(ellipse, rgba(0, 212, 255, 0.11) 0%, rgba(236, 72, 153, 0.09) 35%, rgba(124, 58, 237, 0.08) 60%, transparent 75%);
+            filter: blur(95px);
+            animation: aurora-pulse-mid 12s ease-in-out infinite alternate;
+        }
+
+        .aurora-blue-bottom {
+            width: 950px;
+            height: 520px;
+            bottom: -160px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: radial-gradient(ellipse at center, rgba(0, 212, 255, 0.15) 0%, rgba(124, 58, 237, 0.14) 45%, transparent 70%);
+            filter: blur(90px);
+            animation: aurora-float-bottom 18s ease-in-out infinite alternate;
+        }
+
+        .wawasan-grid-mesh {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(0, 212, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 212, 255, 0.05) 1px, transparent 1px);
+            background-size: 48px 48px;
+            mask-image: radial-gradient(ellipse at 50% 40%, rgba(0, 0, 0, 0.95) 25%, rgba(0, 0, 0, 0.45) 65%, transparent 90%);
+            -webkit-mask-image: radial-gradient(ellipse at 50% 40%, rgba(0, 0, 0, 0.95) 25%, rgba(0, 0, 0, 0.45) 65%, transparent 90%);
+            opacity: 0.85;
+            pointer-events: none;
+        }
+
+        .wawasan-radar-scanner {
+            position: absolute;
+            top: -20%;
+            left: -20%;
+            width: 140%;
+            height: 140%;
+            background: radial-gradient(ellipse at center, transparent 40%, rgba(0, 212, 255, 0.035) 58%, transparent 70%);
+            pointer-events: none;
+            animation: radar-rotate 25s linear infinite;
+        }
+
+        /* Lateral tech circuit lines */
+        .wawasan-circuit-flank {
+            position: absolute;
+            top: 80px;
+            bottom: 80px;
+            width: 150px;
+            pointer-events: none;
+            opacity: 0.65;
+            z-index: 1;
+        }
+        .wawasan-circuit-left {
+            left: 12px;
+        }
+        .wawasan-circuit-right {
+            right: 12px;
+        }
+        .circuit-svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Light mode overrides for ambient scene */
+        html[data-theme="light"] .aurora-cyan-top {
+            background: radial-gradient(circle, rgba(2, 132, 199, 0.09) 0%, transparent 65%);
+            filter: blur(60px);
+        }
+        html[data-theme="light"] .aurora-purple-top {
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.08) 0%, transparent 65%);
+            filter: blur(65px);
+        }
+        html[data-theme="light"] .aurora-pink-mid {
+            background: radial-gradient(ellipse, rgba(2, 132, 199, 0.06) 0%, transparent 65%);
+            filter: blur(70px);
+        }
+        html[data-theme="light"] .aurora-blue-bottom {
+            background: radial-gradient(ellipse at center, rgba(124, 58, 237, 0.07) 0%, transparent 65%);
+            filter: blur(70px);
+        }
+        html[data-theme="light"] .wawasan-grid-mesh {
+            background-image: 
+                linear-gradient(rgba(15, 23, 42, 0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(15, 23, 42, 0.035) 1px, transparent 1px);
+            opacity: 0.6;
+        }
+        html[data-theme="light"] .wawasan-circuit-flank {
+            opacity: 0.3;
         }
 
         /* ==========================================
@@ -239,10 +370,32 @@
            HERO SECTION
         ========================================== */
         .wawasan-hero {
-            padding: 60px 24px 30px;
+            position: relative;
+            z-index: 2;
+            padding: 68px 24px 32px;
             text-align: center;
-            max-width: 860px;
+            max-width: 880px;
             margin: 0 auto;
+        }
+
+        .wawasan-hero-halo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 520px;
+            height: 260px;
+            background: radial-gradient(ellipse, rgba(0, 212, 255, 0.16) 0%, rgba(124, 58, 237, 0.12) 45%, transparent 75%);
+            filter: blur(45px);
+            pointer-events: none;
+            z-index: -1;
+            animation: hero-halo-pulse 6s ease-in-out infinite alternate;
+        }
+
+        @keyframes hero-halo-pulse {
+            0% { transform: translate(-50%, -50%) scale(0.92); opacity: 0.65; }
+            50% { transform: translate(-50%, -50%) scale(1.08); opacity: 0.95; }
+            100% { transform: translate(-50%, -50%) scale(0.92); opacity: 0.65; }
         }
 
         .breadcrumb {
@@ -275,9 +428,10 @@
             color: var(--cyan-neon);
             padding: 7px 18px;
             background: rgba(0, 212, 255, 0.08);
-            border: 1px solid rgba(0, 212, 255, 0.20);
+            border: 1px solid rgba(0, 212, 255, 0.25);
             border-radius: 100px;
             margin-bottom: 20px;
+            box-shadow: 0 0 16px rgba(0, 212, 255, 0.12);
         }
 
         .badge-dot {
@@ -302,12 +456,56 @@
             line-height: 1.2;
             margin-bottom: 16px;
             color: var(--text-main);
+            text-shadow: 0 0 40px rgba(0, 212, 255, 0.20);
         }
 
         .wawasan-hero-desc {
             font-size: clamp(15px, 2vw, 18px);
             color: var(--text-muted);
             line-height: 1.6;
+        }
+
+        .wawasan-tech-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            max-width: 440px;
+            margin: 28px auto 0;
+        }
+
+        .divider-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.45), transparent);
+        }
+
+        .divider-gem {
+            width: 9px;
+            height: 9px;
+            position: relative;
+            transform: rotate(45deg);
+            border: 1.5px solid var(--cyan-neon);
+            background: #020818;
+            box-shadow: 0 0 10px var(--cyan-neon);
+        }
+
+        .gem-pulse {
+            position: absolute;
+            inset: 1px;
+            background: linear-gradient(135deg, var(--cyan-neon), var(--purple-neon));
+            animation: gem-flash 2.5s infinite ease-in-out;
+        }
+
+        @keyframes gem-flash {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
+
+        html[data-theme="light"] .divider-gem {
+            background: #ffffff;
+            border-color: #0284c7;
+            box-shadow: 0 0 8px rgba(2, 132, 199, 0.4);
         }
 
         /* ==========================================
@@ -319,6 +517,8 @@
             margin: 0 auto;
             padding: 20px 24px 80px;
             flex-grow: 1;
+            position: relative;
+            z-index: 2;
         }
 
         .wawasan-grid {
@@ -329,49 +529,57 @@
         }
 
         .article-card {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
+            background: linear-gradient(160deg, rgba(8, 18, 48, 0.65) 0%, rgba(4, 11, 32, 0.82) 100%);
+            border: 1px solid rgba(0, 212, 255, 0.16);
             border-radius: 24px;
             overflow: hidden;
             display: flex;
             flex-direction: column;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
             cursor: pointer;
             text-decoration: none;
             height: 100%;
             position: relative;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.40), inset 0 1px 0 rgba(255, 255, 255, 0.08);
         }
 
         html[data-theme="light"] .article-card {
             background: #ffffff;
             border: 1px solid rgba(15, 23, 42, 0.08);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
         }
 
         .article-card::before {
             content: '';
             position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(0,168,255,0.06), rgba(124,58,237,0.06));
-            opacity: 0;
-            transition: opacity 0.4s;
-            pointer-events: none;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 5%, var(--cyan-neon) 50%, var(--purple-neon) 80%, transparent 95%);
+            opacity: 0.6;
+            transition: opacity 0.4s, height 0.4s;
+            z-index: 3;
         }
 
         .article-card:hover {
             transform: translateY(-8px);
-            border-color: var(--card-hover-border);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 30px rgba(0, 168, 255, 0.12);
+            border-color: rgba(0, 212, 255, 0.45);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.55),
+                        0 0 35px rgba(0, 212, 255, 0.22),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.20);
         }
 
         html[data-theme="light"] .article-card:hover {
-            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08), 0 0 20px rgba(2, 132, 199, 0.08);
+            border-color: rgba(2, 132, 199, 0.4);
+            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.10), 0 0 25px rgba(2, 132, 199, 0.12);
         }
 
         .article-card:hover::before {
             opacity: 1;
+            height: 3px;
         }
 
         .article-img-wrap {
@@ -808,6 +1016,12 @@
         }
 
         /* Responsive */
+        @media (max-width: 1200px) {
+            .wawasan-circuit-flank {
+                display: none;
+            }
+        }
+
         @media (max-width: 1024px) {
             .wawasan-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -839,9 +1053,92 @@
                 text-align: center;
             }
         }
+
+        @keyframes aurora-float-cyan {
+            0% { transform: translate(0, 0) scale(1); opacity: 0.75; }
+            50% { transform: translate(45px, 35px) scale(1.12); opacity: 0.95; }
+            100% { transform: translate(-20px, 20px) scale(0.98); opacity: 0.75; }
+        }
+
+        @keyframes aurora-float-purple {
+            0% { transform: translate(0, 0) scale(1); opacity: 0.8; }
+            50% { transform: translate(-40px, 30px) scale(1.15); opacity: 1; }
+            100% { transform: translate(25px, -20px) scale(0.95); opacity: 0.8; }
+        }
+
+        @keyframes aurora-pulse-mid {
+            0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.6; }
+            50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.9; }
+            100% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.6; }
+        }
+
+        @keyframes aurora-float-bottom {
+            0% { transform: translateX(-50%) scale(0.95); opacity: 0.7; }
+            50% { transform: translateX(-48%) scale(1.1); opacity: 0.95; }
+            100% { transform: translateX(-52%) scale(0.95); opacity: 0.7; }
+        }
+
+        @keyframes radar-rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
+
+    <!-- Futuristic Ambient Background Scene -->
+    <div class="wawasan-bg-scene" aria-hidden="true">
+        <div class="wawasan-aurora aurora-cyan-top"></div>
+        <div class="wawasan-aurora aurora-purple-top"></div>
+        <div class="wawasan-aurora aurora-pink-mid"></div>
+        <div class="wawasan-aurora aurora-blue-bottom"></div>
+        <div class="wawasan-grid-mesh"></div>
+        <div class="wawasan-radar-scanner"></div>
+        
+        <!-- Flanking Circuit Lines -->
+        <div class="wawasan-circuit-flank wawasan-circuit-left">
+            <svg class="circuit-svg" viewBox="0 0 160 800" fill="none">
+                <path d="M20 0 V240 L70 290 V450 L30 490 V800" stroke="url(#cyan-grad-l)" stroke-width="1.5" stroke-dasharray="4 8" opacity="0.45" />
+                <path d="M60 0 V180 L110 230 V390 L80 420 V800" stroke="url(#purple-grad-l)" stroke-width="1" opacity="0.35" />
+                <circle cx="70" cy="290" r="4" fill="#00d4ff" />
+                <circle cx="30" cy="490" r="3.5" fill="#7c3aed" />
+                <circle cx="110" cy="230" r="3" fill="#ec4899" />
+                <defs>
+                    <linearGradient id="cyan-grad-l" x1="0" y1="0" x2="0" y2="800" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#00d4ff" stop-opacity="0.8"/>
+                        <stop offset="0.5" stop-color="#7c3aed" stop-opacity="0.4"/>
+                        <stop offset="1" stop-color="#00d4ff" stop-opacity="0.1"/>
+                    </linearGradient>
+                    <linearGradient id="purple-grad-l" x1="0" y1="0" x2="0" y2="800" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#7c3aed" stop-opacity="0.7"/>
+                        <stop offset="0.6" stop-color="#00d4ff" stop-opacity="0.3"/>
+                        <stop offset="1" stop-color="#7c3aed" stop-opacity="0.1"/>
+                    </linearGradient>
+                </defs>
+            </svg>
+        </div>
+        <div class="wawasan-circuit-flank wawasan-circuit-right">
+            <svg class="circuit-svg" viewBox="0 0 160 800" fill="none">
+                <path d="M140 0 V220 L90 270 V430 L130 470 V800" stroke="url(#cyan-grad-r)" stroke-width="1.5" stroke-dasharray="4 8" opacity="0.45" />
+                <path d="M100 0 V160 L50 210 V370 L80 400 V800" stroke="url(#purple-grad-r)" stroke-width="1" opacity="0.35" />
+                <circle cx="90" cy="270" r="4" fill="#00d4ff" />
+                <circle cx="130" cy="470" r="3.5" fill="#7c3aed" />
+                <circle cx="50" cy="210" r="3" fill="#00d4ff" />
+                <defs>
+                    <linearGradient id="cyan-grad-r" x1="0" y1="0" x2="0" y2="800" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#00d4ff" stop-opacity="0.8"/>
+                        <stop offset="0.5" stop-color="#ec4899" stop-opacity="0.4"/>
+                        <stop offset="1" stop-color="#7c3aed" stop-opacity="0.1"/>
+                    </linearGradient>
+                    <linearGradient id="purple-grad-r" x1="0" y1="0" x2="0" y2="800" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#7c3aed" stop-opacity="0.7"/>
+                        <stop offset="0.6" stop-color="#00d4ff" stop-opacity="0.3"/>
+                        <stop offset="1" stop-color="#00d4ff" stop-opacity="0.1"/>
+                    </linearGradient>
+                </defs>
+            </svg>
+        </div>
+    </div>
 
     <!-- Navbar -->
     <nav class="navbar" role="navigation" aria-label="Main Navigation">
@@ -892,6 +1189,7 @@
 
     <!-- Hero Header -->
     <header class="wawasan-hero">
+        <div class="wawasan-hero-halo" aria-hidden="true"></div>
         <div class="breadcrumb">
             <a href="/">Beranda</a>
             <span>/</span>
@@ -905,6 +1203,14 @@
 
         <h1 class="wawasan-hero-title">Wawasan &amp; Inovasi AI Solution</h1>
         <p class="wawasan-hero-desc">Kumpulan artikel, pemikiran mendalam, dan perkembangan teknologi kecerdasan buatan untuk membantu bisnis berkembang lebih cepat dan efisien.</p>
+
+        <div class="wawasan-tech-divider" aria-hidden="true">
+            <span class="divider-line"></span>
+            <span class="divider-gem">
+                <span class="gem-pulse"></span>
+            </span>
+            <span class="divider-line"></span>
+        </div>
     </header>
 
     <!-- Articles Grid Section -->

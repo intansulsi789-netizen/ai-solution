@@ -211,10 +211,129 @@
             color: var(--text-main);
             font-family: 'Inter', sans-serif;
             line-height: 1.6;
-            background-image:
-                radial-gradient(circle at 15% 50%, rgba(0, 212, 255, 0.06) 0%, transparent 50%),
-                radial-gradient(circle at 85% 30%, rgba(124, 58, 237, 0.06) 0%, transparent 50%);
+            background-color: #020818;
             background-attachment: fixed;
+            position: relative;
+        }
+
+        /* ===== FUTURISTIC AMBIENT SCENE ===== */
+        .article-bg-scene {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .article-aurora {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            will-change: transform, opacity;
+        }
+
+        .art-aurora-cyan-top {
+            width: 700px;
+            height: 700px;
+            top: -150px;
+            left: -150px;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.18) 0%, rgba(0, 168, 255, 0.08) 45%, transparent 70%);
+            filter: blur(85px);
+            animation: aurora-float-cyan 14s ease-in-out infinite alternate;
+        }
+
+        .art-aurora-purple-top {
+            width: 750px;
+            height: 750px;
+            top: -120px;
+            right: -150px;
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.20) 0%, rgba(167, 139, 250, 0.09) 45%, transparent 70%);
+            filter: blur(90px);
+            animation: aurora-float-purple 16s ease-in-out infinite alternate;
+        }
+
+        .art-aurora-pink-mid {
+            width: 650px;
+            height: 550px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(ellipse, rgba(0, 212, 255, 0.09) 0%, rgba(236, 72, 153, 0.08) 35%, rgba(124, 58, 237, 0.07) 60%, transparent 75%);
+            filter: blur(95px);
+            animation: aurora-pulse-mid 12s ease-in-out infinite alternate;
+        }
+
+        .art-aurora-blue-bottom {
+            width: 900px;
+            height: 500px;
+            bottom: -150px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: radial-gradient(ellipse at center, rgba(0, 212, 255, 0.14) 0%, rgba(124, 58, 237, 0.12) 45%, transparent 70%);
+            filter: blur(90px);
+            animation: aurora-float-bottom 18s ease-in-out infinite alternate;
+        }
+
+        .article-grid-mesh {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(0, 212, 255, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 212, 255, 0.04) 1px, transparent 1px);
+            background-size: 48px 48px;
+            mask-image: radial-gradient(ellipse at 50% 40%, rgba(0, 0, 0, 0.95) 20%, rgba(0, 0, 0, 0.4) 65%, transparent 85%);
+            -webkit-mask-image: radial-gradient(ellipse at 50% 40%, rgba(0, 0, 0, 0.95) 20%, rgba(0, 0, 0, 0.4) 65%, transparent 85%);
+            opacity: 0.85;
+            pointer-events: none;
+        }
+
+        html[data-theme="light"] .art-aurora-cyan-top {
+            background: radial-gradient(circle, rgba(2, 132, 199, 0.08) 0%, transparent 65%);
+            filter: blur(60px);
+        }
+        html[data-theme="light"] .art-aurora-purple-top {
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.07) 0%, transparent 65%);
+            filter: blur(65px);
+        }
+        html[data-theme="light"] .art-aurora-pink-mid {
+            background: radial-gradient(ellipse, rgba(2, 132, 199, 0.05) 0%, transparent 65%);
+            filter: blur(70px);
+        }
+        html[data-theme="light"] .art-aurora-blue-bottom {
+            background: radial-gradient(ellipse at center, rgba(124, 58, 237, 0.06) 0%, transparent 65%);
+            filter: blur(70px);
+        }
+        html[data-theme="light"] .article-grid-mesh {
+            background-image: 
+                linear-gradient(rgba(15, 23, 42, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(15, 23, 42, 0.03) 1px, transparent 1px);
+            opacity: 0.6;
+        }
+
+        @keyframes aurora-float-cyan {
+            0% { transform: translate(0, 0) scale(1); opacity: 0.75; }
+            50% { transform: translate(45px, 35px) scale(1.12); opacity: 0.95; }
+            100% { transform: translate(-20px, 20px) scale(0.98); opacity: 0.75; }
+        }
+
+        @keyframes aurora-float-purple {
+            0% { transform: translate(0, 0) scale(1); opacity: 0.8; }
+            50% { transform: translate(-40px, 30px) scale(1.15); opacity: 1; }
+            100% { transform: translate(25px, -20px) scale(0.95); opacity: 0.8; }
+        }
+
+        @keyframes aurora-pulse-mid {
+            0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.6; }
+            50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.9; }
+            100% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.6; }
+        }
+
+        @keyframes aurora-float-bottom {
+            0% { transform: translateX(-50%) scale(0.95); opacity: 0.7; }
+            50% { transform: translateX(-48%) scale(1.1); opacity: 0.95; }
+            100% { transform: translateX(-52%) scale(0.95); opacity: 0.7; }
         }
 
         /* ===== NAVBAR ===== */
@@ -731,6 +850,15 @@
     </style>
 </head>
 <body>
+
+    <!-- Futuristic Ambient Background Scene -->
+    <div class="article-bg-scene" aria-hidden="true">
+        <div class="article-aurora art-aurora-cyan-top"></div>
+        <div class="article-aurora art-aurora-purple-top"></div>
+        <div class="article-aurora art-aurora-pink-mid"></div>
+        <div class="article-aurora art-aurora-blue-bottom"></div>
+        <div class="article-grid-mesh"></div>
+    </div>
 
     <!-- Navbar -->
     <nav class="navbar">
