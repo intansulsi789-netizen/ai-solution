@@ -295,5 +295,48 @@ class ArticleManagementTest extends TestCase
         $response->assertSee('Semua Artikel', false);
         $response->assertSee('Cari artikel, layanan', false);
     }
+
+    public function test_scheduled_status_requires_published_at_validation()
+    {
+        $payload = [
+            'judul'        => 'Artikel Jadwal Tanpa Tanggal',
+            'slug'         => 'artikel-jadwal-tanpa-tanggal',
+            'status'       => 'scheduled',
+            'published_at' => '',
+            'is_active'    => '1',
+        ];
+
+        $response = $this->actingAs($this->admin)->post(route('admin.articles.store'), $payload);
+        $response->assertSessionHasErrors(['published_at']);
+    }
+
+    public function test_admin_can_update_existing_article_to_scheduled()
+    {
+        $article = Article::create([
+            'judul'     => 'Artikel Draft Awal',
+            'slug'      => 'artikel-draft-awal',
+            'status'    => 'draft',
+            'is_active' => true,
+        ]);
+
+        $futureDate = now()->addDays(2)->format('Y-m-d\TH:i');
+
+        $updatePayload = [
+            'judul'        => 'Artikel Draft Awal (Dijadwalkan)',
+            'slug'         => 'artikel-draft-awal',
+            'status'       => 'scheduled',
+            'published_at' => $futureDate,
+            'is_active'    => '1',
+        ];
+
+        $response = $this->actingAs($this->admin)->put(route('admin.articles.update', $article->id), $updatePayload);
+        $response->assertRedirect(route('admin.articles.index'));
+
+        $article->refresh();
+        $this->assertEquals('scheduled', $article->status);
+        $this->assertNotNull($article->published_at);
+        $this->assertNotNull($article->tanggal);
+    }
 }
+
 

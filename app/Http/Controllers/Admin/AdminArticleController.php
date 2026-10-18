@@ -76,19 +76,25 @@ class AdminArticleController extends Controller
         }
 
         // Penanganan Status & Tanggal Publikasi (WIB)
-        if ($request->status === 'published') {
-            $pubDate = $request->filled('published_at')
-                ? Carbon::parse($request->published_at, 'Asia/Jakarta')
-                : now('Asia/Jakarta');
-            $data['published_at'] = $pubDate;
-            $data['tanggal']      = $pubDate->locale('id')->translatedFormat('d F Y');
-        } elseif ($request->status === 'scheduled') {
-            $pubDate = Carbon::parse($request->published_at, 'Asia/Jakarta');
-            $data['published_at'] = $pubDate;
-            $data['tanggal']      = $pubDate->locale('id')->translatedFormat('d F Y');
-        } else { // draft
-            $data['published_at'] = null;
-            $data['tanggal']      = null;
+        try {
+            if ($request->status === 'published') {
+                $pubDate = $request->filled('published_at')
+                    ? Carbon::parse($request->published_at, 'Asia/Jakarta')
+                    : now('Asia/Jakarta');
+                $data['published_at'] = $pubDate;
+                $data['tanggal']      = $pubDate->locale('id')->translatedFormat('d F Y');
+            } elseif ($request->status === 'scheduled') {
+                $pubDate = Carbon::parse($request->published_at, 'Asia/Jakarta');
+                $data['published_at'] = $pubDate;
+                $data['tanggal']      = $pubDate->locale('id')->translatedFormat('d F Y');
+            } else { // draft
+                $data['published_at'] = null;
+                $data['tanggal']      = null;
+            }
+        } catch (\Throwable $e) {
+            return back()->withInput()->withErrors([
+                'published_at' => 'Format tanggal dan waktu publikasi tidak valid.'
+            ]);
         }
 
         $data['is_active'] = $request->has('is_active');
@@ -171,19 +177,25 @@ class AdminArticleController extends Controller
         }
 
         // Penanganan Status & Tanggal Publikasi (WIB)
-        if ($request->status === 'published') {
-            $pubDate = $request->filled('published_at')
-                ? Carbon::parse($request->published_at, 'Asia/Jakarta')
-                : ($article->published_at ?? now('Asia/Jakarta'));
-            $data['published_at'] = $pubDate;
-            $data['tanggal']      = $pubDate->locale('id')->translatedFormat('d F Y');
-        } elseif ($request->status === 'scheduled') {
-            $pubDate = Carbon::parse($request->published_at, 'Asia/Jakarta');
-            $data['published_at'] = $pubDate;
-            $data['tanggal']      = $pubDate->locale('id')->translatedFormat('d F Y');
-        } else { // draft
-            $data['published_at'] = null;
-            $data['tanggal']      = null;
+        try {
+            if ($request->status === 'published') {
+                $pubDate = $request->filled('published_at')
+                    ? Carbon::parse($request->published_at, 'Asia/Jakarta')
+                    : ($article->published_at ?? now('Asia/Jakarta'));
+                $data['published_at'] = $pubDate;
+                $data['tanggal']      = $pubDate->locale('id')->translatedFormat('d F Y');
+            } elseif ($request->status === 'scheduled') {
+                $pubDate = Carbon::parse($request->published_at, 'Asia/Jakarta');
+                $data['published_at'] = $pubDate;
+                $data['tanggal']      = $pubDate->locale('id')->translatedFormat('d F Y');
+            } else { // draft
+                $data['published_at'] = null;
+                $data['tanggal']      = null;
+            }
+        } catch (\Throwable $e) {
+            return back()->withInput()->withErrors([
+                'published_at' => 'Format tanggal dan waktu publikasi tidak valid.'
+            ]);
         }
 
         $data['is_active'] = $request->has('is_active');
