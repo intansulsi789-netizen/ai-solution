@@ -103,8 +103,8 @@ Route::get('/', function () use ($getServices, $getArticles) {
     $cmsContact  = \App\Models\CmsContact::first();
 
     $articles    = $getArticles();
-    // limit to 4 latest articles for homepage
-    $homepageArticles = array_slice($articles, 0, 4);
+    // limit to 3 latest articles for homepage
+    $homepageArticles = array_slice($articles, 0, 3);
 
     return view('welcome', compact('services', 'adminUser', 'partners', 'cmsAbout', 'cmsHomepage', 'cmsContact', 'homepageArticles'));
 });
@@ -135,6 +135,25 @@ Route::get('/layanan/{slug}', function ($slug) {
     return view('service-detail', ['service' => $serviceData]);
 });
 
+Route::get('/wawasan', function () {
+    try {
+        $articles = \App\Models\Article::published()
+            ->orderByRaw('COALESCE(published_at, created_at) DESC')
+            ->paginate(6)
+            ->withQueryString();
+    } catch (\Throwable $e) {
+        $articles = \App\Models\Article::where('is_active', true)
+            ->orderBy('created_at', 'DESC')
+            ->paginate(6)
+            ->withQueryString();
+    }
+
+    $cmsContact = \App\Models\CmsContact::first();
+    $cmsSeo     = \App\Models\CmsSeo::first();
+
+    return view('wawasan', compact('articles', 'cmsContact', 'cmsSeo'));
+})->name('articles.index');
+
 Route::get('/wawasan/{slug}', function ($slug) use ($getArticles) {
     $articles = $getArticles();
     $articleData = collect($articles)->firstWhere('slug', $slug);
@@ -144,6 +163,7 @@ Route::get('/wawasan/{slug}', function ($slug) use ($getArticles) {
     $otherArticles = collect($articles)->where('slug', '!=', $slug)->values()->all();
     return view('article-detail', ['article' => $articleData, 'allArticles' => $otherArticles]);
 })->name('article.detail');
+
 
 // ============================================================
 // FRONTEND ROUTES (POST)

@@ -1823,10 +1823,58 @@
         }
         .wawasan-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 24px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
             margin-top: 50px;
         }
+        .wawasan-actions {
+            display: flex;
+            justify-content: center;
+            margin-top: 48px;
+        }
+        .btn-lihat-semua-artikel {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 34px;
+            background: rgba(0, 212, 255, 0.08);
+            border: 1px solid rgba(0, 212, 255, 0.35);
+            border-radius: 100px;
+            color: #ffffff;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 20px rgba(0, 212, 255, 0.15);
+        }
+        .btn-lihat-semua-artikel:hover {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.22) 0%, rgba(124, 58, 237, 0.25) 100%);
+            border-color: var(--cyan-neon);
+            color: var(--cyan-neon);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 212, 255, 0.35);
+        }
+        .btn-lihat-semua-artikel svg {
+            transition: transform 0.3s ease;
+            color: var(--cyan-neon);
+        }
+        .btn-lihat-semua-artikel:hover svg {
+            transform: translateX(5px);
+        }
+        html[data-theme="light"] .btn-lihat-semua-artikel {
+            background: #ffffff;
+            border-color: rgba(2, 132, 199, 0.35);
+            color: #0f172a;
+            box-shadow: 0 4px 16px rgba(2, 132, 199, 0.10);
+        }
+        html[data-theme="light"] .btn-lihat-semua-artikel:hover {
+            background: rgba(2, 132, 199, 0.08);
+            border-color: #0284c7;
+            color: #0284c7;
+            box-shadow: 0 6px 20px rgba(2, 132, 199, 0.20);
+        }
+
         .article-card {
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.06);
@@ -2943,6 +2991,16 @@
             </a>
             @endforeach
         @endif
+    </div>
+
+    <div class="wawasan-actions">
+        <a href="{{ route('articles.index') }}" class="btn-lihat-semua-artikel" id="btn-lihat-semua-artikel">
+            <span>Lihat Semua Artikel</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+        </a>
     </div>
 </section>
 

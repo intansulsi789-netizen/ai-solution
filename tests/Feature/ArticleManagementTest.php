@@ -218,4 +218,70 @@ class ArticleManagementTest extends TestCase
         $responseFile = $this->actingAs($this->admin)->post(route('admin.articles.store'), $payloadFile);
         $responseFile->assertSessionHasErrors(['gambar']);
     }
+
+    public function test_homepage_displays_maximum_three_published_articles_and_has_all_articles_button()
+    {
+        $response = $this->get('/');
+        $response->assertStatus(200);
+        $response->assertSee('Lihat Semua Artikel');
+        $response->assertSee(route('articles.index'));
+
+        $homepageArticles = $response->viewData('homepageArticles');
+        $this->assertNotNull($homepageArticles);
+        $this->assertLessThanOrEqual(3, count($homepageArticles));
+    }
+
+    public function test_wawasan_index_page_displays_all_published_articles_with_pagination()
+    {
+        $response = $this->get('/wawasan');
+        $response->assertStatus(200);
+        $response->assertSee('Wawasan & Inovasi AI Solution');
+        $response->assertViewHas('articles');
+
+        $articles = $response->viewData('articles');
+        $this->assertInstanceOf(\Illuminate\Pagination\LengthAwarePaginator::class, $articles);
+
+        // Pastikan setiap artikel memiliki tautan ke detailnya
+        foreach ($articles as $article) {
+            $response->assertSee(route('article.detail', ['slug' => $article->slug]));
+        }
+    }
+
+    public function test_newly_published_article_from_admin_automatically_appears_in_wawasan_and_homepage()
+    {
+        $uniqueSlug = 'artikel-integrasi-ai-terbaru-' . time();
+        $payload = [
+            'judul'        => 'Artikel Integrasi AI Terbaru Otomatis',
+            'slug'         => $uniqueSlug,
+            'kategori'     => 'Teknologi Masa Depan',
+            'image_type'   => 'url',
+            'gambar_url'   => 'https://images.unsplash.com/photo-1518770660439-4636190af475',
+            'ringkasan'    => 'Ringkasan artikel integrasi otomatis dari admin ke wawasan dan beranda.',
+            'isi_artikel'  => json_encode(['content' => '<p>Konten artikel otomatis</p>', 'takeaway' => 'Otomatisasi sukses', 'readTime' => '2 mnt']),
+            'status'       => 'published',
+            'is_active'    => '1',
+        ];
+
+        // 1. Simpan artikel melalui form admin
+        $postResponse = $this->actingAs($this->admin)->post(route('admin.articles.store'), $payload);
+        $postResponse->assertRedirect(route('admin.articles.index'));
+
+        // 2. Cek apakah langsung muncul di halaman daftar /wawasan
+        $wawasanResponse = $this->get('/wawasan');
+        $wawasanResponse->assertStatus(200);
+        $wawasanResponse->assertSee('Artikel Integrasi AI Terbaru Otomatis');
+        $wawasanResponse->assertSee(route('article.detail', ['slug' => $uniqueSlug]));
+
+        // 3. Cek apakah langsung muncul di halaman utama (karena merupakan artikel terbaru teratas)
+        $homeResponse = $this->get('/');
+        $homeResponse->assertStatus(200);
+        $homeResponse->assertSee('Artikel Integrasi AI Terbaru Otomatis');
+        $homeResponse->assertSee(route('article.detail', ['slug' => $uniqueSlug]));
+
+        // 4. Cek apakah halaman detailnya dapat dibuka dengan status 200
+        $detailResponse = $this->get('/wawasan/' . $uniqueSlug);
+        $detailResponse->assertStatus(200);
+        $detailResponse->assertSee('Artikel Integrasi AI Terbaru Otomatis');
+    }
 }
+

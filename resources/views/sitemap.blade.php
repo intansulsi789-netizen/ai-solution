@@ -6,6 +6,13 @@
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
     </url>
+    <url>
+        <loc>{{ url('/wawasan') }}</loc>
+        <lastmod>{{ now()->tz('UTC')->toAtomString() }}</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.9</priority>
+    </url>
+
     @foreach ($services as $service)
     <url>
         <loc>{{ url('/layanan/' . $service->slug) }}</loc>

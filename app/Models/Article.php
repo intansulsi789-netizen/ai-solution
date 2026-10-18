@@ -60,4 +60,37 @@ class Article extends Model
         }
         return asset('storage/' . $this->gambar);
     }
+
+    /**
+     * Helper tanggal terformat d M Y.
+     */
+    public function getFormattedDateAttribute()
+    {
+        if (!empty($this->published_at)) {
+            return $this->published_at->timezone('Asia/Jakarta')->locale('id')->translatedFormat('d M Y');
+        }
+        if (!empty($this->tanggal)) {
+            $dateStr = str_ireplace(
+                ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'],
+                ['January','February','March','April','May','June','July','August','September','October','November','December'],
+                $this->tanggal
+            );
+            try {
+                return \Carbon\Carbon::parse($dateStr)->locale('id')->translatedFormat('d M Y');
+            } catch (\Throwable $e) {
+                return $this->tanggal;
+            }
+        }
+        return $this->created_at ? $this->created_at->locale('id')->translatedFormat('d M Y') : '';
+    }
+
+    /**
+     * Helper estimasi waktu baca dari JSON isi_artikel.
+     */
+    public function getReadTimeAttribute()
+    {
+        $isi = json_decode($this->isi_artikel, true);
+        return is_array($isi) ? ($isi['readTime'] ?? '') : '';
+    }
 }
+
