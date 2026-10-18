@@ -1144,7 +1144,7 @@
     <nav class="navbar" role="navigation" aria-label="Main Navigation">
         <div class="navbar-inner">
             <div class="nav-brand-wrap">
-                <a href="/" class="nav-logo" aria-label="AI Solution Beranda">
+                <a href="/" class="nav-logo" aria-label="AI Jogja Solutions Beranda">
                     <div class="nav-logo-icon" aria-hidden="true">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="12" cy="12" r="3" fill="white" opacity="0.95"/>
@@ -1162,7 +1162,7 @@
                             <line x1="12" y1="15" x2="12" y2="19.5" stroke="white" stroke-width="1.2" opacity="0.70"/>
                         </svg>
                     </div>
-                    <span class="nav-logo-text"><span>AI</span> Solution</span>
+                    <span class="nav-logo-text"><span>AI</span> Jogja Solutions</span>
                 </a>
 
                 <a href="/" class="btn-back">

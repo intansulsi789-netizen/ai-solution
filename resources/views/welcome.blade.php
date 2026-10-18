@@ -3326,7 +3326,7 @@
     ========================================== -->
     <nav class="navbar" role="navigation" aria-label="Main navigation">
         <!-- Logo -->
-        <a href="/" class="nav-logo" aria-label="AI Solution Home">
+        <a href="/" class="nav-logo" aria-label="AI Jogja Solutions Home">
             <div class="nav-logo-icon" aria-hidden="true">
                 <!-- AI icon: neural network / brain -->
                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -3345,7 +3345,7 @@
                     <line x1="12" y1="15" x2="12" y2="19.5" stroke="white" stroke-width="1.2" opacity="0.70"/>
                 </svg>
             </div>
-            <span class="nav-logo-text"><span>AI</span> Solution</span>
+            <span class="nav-logo-text"><span>AI</span> Jogja Solutions</span>
         </a>
 
         <!-- Desktop nav links -->
@@ -4525,7 +4525,7 @@
 
         {{-- Brand Column --}}
         <div class="footer-brand-col">
-            <a href="/" class="footer-brand-logo" aria-label="AI Solution Home">
+            <a href="/" class="footer-brand-logo" aria-label="AI Jogja Solutions Home">
                 <div class="footer-brand-icon" aria-hidden="true">
                     <svg viewBox="0 0 24 24" fill="none">
                         <circle cx="12" cy="12" r="3" fill="white" opacity="0.95"/>
@@ -4539,7 +4539,7 @@
                         <line x1="15" y1="13" x2="17.88" y2="16.12" stroke="white" stroke-width="1.2" opacity="0.65"/>
                     </svg>
                 </div>
-                <span class="footer-brand-name"><span>AI</span> Solution</span>
+                <span class="footer-brand-name"><span>AI</span> Jogja Solutions</span>
             </a>
             <p class="footer-brand-desc">Platform AI cerdas yang membantu bisnis bekerja lebih cepat, lebih efisien, dan lebih inovatif melalui solusi kecerdasan buatan yang disesuaikan.</p>
             <div class="footer-socials">

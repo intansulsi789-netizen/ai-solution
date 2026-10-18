@@ -299,7 +299,7 @@
                 <line x1="15" y1="13" x2="17.88" y2="16.12" stroke="white" stroke-width="1.2" opacity="0.65"/>
             </svg>
         </div>
-        <span class="logo-text"><span>AI</span> Solution</span>
+        <span class="logo-text"><span>AI</span> Jogja Solutions</span>
     </a>
 
     <div class="login-card">
