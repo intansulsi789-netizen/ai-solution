@@ -506,6 +506,37 @@
             color: #475569;
         }
 
+        html[data-theme="light"] .konsultasi-telemetry-pill {
+            background: rgba(255, 255, 255, 0.92);
+            border-color: rgba(2, 132, 199, 0.25);
+            box-shadow: 0 4px 16px rgba(2, 132, 199, 0.08);
+        }
+        html[data-theme="light"] .konsultasi-telemetry-pill.pill-alt {
+            border-color: rgba(124, 58, 237, 0.25);
+            box-shadow: 0 4px 16px rgba(124, 58, 237, 0.08);
+        }
+        html[data-theme="light"] .pill-title {
+            color: #0369a1;
+        }
+        html[data-theme="light"] .pill-alt .pill-title {
+            color: #7c3aed;
+        }
+        html[data-theme="light"] .pill-sub {
+            color: #64748b;
+        }
+        html[data-theme="light"] .konsultasi-eq-bars {
+            background: rgba(2, 132, 199, 0.06);
+            border-color: rgba(2, 132, 199, 0.20);
+        }
+        html[data-theme="light"] .konsultasi-response-gauge {
+            background: rgba(255, 255, 255, 0.92);
+            border-color: rgba(124, 58, 237, 0.25);
+            box-shadow: 0 4px 16px rgba(124, 58, 237, 0.08);
+        }
+        html[data-theme="light"] .gauge-label {
+            color: #64748b;
+        }
+
         /* Modals & Forms */
         html[data-theme="light"] .modal-box {
             background: #ffffff;
@@ -2512,7 +2543,7 @@
         ========================================== */
         .konsultasi-section {
             padding: 110px 24px;
-            max-width: 1050px;
+            max-width: 1360px;
             margin: 0 auto;
             position: relative;
             z-index: 10;
@@ -2566,6 +2597,181 @@
             z-index: 0;
             animation: ambient-pulse-purple 10s ease-in-out infinite alternate;
         }
+
+        /* KONSULTASI SIDE DECORATIONS */
+        .konsultasi-wrapper {
+            position: relative;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .konsultasi-side-decor {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 195px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            pointer-events: none;
+            z-index: 2;
+        }
+        .konsultasi-side-left {
+            left: 12px;
+            align-items: flex-start;
+            animation: float-hud-left 7s ease-in-out infinite;
+        }
+        .konsultasi-side-right {
+            right: 12px;
+            align-items: flex-end;
+            animation: float-hud-right 8s ease-in-out infinite;
+        }
+
+        /* Telemetry Pill */
+        .konsultasi-telemetry-pill {
+            background: rgba(10, 20, 55, 0.70);
+            border: 1px solid rgba(0, 212, 255, 0.28);
+            border-radius: 12px;
+            padding: 9px 14px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), 0 0 16px rgba(0, 212, 255, 0.12);
+            width: 175px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .konsultasi-telemetry-pill.pill-alt {
+            border-color: rgba(167, 139, 250, 0.30);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), 0 0 16px rgba(124, 58, 237, 0.15);
+        }
+        .pill-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            animation: blink-dot 1.8s ease infinite;
+        }
+        .pill-dot-cyan {
+            background: var(--cyan-neon);
+            box-shadow: 0 0 10px var(--cyan-neon);
+        }
+        .pill-dot-purple {
+            background: #a78bfa;
+            box-shadow: 0 0 10px #a78bfa;
+        }
+        .pill-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .pill-title {
+            font-family: 'Plus Jakarta Sans', monospace;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            color: var(--cyan-neon);
+        }
+        .pill-alt .pill-title {
+            color: #a78bfa;
+        }
+        .pill-sub {
+            font-size: 9px;
+            color: rgba(255, 255, 255, 0.55);
+            letter-spacing: 0.3px;
+        }
+
+        /* Equalizer Frequency Bars */
+        .konsultasi-eq-bars {
+            display: flex;
+            align-items: flex-end;
+            gap: 5px;
+            height: 28px;
+            padding: 4px 8px;
+            background: rgba(0, 212, 255, 0.05);
+            border: 1px solid rgba(0, 212, 255, 0.18);
+            border-radius: 8px;
+            width: 120px;
+        }
+        .eq-bar {
+            flex: 1;
+            background: linear-gradient(180deg, #00d4ff 0%, #7c3aed 100%);
+            border-radius: 2px;
+            transform-origin: bottom;
+            animation: eq-pulse 1.6s ease-in-out infinite alternate;
+        }
+        .eq-b1 { height: 40%; animation-delay: 0.1s; }
+        .eq-b2 { height: 75%; animation-delay: 0.3s; }
+        .eq-b3 { height: 100%; animation-delay: 0.5s; }
+        .eq-b4 { height: 60%; animation-delay: 0.2s; }
+        .eq-b5 { height: 90%; animation-delay: 0.4s; }
+        .eq-b6 { height: 50%; animation-delay: 0.15s; }
+        .eq-b7 { height: 80%; animation-delay: 0.35s; }
+
+        @keyframes eq-pulse {
+            0% { transform: scaleY(0.3); opacity: 0.6; }
+            50% { transform: scaleY(1); opacity: 1; }
+            100% { transform: scaleY(0.4); opacity: 0.7; }
+        }
+
+        /* Side SVG widgets */
+        .konsultasi-side-svg {
+            width: 130px;
+            height: 130px;
+            filter: drop-shadow(0 0 12px rgba(0, 212, 255, 0.18));
+        }
+
+        /* Response Gauge */
+        .konsultasi-response-gauge {
+            width: 165px;
+            background: rgba(10, 20, 55, 0.65);
+            border: 1px solid rgba(167, 139, 250, 0.25);
+            border-radius: 10px;
+            padding: 8px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .gauge-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 9px;
+            color: rgba(255, 255, 255, 0.55);
+            font-family: 'Plus Jakarta Sans', monospace;
+        }
+        .gauge-val {
+            font-weight: 700;
+            color: #a78bfa;
+        }
+        .gauge-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 2px;
+            overflow: hidden;
+            position: relative;
+        }
+        .gauge-fill {
+            position: absolute;
+            top: 0; left: 0; bottom: 0;
+            width: 85%;
+            background: linear-gradient(90deg, #7c3aed, #00d4ff);
+            border-radius: 2px;
+            animation: pulse-glow-aura 4s ease-in-out infinite alternate;
+        }
+
+        @media (max-width: 1240px) {
+            .konsultasi-side-decor { width: 155px; }
+            .konsultasi-telemetry-pill { width: 140px; padding: 7px 10px; }
+            .konsultasi-side-svg { width: 105px; height: 105px; }
+            .konsultasi-response-gauge { width: 135px; }
+        }
+        @media (max-width: 1024px) {
+            .konsultasi-side-decor { display: none; }
+        }
+
         .konsultasi-card {
             background: linear-gradient(135deg, rgba(12, 22, 65, 0.70) 0%, rgba(18, 14, 50, 0.65) 50%, rgba(8, 16, 52, 0.75) 100%);
             backdrop-filter: blur(20px);
@@ -2581,6 +2787,9 @@
                         inset 0 1px 0 rgba(255, 255, 255, 0.15),
                         inset 0 0 40px rgba(0, 212, 255, 0.04);
             transition: all 0.4s ease;
+            max-width: 860px;
+            width: 100%;
+            margin: 0 auto;
         }
         .konsultasi-card:hover {
             border-color: rgba(0, 212, 255, 0.50);
@@ -3808,51 +4017,112 @@
     <div class="konsultasi-grid-mesh"></div>
     <div class="konsultasi-ambient-glow-left"></div>
     <div class="konsultasi-ambient-glow-right"></div>
-    <div class="konsultasi-card">
-        <div class="konsultasi-card-corners">
-            <span class="card-corner card-corner-tl"></span>
-            <span class="card-corner card-corner-tr"></span>
-            <span class="card-corner card-corner-bl"></span>
-            <span class="card-corner card-corner-br"></span>
-        </div>
-        <div class="konsultasi-glow"></div>
-        <div class="konsultasi-lines"></div>
-        <div class="konsultasi-radar-wave">
-            <div class="radar-wave-ring"></div>
-            <div class="radar-wave-ring-2"></div>
-        </div>
-        <div class="konsultasi-content">
-            <div class="konsultasi-icon">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                    <path d="M12 11V7"></path>
-                    <path d="M9 11l3-3 3 3"></path>
-                </svg>
+    
+    <div class="konsultasi-wrapper">
+        <!-- LEFT SIDE DECOR -->
+        <div class="konsultasi-side-decor konsultasi-side-left" aria-hidden="true">
+            <div class="konsultasi-telemetry-pill">
+                <div class="pill-dot pill-dot-cyan"></div>
+                <div class="pill-info">
+                    <span class="pill-title">AI_ADVISORY // 24/7</span>
+                    <span class="pill-sub">CONSULTATION READY</span>
+                </div>
             </div>
-            @php
-                $ctaTitle = (isset($cmsContact) && $cmsContact->judul) ? $cmsContact->judul : 'Punya Kebutuhan AI?';
-                $ctaDesc  = (isset($cmsContact) && $cmsContact->deskripsi) ? $cmsContact->deskripsi : 'Ceritakan kebutuhan Anda kepada kami. Kami akan membantu memahami kebutuhan dan mendiskusikan solusi AI yang sesuai.';
-                $ctaBtnText = (isset($cmsContact) && $cmsContact->teks_tombol) ? $cmsContact->teks_tombol : 'Konsultasikan Kebutuhan';
-                $ctaBtnLink = (isset($cmsContact) && $cmsContact->link_tombol) ? $cmsContact->link_tombol : $waUrl;
-            @endphp
-            <div class="konsultasi-label">KONSULTASI</div>
-            <h2 class="konsultasi-title">{{ $ctaTitle }}</h2>
-            <p class="konsultasi-desc">{{ $ctaDesc }}</p>
             
-            <div class="konsultasi-btn-row">
-                <button type="button" class="konsultasi-open-btn" id="btn-open-modal-konsultasi" onclick="openKonsultasiModal()">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                    {{ $ctaBtnText }}
-                </button>
+            <div class="konsultasi-eq-bars">
+                <span class="eq-bar eq-b1"></span>
+                <span class="eq-bar eq-b2"></span>
+                <span class="eq-bar eq-b3"></span>
+                <span class="eq-bar eq-b4"></span>
+                <span class="eq-bar eq-b5"></span>
+                <span class="eq-bar eq-b6"></span>
+                <span class="eq-bar eq-b7"></span>
+            </div>
 
-                <a href="{{ $ctaBtnLink }}"
-                   class="konsultasi-btn"
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   id="btn-konsultasi-wa">
-                    <svg width="18" height="18" viewBox="0 0 448 512" fill="currentColor"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
-                    {{ $ctaBtnText }} via WA
-                </a>
+            <svg class="konsultasi-side-svg" viewBox="0 0 160 160" fill="none">
+                <circle cx="80" cy="80" r="64" stroke="rgba(0, 212, 255, 0.35)" stroke-width="1.5" stroke-dasharray="12 8" class="hud-ring-outer"/>
+                <path d="M40,80 A40,40 0 0,1 120,80" stroke="rgba(167, 139, 250, 0.45)" stroke-width="2" stroke-linecap="round"/>
+                <path d="M55,80 A25,25 0 0,1 105,80" stroke="rgba(0, 212, 255, 0.6)" stroke-width="2" stroke-linecap="round"/>
+                <circle cx="80" cy="80" r="10" fill="rgba(0, 212, 255, 0.15)" stroke="rgba(0, 212, 255, 0.7)" stroke-width="1.5"/>
+                <circle cx="80" cy="80" r="4" fill="#00d4ff"/>
+                <path d="M80,80 L135,80 L155,95" stroke="rgba(0, 212, 255, 0.45)" stroke-width="1.5" stroke-dasharray="4 4"/>
+            </svg>
+        </div>
+
+        <!-- CENTER CARD -->
+        <div class="konsultasi-card">
+            <div class="konsultasi-card-corners">
+                <span class="card-corner card-corner-tl"></span>
+                <span class="card-corner card-corner-tr"></span>
+                <span class="card-corner card-corner-bl"></span>
+                <span class="card-corner card-corner-br"></span>
+            </div>
+            <div class="konsultasi-glow"></div>
+            <div class="konsultasi-lines"></div>
+            <div class="konsultasi-radar-wave">
+                <div class="radar-wave-ring"></div>
+                <div class="radar-wave-ring-2"></div>
+            </div>
+            <div class="konsultasi-content">
+                <div class="konsultasi-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                        <path d="M12 11V7"></path>
+                        <path d="M9 11l3-3 3 3"></path>
+                    </svg>
+                </div>
+                @php
+                    $ctaTitle = (isset($cmsContact) && $cmsContact->judul) ? $cmsContact->judul : 'Punya Kebutuhan AI?';
+                    $ctaDesc  = (isset($cmsContact) && $cmsContact->deskripsi) ? $cmsContact->deskripsi : 'Ceritakan kebutuhan Anda kepada kami. Kami akan membantu memahami kebutuhan dan mendiskusikan solusi AI yang sesuai.';
+                    $ctaBtnText = (isset($cmsContact) && $cmsContact->teks_tombol) ? $cmsContact->teks_tombol : 'Konsultasikan Kebutuhan';
+                    $ctaBtnLink = (isset($cmsContact) && $cmsContact->link_tombol) ? $cmsContact->link_tombol : $waUrl;
+                @endphp
+                <div class="konsultasi-label">KONSULTASI</div>
+                <h2 class="konsultasi-title">{{ $ctaTitle }}</h2>
+                <p class="konsultasi-desc">{{ $ctaDesc }}</p>
+                
+                <div class="konsultasi-btn-row">
+                    <button type="button" class="konsultasi-open-btn" id="btn-open-modal-konsultasi" onclick="openKonsultasiModal()">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                        {{ $ctaBtnText }}
+                    </button>
+
+                    <a href="{{ $ctaBtnLink }}"
+                       class="konsultasi-btn"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       id="btn-konsultasi-wa">
+                        <svg width="18" height="18" viewBox="0 0 448 512" fill="currentColor"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
+                        {{ $ctaBtnText }} via WA
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT SIDE DECOR -->
+        <div class="konsultasi-side-decor konsultasi-side-right" aria-hidden="true">
+            <div class="konsultasi-telemetry-pill pill-alt">
+                <div class="pill-dot pill-dot-purple"></div>
+                <div class="pill-info">
+                    <span class="pill-title">CHANNELS // ACTIVE</span>
+                    <span class="pill-sub">WHATSAPP &amp; FORM</span>
+                </div>
+            </div>
+
+            <svg class="konsultasi-side-svg" viewBox="0 0 160 160" fill="none">
+                <polygon points="80,18 134,49 134,111 80,142 26,111 26,49" stroke="rgba(124, 58, 237, 0.4)" stroke-width="1.5" stroke-dasharray="14 7" class="hud-hex-outer"/>
+                <circle cx="80" cy="80" r="42" stroke="rgba(0, 212, 255, 0.45)" stroke-width="1.5" stroke-dasharray="18 12" class="hud-ring-outer"/>
+                <circle cx="80" cy="80" r="10" fill="rgba(124, 58, 237, 0.18)" stroke="rgba(167, 139, 250, 0.7)" stroke-width="1.5"/>
+                <circle cx="80" cy="80" r="4" fill="#a78bfa"/>
+                <path d="M80,80 L25,80 L5,95" stroke="rgba(167, 139, 250, 0.45)" stroke-width="1.5" stroke-dasharray="4 4"/>
+            </svg>
+
+            <div class="konsultasi-response-gauge">
+                <div class="gauge-label">
+                    <span>RESPONSE TIME</span>
+                    <span class="gauge-val">&lt; 15 MIN</span>
+                </div>
+                <div class="gauge-bar"><div class="gauge-fill"></div></div>
             </div>
         </div>
     </div>
