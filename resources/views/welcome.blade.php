@@ -473,8 +473,29 @@
         /* Konsultasi Section */
         html[data-theme="light"] .konsultasi-card {
             background: #ffffff;
-            border: 1px solid rgba(15, 23, 42, 0.12);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(2, 132, 199, 0.25);
+            box-shadow: 0 15px 45px rgba(2, 132, 199, 0.08);
+        }
+
+        html[data-theme="light"] .konsultasi-bg-aurora {
+            background: radial-gradient(ellipse at center, rgba(2, 132, 199, 0.08) 0%, rgba(124, 58, 237, 0.05) 45%, transparent 70%);
+        }
+
+        html[data-theme="light"] .konsultasi-grid-mesh {
+            background-image: linear-gradient(rgba(2, 132, 199, 0.04) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(2, 132, 199, 0.04) 1px, transparent 1px);
+        }
+
+        html[data-theme="light"] .card-corner {
+            border-color: rgba(2, 132, 199, 0.35);
+        }
+
+        html[data-theme="light"] .radar-wave-ring {
+            border-color: rgba(2, 132, 199, 0.25);
+        }
+
+        html[data-theme="light"] .radar-wave-ring-2 {
+            border-color: rgba(124, 58, 237, 0.20);
         }
 
         html[data-theme="light"] .konsultasi-title {
@@ -2490,20 +2511,44 @@
            KONSULTASI SECTION
         ========================================== */
         .konsultasi-section {
-            padding: 100px 24px;
-            max-width: 1000px;
+            padding: 110px 24px;
+            max-width: 1050px;
             margin: 0 auto;
             position: relative;
             z-index: 10;
-            overflow: hidden;
+            overflow: visible;
+        }
+        .konsultasi-bg-aurora {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 85%;
+            height: 380px;
+            background: radial-gradient(ellipse at center, rgba(0, 212, 255, 0.22) 0%, rgba(124, 58, 237, 0.18) 45%, transparent 72%);
+            filter: blur(55px);
+            pointer-events: none;
+            z-index: 0;
+            animation: pulse-glow-aura 7s ease-in-out infinite alternate;
+        }
+        .konsultasi-grid-mesh {
+            position: absolute;
+            inset: -40px;
+            background-image: linear-gradient(rgba(0, 212, 255, 0.035) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(0, 212, 255, 0.035) 1px, transparent 1px);
+            background-size: 36px 36px;
+            pointer-events: none;
+            z-index: 0;
+            mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 40%, transparent 75%);
+            -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 40%, transparent 75%);
         }
         .konsultasi-ambient-glow-left {
             position: absolute;
-            top: 20%;
-            left: -100px;
-            width: 480px;
-            height: 480px;
-            background: radial-gradient(circle, rgba(0, 212, 255, 0.12) 0%, transparent 70%);
+            top: 15%;
+            left: -80px;
+            width: 450px;
+            height: 450px;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.15) 0%, transparent 68%);
             pointer-events: none;
             filter: blur(65px);
             z-index: 0;
@@ -2511,52 +2556,130 @@
         }
         .konsultasi-ambient-glow-right {
             position: absolute;
-            bottom: 15%;
-            right: -100px;
-            width: 480px;
-            height: 480px;
-            background: radial-gradient(circle, rgba(124, 58, 237, 0.14) 0%, transparent 70%);
+            bottom: 10%;
+            right: -80px;
+            width: 450px;
+            height: 450px;
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.16) 0%, transparent 68%);
             pointer-events: none;
             filter: blur(65px);
             z-index: 0;
             animation: ambient-pulse-purple 10s ease-in-out infinite alternate;
         }
         .konsultasi-card {
-            background: rgba(10, 20, 60, 0.45);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(0, 212, 255, 0.22);
-            border-radius: 22px;
-            padding: 44px 36px 40px;
+            background: linear-gradient(135deg, rgba(12, 22, 65, 0.70) 0%, rgba(18, 14, 50, 0.65) 50%, rgba(8, 16, 52, 0.75) 100%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 212, 255, 0.32);
+            border-radius: 28px;
+            padding: 52px 40px 48px;
             text-align: center;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.50),
+                        0 0 35px rgba(0, 212, 255, 0.12),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.15),
+                        inset 0 0 40px rgba(0, 212, 255, 0.04);
+            transition: all 0.4s ease;
+        }
+        .konsultasi-card:hover {
+            border-color: rgba(0, 212, 255, 0.50);
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55),
+                        0 0 50px rgba(0, 212, 255, 0.22),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.25);
         }
         .konsultasi-card::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; height: 2px;
             background: linear-gradient(90deg, transparent, var(--cyan-neon), var(--purple-neon), transparent);
+            z-index: 2;
         }
+        .konsultasi-card::after {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 160px;
+            height: 3px;
+            background: radial-gradient(ellipse at center, #00d4ff 0%, #7c3aed 50%, transparent 80%);
+            filter: blur(1px);
+            border-radius: 50%;
+            box-shadow: 0 0 12px #00d4ff;
+            z-index: 3;
+            pointer-events: none;
+        }
+        .konsultasi-card-corners {
+            position: absolute;
+            inset: 12px;
+            pointer-events: none;
+            z-index: 2;
+        }
+        .card-corner {
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            border-color: rgba(0, 212, 255, 0.5);
+            border-style: solid;
+        }
+        .card-corner-tl { top: 0; left: 0; border-width: 2px 0 0 2px; border-radius: 4px 0 0 0; }
+        .card-corner-tr { top: 0; right: 0; border-width: 2px 2px 0 0; border-radius: 0 4px 0 0; }
+        .card-corner-bl { bottom: 0; left: 0; border-width: 0 0 2px 2px; border-radius: 0 0 0 4px; }
+        .card-corner-br { bottom: 0; right: 0; border-width: 0 2px 2px 0; border-radius: 0 0 4px 0; }
+
         .konsultasi-glow {
             position: absolute;
-            width: 220px; height: 220px;
-            background: radial-gradient(circle, rgba(124, 58, 237, 0.12) 0%, transparent 70%);
-            top: 50%; left: 50%;
+            width: 440px; height: 320px;
+            background: radial-gradient(ellipse at center, rgba(0, 212, 255, 0.16) 0%, rgba(124, 58, 237, 0.14) 45%, transparent 70%);
+            top: 45%; left: 50%;
             transform: translate(-50%, -50%);
             pointer-events: none;
             z-index: 0;
+            filter: blur(25px);
+            animation: pulse-glow-aura 6s ease-in-out infinite alternate;
         }
         .konsultasi-lines {
             position: absolute;
             inset: 0;
-            background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-image: linear-gradient(rgba(0, 212, 255, 0.035) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(0, 212, 255, 0.035) 1px, transparent 1px);
             background-size: 28px 28px;
-            opacity: 0.5;
+            opacity: 0.8;
             z-index: 0;
             pointer-events: none;
+            mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 35%, transparent 80%);
+            -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 35%, transparent 80%);
+        }
+        .konsultasi-radar-wave {
+            position: absolute;
+            top: 75px;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 140px;
+            height: 140px;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .radar-wave-ring {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 1px dashed rgba(0, 212, 255, 0.35);
+            animation: radar-expand 6s linear infinite;
+        }
+        .radar-wave-ring-2 {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 1px dashed rgba(167, 139, 250, 0.35);
+            animation: radar-expand 6s linear infinite;
+            animation-delay: -3s;
+        }
+        @keyframes radar-expand {
+            0% { transform: scale(0.6); opacity: 0; }
+            40% { opacity: 0.8; }
+            100% { transform: scale(1.6); opacity: 0; }
         }
         .konsultasi-content {
             position: relative;
@@ -2566,16 +2689,16 @@
             align-items: center;
         }
         .konsultasi-icon {
-            width: 48px; height: 48px;
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.12), rgba(124, 58, 237, 0.12));
-            border: 1px solid rgba(0, 212, 255, 0.28);
-            border-radius: 14px;
+            width: 56px; height: 56px;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.18), rgba(124, 58, 237, 0.22));
+            border: 1.5px solid rgba(0, 212, 255, 0.45);
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 16px;
+            margin-bottom: 18px;
             color: var(--cyan-neon);
-            box-shadow: 0 0 16px rgba(0, 212, 255, 0.15);
+            box-shadow: 0 0 25px rgba(0, 212, 255, 0.35), inset 0 0 12px rgba(0, 212, 255, 0.15);
             animation: float-icon 6s ease-in-out infinite;
         }
         .konsultasi-label {
@@ -3681,11 +3804,23 @@
 <div class="section-divider-line"></div>
 
 <section id="konsultasi" class="konsultasi-section">
+    <div class="konsultasi-bg-aurora"></div>
+    <div class="konsultasi-grid-mesh"></div>
     <div class="konsultasi-ambient-glow-left"></div>
     <div class="konsultasi-ambient-glow-right"></div>
     <div class="konsultasi-card">
+        <div class="konsultasi-card-corners">
+            <span class="card-corner card-corner-tl"></span>
+            <span class="card-corner card-corner-tr"></span>
+            <span class="card-corner card-corner-bl"></span>
+            <span class="card-corner card-corner-br"></span>
+        </div>
         <div class="konsultasi-glow"></div>
         <div class="konsultasi-lines"></div>
+        <div class="konsultasi-radar-wave">
+            <div class="radar-wave-ring"></div>
+            <div class="radar-wave-ring-2"></div>
+        </div>
         <div class="konsultasi-content">
             <div class="konsultasi-icon">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
