@@ -12,7 +12,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $service['title'] }} - AI Solution</title>
+    <title>{{ $service['title'] }} - AI Jogja Solutions</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
     
     {{-- Dark & Light Mode Script & Styles --}}
@@ -127,47 +127,75 @@
             -webkit-text-fill-color: transparent;
         }
 
-        html[data-theme="light"] .content-card {
-            background: #ffffff;
-            border: 1px solid rgba(15, 23, 42, 0.12);
-            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
+        html[data-theme="light"] .benefits-section-wrap {
+            background: linear-gradient(180deg, rgba(241, 245, 249, 0.4) 0%, rgba(226, 232, 240, 0.6) 50%, rgba(241, 245, 249, 0.6) 100%);
         }
-
+        html[data-theme="light"] .benefits-bg-glow.glow-left {
+            background: radial-gradient(circle, rgba(2, 132, 199, 0.12) 0%, transparent 70%);
+        }
+        html[data-theme="light"] .benefits-bg-glow.glow-right {
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.10) 0%, transparent 70%);
+        }
+        html[data-theme="light"] .benefits-cyber-grid {
+            background-image: 
+                linear-gradient(to right, rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
+        }
+        html[data-theme="light"] .content-card {
+            background: #ffffff !important;
+            border: 1px solid rgba(15, 23, 42, 0.12) !important;
+            box-shadow: 0 12px 35px rgba(15, 23, 42, 0.05), 0 0 25px rgba(2, 132, 199, 0.06) !important;
+        }
+        html[data-theme="light"] .content-card::before {
+            background: linear-gradient(90deg, transparent, #0284c7, #7c3aed, transparent) !important;
+            box-shadow: 0 0 8px #0284c7 !important;
+        }
         html[data-theme="light"] .content-section-title {
             color: #0f172a;
         }
-
+        html[data-theme="light"] .content-title-icon {
+            background: rgba(2, 132, 199, 0.08);
+            border-color: rgba(2, 132, 199, 0.25);
+            color: #0284c7;
+            box-shadow: 0 0 15px rgba(2, 132, 199, 0.15);
+        }
         html[data-theme="light"] .benefit-item {
-            background: #f8fafc;
-            border-color: rgba(15, 23, 42, 0.08);
+            background: #f8fafc !important;
+            border-color: rgba(15, 23, 42, 0.09) !important;
         }
-
         html[data-theme="light"] .benefit-item:hover {
-            border-color: #0284c7;
-            background: rgba(2, 132, 199, 0.04);
+            border-color: #0284c7 !important;
+            background: rgba(2, 132, 199, 0.04) !important;
+            box-shadow: 0 8px 24px rgba(2, 132, 199, 0.12) !important;
         }
-
+        html[data-theme="light"] .benefit-icon {
+            background: rgba(2, 132, 199, 0.08);
+            border-color: rgba(2, 132, 199, 0.25);
+            color: #0284c7;
+            box-shadow: 0 0 12px rgba(2, 132, 199, 0.15);
+        }
         html[data-theme="light"] .benefit-text {
-            color: #334155;
+            color: #1e293b;
         }
-
         html[data-theme="light"] .cta-box {
-            background: #ffffff;
-            border: 1px solid rgba(15, 23, 42, 0.12);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+            background: linear-gradient(135deg, rgba(2, 132, 199, 0.06), rgba(124, 58, 237, 0.06)), #ffffff !important;
+            border: 1px solid rgba(2, 132, 199, 0.25) !important;
+            box-shadow: 0 12px 35px rgba(15, 23, 42, 0.06) !important;
         }
-
         html[data-theme="light"] .cta-title {
             color: #0f172a;
         }
-
         html[data-theme="light"] .cta-desc {
             color: #475569;
         }
-
         html[data-theme="light"] .btn-cta {
             background: linear-gradient(135deg, #0284c7 0%, #7c3aed 100%);
             color: #ffffff;
+            box-shadow: 0 4px 20px rgba(2, 132, 199, 0.3);
+        }
+        html[data-theme="light"] .btn-cta:hover {
+            color: #ffffff;
+            box-shadow: 0 8px 25px rgba(2, 132, 199, 0.45);
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html, body {
@@ -483,103 +511,282 @@
             border-radius: 1px;
         }
 
+        /* ============================================================
+           BENEFITS & CTA SECTION (ENHANCED AMBIENT TECH BACKGROUND)
+           ============================================================ */
+        .benefits-section-wrap {
+            position: relative;
+            padding: 50px 0 90px;
+            overflow: hidden;
+            background: 
+                radial-gradient(ellipse 70% 45% at 50% 0%, rgba(0, 212, 255, 0.14), transparent 70%),
+                radial-gradient(ellipse 55% 45% at 15% 55%, rgba(124, 58, 237, 0.16), transparent 60%),
+                radial-gradient(ellipse 55% 45% at 85% 65%, rgba(0, 212, 255, 0.13), transparent 60%),
+                linear-gradient(180deg, rgba(2, 8, 24, 0.2) 0%, rgba(5, 14, 42, 0.75) 40%, rgba(2, 8, 24, 0.95) 100%);
+        }
+
+        /* Ambient floating glow orbs */
+        .benefits-bg-glow {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.85;
+        }
+
+        .glow-left {
+            top: 15%;
+            left: -80px;
+            width: 420px;
+            height: 420px;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.28) 0%, rgba(124, 58, 237, 0.15) 50%, transparent 70%);
+            animation: floatGlow1 8s ease-in-out infinite alternate;
+        }
+
+        .glow-right {
+            bottom: 10%;
+            right: -80px;
+            width: 450px;
+            height: 450px;
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.3) 0%, rgba(0, 212, 255, 0.15) 50%, transparent 70%);
+            animation: floatGlow2 9s ease-in-out infinite alternate;
+        }
+
+        .glow-center {
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 350px;
+            background: radial-gradient(ellipse, rgba(0, 212, 255, 0.12) 0%, rgba(124, 58, 237, 0.08) 50%, transparent 75%);
+            animation: pulseGlow 6s ease-in-out infinite;
+        }
+
+        @keyframes floatGlow1 {
+            0%   { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(40px, 30px) scale(1.1); }
+        }
+
+        @keyframes floatGlow2 {
+            0%   { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(-35px, -30px) scale(1.08); }
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
+            50%      { opacity: 0.9; transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+        /* Cyber grid overlay */
+        .benefits-cyber-grid {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(to right, rgba(0, 212, 255, 0.04) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 212, 255, 0.04) 1px, transparent 1px);
+            background-size: 48px 48px;
+            mask-image: radial-gradient(ellipse 80% 65% at 50% 50%, black 30%, transparent 80%);
+            -webkit-mask-image: radial-gradient(ellipse 80% 65% at 50% 50%, black 30%, transparent 80%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Tech circuit lines on left and right */
+        .tech-circuit-left, .tech-circuit-right {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 140px;
+            height: 340px;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.65;
+        }
+        .tech-circuit-left {
+            left: 2%;
+        }
+        .tech-circuit-right {
+            right: 2%;
+        }
+        @media (max-width: 1200px) {
+            .tech-circuit-left, .tech-circuit-right { display: none; }
+        }
+
         /* Content Section */
         .content-card {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 24px;
-            padding: 40px;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: 
+                radial-gradient(ellipse 80% 50% at 50% 0%, rgba(0, 212, 255, 0.12), transparent 70%),
+                radial-gradient(ellipse 60% 40% at 85% 100%, rgba(124, 58, 237, 0.15), transparent 60%),
+                rgba(8, 18, 48, 0.85);
+            border: 1px solid rgba(0, 212, 255, 0.22);
+            border-radius: 28px;
+            padding: 48px;
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
             animation: fadeUp 1s ease forwards;
             animation-delay: 0.2s;
             opacity: 0;
+            position: relative;
+            z-index: 2;
+            box-shadow: 
+                0 25px 60px rgba(0, 0, 0, 0.6),
+                0 0 45px rgba(0, 212, 255, 0.12),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            overflow: hidden;
         }
+
+        /* Shimmering top glowing line */
+        .content-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 15%;
+            right: 15%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--cyan-neon), var(--purple-neon), transparent);
+            box-shadow: 0 0 12px var(--cyan-neon);
+        }
+
         .content-section-title {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 24px;
+            font-size: 26px;
+            font-weight: 800;
+            margin-bottom: 28px;
             color: #fff;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
+            letter-spacing: -0.5px;
         }
-        .content-section-title svg {
-            color: var(--purple-neon);
+        .content-title-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(124, 58, 237, 0.25));
+            border: 1px solid rgba(0, 212, 255, 0.35);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--cyan-neon);
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.25);
+            flex-shrink: 0;
         }
         
         .benefits-list {
             list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 20px;
-            margin-bottom: 40px;
+            gap: 16px;
+            margin-bottom: 44px;
         }
         .benefit-item {
             display: flex;
-            gap: 16px;
-            background: rgba(0,0,0,0.2);
-            padding: 20px;
-            border-radius: 16px;
-            border: 1px solid rgba(255,255,255,0.03);
-            transition: all 0.3s ease;
+            gap: 18px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.04), rgba(0, 212, 255, 0.02));
+            padding: 22px 24px;
+            border-radius: 18px;
+            border: 1px solid rgba(0, 212, 255, 0.14);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .benefit-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, var(--cyan-neon), var(--purple-neon));
+            opacity: 0.4;
+            transition: opacity 0.3s, width 0.3s;
         }
         .benefit-item:hover {
-            border-color: rgba(0, 212, 255, 0.2);
-            background: rgba(0, 212, 255, 0.03);
-            transform: translateX(5px);
+            border-color: rgba(0, 212, 255, 0.45);
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.08), rgba(124, 58, 237, 0.06));
+            transform: translateX(8px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.18), 0 0 20px rgba(0, 212, 255, 0.1);
+        }
+        .benefit-item:hover::before {
+            opacity: 1;
+            width: 4px;
         }
         .benefit-icon {
             flex-shrink: 0;
-            width: 32px;
-            height: 32px;
-            background: rgba(0, 212, 255, 0.1);
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.18), rgba(124, 58, 237, 0.18));
             color: var(--cyan-neon);
+            border: 1px solid rgba(0, 212, 255, 0.3);
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 0 14px rgba(0, 212, 255, 0.2);
+            transition: transform 0.3s;
+        }
+        .benefit-item:hover .benefit-icon {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
         }
         .benefit-text {
             font-size: 16px;
-            color: rgba(255,255,255,0.8);
-            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.55;
             align-self: center;
+            font-weight: 500;
         }
 
         /* CTA Section */
         .cta-box {
             margin-top: 40px;
-            padding: 40px;
-            background: linear-gradient(135deg, rgba(0,168,255,0.1), rgba(124,58,237,0.1));
-            border: 1px solid rgba(0, 212, 255, 0.3);
-            border-radius: 20px;
+            padding: 44px 36px;
+            background: 
+                radial-gradient(circle at 50% 0%, rgba(0, 212, 255, 0.24), transparent 75%),
+                radial-gradient(circle at 85% 100%, rgba(124, 58, 237, 0.22), transparent 70%),
+                linear-gradient(135deg, rgba(8, 20, 56, 0.95), rgba(24, 12, 54, 0.95));
+            border: 1px solid rgba(0, 212, 255, 0.38);
+            border-radius: 22px;
             text-align: center;
             position: relative;
             overflow: hidden;
+            box-shadow: 
+                0 16px 45px rgba(0, 0, 0, 0.55),
+                0 0 35px rgba(0, 212, 255, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
         }
         .cta-box::before {
             content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
             background: linear-gradient(90deg, transparent, var(--cyan-neon), var(--purple-neon), transparent);
+            box-shadow: 0 0 12px var(--cyan-neon);
         }
         .cta-title {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 22px; font-weight: 700; margin-bottom: 12px;
+            font-size: 24px; font-weight: 800; margin-bottom: 12px;
+            letter-spacing: -0.5px;
+            color: #ffffff;
         }
         .cta-desc {
-            font-size: 15px; color: var(--text-muted); margin-bottom: 24px;
+            font-size: 15px; color: var(--text-muted); margin-bottom: 28px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
         }
         .btn-cta {
-            display: inline-flex; align-items: center; gap: 8px;
-            background: #fff; color: #000;
+            display: inline-flex; align-items: center; gap: 10px;
+            background: #ffffff; color: #020818;
             font-weight: 700; font-size: 15px;
-            padding: 14px 28px; border-radius: 100px; text-decoration: none;
-            transition: all 0.3s ease;
+            padding: 14px 32px; border-radius: 100px; text-decoration: none;
+            box-shadow: 0 4px 20px rgba(0, 212, 255, 0.35);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .btn-cta:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(255,255,255,0.2);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 30px rgba(0, 212, 255, 0.55), 0 0 25px rgba(124, 58, 237, 0.35);
+            color: #000;
         }
 
         @keyframes fadeUp {
@@ -691,55 +898,105 @@
     </div>
     @endif
 
-    <div class="detail-container" style="margin-top: 0;">{{-- reopen for content card --}}
+    <!-- Benefits & CTA Section (With Ambient Glowing Tech Background) -->
+    <section class="benefits-section-wrap">
+        {{-- Ambient Glow Orbs & Cyber Grid --}}
+        <div class="benefits-bg-glow glow-left" aria-hidden="true"></div>
+        <div class="benefits-bg-glow glow-right" aria-hidden="true"></div>
+        <div class="benefits-bg-glow glow-center" aria-hidden="true"></div>
+        <div class="benefits-cyber-grid" aria-hidden="true"></div>
 
-        <!-- Content -->
-        <div class="content-card">
-            
-            @if(!empty($service['benefits']) && count(array_filter($service['benefits'])) > 0)
-            <h2 class="content-section-title">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <path d="M12 16v-4"></path>
-                    <path d="M12 8h.01"></path>
-                </svg>
-                Bagaimana Layanan Ini Membantu?
-            </h2>
-            
-            <ul class="benefits-list">
-                @foreach($service['benefits'] as $benefit)
-                @if(!empty(trim($benefit)))
-                <li class="benefit-item">
-                    <div class="benefit-icon">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
-                    </div>
-                    <div class="benefit-text">
-                        {{ $benefit }}
-                    </div>
-                </li>
-                @endif
-                @endforeach
-            </ul>
-            @endif
-
-            <!-- CTA -->
-            <div class="cta-box">
-                <h3 class="cta-title">Siap Mengimplementasikan Solusi Ini?</h3>
-                <p class="cta-desc">Hubungi tim konsultan kami untuk mengetahui implementasi teknis dan use-case spesifik untuk industri Anda.</p>
-                <a href="{{ $waUrl }}" class="btn-cta" target="_blank" rel="noopener noreferrer">
-                    Konsultasikan Kebutuhan Anda
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                        <polyline points="12 5 19 12 12 19"></polyline>
-                    </svg>
-                </a>
-            </div>
-
+        {{-- Tech Circuit SVG Accents on Sides --}}
+        <div class="tech-circuit-left" aria-hidden="true">
+            <svg viewBox="0 0 140 340" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+                <path d="M10 20 H70 L110 60 V180 L80 210 H20" stroke="url(#c-grad-1)" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.75"/>
+                <circle cx="70" cy="20" r="3.5" fill="var(--cyan-neon)"/>
+                <circle cx="110" cy="120" r="4" fill="var(--purple-neon)"/>
+                <circle cx="80" cy="210" r="3" fill="var(--cyan-neon)"/>
+                <path d="M30 100 H85 L120 135 V280" stroke="url(#c-grad-2)" stroke-width="1.2" opacity="0.6"/>
+                <circle cx="120" cy="280" r="3.5" fill="var(--cyan-neon)"/>
+                <defs>
+                    <linearGradient id="c-grad-1" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="var(--cyan-neon)"/>
+                        <stop offset="100%" stop-color="var(--purple-neon)"/>
+                    </linearGradient>
+                    <linearGradient id="c-grad-2" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="var(--purple-neon)"/>
+                        <stop offset="100%" stop-color="var(--cyan-neon)"/>
+                    </linearGradient>
+                </defs>
+            </svg>
         </div>
 
-    </div>
+        <div class="tech-circuit-right" aria-hidden="true">
+            <svg viewBox="0 0 140 340" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;transform:scaleX(-1);">
+                <path d="M10 20 H70 L110 60 V180 L80 210 H20" stroke="url(#c-grad-3)" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.75"/>
+                <circle cx="70" cy="20" r="3.5" fill="var(--cyan-neon)"/>
+                <circle cx="110" cy="120" r="4" fill="var(--purple-neon)"/>
+                <circle cx="80" cy="210" r="3" fill="var(--cyan-neon)"/>
+                <path d="M30 100 H85 L120 135 V280" stroke="url(#c-grad-4)" stroke-width="1.2" opacity="0.6"/>
+                <circle cx="120" cy="280" r="3.5" fill="var(--cyan-neon)"/>
+                <defs>
+                    <linearGradient id="c-grad-3" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="var(--purple-neon)"/>
+                        <stop offset="100%" stop-color="var(--cyan-neon)"/>
+                    </linearGradient>
+                    <linearGradient id="c-grad-4" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="var(--cyan-neon)"/>
+                        <stop offset="100%" stop-color="var(--purple-neon)"/>
+                    </linearGradient>
+                </defs>
+            </svg>
+        </div>
+
+        <div class="detail-container" style="margin-top: 0; position:relative; z-index:2;">
+            <!-- Content -->
+            <div class="content-card">
+                @if(!empty($service['benefits']) && count(array_filter($service['benefits'])) > 0)
+                <h2 class="content-section-title">
+                    <span class="content-title-icon">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M12 16v-4"></path>
+                            <path d="M12 8h.01"></path>
+                        </svg>
+                    </span>
+                    Bagaimana Layanan Ini Membantu?
+                </h2>
+                
+                <ul class="benefits-list">
+                    @foreach($service['benefits'] as $benefit)
+                    @if(!empty(trim($benefit)))
+                    <li class="benefit-item">
+                        <div class="benefit-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <div class="benefit-text">
+                            {{ $benefit }}
+                        </div>
+                    </li>
+                    @endif
+                    @endforeach
+                </ul>
+                @endif
+
+                <!-- CTA -->
+                <div class="cta-box">
+                    <h3 class="cta-title">Siap Mengimplementasikan Solusi Ini?</h3>
+                    <p class="cta-desc">Hubungi tim konsultan kami untuk mengetahui implementasi teknis dan use-case spesifik untuk industri Anda.</p>
+                    <a href="{{ $waUrl }}" class="btn-cta" target="_blank" rel="noopener noreferrer">
+                        Konsultasikan Kebutuhan Anda
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
 
 {{-- WhatsApp Chat Widget --}}
 @include('partials.wa-widget')
