@@ -337,6 +337,88 @@ class ArticleManagementTest extends TestCase
         $this->assertNotNull($article->published_at);
         $this->assertNotNull($article->tanggal);
     }
+
+    public function test_article_calendar_tab_and_route_render_properly()
+    {
+        // 1. Akses halaman index artikel biasa
+        $indexResponse = $this->actingAs($this->admin)->get(route('admin.articles.index'));
+        $indexResponse->assertStatus(200);
+        $indexResponse->assertSee('Daftar Artikel');
+        $indexResponse->assertSee('Kalender Penjadwalan');
+        $indexResponse->assertViewHas('calendarArticles');
+        $indexResponse->assertViewHas('activeTab', 'table');
+
+        // 2. Akses halaman kalender langsung via rute admin.articles.calendar
+        $calendarResponse = $this->actingAs($this->admin)->get(route('admin.articles.calendar'));
+        $calendarResponse->assertStatus(200);
+        $calendarResponse->assertSee('Kalender Penjadwalan');
+        $calendarResponse->assertViewHas('calendarArticles');
+        $calendarResponse->assertViewHas('activeTab', 'calendar');
+
+        // 3. Akses via query param tab=calendar
+        $tabResponse = $this->actingAs($this->admin)->get(route('admin.articles.index', ['tab' => 'calendar']));
+        $tabResponse->assertStatus(200);
+        $tabResponse->assertViewHas('activeTab', 'calendar');
+    }
+
+    public function test_article_calendar_formats_multiple_articles_with_correct_statuses_and_dates()
+    {
+        $targetDate = '2026-11-15';
+
+        // Buat 3 artikel pada tanggal yang sama dengan 3 status berbeda: scheduled, published, draft
+        $scheduled = Article::create([
+            'judul'        => 'Artikel Jadwal Target',
+            'slug'         => 'artikel-jadwal-target',
+            'status'       => 'scheduled',
+            'published_at' => Carbon::parse($targetDate . ' 10:30:00', 'Asia/Jakarta'),
+            'is_active'    => true,
+        ]);
+
+        $published = Article::create([
+            'judul'        => 'Artikel Published Target',
+            'slug'         => 'artikel-published-target',
+            'status'       => 'published',
+            'published_at' => Carbon::parse($targetDate . ' 14:00:00', 'Asia/Jakarta'),
+            'is_active'    => true,
+        ]);
+
+        $draft = Article::create([
+            'judul'        => 'Artikel Draft Target',
+            'slug'         => 'artikel-draft-target',
+            'status'       => 'draft',
+            'published_at' => Carbon::parse($targetDate . ' 16:00:00', 'Asia/Jakarta'),
+            'is_active'    => false,
+        ]);
+
+        $response = $this->actingAs($this->admin)->get(route('admin.articles.calendar'));
+        $response->assertStatus(200);
+
+        $calendarArticles = $response->viewData('calendarArticles');
+        $this->assertNotEmpty($calendarArticles);
+
+        // Filter artikel yang jatuh pada tanggal target
+        $targetArticles = $calendarArticles->where('date', $targetDate);
+        $this->assertCount(3, $targetArticles);
+
+        // Periksa status masing-masing
+        $statuses = $targetArticles->pluck('status')->all();
+        $this->assertContains('scheduled', $statuses);
+        $this->assertContains('published', $statuses);
+        $this->assertContains('draft', $statuses);
+    }
+
+    public function test_create_article_page_presets_scheduled_date_when_date_query_param_is_passed()
+    {
+        $presetDate = '2026-12-25';
+        $response = $this->actingAs($this->admin)->get(route('admin.articles.create', ['date' => $presetDate]));
+        $response->assertStatus(200);
+
+        // Harus memilih radio scheduled dan mengisi input published_at
+        $response->assertSee('value="scheduled"', false);
+        $response->assertSee('checked', false);
+        $response->assertSee('2026-12-25T09:00', false);
+    }
 }
+
 
 

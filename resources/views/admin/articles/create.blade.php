@@ -185,29 +185,51 @@
 
             <input type="hidden" name="isi_artikel" id="isi_artikel" value="{{ $iaRaw }}">
 
+            @php
+                $presetDate = request('scheduled_date') ?? request('date');
+                if ($presetDate) {
+                    try {
+                        $parsedPreset = \Carbon\Carbon::parse($presetDate, 'Asia/Jakarta');
+                        if (strlen($presetDate) <= 10) {
+                            $parsedPreset->setTime(9, 0);
+                        }
+                        $defaultPublishedAt = $parsedPreset->format('Y-m-d\TH:i');
+                        $defaultStatus = 'scheduled';
+                    } catch (\Throwable $e) {
+                        $defaultPublishedAt = now('Asia/Jakarta')->format('Y-m-d\TH:i');
+                        $defaultStatus = 'published';
+                    }
+                } else {
+                    $defaultPublishedAt = now('Asia/Jakarta')->format('Y-m-d\TH:i');
+                    $defaultStatus = 'published';
+                }
+                $selectedStatus = old('status', $defaultStatus);
+                $publishedAtVal = old('published_at', $defaultPublishedAt);
+            @endphp
+
             <!-- Status & Penjadwalan -->
             <div class="form-group full-width" style="background: rgba(0,0,0,0.18); padding: 22px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.06);">
                 <label class="form-label" style="color: var(--cyan); margin-bottom: 12px;">Status Publikasi &amp; Jadwal</label>
 
                 <div class="status-cards">
-                    <label class="status-card {{ old('status') === 'draft' ? 'selected' : '' }}" id="card-draft">
-                        <input type="radio" name="status" value="draft" {{ old('status') === 'draft' ? 'checked' : '' }}>
+                    <label class="status-card {{ $selectedStatus === 'draft' ? 'selected' : '' }}" id="card-draft">
+                        <input type="radio" name="status" value="draft" {{ $selectedStatus === 'draft' ? 'checked' : '' }}>
                         <div>
                             <div class="status-card-title">Simpan Draft</div>
                             <div class="status-card-desc">Hanya tersimpan di admin, belum tampil di frontend.</div>
                         </div>
                     </label>
 
-                    <label class="status-card {{ old('status', 'published') === 'published' ? 'selected' : '' }}" id="card-published">
-                        <input type="radio" name="status" value="published" {{ old('status', 'published') === 'published' ? 'checked' : '' }}>
+                    <label class="status-card {{ $selectedStatus === 'published' ? 'selected' : '' }}" id="card-published">
+                        <input type="radio" name="status" value="published" {{ $selectedStatus === 'published' ? 'checked' : '' }}>
                         <div>
                             <div class="status-card-title">Publish Sekarang</div>
                             <div class="status-card-desc">Terbitkan langsung dan tayang di website saat ini juga.</div>
                         </div>
                     </label>
 
-                    <label class="status-card {{ old('status') === 'scheduled' ? 'selected' : '' }}" id="card-scheduled">
-                        <input type="radio" name="status" value="scheduled" {{ old('status') === 'scheduled' ? 'checked' : '' }}>
+                    <label class="status-card {{ $selectedStatus === 'scheduled' ? 'selected' : '' }}" id="card-scheduled">
+                        <input type="radio" name="status" value="scheduled" {{ $selectedStatus === 'scheduled' ? 'checked' : '' }}>
                         <div>
                             <div class="status-card-title">Jadwalkan Publikasi</div>
                             <div class="status-card-desc">Atur tanggal &amp; jam terbit otomatis di masa mendatang.</div>
@@ -216,9 +238,11 @@
                 </div>
 
                 <!-- Input Tanggal & Jam Penjadwalan (WIB) -->
-                <div id="scheduled-date-wrap" style="margin-top: 18px; {{ old('status') === 'scheduled' || old('status') === 'published' ? '' : 'display:none;' }}">
-                    <label class="form-label" id="date-label">Waktu Publikasi (WIB - Asia/Jakarta)</label>
-                    <input type="datetime-local" name="published_at" id="published_at" class="form-control" style="max-width: 320px;" value="{{ old('published_at', now('Asia/Jakarta')->format('Y-m-d\TH:i')) }}">
+                <div id="scheduled-date-wrap" style="margin-top: 18px; {{ $selectedStatus === 'draft' ? 'display:none;' : '' }}">
+                    <label class="form-label" id="date-label">
+                        {{ $selectedStatus === 'scheduled' ? 'Jadwal Publikasi Otomatis (WIB) *' : 'Tanggal Publikasi (WIB)' }}
+                    </label>
+                    <input type="datetime-local" name="published_at" id="published_at" class="form-control" style="max-width: 320px;" value="{{ $publishedAtVal }}">
                     <small style="color: var(--muted); font-size: 11.5px; margin-top: 5px; display: block;" id="date-hint">
                         Zona Waktu: WIB (Asia/Jakarta). Artikel terjadwal otomatis tayang setelah waktu tersebut tercapai.
                     </small>

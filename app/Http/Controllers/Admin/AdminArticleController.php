@@ -10,10 +10,104 @@ use Illuminate\Support\Facades\Storage;
 
 class AdminArticleController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $articles = Article::orderBy('created_at', 'desc')->get();
-        return view('admin.articles.index', compact('articles'));
+        $calendarArticles = $this->formatArticlesForCalendar($articles);
+        $activeTab = $request->query('tab', $request->query('view', 'table'));
+        $scheduledCount = $articles->where('status', 'scheduled')->count();
+        $publishedCount = $articles->where('status', 'published')->count();
+        $draftCount     = $articles->where('status', 'draft')->count();
+
+        return view('admin.articles.index', compact(
+            'articles',
+            'calendarArticles',
+            'activeTab',
+            'scheduledCount',
+            'publishedCount',
+            'draftCount'
+        ));
+    }
+
+    public function calendar(Request $request)
+    {
+        $articles = Article::orderBy('created_at', 'desc')->get();
+        $calendarArticles = $this->formatArticlesForCalendar($articles);
+        $activeTab = 'calendar';
+        $scheduledCount = $articles->where('status', 'scheduled')->count();
+        $publishedCount = $articles->where('status', 'published')->count();
+        $draftCount     = $articles->where('status', 'draft')->count();
+
+        return view('admin.articles.index', compact(
+            'articles',
+            'calendarArticles',
+            'activeTab',
+            'scheduledCount',
+            'publishedCount',
+            'draftCount'
+        ));
+    }
+
+    protected function formatArticlesForCalendar($articles)
+    {
+        return $articles->map(function ($a) {
+            $status = $a->status ?? 'published';
+            $date = null;
+            $time = '';
+            $fullDateTime = '';
+
+            if ($a->published_at) {
+                $dt = $a->published_at->timezone('Asia/Jakarta');
+                $date = $dt->format('Y-m-d');
+                $time = $dt->format('H:i') . ' WIB';
+                $fullDateTime = $dt->locale('id')->translatedFormat('d F Y, H:i') . ' WIB';
+            } elseif ($status === 'published' && !empty($a->tanggal)) {
+                try {
+                    $parsed = Carbon::parse($a->tanggal, 'Asia/Jakarta');
+                    $date = $parsed->format('Y-m-d');
+                    $time = $parsed->format('H:i') !== '00:00' ? $parsed->format('H:i') . ' WIB' : '';
+                    $fullDateTime = $a->tanggal;
+                } catch (\Throwable $e) {
+                    // ignore
+                }
+            }
+
+            // Fallback ke created_at jika date belum terisi
+            if (!$date && $a->created_at) {
+                $dt = $a->created_at->timezone('Asia/Jakarta');
+                $date = $dt->format('Y-m-d');
+                $time = $dt->format('H:i') . ' WIB';
+                $fullDateTime = $dt->locale('id')->translatedFormat('d F Y, H:i') . ' WIB';
+            }
+
+            // Gambar thumbnail helper
+            $imgSrc = null;
+            if ($a->gambar) {
+                $imgSrc = (str_starts_with($a->gambar, 'http://') || str_starts_with($a->gambar, 'https://'))
+                    ? $a->gambar
+                    : asset('storage/' . $a->gambar);
+            }
+
+            return [
+                'id'            => $a->id,
+                'judul'         => $a->judul,
+                'slug'          => $a->slug,
+                'kategori'      => $a->kategori ?: 'Umum',
+                'gambar'        => $imgSrc,
+                'status'        => $status,
+                'status_label'  => match($status) {
+                    'scheduled' => 'Terjadwal',
+                    'draft'     => 'Draft',
+                    default     => 'Published',
+                },
+                'date'          => $date,
+                'time'          => $time,
+                'full_datetime' => $fullDateTime,
+                'is_active'     => (bool) $a->is_active,
+                'edit_url'      => route('admin.articles.edit', $a->id),
+                'view_url'      => url('/wawasan/' . $a->slug),
+            ];
+        })->values();
     }
 
     public function create()
