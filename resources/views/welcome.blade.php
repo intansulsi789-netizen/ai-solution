@@ -189,6 +189,22 @@
             -webkit-text-fill-color: transparent;
         }
 
+        html[data-theme="light"] .hero-heading-line1 {
+            color: #0f172a;
+            animation: none;
+            text-shadow: none;
+        }
+
+        html[data-theme="light"] .hero-heading-line2 {
+            background: linear-gradient(90deg, #0284c7 0%, #7c3aed 50%, #db2777 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: hero-gradient-flow 8s linear infinite;
+            filter: none;
+        }
+
         html[data-theme="light"] .hero-subheading,
         html[data-theme="light"] .page-subtitle,
         html[data-theme="light"] .jasa-subtitle,
@@ -1138,29 +1154,37 @@
             letter-spacing: -3px;
             margin-bottom: 28px;
             max-width: 1200px;
+            animation: hero-text-float 6s ease-in-out infinite alternate;
+            will-change: transform;
         }
 
         .hero-heading-line1 {
             display: block;
             color: var(--white);
+            animation: hero-line1-glow 5s ease-in-out infinite alternate;
         }
 
         .hero-heading-line2 {
             display: block;
-            background: linear-gradient(90deg, #00a8ff 0%, #a78bfa 50%, #ec4899 100%);
+            background: linear-gradient(90deg, #00d4ff 0%, #a78bfa 30%, #ec4899 60%, #00a8ff 85%, #00d4ff 100%);
+            background-size: 250% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            animation: hero-gradient-flow 7s linear infinite, hero-gradient-glow 5s ease-in-out infinite alternate;
+            will-change: background-position, filter;
         }
 
         /* Hero subheading */
         .hero-subheading {
             font-size: clamp(18px, 2.5vw, 26px);
             font-weight: 400;
-            color: rgba(255, 255, 255, 0.75);
+            color: rgba(255, 255, 255, 0.80);
             line-height: 1.6;
             max-width: 900px;
             margin-bottom: 48px;
+            animation: hero-sub-shimmer 6s ease-in-out infinite alternate;
+            animation-delay: -3s;
         }
 
         /* CTA Buttons */
@@ -3207,6 +3231,66 @@
             20% { opacity: 1; }
             80% { opacity: 1; }
             100% { left: 0%; opacity: 0; }
+        }
+
+        @keyframes hero-text-float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-9px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        @keyframes hero-line1-glow {
+            0% {
+                text-shadow: 0 0 25px rgba(255, 255, 255, 0.15), 0 0 50px rgba(0, 212, 255, 0.15);
+            }
+            50% {
+                text-shadow: 0 0 35px rgba(255, 255, 255, 0.35), 0 0 70px rgba(0, 212, 255, 0.40), 0 0 90px rgba(124, 58, 237, 0.25);
+            }
+            100% {
+                text-shadow: 0 0 25px rgba(255, 255, 255, 0.15), 0 0 50px rgba(0, 212, 255, 0.15);
+            }
+        }
+
+        @keyframes hero-gradient-flow {
+            0% {
+                background-position: 0% 50%;
+            }
+            100% {
+                background-position: 250% 50%;
+            }
+        }
+
+        @keyframes hero-gradient-glow {
+            0% {
+                filter: drop-shadow(0 0 16px rgba(0, 168, 255, 0.25));
+            }
+            50% {
+                filter: drop-shadow(0 0 32px rgba(167, 139, 250, 0.55)) drop-shadow(0 0 50px rgba(0, 212, 255, 0.40));
+            }
+            100% {
+                filter: drop-shadow(0 0 16px rgba(0, 168, 255, 0.25));
+            }
+        }
+
+        @keyframes hero-sub-shimmer {
+            0% {
+                opacity: 0.75;
+                transform: translateY(0px);
+            }
+            50% {
+                opacity: 0.95;
+                transform: translateY(-4px);
+            }
+            100% {
+                opacity: 0.75;
+                transform: translateY(0px);
+            }
         }
     </style>
 </head>
