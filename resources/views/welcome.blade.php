@@ -1506,7 +1506,7 @@
            PAGE 3 / JASA AI SECTION
         ========================================== */
         /* SERVICES SECTION */
-        .services-section { padding: 100px 24px; max-width: 1400px; margin: 0 auto; width: 100%; display: flex; flex-direction: column; align-items: center; position: relative; z-index: 10; }
+        .services-section { padding: 100px 24px; max-width: 1400px; margin: 0 auto; width: 100%; display: flex; flex-direction: column; align-items: center; position: relative; z-index: 10; scroll-margin-top: 40px; }
         .jasa-header { text-align: center; max-width: 900px; margin: 0 auto 60px; display: flex; flex-direction: column; align-items: center; }
         .jasa-badge { display: inline-flex; font-size: 13px; font-weight: 600; color: var(--cyan-neon); letter-spacing: 2px; padding: 6px 16px; background: rgba(0, 168, 255, 0.1); border: 1px solid rgba(0, 168, 255, 0.2); border-radius: 100px; margin-bottom: 24px; }
         .jasa-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(36px, 5vw, 64px); font-weight: 800; line-height: 1.1; letter-spacing: -1.5px; margin-bottom: 24px; background: linear-gradient(135deg, #ffffff 0%, #a78bfa 50%, #00d4ff 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
@@ -2503,9 +2503,9 @@
 <!-- /hero section -->
 
 <!-- ==========================================
-     LAYANAN SECTION
+     PENGENALAN / KREASI CERDAS SECTION
 ========================================== -->
-<section id="layanan" class="layanan-section">
+<section id="pengenalan" class="layanan-section">
     <div class="ambient-glow-4"></div>
     
     <!-- AI Circuit Decoration -->
@@ -2609,9 +2609,10 @@
 </section>
 
 <!-- ==========================================
-     JASA AI SECTION
+     LAYANAN AI SECTION
 ========================================== -->
-<section id="jasa" class="services-section">
+<section id="layanan" class="services-section">
+    <div id="jasa"></div>
     <div class="jasa-header">
         <div class="jasa-badge">LAYANAN AI</div>
         <h1 class="jasa-title">Solusi AI yang Dirancang untuk Kebutuhan Anda</h1>
