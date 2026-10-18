@@ -88,6 +88,54 @@
             box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.04);
         }
 
+        html[data-theme="light"] .service-hero-solutions-wrapper {
+            background: transparent;
+        }
+
+        html[data-theme="light"] .hero-aurora-glow.aurora-cyan {
+            background: radial-gradient(circle, rgba(2, 132, 199, 0.08) 0%, transparent 70%);
+        }
+
+        html[data-theme="light"] .hero-aurora-glow.aurora-purple {
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.06) 0%, transparent 70%);
+        }
+
+        html[data-theme="light"] .hero-aurora-glow.aurora-indigo {
+            background: radial-gradient(ellipse, rgba(2, 132, 199, 0.05) 0%, transparent 75%);
+        }
+
+        html[data-theme="light"] .constellation-dot-matrix {
+            background-image: radial-gradient(rgba(2, 132, 199, 0.12) 1.2px, transparent 1.2px);
+        }
+
+        html[data-theme="light"] .hero-image-status-pill {
+            background: rgba(255, 255, 255, 0.9);
+            border-color: rgba(2, 132, 199, 0.25);
+            color: #1e293b;
+            box-shadow: 0 4px 16px rgba(15, 23, 42, 0.08);
+        }
+
+        html[data-theme="light"] .tech-corner {
+            border-color: #0284c7;
+        }
+
+        html[data-theme="light"] .horizon-beam-line {
+            background: linear-gradient(90deg, transparent 0%, rgba(2, 132, 199, 0.15) 20%, rgba(2, 132, 199, 0.4) 50%, rgba(124, 58, 237, 0.15) 80%, transparent 100%);
+            box-shadow: 0 0 8px rgba(2, 132, 199, 0.25);
+        }
+
+        html[data-theme="light"] .horizon-beam-core {
+            background: linear-gradient(90deg, #0284c7, #38bdf8, #7c3aed);
+            box-shadow: 0 0 10px rgba(2, 132, 199, 0.4);
+        }
+
+        html[data-theme="light"] .solutions-pill {
+            background: rgba(2, 132, 199, 0.08);
+            border-color: rgba(2, 132, 199, 0.25);
+            color: #0284c7;
+            box-shadow: 0 0 12px rgba(2, 132, 199, 0.1);
+        }
+
         html[data-theme="light"] .solutions-title {
             color: #0f172a;
         }
@@ -98,13 +146,13 @@
 
         html[data-theme="light"] .solution-card {
             background: #ffffff;
-            border: 1px solid rgba(15, 23, 42, 0.12);
+            border: 1px solid rgba(15, 23, 42, 0.10);
             box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
         }
 
         html[data-theme="light"] .solution-card:hover {
             border-color: #0284c7;
-            box-shadow: 0 12px 32px rgba(2, 132, 199, 0.12);
+            box-shadow: 0 14px 35px rgba(2, 132, 199, 0.14);
         }
 
         html[data-theme="light"] .solution-card-title {
@@ -122,7 +170,7 @@
         }
 
         html[data-theme="light"] .solution-number {
-            background: linear-gradient(135deg, rgba(2, 132, 199, 0.35), rgba(124, 58, 237, 0.25));
+            background: linear-gradient(135deg, #0284c7 30%, #7c3aed 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -263,12 +311,103 @@
             transform: translateX(-4px);
         }
 
+        /* ============================================================
+           HERO & SOLUTIONS SECTION (NEURAL AURORA & CONSTELLATION MATRIX)
+           ============================================================ */
+        .service-hero-solutions-wrapper {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            padding-top: 10px;
+            padding-bottom: 20px;
+        }
+
+        /* Ambient Fluid Aurora Glows */
+        .hero-aurora-glow {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.9;
+        }
+
+        .hero-aurora-glow.aurora-cyan {
+            top: -60px;
+            left: 5%;
+            width: 520px;
+            height: 520px;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.22) 0%, rgba(0, 150, 255, 0.08) 45%, transparent 70%);
+            filter: blur(85px);
+            animation: floatAurora1 11s ease-in-out infinite alternate;
+        }
+
+        .hero-aurora-glow.aurora-purple {
+            top: 40px;
+            right: 2%;
+            width: 560px;
+            height: 560px;
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.25) 0%, rgba(99, 102, 241, 0.09) 45%, transparent 70%);
+            filter: blur(95px);
+            animation: floatAurora2 13s ease-in-out infinite alternate;
+        }
+
+        .hero-aurora-glow.aurora-indigo {
+            bottom: 60px;
+            left: 30%;
+            width: 650px;
+            height: 400px;
+            background: radial-gradient(ellipse, rgba(30, 58, 138, 0.28) 0%, rgba(0, 212, 255, 0.06) 50%, transparent 75%);
+            filter: blur(90px);
+            animation: pulseAurora 9s ease-in-out infinite alternate;
+        }
+
+        @keyframes floatAurora1 {
+            0%   { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(35px, 30px) scale(1.12); }
+        }
+
+        @keyframes floatAurora2 {
+            0%   { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(-40px, -25px) scale(1.08); }
+        }
+
+        @keyframes pulseAurora {
+            0%, 100% { opacity: 0.7; transform: scale(1); }
+            50%      { opacity: 1; transform: scale(1.1); }
+        }
+
+        /* Constellation Tech Dot Matrix */
+        .constellation-dot-matrix {
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(rgba(0, 212, 255, 0.2) 1.2px, transparent 1.2px);
+            background-size: 32px 32px;
+            mask-image: radial-gradient(ellipse 85% 75% at 50% 40%, black 25%, transparent 75%);
+            -webkit-mask-image: radial-gradient(ellipse 85% 75% at 50% 40%, black 25%, transparent 75%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Side Floating Geometric Telemetry */
+        .hero-tech-floating {
+            position: absolute;
+            top: 120px;
+            width: 90px;
+            height: 260px;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.75;
+        }
+        .hero-tech-floating.left-side { left: 24px; }
+        .hero-tech-floating.right-side { right: 24px; }
+
         /* Detail Container */
         .detail-container {
             max-width: 1200px;
-            margin: 40px auto 60px;
+            margin: 20px auto 48px;
             padding: 0 5%;
             position: relative;
+            z-index: 2;
             display: flex;
             align-items: center;
             gap: 48px;
@@ -293,42 +432,62 @@
             color: var(--cyan-neon);
             padding: 6px 16px;
             background: rgba(0, 212, 255, 0.08);
-            border: 1px solid rgba(0, 212, 255, 0.2);
+            border: 1px solid rgba(0, 212, 255, 0.25);
             border-radius: 100px;
             margin-bottom: 24px;
+            box-shadow: 0 0 16px rgba(0, 212, 255, 0.12);
         }
+        .badge-pulse-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--cyan-neon);
+            box-shadow: 0 0 8px var(--cyan-neon);
+            animation: statusPulse 1.8s infinite;
+        }
+        @keyframes statusPulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50%      { opacity: 0.35; transform: scale(0.75); }
+        }
+
         .detail-icon-wrap {
             width: 80px;
             height: 80px;
             margin: 0 0 24px 0;
-            background: linear-gradient(135deg, rgba(0,212,255,0.1), rgba(124,58,237,0.1));
-            border: 1px solid rgba(255,255,255,0.1);
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.14), rgba(124, 58, 237, 0.14));
+            border: 1px solid rgba(0, 212, 255, 0.25);
             border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--cyan-neon);
-            box-shadow: 0 0 30px rgba(0, 212, 255, 0.15);
+            box-shadow: 0 0 35px rgba(0, 212, 255, 0.2);
             position: relative;
+            backdrop-filter: blur(12px);
         }
         .detail-icon-wrap::after {
             content: ''; position: absolute; inset: -1px;
             border-radius: 20px;
             background: linear-gradient(135deg, var(--cyan-neon), var(--purple-neon));
-            opacity: 0.3; z-index: -1; filter: blur(10px);
+            opacity: 0.35; z-index: -1; filter: blur(10px);
         }
         .detail-title {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: clamp(32px, 4vw, 48px);
+            font-size: clamp(34px, 4.2vw, 50px);
             font-weight: 800;
             letter-spacing: -1px;
-            line-height: 1.2;
+            line-height: 1.18;
             margin-bottom: 20px;
+            background: linear-gradient(135deg, #ffffff 45%, #67e8f9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(0, 212, 255, 0.15);
         }
         .detail-desc {
-            font-size: clamp(16px, 2vw, 20px);
+            font-size: clamp(16px, 2vw, 19px);
             color: var(--text-muted);
-            line-height: 1.6;
+            line-height: 1.65;
             max-width: 520px;
             margin: 0;
         }
@@ -341,8 +500,13 @@
             overflow: hidden;
             animation: fadeUp 0.8s ease forwards;
             animation-delay: 0.2s;
-            border: 1px solid rgba(0, 212, 255, 0.15);
-            box-shadow: 0 12px 40px rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.28);
+            box-shadow: 
+                0 16px 50px rgba(0, 0, 0, 0.55),
+                0 0 35px rgba(0, 212, 255, 0.16),
+                inset 0 0 20px rgba(0, 212, 255, 0.06);
+            background: rgba(10, 20, 50, 0.4);
+            backdrop-filter: blur(12px);
         }
         .detail-image-wrap img {
             width: 100%;
@@ -354,16 +518,91 @@
         .image-glow {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            box-shadow: inset 0 0 40px rgba(0,0,0,0.5);
+            box-shadow: inset 0 0 40px rgba(0,0,0,0.45);
             pointer-events: none;
             border-radius: 24px;
+        }
+
+        /* Tech Corner Brackets */
+        .tech-corner {
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            pointer-events: none;
+            z-index: 3;
+            border-color: var(--cyan-neon);
+            opacity: 0.85;
+        }
+        .corner-tl { top: 12px; left: 12px; border-top: 2px solid var(--cyan-neon); border-left: 2px solid var(--cyan-neon); border-top-left-radius: 6px; }
+        .corner-tr { top: 12px; right: 12px; border-top: 2px solid var(--cyan-neon); border-right: 2px solid var(--cyan-neon); border-top-right-radius: 6px; }
+        .corner-bl { bottom: 12px; left: 12px; border-bottom: 2px solid var(--cyan-neon); border-left: 2px solid var(--cyan-neon); border-bottom-left-radius: 6px; }
+        .corner-br { bottom: 12px; right: 12px; border-bottom: 2px solid var(--cyan-neon); border-right: 2px solid var(--cyan-neon); border-bottom-right-radius: 6px; }
+
+        .hero-image-status-pill {
+            position: absolute;
+            bottom: 16px;
+            left: 16px;
+            z-index: 3;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 15px;
+            background: rgba(2, 8, 24, 0.78);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 212, 255, 0.35);
+            border-radius: 100px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #e2e8f0;
+            letter-spacing: 0.4px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+        }
+        .status-indicator-ping {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--cyan-neon);
+            box-shadow: 0 0 8px var(--cyan-neon);
+            animation: statusPulse 2s ease-in-out infinite;
+        }
+
+        /* Neural Horizon Beam (Divider between Hero and Solutions) */
+        .neural-horizon-beam {
+            position: relative;
+            max-width: 960px;
+            margin: 10px auto 44px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+            pointer-events: none;
+            padding: 0 5%;
+        }
+        .horizon-beam-line {
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, rgba(0, 212, 255, 0.12) 15%, rgba(0, 212, 255, 0.6) 50%, rgba(124, 58, 237, 0.12) 85%, transparent 100%);
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.35);
+        }
+        .horizon-beam-core {
+            width: 68px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--cyan-neon), #ffffff, var(--purple-neon));
+            border-radius: 10px;
+            filter: blur(0.5px);
+            box-shadow: 0 0 14px var(--cyan-neon), 0 0 24px rgba(124, 58, 237, 0.6);
         }
 
         /* Solutions Section */
         .solutions-wrapper {
             max-width: 1280px;
-            margin: 0 auto 48px;
+            margin: 0 auto 36px;
             padding: 0 5%;
+            position: relative;
+            z-index: 2;
         }
         .solutions-section {
             animation: fadeUp 1s ease forwards;
@@ -374,17 +613,41 @@
             text-align: center;
             margin-bottom: 36px;
         }
+        .solutions-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--cyan-neon);
+            padding: 5px 14px;
+            background: rgba(0, 212, 255, 0.08);
+            border: 1px solid rgba(0, 212, 255, 0.22);
+            border-radius: 100px;
+            margin-bottom: 14px;
+            box-shadow: 0 0 14px rgba(0, 212, 255, 0.12);
+        }
+        .pill-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--cyan-neon);
+            box-shadow: 0 0 6px var(--cyan-neon);
+        }
         .solutions-title {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 26px;
+            font-size: 28px;
             font-weight: 700;
             color: #fff;
             margin-bottom: 10px;
+            letter-spacing: -0.3px;
         }
         .solutions-subtitle {
             font-size: 15px;
             color: var(--text-muted);
-            max-width: 560px;
+            max-width: 580px;
             margin: 0 auto;
             line-height: 1.6;
         }
@@ -394,25 +657,26 @@
             gap: 20px;
         }
         .solution-card {
-            background: rgba(10, 20, 50, 0.5);
-            border: 1px solid rgba(0, 212, 255, 0.12);
+            background: linear-gradient(145deg, rgba(12, 26, 68, 0.65) 0%, rgba(7, 16, 46, 0.75) 100%);
+            border: 1px solid rgba(0, 212, 255, 0.16);
             border-radius: 18px;
             padding: 28px 24px 24px;
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            transition: all 0.35s ease;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
             overflow: hidden;
             display: flex;
             flex-direction: column;
             min-height: 220px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
         }
-        /* Subtle radial glow behind card on hover */
+        /* Top sweeping shimmer line on hover */
         .solution-card::before {
             content: '';
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at top right, rgba(124, 58, 237, 0.12), transparent 65%);
+            background: radial-gradient(circle at top right, rgba(0, 212, 255, 0.18), rgba(124, 58, 237, 0.12), transparent 70%);
             opacity: 0;
             transition: opacity 0.35s ease;
             pointer-events: none;
@@ -423,25 +687,26 @@
             position: absolute;
             top: 0; right: 0;
             width: 60px; height: 60px;
-            border-top: 2px solid rgba(0, 212, 255, 0.15);
-            border-right: 2px solid rgba(0, 212, 255, 0.15);
+            border-top: 2px solid rgba(0, 212, 255, 0.22);
+            border-right: 2px solid rgba(0, 212, 255, 0.22);
             border-radius: 0 18px 0 0;
             pointer-events: none;
             transition: border-color 0.35s ease;
         }
         .solution-card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(0, 212, 255, 0.35);
+            transform: translateY(-6px);
+            border-color: rgba(0, 212, 255, 0.45);
             box-shadow:
-                0 8px 32px rgba(0, 212, 255, 0.12),
-                0 0 0 1px rgba(0, 212, 255, 0.08);
+                0 14px 40px rgba(0, 212, 255, 0.18),
+                0 0 25px rgba(124, 58, 237, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15);
         }
         .solution-card:hover::before {
             opacity: 1;
         }
         .solution-card:hover::after {
-            border-top-color: rgba(0, 212, 255, 0.4);
-            border-right-color: rgba(124, 58, 237, 0.4);
+            border-top-color: rgba(0, 212, 255, 0.6);
+            border-right-color: rgba(124, 58, 237, 0.6);
         }
         /* Top row: icon + number side by side */
         .solution-top {
@@ -455,15 +720,15 @@
         .solution-icon {
             width: 44px;
             height: 44px;
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.12), rgba(124, 58, 237, 0.10));
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.14), rgba(124, 58, 237, 0.12));
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--cyan-neon);
             flex-shrink: 0;
-            border: 1px solid rgba(0, 212, 255, 0.18);
-            box-shadow: 0 0 12px rgba(0, 212, 255, 0.08);
+            border: 1px solid rgba(0, 212, 255, 0.25);
+            box-shadow: 0 0 14px rgba(0, 212, 255, 0.12);
         }
         .solution-icon svg {
             width: 20px;
@@ -473,11 +738,16 @@
             font-family: 'Plus Jakarta Sans', sans-serif;
             font-size: 32px;
             font-weight: 800;
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.25), rgba(124, 58, 237, 0.18));
+            background: linear-gradient(135deg, #00d4ff 20%, #a78bfa 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             line-height: 1;
+            filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.25));
+            transition: filter 0.3s ease;
+        }
+        .solution-card:hover .solution-number {
+            filter: drop-shadow(0 0 16px rgba(0, 212, 255, 0.55));
         }
         .solution-card-title {
             font-family: 'Plus Jakarta Sans', sans-serif;
@@ -491,7 +761,7 @@
         }
         .solution-card-desc {
             font-size: 13px;
-            color: rgba(255, 255, 255, 0.6);
+            color: rgba(255, 255, 255, 0.65);
             line-height: 1.55;
             position: relative;
             z-index: 1;
@@ -507,7 +777,7 @@
             display: block;
             height: 1px;
             background: linear-gradient(90deg, var(--cyan-neon), var(--purple-neon), transparent);
-            opacity: 0.25;
+            opacity: 0.3;
             border-radius: 1px;
         }
 
@@ -795,6 +1065,7 @@
         }
 
         @media (max-width: 1024px) {
+            .hero-tech-floating { display: none; }
             .solutions-grid { grid-template-columns: repeat(2, 1fr); }
             .solution-card { min-height: 200px; }
             .detail-container {
@@ -836,67 +1107,123 @@
         @include('partials.theme-toggle')
     </nav>
 
-    <!-- Detail Container -->
-    <div class="detail-container">
-        
-        <!-- Header -->
-        <div class="detail-header">
-            <div class="detail-icon-wrap">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="{{ $service['icon'] }}"></path>
-                </svg>
-            </div>
-            <div class="badge-layanan">Layanan AI</div>
-            <h1 class="detail-title">{{ $service['title'] }}</h1>
-            <p class="detail-desc">{{ $service['desc'] }}</p>
-        </div>
-        <!-- Dynamic Image -->
-        <div class="detail-image-wrap">
-            @php
-                $imageSrc = asset('images/services/' . $service['slug'] . '.jpg');
-                if (!empty($service['image'])) {
-                    $imageSrc = Storage::url($service['image']);
-                }
-            @endphp
-            <img src="{{ $imageSrc }}" alt="Ilustrasi Layanan {{ $service['title'] }}">
-            <div class="image-glow"></div>
-        </div>
-    </div>{{-- close detail-container for hero --}}
+    <!-- Hero & Solutions Super-Wrapper (Neural Aurora & Constellation Tech Matrix) -->
+    <section class="service-hero-solutions-wrapper">
+        {{-- Ambient Aurora Glow Orbs --}}
+        <div class="hero-aurora-glow aurora-cyan" aria-hidden="true"></div>
+        <div class="hero-aurora-glow aurora-purple" aria-hidden="true"></div>
+        <div class="hero-aurora-glow aurora-indigo" aria-hidden="true"></div>
 
-    <!-- Solutions Section (wider container) -->
-    @if(isset($service['solutions']) && count($service['solutions']) > 0)
-    <div class="solutions-wrapper">
-        <div class="solutions-section">
-            <div class="solutions-header">
-                <h2 class="solutions-title">Solusi yang Kami Hadirkan</h2>
-                <p class="solutions-subtitle">Kami membantu mengubah kebutuhan bisnis menjadi solusi AI yang dapat diterapkan sesuai proses kerja Anda.</p>
-            </div>
-            <div class="solutions-grid">
-                @php
-                $solutionIcons = [
-                    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>',
-                    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>',
-                    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>',
-                    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>'
-                ];
-                @endphp
-                @foreach($service['solutions'] as $index => $solution)
-                <div class="solution-card">
-                    <div class="solution-top">
-                        <div class="solution-icon">
-                            {!! $solutionIcons[$index] ?? $solutionIcons[0] !!}
-                        </div>
-                        <div class="solution-number">0{{ $index + 1 }}</div>
-                    </div>
-                    <h3 class="solution-card-title">{{ $solution['title'] }}</h3>
-                    <p class="solution-card-desc">{{ $solution['desc'] }}</p>
-                    <div class="solution-glow-line"><span></span></div>
+        {{-- Constellation Dot Matrix Grid --}}
+        <div class="constellation-dot-matrix" aria-hidden="true"></div>
+
+        {{-- Floating Tech Geometry Accents on Sides --}}
+        <div class="hero-tech-floating left-side" aria-hidden="true">
+            <svg viewBox="0 0 90 260" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+                <circle cx="20" cy="30" r="3" fill="var(--cyan-neon)" opacity="0.85"/>
+                <circle cx="20" cy="30" r="8" stroke="var(--cyan-neon)" stroke-width="1" stroke-dasharray="2 3" opacity="0.4"/>
+                <line x1="20" y1="38" x2="20" y2="100" stroke="rgba(0, 212, 255, 0.25)" stroke-width="1" stroke-dasharray="3 3"/>
+                <polygon points="20,110 26,116 20,122 14,116" fill="none" stroke="var(--purple-neon)" stroke-width="1.5" opacity="0.75"/>
+                <line x1="20" y1="122" x2="20" y2="185" stroke="rgba(124, 58, 237, 0.2)" stroke-width="1"/>
+                <circle cx="20" cy="185" r="2.5" fill="var(--cyan-neon)" opacity="0.7"/>
+                <path d="M20 185 L48 213 H72" stroke="rgba(0, 212, 255, 0.35)" stroke-width="1.2"/>
+                <circle cx="72" cy="213" r="3" fill="var(--cyan-neon)"/>
+            </svg>
+        </div>
+        <div class="hero-tech-floating right-side" aria-hidden="true">
+            <svg viewBox="0 0 90 260" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+                <circle cx="70" cy="30" r="3" fill="var(--purple-neon)" opacity="0.85"/>
+                <polygon points="70,68 77,75 70,82 63,75" fill="none" stroke="var(--cyan-neon)" stroke-width="1.5" opacity="0.75"/>
+                <line x1="70" y1="82" x2="70" y2="150" stroke="rgba(0, 212, 255, 0.25)" stroke-width="1" stroke-dasharray="3 3"/>
+                <circle cx="70" cy="150" r="8" stroke="var(--purple-neon)" stroke-width="1" stroke-dasharray="2 2" opacity="0.45"/>
+                <circle cx="70" cy="150" r="2.5" fill="var(--purple-neon)" opacity="0.85"/>
+                <path d="M70 150 L42 178 H18" stroke="rgba(124, 58, 237, 0.35)" stroke-width="1.2"/>
+                <circle cx="18" cy="178" r="3" fill="var(--purple-neon)"/>
+            </svg>
+        </div>
+
+        <!-- Detail Container -->
+        <div class="detail-container">
+            <!-- Header -->
+            <div class="detail-header">
+                <div class="detail-icon-wrap">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="{{ $service['icon'] }}"></path>
+                    </svg>
                 </div>
-                @endforeach
+                <div class="badge-layanan">
+                    <span class="badge-pulse-dot"></span>
+                    Layanan AI
+                </div>
+                <h1 class="detail-title">{{ $service['title'] }}</h1>
+                <p class="detail-desc">{{ $service['desc'] }}</p>
+            </div>
+            <!-- Dynamic Image -->
+            <div class="detail-image-wrap">
+                <div class="tech-corner corner-tl"></div>
+                <div class="tech-corner corner-tr"></div>
+                <div class="tech-corner corner-bl"></div>
+                <div class="tech-corner corner-br"></div>
+                @php
+                    $imageSrc = asset('images/services/' . $service['slug'] . '.jpg');
+                    if (!empty($service['image'])) {
+                        $imageSrc = Storage::url($service['image']);
+                    }
+                @endphp
+                <img src="{{ $imageSrc }}" alt="Ilustrasi Layanan {{ $service['title'] }}">
+                <div class="image-glow"></div>
+                <div class="hero-image-status-pill">
+                    <span class="status-indicator-ping"></span>
+                    Solusi AI Terverifikasi
+                </div>
+            </div>
+        </div>{{-- close detail-container for hero --}}
+
+        {{-- Neural Horizon Beam (Divider between Hero and Solutions) --}}
+        <div class="neural-horizon-beam" aria-hidden="true">
+            <div class="horizon-beam-line"></div>
+            <div class="horizon-beam-core"></div>
+        </div>
+
+        <!-- Solutions Section (wider container) -->
+        @if(isset($service['solutions']) && count($service['solutions']) > 0)
+        <div class="solutions-wrapper">
+            <div class="solutions-section">
+                <div class="solutions-header">
+                    <div class="solutions-pill">
+                        <span class="pill-dot"></span>
+                        KAPABILITAS &amp; FITUR
+                    </div>
+                    <h2 class="solutions-title">Solusi yang Kami Hadirkan</h2>
+                    <p class="solutions-subtitle">Kami membantu mengubah kebutuhan bisnis menjadi solusi AI yang dapat diterapkan sesuai proses kerja Anda.</p>
+                </div>
+                <div class="solutions-grid">
+                    @php
+                    $solutionIcons = [
+                        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>',
+                        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>',
+                        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>',
+                        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>'
+                    ];
+                    @endphp
+                    @foreach($service['solutions'] as $index => $solution)
+                    <div class="solution-card">
+                        <div class="solution-top">
+                            <div class="solution-icon">
+                                {!! $solutionIcons[$index] ?? $solutionIcons[0] !!}
+                            </div>
+                            <div class="solution-number">0{{ $index + 1 }}</div>
+                        </div>
+                        <h3 class="solution-card-title">{{ $solution['title'] }}</h3>
+                        <p class="solution-card-desc">{{ $solution['desc'] }}</p>
+                        <div class="solution-glow-line"><span></span></div>
+                    </div>
+                    @endforeach
+                </div>
             </div>
         </div>
-    </div>
-    @endif
+        @endif
+    </section>
 
     <!-- Benefits & CTA Section (With Ambient Glowing Tech Background) -->
     <section class="benefits-section-wrap">
