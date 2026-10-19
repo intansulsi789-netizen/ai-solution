@@ -62,7 +62,17 @@
         }
 
         html[data-theme="light"] .article-hero-title {
-            color: #0f172a;
+            background: linear-gradient(135deg, #0f172a 50%, #0369a1 85%, #6d28d9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: none;
+        }
+        html[data-theme="light"] .article-hero-halo {
+            background: radial-gradient(ellipse 70% 50% at 50% 50%, rgba(2, 132, 199, 0.10) 0%, rgba(124, 58, 237, 0.06) 45%, transparent 75%);
+            filter: blur(50px);
+        }
+        html[data-theme="light"] .article-circuit-flank {
+            opacity: 0.35;
         }
 
         html[data-theme="light"] .article-hero-summary {
@@ -235,33 +245,33 @@
         }
 
         .art-aurora-cyan-top {
-            width: 700px;
-            height: 700px;
-            top: -150px;
-            left: -150px;
-            background: radial-gradient(circle, rgba(0, 212, 255, 0.18) 0%, rgba(0, 168, 255, 0.08) 45%, transparent 70%);
-            filter: blur(85px);
+            width: 750px;
+            height: 750px;
+            top: -60px;
+            left: -80px;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.24) 0%, rgba(0, 168, 255, 0.12) 45%, transparent 70%);
+            filter: blur(75px);
             animation: aurora-float-cyan 14s ease-in-out infinite alternate;
         }
 
         .art-aurora-purple-top {
-            width: 750px;
-            height: 750px;
-            top: -120px;
-            right: -150px;
-            background: radial-gradient(circle, rgba(124, 58, 237, 0.20) 0%, rgba(167, 139, 250, 0.09) 45%, transparent 70%);
-            filter: blur(90px);
+            width: 800px;
+            height: 800px;
+            top: -50px;
+            right: -80px;
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.24) 0%, rgba(167, 139, 250, 0.12) 45%, transparent 70%);
+            filter: blur(80px);
             animation: aurora-float-purple 16s ease-in-out infinite alternate;
         }
 
         .art-aurora-pink-mid {
-            width: 650px;
+            width: 700px;
             height: 550px;
-            top: 50%;
+            top: 45%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: radial-gradient(ellipse, rgba(0, 212, 255, 0.09) 0%, rgba(236, 72, 153, 0.08) 35%, rgba(124, 58, 237, 0.07) 60%, transparent 75%);
-            filter: blur(95px);
+            background: radial-gradient(ellipse, rgba(0, 212, 255, 0.12) 0%, rgba(236, 72, 153, 0.10) 35%, rgba(124, 58, 237, 0.09) 60%, transparent 75%);
+            filter: blur(90px);
             animation: aurora-pulse-mid 12s ease-in-out infinite alternate;
         }
 
@@ -271,7 +281,7 @@
             bottom: -150px;
             left: 50%;
             transform: translateX(-50%);
-            background: radial-gradient(ellipse at center, rgba(0, 212, 255, 0.14) 0%, rgba(124, 58, 237, 0.12) 45%, transparent 70%);
+            background: radial-gradient(ellipse at center, rgba(0, 212, 255, 0.16) 0%, rgba(124, 58, 237, 0.14) 45%, transparent 70%);
             filter: blur(90px);
             animation: aurora-float-bottom 18s ease-in-out infinite alternate;
         }
@@ -280,13 +290,39 @@
             position: absolute;
             inset: 0;
             background-image: 
-                linear-gradient(rgba(0, 212, 255, 0.04) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 212, 255, 0.04) 1px, transparent 1px);
-            background-size: 48px 48px;
-            mask-image: radial-gradient(ellipse at 50% 40%, rgba(0, 0, 0, 0.95) 20%, rgba(0, 0, 0, 0.4) 65%, transparent 85%);
-            -webkit-mask-image: radial-gradient(ellipse at 50% 40%, rgba(0, 0, 0, 0.95) 20%, rgba(0, 0, 0, 0.4) 65%, transparent 85%);
-            opacity: 0.85;
+                radial-gradient(rgba(0, 212, 255, 0.18) 1.2px, transparent 1.2px),
+                linear-gradient(rgba(0, 212, 255, 0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 212, 255, 0.035) 1px, transparent 1px);
+            background-size: 32px 32px, 64px 64px, 64px 64px;
+            mask-image: radial-gradient(ellipse 90% 80% at 50% 30%, rgba(0, 0, 0, 0.95) 20%, rgba(0, 0, 0, 0.4) 65%, transparent 90%);
+            -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 30%, rgba(0, 0, 0, 0.95) 20%, rgba(0, 0, 0, 0.4) 65%, transparent 90%);
             pointer-events: none;
+        }
+
+        /* Lateral tech circuit lines */
+        .article-circuit-flank {
+            position: fixed;
+            top: 70px;
+            bottom: 70px;
+            width: 140px;
+            pointer-events: none;
+            opacity: 0.55;
+            z-index: 0;
+        }
+        .article-circuit-left {
+            left: 10px;
+        }
+        .article-circuit-right {
+            right: 10px;
+        }
+        .circuit-svg {
+            width: 100%;
+            height: 100%;
+        }
+        @media (max-width: 1100px) {
+            .article-circuit-flank {
+                display: none;
+            }
         }
 
         html[data-theme="light"] .art-aurora-cyan-top {
@@ -307,8 +343,9 @@
         }
         html[data-theme="light"] .article-grid-mesh {
             background-image: 
-                linear-gradient(rgba(15, 23, 42, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(15, 23, 42, 0.03) 1px, transparent 1px);
+                radial-gradient(rgba(2, 132, 199, 0.10) 1.2px, transparent 1.2px),
+                linear-gradient(rgba(15, 23, 42, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(15, 23, 42, 0.02) 1px, transparent 1px);
             opacity: 0.6;
         }
 
@@ -370,10 +407,29 @@
 
         /* ===== HERO HEADER ===== */
         .article-hero {
+            position: relative;
             max-width: 900px;
             margin: 0 auto;
             padding: 20px 5% 0;
             animation: fadeUp 0.7s ease forwards;
+        }
+        .article-hero-halo {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 780px;
+            max-width: 96vw;
+            height: 380px;
+            background: radial-gradient(ellipse 70% 50% at 50% 50%, rgba(0, 212, 255, 0.24) 0%, rgba(124, 58, 237, 0.18) 45%, transparent 75%);
+            filter: blur(55px);
+            pointer-events: none;
+            z-index: -1;
+            animation: hero-halo-breathe 7s ease-in-out infinite alternate;
+        }
+        @keyframes hero-halo-breathe {
+            0% { transform: translate(-50%, -50%) scale(0.92); opacity: 0.75; }
+            100% { transform: translate(-50%, -50%) scale(1.08); opacity: 1; }
         }
         .article-meta-row {
             display: flex;
@@ -420,6 +476,11 @@
             letter-spacing: -1px;
             line-height: 1.2;
             margin-bottom: 16px;
+            background: linear-gradient(135deg, #ffffff 45%, #cffafe 80%, #e9d5ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 2px 20px rgba(0, 212, 255, 0.22));
         }
         .article-hero-summary {
             font-size: 17px;
@@ -858,6 +919,50 @@
         <div class="article-aurora art-aurora-pink-mid"></div>
         <div class="article-aurora art-aurora-blue-bottom"></div>
         <div class="article-grid-mesh"></div>
+        
+        <!-- Flanking Circuit Lines -->
+        <div class="article-circuit-flank article-circuit-left">
+            <svg class="circuit-svg" viewBox="0 0 160 800" fill="none">
+                <path d="M20 0 V240 L70 290 V450 L30 490 V800" stroke="url(#art-cyan-grad-l)" stroke-width="1.5" stroke-dasharray="4 8" opacity="0.45" />
+                <path d="M60 0 V180 L110 230 V390 L80 420 V800" stroke="url(#art-purple-grad-l)" stroke-width="1" opacity="0.35" />
+                <circle cx="70" cy="290" r="4" fill="#00d4ff" />
+                <circle cx="30" cy="490" r="3.5" fill="#7c3aed" />
+                <circle cx="110" cy="230" r="3" fill="#ec4899" />
+                <defs>
+                    <linearGradient id="art-cyan-grad-l" x1="0" y1="0" x2="0" y2="800" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#00d4ff" stop-opacity="0.8"/>
+                        <stop offset="0.5" stop-color="#7c3aed" stop-opacity="0.4"/>
+                        <stop offset="1" stop-color="#00d4ff" stop-opacity="0.1"/>
+                    </linearGradient>
+                    <linearGradient id="art-purple-grad-l" x1="0" y1="0" x2="0" y2="800" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#7c3aed" stop-opacity="0.7"/>
+                        <stop offset="0.6" stop-color="#00d4ff" stop-opacity="0.3"/>
+                        <stop offset="1" stop-color="#7c3aed" stop-opacity="0.1"/>
+                    </linearGradient>
+                </defs>
+            </svg>
+        </div>
+        <div class="article-circuit-flank article-circuit-right">
+            <svg class="circuit-svg" viewBox="0 0 160 800" fill="none">
+                <path d="M140 0 V220 L90 270 V430 L130 470 V800" stroke="url(#art-cyan-grad-r)" stroke-width="1.5" stroke-dasharray="4 8" opacity="0.45" />
+                <path d="M100 0 V160 L50 210 V370 L80 400 V800" stroke="url(#art-purple-grad-r)" stroke-width="1" opacity="0.35" />
+                <circle cx="90" cy="270" r="4" fill="#00d4ff" />
+                <circle cx="130" cy="470" r="3.5" fill="#7c3aed" />
+                <circle cx="50" cy="210" r="3" fill="#00d4ff" />
+                <defs>
+                    <linearGradient id="art-cyan-grad-r" x1="0" y1="0" x2="0" y2="800" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#00d4ff" stop-opacity="0.8"/>
+                        <stop offset="0.5" stop-color="#ec4899" stop-opacity="0.4"/>
+                        <stop offset="1" stop-color="#7c3aed" stop-opacity="0.1"/>
+                    </linearGradient>
+                    <linearGradient id="art-purple-grad-r" x1="0" y1="0" x2="0" y2="800" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#7c3aed" stop-opacity="0.7"/>
+                        <stop offset="0.6" stop-color="#00d4ff" stop-opacity="0.3"/>
+                        <stop offset="1" stop-color="#00d4ff" stop-opacity="0.1"/>
+                    </linearGradient>
+                </defs>
+            </svg>
+        </div>
     </div>
 
     <!-- Navbar -->
@@ -874,6 +979,7 @@
 
     <!-- Hero Header -->
     <header class="article-hero">
+        <div class="article-hero-halo" aria-hidden="true"></div>
         <div class="article-meta-row">
             <span class="article-category-badge">{{ $article['category'] }}</span>
             <span class="article-meta-divider"></span>
