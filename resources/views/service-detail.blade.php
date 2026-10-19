@@ -15,8 +15,10 @@
     <title>{{ $service['title'] }} - AI Jogja Solutions</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
     
-    {{-- Dark & Light Mode Script & Styles --}}
-    @include('partials.theme-script')
+    {{-- Strictly Dark Mode on public pages --}}
+    <script>
+        document.documentElement.setAttribute('data-theme', 'dark');
+    </script>
 
     <style>
         :root {
@@ -1139,7 +1141,7 @@
             </svg>
             Kembali ke Layanan
         </a>
-        @include('partials.theme-toggle')
+
     </nav>
 
     <!-- Hero & Solutions Super-Wrapper (Neural Aurora & Constellation Tech Matrix) -->

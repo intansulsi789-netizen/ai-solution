@@ -36,8 +36,10 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     @endif
 
-    {{-- Dark & Light Mode Script & Styles --}}
-    @include('partials.theme-script')
+    {{-- Homepage strictly Dark Mode --}}
+    <script>
+        document.documentElement.setAttribute('data-theme', 'dark');
+    </script>
 
     <style>
         /* ==========================================
@@ -3592,8 +3594,7 @@
                 <kbd class="nav-search-kbd">Ctrl K</kbd>
             </button>
 
-            <!-- Theme Toggle Button -->
-            @include('partials.theme-toggle')
+
 
             <!-- Mobile hamburger -->
             <button class="nav-hamburger" id="hamburger-btn" aria-label="Toggle menu" aria-expanded="false">

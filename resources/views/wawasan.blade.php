@@ -24,8 +24,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    {{-- Dark & Light Mode Script & Styles --}}
-    @include('partials.theme-script')
+    {{-- Strictly Dark Mode on public pages --}}
+    <script>
+        document.documentElement.setAttribute('data-theme', 'dark');
+    </script>
 
     <style>
         *, *::before, *::after {
@@ -1202,7 +1204,6 @@
             </ul>
 
             <div class="nav-right">
-                @include('partials.theme-toggle')
             </div>
         </div>
     </nav>
