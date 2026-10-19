@@ -117,6 +117,7 @@ class AdminPartnerController extends Controller
             $url = 'https://' . $url;
         }
 
+        return $url;
     }
 
     public function destroy($id)
