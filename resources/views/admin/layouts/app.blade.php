@@ -1277,21 +1277,30 @@
         </svg>
     </button>
     {{-- Logo --}}
+    @php
+        $siteLogoCustom = (isset($cmsHomepage) && ($cmsHomepage->site_logo_type ?? '') === 'custom' && $cmsHomepage->site_logo_url);
+        $siteHighlight = isset($cmsHomepage) && $cmsHomepage->site_name_highlight ? $cmsHomepage->site_name_highlight : 'AI';
+        $siteRest = isset($cmsHomepage) && $cmsHomepage->site_name_rest ? $cmsHomepage->site_name_rest : 'Jogja Solutions';
+    @endphp
     <a href="/" class="sidebar-logo">
         <div class="sidebar-logo-icon">
-            <svg viewBox="0 0 24 24" fill="none">
-                <circle cx="12" cy="12" r="3" fill="white" opacity="0.95"/>
-                <circle cx="5" cy="7" r="1.5" fill="white" opacity="0.75"/>
-                <circle cx="19" cy="7" r="1.5" fill="white" opacity="0.75"/>
-                <circle cx="5" cy="17" r="1.5" fill="white" opacity="0.75"/>
-                <circle cx="19" cy="17" r="1.5" fill="white" opacity="0.75"/>
-                <line x1="9" y1="11" x2="6.12" y2="7.88" stroke="white" stroke-width="1.2" opacity="0.65"/>
-                <line x1="15" y1="11" x2="17.88" y2="7.88" stroke="white" stroke-width="1.2" opacity="0.65"/>
-                <line x1="9" y1="13" x2="6.12" y2="16.12" stroke="white" stroke-width="1.2" opacity="0.65"/>
-                <line x1="15" y1="13" x2="17.88" y2="16.12" stroke="white" stroke-width="1.2" opacity="0.65"/>
-            </svg>
+            @if($siteLogoCustom)
+                <img src="{{ $cmsHomepage->site_logo_url }}" alt="{{ $siteHighlight }} {{ $siteRest }}" style="width:100%;height:100%;object-fit:contain;padding:4px;">
+            @else
+                <svg viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="3" fill="white" opacity="0.95"/>
+                    <circle cx="5" cy="7" r="1.5" fill="white" opacity="0.75"/>
+                    <circle cx="19" cy="7" r="1.5" fill="white" opacity="0.75"/>
+                    <circle cx="5" cy="17" r="1.5" fill="white" opacity="0.75"/>
+                    <circle cx="19" cy="17" r="1.5" fill="white" opacity="0.75"/>
+                    <line x1="9" y1="11" x2="6.12" y2="7.88" stroke="white" stroke-width="1.2" opacity="0.65"/>
+                    <line x1="15" y1="11" x2="17.88" y2="7.88" stroke="white" stroke-width="1.2" opacity="0.65"/>
+                    <line x1="9" y1="13" x2="6.12" y2="16.12" stroke="white" stroke-width="1.2" opacity="0.65"/>
+                    <line x1="15" y1="13" x2="17.88" y2="16.12" stroke="white" stroke-width="1.2" opacity="0.65"/>
+                </svg>
+            @endif
         </div>
-        <span class="sidebar-logo-text"><span>AI</span> Jogja Solutions</span>
+        <span class="sidebar-logo-text"><span>{{ $siteHighlight }}</span> {{ $siteRest }}</span>
     </a>
 
     {{-- Admin info --}}
@@ -1394,13 +1403,17 @@
                 Homepage
             </a>
 
+            {{-- Logo & Identitas Website --}}
+            <a href="{{ route('admin.cms.logo.index') }}" class="cms-sub-item {{ request()->routeIs('admin.cms.logo.*') ? 'active' : '' }}" id="cms-logo">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-left:-2px;"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+                Logo Website
+            </a>
+
             {{-- Tentang Kami --}}
             <a href="{{ route('admin.cms.about.index') }}" class="cms-sub-item {{ request()->routeIs('admin.cms.about.*') ? 'active' : '' }}" id="cms-tentang">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-left:-2px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
                 Tentang Kami
             </a>
-
-
 
             {{-- CTA / Kontak --}}
             <a href="{{ route('admin.cms.contact.index') }}" class="cms-sub-item {{ request()->routeIs('admin.cms.contact.*') ? 'active' : '' }}" id="cms-cta">

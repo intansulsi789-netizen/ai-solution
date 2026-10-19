@@ -1144,25 +1144,35 @@
     <nav class="navbar" role="navigation" aria-label="Main Navigation">
         <div class="navbar-inner">
             <div class="nav-brand-wrap">
-                <a href="/" class="nav-logo" aria-label="AI Jogja Solutions Beranda">
+                @php
+                    $isCustomLogo = (isset($cmsHomepage) && ($cmsHomepage->site_logo_type ?? '') === 'custom' && $cmsHomepage->site_logo_url);
+                    $siteHl = isset($cmsHomepage) && $cmsHomepage->site_name_highlight ? $cmsHomepage->site_name_highlight : 'AI';
+                    $siteRs = isset($cmsHomepage) && $cmsHomepage->site_name_rest ? $cmsHomepage->site_name_rest : 'Jogja Solutions';
+                    $siteFull = trim($siteHl . ' ' . $siteRs);
+                @endphp
+                <a href="/" class="nav-logo" aria-label="{{ $siteFull }} Beranda">
                     <div class="nav-logo-icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="12" cy="12" r="3" fill="white" opacity="0.95"/>
-                            <circle cx="5" cy="7" r="1.5" fill="white" opacity="0.80"/>
-                            <circle cx="19" cy="7" r="1.5" fill="white" opacity="0.80"/>
-                            <circle cx="5" cy="17" r="1.5" fill="white" opacity="0.80"/>
-                            <circle cx="19" cy="17" r="1.5" fill="white" opacity="0.80"/>
-                            <circle cx="12" cy="3" r="1.5" fill="white" opacity="0.80"/>
-                            <circle cx="12" cy="21" r="1.5" fill="white" opacity="0.80"/>
-                            <line x1="9" y1="11" x2="6.12" y2="7.88" stroke="white" stroke-width="1.2" opacity="0.70"/>
-                            <line x1="15" y1="11" x2="17.88" y2="7.88" stroke="white" stroke-width="1.2" opacity="0.70"/>
-                            <line x1="9" y1="13" x2="6.12" y2="16.12" stroke="white" stroke-width="1.2" opacity="0.70"/>
-                            <line x1="15" y1="13" x2="17.88" y2="16.12" stroke="white" stroke-width="1.2" opacity="0.70"/>
-                            <line x1="12" y1="9" x2="12" y2="4.5" stroke="white" stroke-width="1.2" opacity="0.70"/>
-                            <line x1="12" y1="15" x2="12" y2="19.5" stroke="white" stroke-width="1.2" opacity="0.70"/>
-                        </svg>
+                        @if($isCustomLogo)
+                            <img src="{{ $cmsHomepage->site_logo_url }}" alt="{{ $siteFull }}" style="width:100%;height:100%;object-fit:contain;padding:4px;">
+                        @else
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="3" fill="white" opacity="0.95"/>
+                                <circle cx="5" cy="7" r="1.5" fill="white" opacity="0.80"/>
+                                <circle cx="19" cy="7" r="1.5" fill="white" opacity="0.80"/>
+                                <circle cx="5" cy="17" r="1.5" fill="white" opacity="0.80"/>
+                                <circle cx="19" cy="17" r="1.5" fill="white" opacity="0.80"/>
+                                <circle cx="12" cy="3" r="1.5" fill="white" opacity="0.80"/>
+                                <circle cx="12" cy="21" r="1.5" fill="white" opacity="0.80"/>
+                                <line x1="9" y1="11" x2="6.12" y2="7.88" stroke="white" stroke-width="1.2" opacity="0.70"/>
+                                <line x1="15" y1="11" x2="17.88" y2="7.88" stroke="white" stroke-width="1.2" opacity="0.70"/>
+                                <line x1="9" y1="13" x2="6.12" y2="16.12" stroke="white" stroke-width="1.2" opacity="0.70"/>
+                                <line x1="15" y1="13" x2="17.88" y2="16.12" stroke="white" stroke-width="1.2" opacity="0.70"/>
+                                <line x1="12" y1="9" x2="12" y2="4.5" stroke="white" stroke-width="1.2" opacity="0.70"/>
+                                <line x1="12" y1="15" x2="12" y2="19.5" stroke="white" stroke-width="1.2" opacity="0.70"/>
+                            </svg>
+                        @endif
                     </div>
-                    <span class="nav-logo-text"><span>AI</span> Jogja Solutions</span>
+                    <span class="nav-logo-text"><span>{{ $siteHl }}</span> {{ $siteRs }}</span>
                 </a>
 
                 <a href="/" class="btn-back">

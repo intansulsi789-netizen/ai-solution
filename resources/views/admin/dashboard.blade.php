@@ -95,6 +95,12 @@
                     <span style="font-size:10px;padding:2px 8px;background:rgba(0,212,255,0.12);border:1px solid rgba(0,212,255,0.25);border-radius:100px;color:#00d4ff;font-weight:600;">Aktif</span>
                 @endif
             </a>
+            @if(auth()->user()->hasRole('admin_website'))
+            <a href="{{ route('admin.cms.logo.index') }}" class="menu-link-item" style="border-left:2px solid var(--cyan);">
+                <span>✨ Identitas & Logo Website</span>
+                <span style="font-size:10px;padding:2px 8px;background:rgba(0,212,255,0.18);border:1px solid rgba(0,212,255,0.35);border-radius:100px;color:var(--cyan);font-weight:700;">Ubah Logo &rarr;</span>
+            </a>
+            @endif
         </div>
     </div>
 

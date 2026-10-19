@@ -245,6 +245,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::prefix('cms')->name('cms.')->group(function () {
                 Route::get('/homepage', [\App\Http\Controllers\Admin\AdminCmsHomepageController::class, 'index'])->name('homepage.index');
                 Route::put('/homepage', [\App\Http\Controllers\Admin\AdminCmsHomepageController::class, 'update'])->name('homepage.update');
+                Route::get('/logo', [\App\Http\Controllers\Admin\AdminCmsLogoController::class, 'index'])->name('logo.index');
+                Route::put('/logo', [\App\Http\Controllers\Admin\AdminCmsLogoController::class, 'update'])->name('logo.update');
                 Route::get('/about', [\App\Http\Controllers\Admin\AdminCmsAboutController::class, 'index'])->name('about.index');
                 Route::put('/about', [\App\Http\Controllers\Admin\AdminCmsAboutController::class, 'update'])->name('about.update');
                 Route::get('/contact', [\App\Http\Controllers\Admin\AdminCmsContactController::class, 'index'])->name('contact.index');
