@@ -21,5 +21,14 @@ fi
 php artisan package:discover --ansi >/dev/null
 php artisan storage:link --force >/dev/null 2>&1 || true
 php artisan migrate --force >/dev/null 2>&1 || true
+php artisan articles:publish-scheduled >/dev/null 2>&1 || true
+
+# Background scheduler loop di dalam container (setiap 60 detik)
+(
+    while true; do
+        sleep 60
+        php /app/artisan schedule:run --no-interaction >/dev/null 2>&1 || true
+    done
+) &
 
 exec "$@"

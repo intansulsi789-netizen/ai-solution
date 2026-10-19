@@ -13,6 +13,8 @@ class AdminDashboardController extends Controller
      */
     public function index()
     {
+        \App\Models\Article::autoPublishOverdue();
+
         $stats = [
             'total_layanan'    => \App\Models\Service::count(),
             'total_artikel'    => \App\Models\Article::count(),

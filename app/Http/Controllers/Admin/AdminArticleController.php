@@ -12,6 +12,7 @@ class AdminArticleController extends Controller
 {
     public function index(Request $request)
     {
+        Article::autoPublishOverdue();
         $articles = Article::orderBy('created_at', 'desc')->get();
         $calendarArticles = $this->formatArticlesForCalendar($articles);
         $activeTab = $request->query('tab', $request->query('view', 'table'));
@@ -31,6 +32,7 @@ class AdminArticleController extends Controller
 
     public function calendar(Request $request)
     {
+        Article::autoPublishOverdue();
         $articles = Article::orderBy('created_at', 'desc')->get();
         $calendarArticles = $this->formatArticlesForCalendar($articles);
         $activeTab = 'calendar';

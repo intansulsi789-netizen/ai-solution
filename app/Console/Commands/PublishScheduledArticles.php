@@ -26,7 +26,7 @@ class PublishScheduledArticles extends Command
      */
     public function handle(): int
     {
-        $now = now();
+        $now = now('Asia/Jakarta');
         $this->info("Menjalankan pengecekan artikel terjadwal pada: {$now->toDateTimeString()} ({$now->timezoneName})");
 
         $articles = Article::where('status', 'scheduled')

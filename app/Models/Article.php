@@ -27,20 +27,54 @@ class Article extends Model
     ];
 
     /**
+     * Otomatis mempublikasikan artikel yang telah melewati jadwal publikasi (WIB).
+     */
+    public static function autoPublishOverdue(): int
+    {
+        try {
+            $now = now('Asia/Jakarta');
+            $articles = static::where('status', 'scheduled')
+                ->whereNotNull('published_at')
+                ->where('published_at', '<=', $now)
+                ->get();
+
+            $count = 0;
+            foreach ($articles as $article) {
+                $article->update([
+                    'status' => 'published',
+                ]);
+                $count++;
+            }
+            return $count;
+        } catch (\Throwable $e) {
+            return 0;
+        }
+    }
+
+    /**
      * Scope query untuk hanya mengambil artikel aktif yang telah terbit.
      */
     public function scopePublished($query)
     {
+        static::autoPublishOverdue();
+
         $query->where('is_active', true);
 
         if (\Illuminate\Support\Facades\Schema::hasColumn('articles', 'status')) {
-            $query->where('status', 'published');
+            $query->where(function ($q) {
+                $q->where('status', 'published')
+                  ->orWhere(function ($sub) {
+                      $sub->where('status', 'scheduled')
+                          ->whereNotNull('published_at')
+                          ->where('published_at', '<=', now('Asia/Jakarta'));
+                  });
+            });
         }
 
         if (\Illuminate\Support\Facades\Schema::hasColumn('articles', 'published_at')) {
             $query->where(function ($q) {
                 $q->whereNull('published_at')
-                  ->orWhere('published_at', '<=', now());
+                  ->orWhere('published_at', '<=', now('Asia/Jakarta'));
             });
         }
 
