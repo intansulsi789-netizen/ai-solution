@@ -344,6 +344,45 @@
             color: #0284c7;
         }
 
+        /* Jasa / Layanan AI Header Light Mode */
+        html[data-theme="light"] .jasa-badge {
+            background: rgba(2, 132, 199, 0.10);
+            border-color: rgba(2, 132, 199, 0.35);
+            color: #0369a1;
+            font-weight: 700;
+        }
+
+        html[data-theme="light"] .jasa-title {
+            background: linear-gradient(135deg, #091224 0%, #0f172a 45%, #0284c7 100%) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            color: #091224;
+        }
+
+        html[data-theme="light"] .jasa-subtitle {
+            color: #475569;
+            font-weight: 500;
+        }
+
+        html[data-theme="light"] .modal-box {
+            background: #ffffff;
+            border-color: rgba(2, 132, 199, 0.3);
+            box-shadow: 0 20px 60px rgba(15, 23, 42, 0.12);
+        }
+
+        html[data-theme="light"] .modal-title-text {
+            color: #0f172a;
+        }
+
+        html[data-theme="light"] .modal-desc {
+            color: #475569;
+        }
+
+        html[data-theme="light"] .modal-close {
+            background: rgba(15, 23, 42, 0.08);
+            color: #334155;
+        }
+
         /* Section divider */
         html[data-theme="light"] .section-divider-line {
             background: linear-gradient(90deg, transparent, rgba(2, 132, 199, 0.25) 30%, rgba(124, 58, 237, 0.20) 70%, transparent);

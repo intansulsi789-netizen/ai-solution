@@ -59,18 +59,43 @@
             border-color: #0284c7;
         }
 
+        html[data-theme="light"] .nav-logo-text {
+            color: #0f172a !important;
+        }
+
         html[data-theme="light"] .detail-title {
-            color: #0f172a;
+            color: #091224 !important;
+            background: linear-gradient(135deg, #091224 0%, #0f172a 45%, #0284c7 100%) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            background-clip: text !important;
+            text-shadow: none !important;
+            filter: drop-shadow(0 2px 8px rgba(2, 132, 199, 0.12)) !important;
         }
 
         html[data-theme="light"] .detail-desc {
-            color: #475569;
+            color: #334155 !important;
+            font-weight: 500 !important;
         }
 
         html[data-theme="light"] .badge-layanan {
-            background: rgba(2, 132, 199, 0.08);
-            border-color: rgba(2, 132, 199, 0.25);
-            color: #0284c7;
+            background: rgba(2, 132, 199, 0.10) !important;
+            border-color: rgba(2, 132, 199, 0.35) !important;
+            color: #0369a1 !important;
+            font-weight: 700 !important;
+            box-shadow: 0 2px 10px rgba(2, 132, 199, 0.10) !important;
+        }
+
+        html[data-theme="light"] .badge-pulse-dot {
+            background: #0284c7 !important;
+            box-shadow: 0 0 8px #0284c7 !important;
+        }
+
+        html[data-theme="light"] .detail-icon-wrap {
+            background: linear-gradient(135deg, rgba(2, 132, 199, 0.12), rgba(124, 58, 237, 0.12)) !important;
+            border: 1px solid rgba(2, 132, 199, 0.35) !important;
+            color: #0284c7 !important;
+            box-shadow: 0 4px 16px rgba(2, 132, 199, 0.12) !important;
         }
 
         html[data-theme="light"] .detail-image-wrap {
@@ -137,30 +162,34 @@
         }
 
         html[data-theme="light"] .solutions-title {
-            color: #0f172a;
+            color: #091224 !important;
+            font-weight: 800 !important;
         }
 
         html[data-theme="light"] .solutions-subtitle {
-            color: #475569;
+            color: #475569 !important;
+            font-weight: 500 !important;
         }
 
         html[data-theme="light"] .solution-card {
-            background: #ffffff;
-            border: 1px solid rgba(15, 23, 42, 0.10);
-            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
+            background: #ffffff !important;
+            border: 1px solid rgba(15, 23, 42, 0.12) !important;
+            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05) !important;
         }
 
         html[data-theme="light"] .solution-card:hover {
-            border-color: #0284c7;
-            box-shadow: 0 14px 35px rgba(2, 132, 199, 0.14);
+            border-color: #0284c7 !important;
+            box-shadow: 0 14px 35px rgba(2, 132, 199, 0.14) !important;
         }
 
         html[data-theme="light"] .solution-card-title {
-            color: #0f172a;
+            color: #0f172a !important;
+            font-weight: 700 !important;
         }
 
         html[data-theme="light"] .solution-card-desc {
-            color: #475569;
+            color: #475569 !important;
+            font-weight: 500 !important;
         }
 
         html[data-theme="light"] .solution-icon {
