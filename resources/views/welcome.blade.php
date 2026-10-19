@@ -167,17 +167,21 @@
         }
 
         /* Hero Light Mode */
+        html[data-theme="light"] .hero-bg {
+            filter: saturate(1.15) contrast(1.08);
+        }
+
         html[data-theme="light"] .hero-overlay {
             background: linear-gradient(
                 135deg,
-                rgba(248, 250, 252, 0.88) 0%,
-                rgba(241, 245, 249, 0.82) 40%,
-                rgba(248, 250, 252, 0.92) 100%
+                rgba(248, 250, 252, 0.58) 0%,
+                rgba(241, 245, 249, 0.42) 40%,
+                rgba(248, 250, 252, 0.62) 100%
             );
         }
 
-        html[data-theme="light"] .hero-heading-line1 {
-            color: #0f172a;
+        html[data-theme="light"] .hero-vignette {
+            background: radial-gradient(ellipse at center, transparent 40%, rgba(248, 250, 252, 0.50) 100%);
         }
 
         html[data-theme="light"] .hero-title,
@@ -190,9 +194,9 @@
         }
 
         html[data-theme="light"] .hero-heading-line1 {
-            color: #0f172a;
+            color: #090d16;
             animation: none;
-            text-shadow: none;
+            text-shadow: 0 1px 16px rgba(255, 255, 255, 0.9), 0 2px 28px rgba(255, 255, 255, 0.75);
         }
 
         html[data-theme="light"] .hero-heading-line2 {
@@ -202,10 +206,14 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             animation: hero-gradient-flow 8s linear infinite;
-            filter: none;
+            filter: drop-shadow(0 2px 10px rgba(255, 255, 255, 0.8));
         }
 
-        html[data-theme="light"] .hero-subheading,
+        html[data-theme="light"] .hero-subheading {
+            color: #0f172a;
+            text-shadow: 0 1px 10px rgba(255, 255, 255, 0.95);
+        }
+
         html[data-theme="light"] .page-subtitle,
         html[data-theme="light"] .jasa-subtitle,
         html[data-theme="light"] .section-desc,
@@ -214,9 +222,12 @@
         }
 
         html[data-theme="light"] .hero-badge {
-            background: rgba(2, 132, 199, 0.08);
-            border-color: rgba(2, 132, 199, 0.25);
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-color: rgba(2, 132, 199, 0.35);
             color: #0284c7;
+            box-shadow: 0 2px 12px rgba(2, 132, 199, 0.12);
         }
 
         html[data-theme="light"] .hero-bottom-fade {
