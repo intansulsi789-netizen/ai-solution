@@ -13,12 +13,40 @@ class AdminArticleController extends Controller
     public function index(Request $request)
     {
         Article::autoPublishOverdue();
-        $articles = Article::orderBy('created_at', 'desc')->get();
-        $calendarArticles = $this->formatArticlesForCalendar($articles);
+
+        $query = Article::query();
+
+        // Pencarian judul / kategori / slug
+        if ($request->filled('q')) {
+            $q = trim($request->q);
+            $query->where(function ($w) use ($q) {
+                $w->where('judul', 'like', "%{$q}%")
+                  ->orWhere('kategori', 'like', "%{$q}%")
+                  ->orWhere('slug', 'like', "%{$q}%");
+            });
+        }
+
+        // Filter status artikel
+        if ($request->filled('status') && in_array($request->status, ['draft', 'published', 'scheduled'])) {
+            $query->where('status', $request->status);
+        }
+
+        // Filter kategori
+        if ($request->filled('kategori')) {
+            $query->where('kategori', $request->kategori);
+        }
+
+        // 10 artikel per halaman
+        $articles = $query->orderBy('created_at', 'desc')->paginate(10)->withQueryString();
+
+        // Untuk kalender jadwal, gunakan seluruh data artikel
+        $allArticlesForCalendar = Article::orderBy('created_at', 'desc')->get();
+        $calendarArticles = $this->formatArticlesForCalendar($allArticlesForCalendar);
+
         $activeTab = $request->query('tab', $request->query('view', 'table'));
-        $scheduledCount = $articles->where('status', 'scheduled')->count();
-        $publishedCount = $articles->where('status', 'published')->count();
-        $draftCount     = $articles->where('status', 'draft')->count();
+        $scheduledCount = Article::where('status', 'scheduled')->count();
+        $publishedCount = Article::where('status', 'published')->count();
+        $draftCount     = Article::where('status', 'draft')->count();
 
         return view('admin.articles.index', compact(
             'articles',
@@ -33,12 +61,13 @@ class AdminArticleController extends Controller
     public function calendar(Request $request)
     {
         Article::autoPublishOverdue();
-        $articles = Article::orderBy('created_at', 'desc')->get();
-        $calendarArticles = $this->formatArticlesForCalendar($articles);
+        $articles = Article::orderBy('created_at', 'desc')->paginate(10)->withQueryString();
+        $allArticlesForCalendar = Article::orderBy('created_at', 'desc')->get();
+        $calendarArticles = $this->formatArticlesForCalendar($allArticlesForCalendar);
         $activeTab = 'calendar';
-        $scheduledCount = $articles->where('status', 'scheduled')->count();
-        $publishedCount = $articles->where('status', 'published')->count();
-        $draftCount     = $articles->where('status', 'draft')->count();
+        $scheduledCount = Article::where('status', 'scheduled')->count();
+        $publishedCount = Article::where('status', 'published')->count();
+        $draftCount     = Article::where('status', 'draft')->count();
 
         return view('admin.articles.index', compact(
             'articles',

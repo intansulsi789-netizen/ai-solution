@@ -135,18 +135,32 @@ Route::get('/layanan/{slug}', function ($slug) {
     return view('service-detail', ['service' => $serviceData]);
 });
 
-Route::get('/wawasan', function () {
+Route::get('/wawasan', function (\Illuminate\Http\Request $request) {
+    \App\Models\Article::autoPublishOverdue();
+
     try {
-        $articles = \App\Models\Article::published()
-            ->orderByRaw('COALESCE(published_at, created_at) DESC')
-            ->paginate(6)
-            ->withQueryString();
+        $query = \App\Models\Article::published();
     } catch (\Throwable $e) {
-        $articles = \App\Models\Article::where('is_active', true)
-            ->orderBy('created_at', 'DESC')
-            ->paginate(6)
-            ->withQueryString();
+        $query = \App\Models\Article::where('is_active', true);
     }
+
+    if ($request->filled('q')) {
+        $q = trim($request->q);
+        $query->where(function($w) use ($q) {
+            $w->where('judul', 'like', "%{$q}%")
+              ->orWhere('ringkasan', 'like', "%{$q}%")
+              ->orWhere('kategori', 'like', "%{$q}%")
+              ->orWhere('isi_artikel', 'like', "%{$q}%");
+        });
+    }
+
+    if ($request->filled('kategori')) {
+        $query->where('kategori', $request->kategori);
+    }
+
+    $articles = $query->orderByRaw('COALESCE(published_at, created_at) DESC')
+        ->paginate(6)
+        ->withQueryString();
 
     $cmsContact = \App\Models\CmsContact::first();
     $cmsSeo     = \App\Models\CmsSeo::first();

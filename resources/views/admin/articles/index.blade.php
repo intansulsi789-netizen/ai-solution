@@ -127,7 +127,123 @@
     .cat-pill { display: inline-block; padding: 3px 9px; border-radius: 100px; font-size: 11px; font-weight: 600; background: rgba(124,58,237,0.18); color: #a78bfa; border: 1px solid rgba(124,58,237,0.28); }
     .source-tag { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; color: var(--muted); margin-top: 4px; }
     .source-tag a { color: var(--cyan); text-decoration: none; }
-    .source-tag a:hover { text-decoration: underline; }
+    /* ============================================================
+       PAGINATION STYLES (ADMIN)
+       ============================================================ */
+    .pagination-wrapper {
+        margin-top: 24px;
+        padding-top: 20px;
+        border-top: 1px solid var(--border);
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+    }
+    .pagination-info {
+        font-size: 13px;
+        color: var(--muted);
+        font-family: 'Inter', sans-serif;
+    }
+    .pagination-info span {
+        color: var(--text);
+        font-weight: 600;
+    }
+    .pagination-nav {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+    .pagination-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 7px 14px;
+        border-radius: 8px;
+        font-size: 12.5px;
+        font-weight: 600;
+        font-family: 'Inter', sans-serif;
+        text-decoration: none;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--border);
+        color: var(--text);
+        transition: all 0.2s ease;
+    }
+    .pagination-btn:hover:not(.disabled) {
+        background: rgba(0, 212, 255, 0.12);
+        border-color: var(--cyan);
+        color: var(--cyan);
+        transform: translateY(-1px);
+    }
+    .pagination-btn.disabled {
+        opacity: 0.35;
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+    .pagination-numbers {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+    .pagination-number {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 32px;
+        height: 32px;
+        padding: 0 8px;
+        border-radius: 8px;
+        font-size: 12.5px;
+        font-weight: 600;
+        font-family: 'Inter', sans-serif;
+        text-decoration: none;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--border);
+        color: var(--muted);
+        transition: all 0.2s ease;
+    }
+    .pagination-number:hover:not(.active) {
+        background: rgba(0, 212, 255, 0.1);
+        border-color: var(--cyan);
+        color: var(--cyan);
+        transform: translateY(-1px);
+    }
+    .pagination-number.active {
+        background: linear-gradient(135deg, var(--cyan), var(--purple));
+        border-color: transparent;
+        color: #ffffff;
+        box-shadow: 0 2px 8px rgba(0, 212, 255, 0.3);
+    }
+    .pagination-ellipsis {
+        padding: 0 4px;
+        color: var(--muted);
+        font-size: 13px;
+    }
+
+    html[data-theme="light"] .pagination-btn,
+    html[data-theme="light"] .pagination-number:not(.active) {
+        background: #f8fafc;
+        border-color: rgba(15, 23, 42, 0.12);
+        color: #475569;
+    }
+    html[data-theme="light"] .pagination-btn:hover:not(.disabled),
+    html[data-theme="light"] .pagination-number:not(.active):hover {
+        background: #e0f2fe;
+        border-color: #0284c7;
+        color: #0284c7;
+    }
+    html[data-theme="light"] input[name="q"],
+    html[data-theme="light"] select[name="status"] {
+        background: #ffffff !important;
+        border-color: rgba(15, 23, 42, 0.15) !important;
+        color: #0f172a !important;
+    }
+    html[data-theme="light"] select[name="status"] option {
+        background: #ffffff !important;
+        color: #0f172a !important;
+    }
 
     /* ============================================================
        CALENDAR SPECIFIC STYLES
@@ -741,7 +857,7 @@
             <line x1="3" y1="18" x2="3.01" y2="18"></line>
         </svg>
         <span>Daftar Artikel</span>
-        <span class="tab-badge tab-badge-default">{{ $articles->count() }}</span>
+        <span class="tab-badge tab-badge-default">{{ $articles->total() }}</span>
     </button>
 
     <button type="button" class="article-tab-btn {{ ($activeTab ?? 'table') === 'calendar' ? 'active' : '' }}" id="tab-btn-calendar" onclick="switchArticleTab('calendar')">
@@ -765,11 +881,33 @@
      ========================================== -->
 <div id="view-table-container" class="view-pane {{ ($activeTab ?? 'table') !== 'calendar' ? 'active' : '' }}">
     <div class="table-container">
-        <div class="table-header">
-            <h3 style="font-size:16px;font-weight:700;">Daftar Artikel <span style="font-size:13px;color:var(--muted);font-weight:400;">({{ $articles->count() }} artikel)</span></h3>
-            <a href="{{ route('admin.articles.create') }}" class="btn-primary">
-                + Tambah Artikel
-            </a>
+        <div class="table-header" style="flex-wrap: wrap; gap: 16px;">
+            <div>
+                <h3 style="font-size:16px;font-weight:700;">Daftar Artikel <span style="font-size:13px;color:var(--muted);font-weight:400;">({{ $articles->total() }} artikel)</span></h3>
+            </div>
+            <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+                <form action="{{ route('admin.articles.index') }}" method="GET" style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin:0;">
+                    <div style="position:relative;">
+                        <input type="text" name="q" value="{{ request('q') }}" placeholder="Cari artikel..." style="background:rgba(255,255,255,0.05); border:1px solid var(--border); border-radius:8px; padding:8px 12px 8px 32px; color:var(--text); font-size:13px; outline:none; min-width:180px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position:absolute; left:10px; top:50%; transform:translateY(-50%); color:var(--muted); pointer-events:none;">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </div>
+                    <select name="status" onchange="this.form.submit()" style="background:rgba(255,255,255,0.05); border:1px solid var(--border); border-radius:8px; padding:8px 12px; color:var(--text); font-size:13px; outline:none; cursor:pointer;">
+                        <option value="" style="background:#0a143c; color:#fff;">Semua Status</option>
+                        <option value="published" {{ request('status') === 'published' ? 'selected' : '' }} style="background:#0a143c; color:#fff;">Published</option>
+                        <option value="scheduled" {{ request('status') === 'scheduled' ? 'selected' : '' }} style="background:#0a143c; color:#fff;">Terjadwal</option>
+                        <option value="draft" {{ request('status') === 'draft' ? 'selected' : '' }} style="background:#0a143c; color:#fff;">Draft</option>
+                    </select>
+                    @if(request('q') || request('status'))
+                        <a href="{{ route('admin.articles.index') }}" style="font-size:12px; color:var(--muted); text-decoration:none; padding:7px 10px; border-radius:8px; border:1px solid var(--border);">Reset</a>
+                    @endif
+                </form>
+                <a href="{{ route('admin.articles.create') }}" class="btn-primary">
+                    + Tambah Artikel
+                </a>
+            </div>
         </div>
         <div style="overflow-x:auto;">
             <table>
@@ -863,6 +1001,9 @@
                 </tbody>
             </table>
         </div>
+
+        {{-- Pagination Controls --}}
+        {{ $articles->links('partials.pagination') }}
     </div>
 </div>
 

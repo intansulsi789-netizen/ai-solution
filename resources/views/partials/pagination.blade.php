@@ -1,7 +1,7 @@
-@if ($paginator->hasPages())
+@if ($paginator->total() > 0)
     <div class="pagination-wrapper">
         <div class="pagination-info">
-            Menampilkan <span>{{ $paginator->firstItem() }}</span> – <span>{{ $paginator->lastItem() }}</span> dari <span>{{ $paginator->total() }}</span> artikel
+            Menampilkan <span>{{ $paginator->firstItem() ?? 1 }}</span> – <span>{{ $paginator->lastItem() ?? $paginator->total() }}</span> dari <span>{{ $paginator->total() }}</span> artikel
         </div>
 
         <nav class="pagination-nav" role="navigation" aria-label="Navigasi Halaman">
@@ -24,36 +24,40 @@
 
             {{-- Angka Halaman --}}
             <div class="pagination-numbers">
-                @foreach ($elements as $element)
-                    {{-- Separator titik-titik --}}
-                    @if (is_string($element))
-                        <span class="pagination-ellipsis">{{ $element }}</span>
-                    @endif
+                @if ($paginator->lastPage() > 1)
+                    @foreach ($elements as $element)
+                        {{-- Separator titik-titik --}}
+                        @if (is_string($element))
+                            <span class="pagination-ellipsis">{{ $element }}</span>
+                        @endif
 
-                    {{-- Link Angka Halaman --}}
-                    @if (is_array($element))
-                        @foreach ($element as $page => $url)
-                            @if ($page == $paginator->currentPage())
-                                <span class="pagination-number active" aria-current="page">{{ $page }}</span>
-                            @else
-                                <a href="{{ $url }}" class="pagination-number">{{ $page }}</a>
-                            @endif
-                        @endforeach
-                    @endif
-                @endforeach
+                        {{-- Link Angka Halaman --}}
+                        @if (is_array($element))
+                            @foreach ($element as $page => $url)
+                                @if ($page == $paginator->currentPage())
+                                    <span class="pagination-number active" aria-current="page">{{ $page }}</span>
+                                @else
+                                    <a href="{{ $url }}" class="pagination-number">{{ $page }}</a>
+                                @endif
+                            @endforeach
+                        @endif
+                    @endforeach
+                @else
+                    <span class="pagination-number active" aria-current="page">1</span>
+                @endif
             </div>
 
-            {{-- Tombol Selanjutnya --}}
+            {{-- Tombol Berikutnya --}}
             @if ($paginator->hasMorePages())
                 <a href="{{ $paginator->nextPageUrl() }}" class="pagination-btn" rel="next">
-                    <span>Selanjutnya</span>
+                    <span>Berikutnya</span>
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="9 18 15 12 9 6"></polyline>
                     </svg>
                 </a>
             @else
                 <span class="pagination-btn disabled" aria-disabled="true">
-                    <span>Selanjutnya</span>
+                    <span>Berikutnya</span>
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="9 18 15 12 9 6"></polyline>
                     </svg>
