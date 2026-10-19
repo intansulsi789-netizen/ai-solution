@@ -712,9 +712,25 @@
 
         /* Site Footer */
         html[data-theme="light"] .site-footer {
-            background: #f1f5f9;
+            background: linear-gradient(180deg, #f8fafc 0%, #edf2f7 100%) !important;
             border-top: 1px solid rgba(15, 23, 42, 0.10);
             color: #475569;
+        }
+        html[data-theme="light"] .site-footer::before {
+            background: linear-gradient(90deg, transparent, rgba(14, 165, 233, 0.45) 25%, rgba(99, 102, 241, 0.4) 75%, transparent) !important;
+            box-shadow: 0 0 15px rgba(14, 165, 233, 0.2) !important;
+        }
+        html[data-theme="light"] .footer-glow-top,
+        html[data-theme="light"] .footer-glow-left,
+        html[data-theme="light"] .footer-glow-right {
+            opacity: 0.2 !important;
+        }
+        html[data-theme="light"] .footer-cyber-grid {
+            background-image: radial-gradient(rgba(14, 165, 233, 0.16) 1.2px, transparent 1.2px) !important;
+            opacity: 0.5 !important;
+        }
+        html[data-theme="light"] .footer-circuit-accents {
+            opacity: 0.3 !important;
         }
 
         html[data-theme="light"] .footer-brand-name {
@@ -4397,9 +4413,9 @@
     ========================================== */
     .site-footer {
         position: relative;
-        background: linear-gradient(180deg, var(--navy-900) 0%, #010510 100%);
-        border-top: 1px solid rgba(0, 212, 255, 0.08);
-        padding: 80px 24px 0;
+        background: radial-gradient(130% 100% at 50% 0%, #0d1a3a 0%, #060d22 45%, #020614 100%);
+        border-top: 1px solid rgba(0, 212, 255, 0.16);
+        padding: 85px 24px 0;
         overflow: hidden;
     }
     .site-footer::before {
@@ -4408,19 +4424,76 @@
         top: 0;
         left: 50%;
         transform: translateX(-50%);
-        width: 600px;
-        height: 1px;
-        background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.35), rgba(124, 58, 237, 0.25), transparent);
+        width: 900px;
+        max-width: 92%;
+        height: 2px;
+        background: linear-gradient(90deg, transparent 0%, rgba(0, 212, 255, 0.85) 25%, rgba(124, 58, 237, 0.8) 75%, transparent 100%);
+        box-shadow: 0 0 18px rgba(0, 212, 255, 0.6), 0 0 35px rgba(124, 58, 237, 0.35);
+        pointer-events: none;
+        z-index: 2;
     }
-    .footer-glow {
+    .footer-glow-top {
         position: absolute;
-        top: -80px;
+        top: -120px;
         left: 50%;
         transform: translateX(-50%);
-        width: 500px;
-        height: 200px;
-        background: radial-gradient(ellipse, rgba(0, 168, 255, 0.06) 0%, transparent 70%);
+        width: 850px;
+        max-width: 95%;
+        height: 280px;
+        background: radial-gradient(ellipse 65% 55% at 50% 40%, rgba(0, 212, 255, 0.22) 0%, rgba(124, 58, 237, 0.12) 50%, transparent 75%);
+        filter: blur(40px);
         pointer-events: none;
+        z-index: 0;
+    }
+    .footer-glow-left {
+        position: absolute;
+        left: -100px;
+        top: 15%;
+        width: 550px;
+        height: 450px;
+        background: radial-gradient(circle, rgba(0, 212, 255, 0.14) 0%, rgba(0, 168, 255, 0.04) 50%, transparent 70%);
+        filter: blur(60px);
+        pointer-events: none;
+        z-index: 0;
+    }
+    .footer-glow-right {
+        position: absolute;
+        right: -100px;
+        bottom: 5%;
+        width: 520px;
+        height: 420px;
+        background: radial-gradient(circle, rgba(124, 58, 237, 0.16) 0%, rgba(99, 102, 241, 0.05) 50%, transparent 70%);
+        filter: blur(60px);
+        pointer-events: none;
+        z-index: 0;
+    }
+    .footer-cyber-grid {
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(rgba(0, 212, 255, 0.15) 1.2px, transparent 1.2px);
+        background-size: 28px 28px;
+        mask-image: radial-gradient(ellipse 85% 80% at 50% 35%, black 20%, transparent 85%);
+        -webkit-mask-image: radial-gradient(ellipse 85% 80% at 50% 35%, black 20%, transparent 85%);
+        opacity: 0.8;
+        pointer-events: none;
+        z-index: 0;
+    }
+    .footer-circuit-accents {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        overflow: hidden;
+        z-index: 0;
+    }
+    .footer-circuit-accents svg {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .footer-glow {
+        display: none;
     }
     .footer-inner {
         position: relative;
@@ -4648,7 +4721,30 @@
 </style>
 
 <footer class="site-footer" id="site-footer">
-    <div class="footer-glow"></div>
+    <!-- Ambient Tech Glow & Grid Background -->
+    <div class="footer-glow-top" aria-hidden="true"></div>
+    <div class="footer-glow-left" aria-hidden="true"></div>
+    <div class="footer-glow-right" aria-hidden="true"></div>
+    <div class="footer-cyber-grid" aria-hidden="true"></div>
+    <div class="footer-circuit-accents" aria-hidden="true">
+        <svg viewBox="0 0 1440 240" fill="none" preserveAspectRatio="none">
+            <path d="M-100 180 C300 40, 650 200, 1100 80 C1300 20, 1450 140, 1600 100" stroke="url(#footer-line-grad)" stroke-width="1.5" stroke-dasharray="6 8" opacity="0.45"/>
+            <path d="M-50 90 C350 160, 800 30, 1200 130 C1380 180, 1500 70, 1600 90" stroke="url(#footer-line-grad-2)" stroke-width="1" opacity="0.3"/>
+            <defs>
+                <linearGradient id="footer-line-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#00d4ff" stop-opacity="0.1"/>
+                    <stop offset="40%" stop-color="#00d4ff" stop-opacity="0.6"/>
+                    <stop offset="70%" stop-color="#7c3aed" stop-opacity="0.5"/>
+                    <stop offset="100%" stop-color="#00d4ff" stop-opacity="0"/>
+                </linearGradient>
+                <linearGradient id="footer-line-grad-2" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#7c3aed" stop-opacity="0"/>
+                    <stop offset="50%" stop-color="#7c3aed" stop-opacity="0.4"/>
+                    <stop offset="100%" stop-color="#00d4ff" stop-opacity="0.2"/>
+                </linearGradient>
+            </defs>
+        </svg>
+    </div>
     <div class="footer-inner">
 
         {{-- Brand Column --}}
