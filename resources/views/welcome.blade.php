@@ -389,8 +389,9 @@
             -webkit-text-fill-color: transparent;
             filter: none;
         }
-        html[data-theme="light"] .layanan-section {
-            background: radial-gradient(ellipse 90% 50% at 50% 0%, rgba(224, 242, 254, 0.5) 0%, transparent 70%);
+        html[data-theme="light"] .ambient-glow-top-bridge {
+            background: radial-gradient(ellipse 70% 50% at 50% 50%, rgba(2, 132, 199, 0.08) 0%, transparent 70%);
+            filter: blur(60px);
         }
 
         html[data-theme="light"] .hud-telemetry-badge {
@@ -1454,9 +1455,6 @@
             flex-direction: column;
             gap: 80px;
             z-index: 10;
-            background: 
-                radial-gradient(ellipse 100% 55% at 50% 0%, rgba(0, 168, 255, 0.22) 0%, rgba(10, 26, 68, 0.45) 40%, transparent 75%),
-                radial-gradient(circle 500px at 50% 35%, rgba(0, 212, 255, 0.12) 0%, transparent 70%);
         }
 
         .layanan-circuit-decor {
@@ -1525,17 +1523,32 @@
             }
         }
 
+        .ambient-glow-top-bridge {
+            position: absolute;
+            top: -180px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1100px;
+            max-width: 95vw;
+            height: 480px;
+            border-radius: 50%;
+            background: radial-gradient(ellipse 70% 50% at 50% 50%, rgba(0, 168, 255, 0.22) 0%, rgba(10, 26, 68, 0.10) 45%, transparent 70%);
+            pointer-events: none;
+            filter: blur(65px);
+            z-index: 0;
+        }
+
         .ambient-glow-4 {
             position: absolute;
             width: 700px;
             height: 700px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(124, 58, 237, 0.18) 0%, rgba(0, 168, 255, 0.14) 45%, transparent 70%);
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.16) 0%, rgba(0, 168, 255, 0.12) 45%, transparent 70%);
             top: 15%;
-            right: -120px;
+            right: -100px;
             z-index: 0;
             pointer-events: none;
-            filter: blur(50px);
+            filter: blur(55px);
             animation: ambient-pulse-purple 16s ease-in-out infinite;
         }
         .ambient-glow-blue-left {
@@ -1543,12 +1556,12 @@
             width: 700px;
             height: 700px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(0, 168, 255, 0.24) 0%, rgba(0, 212, 255, 0.12) 45%, transparent 70%);
+            background: radial-gradient(circle, rgba(0, 168, 255, 0.22) 0%, rgba(0, 212, 255, 0.12) 45%, transparent 70%);
             top: 25%;
-            left: -120px;
+            left: -100px;
             z-index: 0;
             pointer-events: none;
-            filter: blur(50px);
+            filter: blur(55px);
             animation: ambient-pulse-blue 15s ease-in-out infinite;
         }
         .section-grid-mesh {
@@ -3587,6 +3600,7 @@
      PENGENALAN / KREASI CERDAS SECTION
 ========================================== -->
 <section id="pengenalan" class="layanan-section">
+    <div class="ambient-glow-top-bridge"></div>
     <div class="ambient-glow-4"></div>
     <div class="ambient-glow-blue-left"></div>
     <div class="section-grid-mesh"></div>
