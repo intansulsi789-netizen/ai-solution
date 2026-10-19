@@ -385,10 +385,15 @@
 
         /* Section divider */
         html[data-theme="light"] .section-divider-line {
-            background: linear-gradient(90deg, transparent, rgba(2, 132, 199, 0.25) 30%, rgba(124, 58, 237, 0.20) 70%, transparent);
+            background: linear-gradient(90deg, transparent 0%, rgba(2, 132, 199, 0.25) 30%, rgba(124, 58, 237, 0.20) 70%, transparent 100%);
         }
         html[data-theme="light"] .section-divider-line::after {
-            background: radial-gradient(ellipse at center, rgba(2, 132, 199, 0.40) 0%, transparent 80%);
+            background: radial-gradient(ellipse at center, rgba(2, 132, 199, 0.60) 0%, transparent 80%);
+            box-shadow: 0 0 12px rgba(2, 132, 199, 0.35);
+        }
+        html[data-theme="light"] .section-top-aurora {
+            background: radial-gradient(ellipse 75% 100% at 50% 0%, rgba(2, 132, 199, 0.12) 0%, rgba(124, 58, 237, 0.08) 45%, transparent 75%);
+            filter: blur(50px);
         }
         html[data-theme="light"] .services-ambient-glow-1,
         html[data-theme="light"] .wawasan-ambient-glow,
@@ -1518,6 +1523,7 @@
             flex-direction: column;
             gap: 80px;
             z-index: 10;
+            overflow: hidden;
         }
 
         .layanan-circuit-decor {
@@ -2200,9 +2206,10 @@
             position: relative;
             width: 100%;
             height: 1px;
-            background: linear-gradient(90deg, transparent 0%, rgba(0,168,255,0.35) 25%, rgba(124,58,237,0.45) 50%, rgba(0,168,255,0.35) 75%, transparent 100%);
+            background: linear-gradient(90deg, transparent 0%, rgba(0, 212, 255, 0.25) 20%, rgba(0, 212, 255, 0.65) 50%, rgba(124, 58, 237, 0.45) 80%, transparent 100%);
             margin: 0;
             overflow: visible;
+            z-index: 15;
         }
         .section-divider-line::after {
             content: '';
@@ -2210,12 +2217,28 @@
             top: -1px;
             left: 50%;
             transform: translateX(-50%);
-            width: 160px;
+            width: 220px;
             height: 3px;
-            background: radial-gradient(ellipse at center, rgba(0, 212, 255, 0.95) 0%, rgba(124, 58, 237, 0.6) 45%, transparent 80%);
-            filter: blur(1px);
+            background: radial-gradient(ellipse at center, rgba(0, 212, 255, 1) 0%, rgba(124, 58, 237, 0.75) 45%, transparent 80%);
+            filter: blur(1.5px);
             border-radius: 50%;
             pointer-events: none;
+            box-shadow: 0 0 16px rgba(0, 212, 255, 0.9), 0 0 32px rgba(124, 58, 237, 0.5);
+        }
+
+        .section-top-aurora {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 900px;
+            max-width: 95vw;
+            height: 340px;
+            background: radial-gradient(ellipse 75% 100% at 50% 0%, rgba(0, 212, 255, 0.24) 0%, rgba(124, 58, 237, 0.15) 45%, transparent 75%);
+            pointer-events: none;
+            filter: blur(40px);
+            z-index: 0;
+            animation: wawasan-aurora-breathe 8s ease-in-out infinite alternate;
         }
 
         @keyframes blink-dot {
@@ -3672,7 +3695,10 @@
 <!-- ==========================================
      PENGENALAN / KREASI CERDAS SECTION
 ========================================== -->
+<div class="section-divider-line"></div>
+
 <section id="pengenalan" class="layanan-section">
+    <div class="section-top-aurora"></div>
     <div class="ambient-glow-top-bridge"></div>
     <div class="ambient-glow-4"></div>
     <div class="ambient-glow-blue-left"></div>
@@ -3781,7 +3807,10 @@
 <!-- ==========================================
      LAYANAN AI SECTION
 ========================================== -->
+<div class="section-divider-line"></div>
+
 <section id="layanan" class="services-section">
+    <div class="section-top-aurora"></div>
     <div class="services-ambient-glow-1"></div>
     <div class="services-ambient-glow-2"></div>
     <div class="services-grid-mesh"></div>
@@ -3958,6 +3987,7 @@
 <div class="section-divider-line"></div>
 
 <section id="tentang" class="tentang-section">
+    <div class="section-top-aurora"></div>
     <div class="tentang-ambient-glow-1"></div>
     <div class="tentang-ambient-glow-2"></div>
     <div class="section-grid-mesh"></div>
@@ -4082,7 +4112,9 @@
     </div>
 
     <!-- PARTNER SECTION -->
+    <div class="section-divider-line" style="margin-top:70px; margin-bottom:50px;"></div>
     <div class="partner-section-wrapper">
+        <div class="section-top-aurora" style="height:220px; opacity:0.8;"></div>
         <div class="partner-ambient-aura"></div>
 
         {{-- Section Header --}}
@@ -4583,6 +4615,8 @@
 <!-- ==========================================
      SITE FOOTER
 ========================================== -->
+<div class="section-divider-line"></div>
+
 <style>
     /* ==========================================
        SITE FOOTER
