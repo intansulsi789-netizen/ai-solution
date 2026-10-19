@@ -371,7 +371,23 @@
         html[data-theme="light"] .services-grid-mesh,
         html[data-theme="light"] .wawasan-grid-mesh,
         html[data-theme="light"] .section-grid-mesh {
-            background-image: radial-gradient(rgba(2, 132, 199, 0.05) 1px, transparent 1px);
+            background-image: radial-gradient(rgba(2, 132, 199, 0.08) 1.2px, transparent 1.2px);
+        }
+        html[data-theme="light"] .wawasan-section {
+            background: radial-gradient(ellipse 90% 60% at 50% 0%, rgba(224, 242, 254, 0.45) 0%, rgba(248, 250, 252, 0) 75%);
+        }
+        html[data-theme="light"] .wawasan-top-aurora {
+            background: radial-gradient(ellipse 75% 100% at 50% 0%, rgba(2, 132, 199, 0.12) 0%, rgba(124, 58, 237, 0.08) 45%, transparent 75%);
+            filter: blur(50px);
+        }
+        html[data-theme="light"] .wawasan-ambient-glow-center {
+            background: radial-gradient(ellipse, rgba(2, 132, 199, 0.06) 0%, transparent 70%);
+        }
+        html[data-theme="light"] .wawasan-title {
+            background: linear-gradient(135deg, #0f172a 40%, #0369a1 80%, #7c3aed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: none;
         }
 
         html[data-theme="light"] .hud-telemetry-badge {
@@ -2356,41 +2372,87 @@
             position: relative;
             z-index: 10;
             overflow: hidden;
+            background: radial-gradient(ellipse 90% 60% at 50% 0%, rgba(10, 25, 64, 0.55) 0%, rgba(3, 7, 18, 0) 75%);
+        }
+        .wawasan-top-aurora {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 900px;
+            max-width: 95vw;
+            height: 380px;
+            background: radial-gradient(ellipse 75% 100% at 50% 0%, rgba(0, 212, 255, 0.28) 0%, rgba(124, 58, 237, 0.18) 45%, transparent 75%);
+            pointer-events: none;
+            filter: blur(40px);
+            z-index: 0;
+            animation: wawasan-aurora-breathe 8s ease-in-out infinite alternate;
         }
         .wawasan-ambient-glow {
             position: absolute;
-            top: 15%;
-            left: -120px;
-            width: 550px;
-            height: 550px;
-            background: radial-gradient(circle, rgba(0, 168, 255, 0.12) 0%, transparent 70%);
+            top: 10%;
+            left: -50px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.24) 0%, rgba(0, 168, 255, 0.10) 45%, transparent 70%);
             pointer-events: none;
-            filter: blur(70px);
+            filter: blur(65px);
             z-index: 0;
             animation: ambient-pulse-blue 9s ease-in-out infinite alternate;
         }
         .wawasan-ambient-glow-purple {
             position: absolute;
-            bottom: 10%;
-            right: -120px;
-            width: 580px;
-            height: 580px;
-            background: radial-gradient(circle, rgba(124, 58, 237, 0.14) 0%, transparent 70%);
+            bottom: 5%;
+            right: -50px;
+            width: 650px;
+            height: 650px;
+            background: radial-gradient(circle, rgba(147, 51, 234, 0.24) 0%, rgba(219, 39, 119, 0.12) 45%, transparent 70%);
+            pointer-events: none;
+            filter: blur(75px);
+            z-index: 0;
+            animation: ambient-pulse-purple 11s ease-in-out infinite alternate;
+        }
+        .wawasan-ambient-glow-center {
+            position: absolute;
+            top: 55%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 800px;
+            height: 450px;
+            background: radial-gradient(ellipse, rgba(0, 168, 255, 0.12) 0%, rgba(124, 58, 237, 0.08) 40%, transparent 70%);
             pointer-events: none;
             filter: blur(80px);
             z-index: 0;
-            animation: ambient-pulse-purple 11s ease-in-out infinite alternate;
         }
         .wawasan-grid-mesh {
             position: absolute;
             inset: 0;
-            background-image: linear-gradient(rgba(0, 212, 255, 0.02) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(0, 212, 255, 0.02) 1px, transparent 1px);
-            background-size: 50px 50px;
+            background-image: 
+                radial-gradient(rgba(0, 212, 255, 0.22) 1.2px, transparent 1.2px),
+                linear-gradient(rgba(0, 212, 255, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 212, 255, 0.04) 1px, transparent 1px);
+            background-size: 32px 32px, 64px 64px, 64px 64px;
             pointer-events: none;
             z-index: 0;
-            mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 35%, transparent 75%);
-            -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 35%, transparent 75%);
+            mask-image: radial-gradient(ellipse 85% 75% at 50% 45%, rgba(0,0,0,1) 30%, transparent 85%);
+            -webkit-mask-image: radial-gradient(ellipse 85% 75% at 50% 45%, rgba(0,0,0,1) 30%, transparent 85%);
+        }
+        .wawasan-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: clamp(32px, 4vw, 48px);
+            font-weight: 800;
+            letter-spacing: -1px;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #ffffff 40%, #a5f3fc 75%, #c084fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 4px 24px rgba(0, 212, 255, 0.22));
+        }
+        @keyframes wawasan-aurora-breathe {
+            0% { opacity: 0.7; transform: translateX(-50%) scale(0.95); }
+            100% { opacity: 1; transform: translateX(-50%) scale(1.08); }
         }
         .wawasan-grid {
             display: grid;
@@ -4072,15 +4134,17 @@
 <div class="section-divider-line"></div>
 
 <section id="wawasan" class="wawasan-section">
+    <div class="wawasan-top-aurora"></div>
     <div class="wawasan-ambient-glow"></div>
     <div class="wawasan-ambient-glow-purple"></div>
+    <div class="wawasan-ambient-glow-center"></div>
     <div class="wawasan-grid-mesh"></div>
     <div style="text-align:center; max-width:700px; margin:0 auto; display:flex; flex-direction:column; align-items:center; position:relative; z-index:2;">
         <div style="display:inline-flex; align-items:center; gap:8px; font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--cyan-neon); padding:7px 18px; background:rgba(0,212,255,0.08); border:1px solid rgba(0,212,255,0.20); border-radius:100px; margin-bottom:28px;">
             <span style="width:7px;height:7px;border-radius:50%;background:var(--cyan-neon);box-shadow:0 0 8px var(--cyan-neon);animation:blink-dot 2s ease infinite;"></span>
             Wawasan Bisnis
         </div>
-        <h2 style="font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(32px,4vw,48px);font-weight:800;letter-spacing:-1px;line-height:1.2;margin-bottom:24px;">Value &amp; Perkembangan</h2>
+        <h2 class="wawasan-title">Value &amp; Perkembangan</h2>
         <p style="font-size:clamp(16px,2vw,19px);color:var(--white-80);line-height:1.6;">Value seputar AI, perusahaan, dan perkembangan teknologi untuk membantu bisnis berkembang.</p>
     </div>
 
