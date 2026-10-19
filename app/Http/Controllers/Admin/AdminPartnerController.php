@@ -25,12 +25,19 @@ class AdminPartnerController extends Controller
         $request->validate([
             'nama'      => 'required|string|max:150',
             'urutan'    => 'required|integer|min:0',
-            'logo_file' => 'required|file|mimetypes:image/png,image/jpeg,image/webp,image/svg+xml|max:2048',
+            'logo_file' => 'nullable|file|mimetypes:image/png,image/jpeg,image/webp,image/svg+xml|max:2048',
+            'logo_url'  => 'nullable|url|max:500',
         ]);
+
+        if (!$request->hasFile('logo_file') && !$request->filled('logo_url')) {
+            return back()->withInput()->withErrors(['logo_file' => 'Harap unggah file logo atau masukkan link URL logo.']);
+        }
 
         $logoPath = null;
         if ($request->hasFile('logo_file')) {
             $logoPath = $request->file('logo_file')->store('partners', 'public');
+        } elseif ($request->filled('logo_url')) {
+            $logoPath = trim($request->logo_url);
         }
 
         Partner::create([
@@ -58,6 +65,7 @@ class AdminPartnerController extends Controller
             'nama'      => 'required|string|max:150',
             'urutan'    => 'required|integer|min:0',
             'logo_file' => 'nullable|file|mimetypes:image/png,image/jpeg,image/webp,image/svg+xml|max:2048',
+            'logo_url'  => 'nullable|url|max:500',
         ]);
 
         $logoPath = $partner->logo; // keep existing by default
@@ -68,6 +76,12 @@ class AdminPartnerController extends Controller
                 Storage::disk('public')->delete($partner->logo);
             }
             $logoPath = $request->file('logo_file')->store('partners', 'public');
+        } elseif ($request->filled('logo_url')) {
+            // delete old file if replacing local file with URL
+            if ($partner->logo && !str_starts_with($partner->logo, 'http')) {
+                Storage::disk('public')->delete($partner->logo);
+            }
+            $logoPath = trim($request->logo_url);
         }
 
         $partner->update([

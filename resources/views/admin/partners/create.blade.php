@@ -82,16 +82,44 @@
             </div>
 
             <div class="form-group full-width">
-                <label class="form-label">Upload Logo Partner</label>
+                <label class="form-label">Logo Partner *</label>
 
-                <div class="upload-zone" id="uploadZone">
-                    <input type="file" name="logo_file" id="logoFile" accept="image/png,image/jpeg,image/webp,image/svg+xml" required>
-                    <div class="icon">🖼️</div>
-                    <p>Klik atau drag gambar logo ke sini<br><span style="font-size:11px;opacity:0.6;">Format: PNG, JPG, WEBP, SVG — maks. 2 MB</span></p>
+                {{-- Tab selector --}}
+                @php
+                    $activeTab = old('logo_url') ? 'url' : 'file';
+                @endphp
+                <div class="tab-row" style="margin-bottom:14px;">
+                    <button type="button" class="tab-btn {{ $activeTab === 'file' ? 'active' : '' }}" data-tab="tab-file">📁 Upload File</button>
+                    <button type="button" class="tab-btn {{ $activeTab === 'url' ? 'active' : '' }}" data-tab="tab-url">🔗 Pakai Link URL</button>
                 </div>
-                <div class="preview-box" id="filePreview">
-                    <img id="filePreviewImg" src="" alt="Preview" style="display:none;">
-                    <div class="preview-name" id="filePreviewName">—</div>
+
+                {{-- Tab Upload File --}}
+                <div class="tab-pane {{ $activeTab === 'file' ? 'active' : '' }}" id="tab-file">
+                    <div class="upload-zone" id="uploadZone">
+                        <input type="file" name="logo_file" id="logoFile" accept="image/png,image/jpeg,image/webp,image/svg+xml">
+                        <div class="icon">🖼️</div>
+                        <p>Klik atau drag gambar logo ke sini<br><span style="font-size:11px;opacity:0.6;">Format: PNG, JPG, WEBP, SVG — maks. 2 MB</span></p>
+                    </div>
+                    <div class="preview-box" id="filePreview">
+                        <img id="filePreviewImg" src="" alt="Preview" style="display:none;">
+                        <div class="preview-name" id="filePreviewName">—</div>
+                    </div>
+                </div>
+
+                {{-- Tab Link URL --}}
+                <div class="tab-pane {{ $activeTab === 'url' ? 'active' : '' }}" id="tab-url">
+                    <div style="margin-bottom:8px;">
+                        <input type="url" name="logo_url" id="logoUrl" class="form-control" 
+                               placeholder="https://contoh.com/logo-partner.png" 
+                               value="{{ old('logo_url') }}">
+                        <p style="font-size:12px;color:var(--muted);margin-top:6px;">
+                            Masukkan link/URL langsung ke gambar logo (contoh: <code>https://logo.clearbit.com/telkom.co.id</code> atau URL gambar lainnya).
+                        </p>
+                    </div>
+                    <div class="preview-box" id="urlPreview" style="display:none;">
+                        <img id="urlPreviewImg" src="" alt="URL Preview" style="display:none;max-height:60px;max-width:160px;object-fit:contain;filter:brightness(0) invert(1);opacity:0.85;">
+                        <div class="preview-name" id="urlPreviewStatus">—</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -105,20 +133,69 @@
 
 @push('scripts')
 <script>
-// File upload preview
-document.getElementById('logoFile').addEventListener('change', function() {
-    const file = this.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = e => {
-        const img = document.getElementById('filePreviewImg');
-        img.src = e.target.result;
-        img.style.display = 'block';
-        document.getElementById('filePreviewName').textContent = file.name;
-        document.getElementById('filePreview').style.display = 'flex';
-    };
-    reader.readAsDataURL(file);
+// Tab Switching
+document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+        this.classList.add('active');
+        const target = document.getElementById(this.dataset.tab);
+        if (target) target.classList.add('active');
+    });
 });
+
+// File upload preview
+const logoFileInput = document.getElementById('logoFile');
+if (logoFileInput) {
+    logoFileInput.addEventListener('change', function() {
+        const file = this.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = e => {
+            const img = document.getElementById('filePreviewImg');
+            img.src = e.target.result;
+            img.style.display = 'block';
+            document.getElementById('filePreviewName').textContent = file.name;
+            document.getElementById('filePreview').style.display = 'flex';
+        };
+        reader.readAsDataURL(file);
+    });
+}
+
+// URL preview
+const logoUrlInput = document.getElementById('logoUrl');
+const urlPreview = document.getElementById('urlPreview');
+const urlPreviewImg = document.getElementById('urlPreviewImg');
+const urlPreviewStatus = document.getElementById('urlPreviewStatus');
+
+function checkUrlPreview() {
+    if (!logoUrlInput) return;
+    const url = logoUrlInput.value.trim();
+    if (url && (url.startsWith('http://') || url.startsWith('https://'))) {
+        urlPreviewImg.src = url;
+        urlPreviewImg.onload = () => {
+            urlPreview.style.display = 'flex';
+            urlPreviewImg.style.display = 'block';
+            urlPreviewStatus.textContent = '✓ Preview logo dari URL valid';
+            urlPreviewStatus.style.color = 'var(--cyan)';
+        };
+        urlPreviewImg.onerror = () => {
+            urlPreview.style.display = 'flex';
+            urlPreviewImg.style.display = 'none';
+            urlPreviewStatus.textContent = '⚠️ Link URL gambar tidak dapat dimuat';
+            urlPreviewStatus.style.color = '#fca5a5';
+        };
+    } else {
+        urlPreview.style.display = 'none';
+    }
+}
+
+if (logoUrlInput) {
+    logoUrlInput.addEventListener('input', checkUrlPreview);
+    if (logoUrlInput.value) {
+        checkUrlPreview();
+    }
+}
 </script>
 @endpush
 @endsection
