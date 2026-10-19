@@ -994,21 +994,29 @@
         }
 
         .nav-logo-icon {
-            width: 36px;
-            height: 36px;
+            width: 38px;
+            height: 38px;
             border-radius: 10px;
-            background: linear-gradient(135deg, #00a8ff 0%, #7c3aed 100%);
+            background: #ffffff;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 16px rgba(0, 168, 255, 0.45);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25), 0 0 16px rgba(255, 255, 255, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.6);
             flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .nav-logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 3px;
         }
 
         .nav-logo-icon svg {
-            width: 20px;
-            height: 20px;
-            fill: white;
+            width: 22px;
+            height: 22px;
         }
 
         .nav-logo-text {
@@ -3515,23 +3523,23 @@
         <a href="/" class="nav-logo" aria-label="{{ $siteFull }} Home">
             <div class="nav-logo-icon" aria-hidden="true">
                 @if($isCustomLogo)
-                    <img src="{{ $cmsHomepage->site_logo_url }}" alt="{{ $siteFull }}" style="width:100%;height:100%;object-fit:contain;padding:4px;">
+                    <img src="{{ $cmsHomepage->site_logo_url }}" alt="{{ $siteFull }}" style="width:100%;height:100%;object-fit:contain;padding:3px;">
                 @else
                     <!-- AI icon: neural network / brain -->
                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="12" cy="12" r="3" fill="white" opacity="0.95"/>
-                        <circle cx="5" cy="7" r="1.5" fill="white" opacity="0.80"/>
-                        <circle cx="19" cy="7" r="1.5" fill="white" opacity="0.80"/>
-                        <circle cx="5" cy="17" r="1.5" fill="white" opacity="0.80"/>
-                        <circle cx="19" cy="17" r="1.5" fill="white" opacity="0.80"/>
-                        <circle cx="12" cy="3" r="1.5" fill="white" opacity="0.80"/>
-                        <circle cx="12" cy="21" r="1.5" fill="white" opacity="0.80"/>
-                        <line x1="9" y1="11" x2="6.12" y2="7.88" stroke="white" stroke-width="1.2" opacity="0.70"/>
-                        <line x1="15" y1="11" x2="17.88" y2="7.88" stroke="white" stroke-width="1.2" opacity="0.70"/>
-                        <line x1="9" y1="13" x2="6.12" y2="16.12" stroke="white" stroke-width="1.2" opacity="0.70"/>
-                        <line x1="15" y1="13" x2="17.88" y2="16.12" stroke="white" stroke-width="1.2" opacity="0.70"/>
-                        <line x1="12" y1="9" x2="12" y2="4.5" stroke="white" stroke-width="1.2" opacity="0.70"/>
-                        <line x1="12" y1="15" x2="12" y2="19.5" stroke="white" stroke-width="1.2" opacity="0.70"/>
+                        <circle cx="12" cy="12" r="3" fill="#0284c7" opacity="0.95"/>
+                        <circle cx="5" cy="7" r="1.5" fill="#7c3aed" opacity="0.85"/>
+                        <circle cx="19" cy="7" r="1.5" fill="#7c3aed" opacity="0.85"/>
+                        <circle cx="5" cy="17" r="1.5" fill="#7c3aed" opacity="0.85"/>
+                        <circle cx="19" cy="17" r="1.5" fill="#7c3aed" opacity="0.85"/>
+                        <circle cx="12" cy="3" r="1.5" fill="#0284c7" opacity="0.85"/>
+                        <circle cx="12" cy="21" r="1.5" fill="#0284c7" opacity="0.85"/>
+                        <line x1="9" y1="11" x2="6.12" y2="7.88" stroke="#0284c7" stroke-width="1.2" opacity="0.75"/>
+                        <line x1="15" y1="11" x2="17.88" y2="7.88" stroke="#0284c7" stroke-width="1.2" opacity="0.75"/>
+                        <line x1="9" y1="13" x2="6.12" y2="16.12" stroke="#0284c7" stroke-width="1.2" opacity="0.75"/>
+                        <line x1="15" y1="13" x2="17.88" y2="16.12" stroke="#0284c7" stroke-width="1.2" opacity="0.75"/>
+                        <line x1="12" y1="9" x2="12" y2="4.5" stroke="#0284c7" stroke-width="1.2" opacity="0.75"/>
+                        <line x1="12" y1="15" x2="12" y2="19.5" stroke="#0284c7" stroke-width="1.2" opacity="0.75"/>
                     </svg>
                 @endif
             </div>

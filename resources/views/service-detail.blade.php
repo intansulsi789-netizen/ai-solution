@@ -306,11 +306,17 @@
             text-decoration: none;
         }
         .nav-logo-icon {
-            width: 32px; height: 32px;
-            background: linear-gradient(135deg, var(--cyan-neon), var(--purple-neon));
-            border-radius: 8px;
+            width: 34px; height: 34px;
+            background: #ffffff;
+            border-radius: 9px;
             display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25), 0 0 16px rgba(255, 255, 255, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        .nav-logo-icon img {
+            width: 100%; height: 100%; object-fit: contain; padding: 3px;
         }
         .nav-logo-icon svg { width: 20px; height: 20px; }
         .nav-logo-text {

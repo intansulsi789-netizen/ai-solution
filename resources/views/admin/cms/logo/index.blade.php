@@ -67,9 +67,11 @@
     .sim-logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
     .sim-logo-icon {
         width: 38px; height: 38px; border-radius: 10px;
-        background: linear-gradient(135deg, #00d4ff, #7c3aed);
+        background: #ffffff;
         display: flex; align-items: center; justify-content: center; flex-shrink: 0;
         overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25), 0 0 14px rgba(255, 255, 255, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.6);
     }
     .sim-logo-icon img { width: 100%; height: 100%; object-fit: contain; padding: 4px; }
     .sim-logo-icon svg { width: 22px; height: 22px; }
@@ -212,15 +214,15 @@
                                     <img src="{{ $cms->site_logo_url }}" alt="Logo" id="simNavImg">
                                 @else
                                     <svg viewBox="0 0 24 24" fill="none" id="simNavSvg">
-                                        <circle cx="12" cy="12" r="3" fill="white" opacity="0.95"/>
-                                        <circle cx="5" cy="7" r="1.5" fill="white" opacity="0.80"/>
-                                        <circle cx="19" cy="7" r="1.5" fill="white" opacity="0.80"/>
-                                        <circle cx="5" cy="17" r="1.5" fill="white" opacity="0.80"/>
-                                        <circle cx="19" cy="17" r="1.5" fill="white" opacity="0.80"/>
-                                        <line x1="9" y1="11" x2="6.12" y2="7.88" stroke="white" stroke-width="1.2" opacity="0.70"/>
-                                        <line x1="15" y1="11" x2="17.88" y2="7.88" stroke="white" stroke-width="1.2" opacity="0.70"/>
-                                        <line x1="9" y1="13" x2="6.12" y2="16.12" stroke="white" stroke-width="1.2" opacity="0.70"/>
-                                        <line x1="15" y1="13" x2="17.88" y2="16.12" stroke="white" stroke-width="1.2" opacity="0.70"/>
+                                        <circle cx="12" cy="12" r="3" fill="#0284c7" opacity="0.95"/>
+                                        <circle cx="5" cy="7" r="1.5" fill="#7c3aed" opacity="0.85"/>
+                                        <circle cx="19" cy="7" r="1.5" fill="#7c3aed" opacity="0.85"/>
+                                        <circle cx="5" cy="17" r="1.5" fill="#7c3aed" opacity="0.85"/>
+                                        <circle cx="19" cy="17" r="1.5" fill="#7c3aed" opacity="0.85"/>
+                                        <line x1="9" y1="11" x2="6.12" y2="7.88" stroke="#0284c7" stroke-width="1.2" opacity="0.75"/>
+                                        <line x1="15" y1="11" x2="17.88" y2="7.88" stroke="#0284c7" stroke-width="1.2" opacity="0.75"/>
+                                        <line x1="9" y1="13" x2="6.12" y2="16.12" stroke="#0284c7" stroke-width="1.2" opacity="0.75"/>
+                                        <line x1="15" y1="13" x2="17.88" y2="16.12" stroke="#0284c7" stroke-width="1.2" opacity="0.75"/>
                                     </svg>
                                     <img src="" alt="Logo" id="simNavImg" style="display:none;">
                                 @endif
@@ -244,15 +246,15 @@
                                     <img src="{{ $cms->site_logo_url }}" alt="Logo" id="simFootImg">
                                 @else
                                     <svg viewBox="0 0 24 24" fill="none" id="simFootSvg">
-                                        <circle cx="12" cy="12" r="3" fill="white" opacity="0.95"/>
-                                        <circle cx="5" cy="7" r="1.5" fill="white" opacity="0.75"/>
-                                        <circle cx="19" cy="7" r="1.5" fill="white" opacity="0.75"/>
-                                        <circle cx="5" cy="17" r="1.5" fill="white" opacity="0.75"/>
-                                        <circle cx="19" cy="17" r="1.5" fill="white" opacity="0.75"/>
-                                        <line x1="9" y1="11" x2="6.12" y2="7.88" stroke="white" stroke-width="1.2" opacity="0.65"/>
-                                        <line x1="15" y1="11" x2="17.88" y2="7.88" stroke="white" stroke-width="1.2" opacity="0.65"/>
-                                        <line x1="9" y1="13" x2="6.12" y2="16.12" stroke="white" stroke-width="1.2" opacity="0.65"/>
-                                        <line x1="15" y1="13" x2="17.88" y2="16.12" stroke="white" stroke-width="1.2" opacity="0.65"/>
+                                        <circle cx="12" cy="12" r="3" fill="#0284c7" opacity="0.95"/>
+                                        <circle cx="5" cy="7" r="1.5" fill="#7c3aed" opacity="0.85"/>
+                                        <circle cx="19" cy="7" r="1.5" fill="#7c3aed" opacity="0.85"/>
+                                        <circle cx="5" cy="17" r="1.5" fill="#7c3aed" opacity="0.85"/>
+                                        <circle cx="19" cy="17" r="1.5" fill="#7c3aed" opacity="0.85"/>
+                                        <line x1="9" y1="11" x2="6.12" y2="7.88" stroke="#0284c7" stroke-width="1.2" opacity="0.75"/>
+                                        <line x1="15" y1="11" x2="17.88" y2="7.88" stroke="#0284c7" stroke-width="1.2" opacity="0.75"/>
+                                        <line x1="9" y1="13" x2="6.12" y2="16.12" stroke="#0284c7" stroke-width="1.2" opacity="0.75"/>
+                                        <line x1="15" y1="13" x2="17.88" y2="16.12" stroke="#0284c7" stroke-width="1.2" opacity="0.75"/>
                                     </svg>
                                     <img src="" alt="Logo" id="simFootImg" style="display:none;">
                                 @endif

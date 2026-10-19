@@ -126,9 +126,12 @@
         }
         .logo-icon {
             width: 36px; height: 36px;
-            background: linear-gradient(135deg, var(--cyan), var(--purple));
+            background: #ffffff;
             border-radius: 10px;
             display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2), 0 0 12px rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            overflow: hidden;
         }
         .logo-icon svg { width: 20px; height: 20px; }
         .logo-text {
@@ -288,15 +291,15 @@
     <a href="/" class="logo">
         <div class="logo-icon">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="12" cy="12" r="3" fill="white" opacity="0.95"/>
-                <circle cx="5" cy="7" r="1.5" fill="white" opacity="0.75"/>
-                <circle cx="19" cy="7" r="1.5" fill="white" opacity="0.75"/>
-                <circle cx="5" cy="17" r="1.5" fill="white" opacity="0.75"/>
-                <circle cx="19" cy="17" r="1.5" fill="white" opacity="0.75"/>
-                <line x1="9" y1="11" x2="6.12" y2="7.88" stroke="white" stroke-width="1.2" opacity="0.65"/>
-                <line x1="15" y1="11" x2="17.88" y2="7.88" stroke="white" stroke-width="1.2" opacity="0.65"/>
-                <line x1="9" y1="13" x2="6.12" y2="16.12" stroke="white" stroke-width="1.2" opacity="0.65"/>
-                <line x1="15" y1="13" x2="17.88" y2="16.12" stroke="white" stroke-width="1.2" opacity="0.65"/>
+                <circle cx="12" cy="12" r="3" fill="#0284c7" opacity="0.95"/>
+                <circle cx="5" cy="7" r="1.5" fill="#7c3aed" opacity="0.85"/>
+                <circle cx="19" cy="7" r="1.5" fill="#7c3aed" opacity="0.85"/>
+                <circle cx="5" cy="17" r="1.5" fill="#7c3aed" opacity="0.85"/>
+                <circle cx="19" cy="17" r="1.5" fill="#7c3aed" opacity="0.85"/>
+                <line x1="9" y1="11" x2="6.12" y2="7.88" stroke="#0284c7" stroke-width="1.2" opacity="0.75"/>
+                <line x1="15" y1="11" x2="17.88" y2="7.88" stroke="#0284c7" stroke-width="1.2" opacity="0.75"/>
+                <line x1="9" y1="13" x2="6.12" y2="16.12" stroke="#0284c7" stroke-width="1.2" opacity="0.75"/>
+                <line x1="15" y1="13" x2="17.88" y2="16.12" stroke="#0284c7" stroke-width="1.2" opacity="0.75"/>
             </svg>
         </div>
         <span class="logo-text"><span>AI</span> Jogja Solutions</span>
