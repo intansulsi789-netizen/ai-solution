@@ -210,8 +210,11 @@
         }
 
         html[data-theme="light"] .hero-subheading {
-            color: #0f172a;
-            text-shadow: 0 1px 10px rgba(255, 255, 255, 0.95);
+            color: #020617;
+            font-weight: 500;
+            opacity: 1;
+            animation: none;
+            text-shadow: 0 1px 12px rgba(255, 255, 255, 0.95), 0 0 24px rgba(255, 255, 255, 0.85);
         }
 
         html[data-theme="light"] .page-subtitle,
