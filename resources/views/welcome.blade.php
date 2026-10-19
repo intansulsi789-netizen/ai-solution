@@ -4144,7 +4144,7 @@
             <span style="width:7px;height:7px;border-radius:50%;background:var(--cyan-neon);box-shadow:0 0 8px var(--cyan-neon);animation:blink-dot 2s ease infinite;"></span>
             Wawasan Bisnis
         </div>
-        <h2 class="wawasan-title">Value &amp; Perkembangan</h2>
+        <h2 class="wawasan-title">Wawasan &amp; Inovasi AI Solution</h2>
         <p style="font-size:clamp(16px,2vw,19px);color:var(--white-80);line-height:1.6;">Value seputar AI, perusahaan, dan perkembangan teknologi untuk membantu bisnis berkembang.</p>
     </div>
 
