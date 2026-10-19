@@ -389,6 +389,9 @@
             -webkit-text-fill-color: transparent;
             filter: none;
         }
+        html[data-theme="light"] .layanan-section {
+            background: radial-gradient(ellipse 90% 50% at 50% 0%, rgba(224, 242, 254, 0.5) 0%, transparent 70%);
+        }
 
         html[data-theme="light"] .hud-telemetry-badge {
             background: rgba(255, 255, 255, 0.90);
@@ -1451,6 +1454,9 @@
             flex-direction: column;
             gap: 80px;
             z-index: 10;
+            background: 
+                radial-gradient(ellipse 100% 55% at 50% 0%, rgba(0, 168, 255, 0.22) 0%, rgba(10, 26, 68, 0.45) 40%, transparent 75%),
+                radial-gradient(circle 500px at 50% 35%, rgba(0, 212, 255, 0.12) 0%, transparent 70%);
         }
 
         .layanan-circuit-decor {
@@ -1521,28 +1527,28 @@
 
         .ambient-glow-4 {
             position: absolute;
-            width: 650px;
-            height: 650px;
+            width: 700px;
+            height: 700px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(124, 58, 237, 0.14) 0%, transparent 60%);
-            top: 20%;
-            right: -180px;
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.18) 0%, rgba(0, 168, 255, 0.14) 45%, transparent 70%);
+            top: 15%;
+            right: -120px;
             z-index: 0;
             pointer-events: none;
-            filter: blur(30px);
+            filter: blur(50px);
             animation: ambient-pulse-purple 16s ease-in-out infinite;
         }
         .ambient-glow-blue-left {
             position: absolute;
-            width: 600px;
-            height: 600px;
+            width: 700px;
+            height: 700px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(0, 212, 255, 0.12) 0%, transparent 65%);
-            top: 35%;
-            left: -180px;
+            background: radial-gradient(circle, rgba(0, 168, 255, 0.24) 0%, rgba(0, 212, 255, 0.12) 45%, transparent 70%);
+            top: 25%;
+            left: -120px;
             z-index: 0;
             pointer-events: none;
-            filter: blur(30px);
+            filter: blur(50px);
             animation: ambient-pulse-blue 15s ease-in-out infinite;
         }
         .section-grid-mesh {
