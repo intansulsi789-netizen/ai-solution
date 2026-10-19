@@ -22,6 +22,20 @@ class Partner extends Model
             return null;
         }
 
+        // Pastikan brand populer yang memiliki SVG resmi transparan langsung digunakan
+        $namaLower = strtolower($this->nama ?? '');
+        $logoLower = strtolower($this->logo);
+
+        if (str_contains($namaLower, 'gojek') || str_contains($logoLower, 'gojek')) {
+            return 'https://cdn.simpleicons.org/gojek';
+        }
+        if (str_contains($namaLower, 'shopee') || str_contains($logoLower, 'shopee')) {
+            return 'https://cdn.simpleicons.org/shopee';
+        }
+        if (str_contains($namaLower, 'bukalapak') || str_contains($logoLower, 'bukalapak')) {
+            return 'https://cdn.simpleicons.org/bukalapak';
+        }
+
         if (str_contains($this->logo, 'clearbit.com/')) {
             $domain = ltrim(parse_url($this->logo, PHP_URL_PATH), '/');
             return 'https://unavatar.io/' . $domain;

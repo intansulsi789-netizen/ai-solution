@@ -44,11 +44,14 @@
     .partner-logo-wrap img {
         max-width: 100%; max-height: 54px;
         object-fit: contain;
-        filter: brightness(0) invert(1);
-        opacity: 0.75;
-        transition: opacity 0.3s;
+        opacity: 0.88;
+        filter: drop-shadow(0 2px 5px rgba(0,0,0,0.35));
+        transition: all 0.3s;
     }
-    .partner-card:hover .partner-logo-wrap img { opacity: 1; }
+    .partner-card:hover .partner-logo-wrap img {
+        opacity: 1;
+        transform: scale(1.05);
+    }
     .partner-name {
         font-size: 13px; font-weight: 600; color: var(--text);
         text-align: center; line-height: 1.3;

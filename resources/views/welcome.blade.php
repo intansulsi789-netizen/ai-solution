@@ -4088,15 +4088,29 @@
                     @php
                         $pNama = is_array($partner) ? $partner['nama'] : $partner->nama;
                         $pLogo = is_array($partner) ? $partner['logo'] : $partner->logo;
+                        $namaLower = strtolower($pNama ?? '');
+                        $logoLower = strtolower($pLogo ?? '');
                         
                         $src = null;
                         $fallbackSrc = '';
                         if ($pLogo) {
-                            if (str_starts_with($pLogo, 'http://') || str_starts_with($pLogo, 'https://')) {
+                            if (str_contains($namaLower, 'gojek') || str_contains($logoLower, 'gojek')) {
+                                $src = 'https://cdn.simpleicons.org/gojek';
+                                $fallbackSrc = 'https://unavatar.io/gojek.com';
+                            } elseif (str_contains($namaLower, 'tokopedia') || str_contains($logoLower, 'tokopedia')) {
+                                $src = 'https://images.tokopedia.net/assets-tokopedia-lite/v2/zeus/production/e5b8438b.svg';
+                                $fallbackSrc = 'https://unavatar.io/tokopedia.com';
+                            } elseif (str_contains($namaLower, 'shopee') || str_contains($logoLower, 'shopee')) {
+                                $src = 'https://cdn.simpleicons.org/shopee';
+                                $fallbackSrc = 'https://unavatar.io/shopee.co.id';
+                            } elseif (str_contains($namaLower, 'bukalapak') || str_contains($logoLower, 'bukalapak')) {
+                                $src = 'https://cdn.simpleicons.org/bukalapak';
+                                $fallbackSrc = 'https://unavatar.io/bukalapak.com';
+                            } elseif (str_starts_with($pLogo, 'http://') || str_starts_with($pLogo, 'https://')) {
                                 if (str_contains($pLogo, 'clearbit.com/')) {
                                     $domain = ltrim(parse_url($pLogo, PHP_URL_PATH), '/');
-                                    $src = 'https://icon.horse/icon/' . $domain;
-                                    $fallbackSrc = 'https://unavatar.io/' . $domain;
+                                    $src = 'https://unavatar.io/' . $domain;
+                                    $fallbackSrc = 'https://icon.horse/icon/' . $domain;
                                 } else {
                                     $src = $pLogo;
                                     $host = parse_url($pLogo, PHP_URL_HOST);
@@ -4113,6 +4127,8 @@
                     <div class="logo-item" title="{{ $pNama }}">
                         <img src="{{ $src }}" alt="{{ $pNama }}"
                              loading="lazy"
+                             crossorigin="anonymous"
+                             class="partner-marquee-img"
                              @if($fallbackSrc)
                              data-fallback="{{ $fallbackSrc }}"
                              onerror="if(this.dataset.fallback && this.src !== this.dataset.fallback){ this.src = this.dataset.fallback; } else { this.style.opacity = '0.5'; }"
@@ -4132,15 +4148,29 @@
                     @php
                         $pNama = is_array($partner) ? $partner['nama'] : $partner->nama;
                         $pLogo = is_array($partner) ? $partner['logo'] : $partner->logo;
+                        $namaLower = strtolower($pNama ?? '');
+                        $logoLower = strtolower($pLogo ?? '');
                         
                         $src = null;
                         $fallbackSrc = '';
                         if ($pLogo) {
-                            if (str_starts_with($pLogo, 'http://') || str_starts_with($pLogo, 'https://')) {
+                            if (str_contains($namaLower, 'gojek') || str_contains($logoLower, 'gojek')) {
+                                $src = 'https://cdn.simpleicons.org/gojek';
+                                $fallbackSrc = 'https://unavatar.io/gojek.com';
+                            } elseif (str_contains($namaLower, 'tokopedia') || str_contains($logoLower, 'tokopedia')) {
+                                $src = 'https://images.tokopedia.net/assets-tokopedia-lite/v2/zeus/production/e5b8438b.svg';
+                                $fallbackSrc = 'https://unavatar.io/tokopedia.com';
+                            } elseif (str_contains($namaLower, 'shopee') || str_contains($logoLower, 'shopee')) {
+                                $src = 'https://cdn.simpleicons.org/shopee';
+                                $fallbackSrc = 'https://unavatar.io/shopee.co.id';
+                            } elseif (str_contains($namaLower, 'bukalapak') || str_contains($logoLower, 'bukalapak')) {
+                                $src = 'https://cdn.simpleicons.org/bukalapak';
+                                $fallbackSrc = 'https://unavatar.io/bukalapak.com';
+                            } elseif (str_starts_with($pLogo, 'http://') || str_starts_with($pLogo, 'https://')) {
                                 if (str_contains($pLogo, 'clearbit.com/')) {
                                     $domain = ltrim(parse_url($pLogo, PHP_URL_PATH), '/');
-                                    $src = 'https://icon.horse/icon/' . $domain;
-                                    $fallbackSrc = 'https://unavatar.io/' . $domain;
+                                    $src = 'https://unavatar.io/' . $domain;
+                                    $fallbackSrc = 'https://icon.horse/icon/' . $domain;
                                 } else {
                                     $src = $pLogo;
                                     $host = parse_url($pLogo, PHP_URL_HOST);
@@ -4157,6 +4187,8 @@
                     <div class="logo-item" title="{{ $pNama }}">
                         <img src="{{ $src }}" alt="{{ $pNama }}"
                              loading="lazy"
+                             crossorigin="anonymous"
+                             class="partner-marquee-img"
                              @if($fallbackSrc)
                              data-fallback="{{ $fallbackSrc }}"
                              onerror="if(this.dataset.fallback && this.src !== this.dataset.fallback){ this.src = this.dataset.fallback; } else { this.style.opacity = '0.5'; }"
@@ -4172,6 +4204,93 @@
         </div>
     </div>
 </section>
+
+{{-- Automatic White Background Stripper for Partner Logos --}}
+<script>
+(function() {
+    function autoStripWhiteBg(img) {
+        if (!img || img.dataset.bgStripped) return;
+        img.dataset.bgStripped = "true";
+
+        function process() {
+            try {
+                const w = img.naturalWidth;
+                const h = img.naturalHeight;
+                if (!w || !h || w < 8 || h < 8) return;
+
+                const canvas = document.createElement('canvas');
+                canvas.width = w;
+                canvas.height = h;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0);
+
+                const imgData = ctx.getImageData(0, 0, w, h);
+                const d = imgData.data;
+
+                // Check 4 corners
+                function getCorner(x, y) {
+                    const idx = (y * w + x) * 4;
+                    return [d[idx], d[idx+1], d[idx+2], d[idx+3]];
+                }
+                const corners = [getCorner(0, 0), getCorner(w-1, 0), getCorner(0, h-1), getCorner(w-1, h-1)];
+                let lightCount = 0;
+                corners.forEach(([r, g, b, a]) => {
+                    if (a > 50 && r > 200 && g > 200 && b > 200) lightCount++;
+                });
+
+                // Only strip if corners are white/light box
+                if (lightCount >= 2) {
+                    const visited = new Uint8Array(w * h);
+                    const queue = [];
+                    for (let x = 0; x < w; x++) { queue.push(x); queue.push((h - 1) * w + x); }
+                    for (let y = 0; y < h; y++) { queue.push(y * w); queue.push(y * w + (w - 1)); }
+
+                    let stripped = 0;
+                    while (queue.length > 0) {
+                        const pos = queue.pop();
+                        if (visited[pos]) continue;
+                        visited[pos] = 1;
+
+                        const idx = pos * 4;
+                        const r = d[idx], g = d[idx+1], b = d[idx+2], a = d[idx+3];
+
+                        if (a === 0 || (r > 205 && g > 205 && b > 205)) {
+                            d[idx + 3] = 0;
+                            stripped++;
+                            const x = pos % w, y = Math.floor(pos / w);
+                            if (x > 0 && !visited[pos - 1]) queue.push(pos - 1);
+                            if (x < w - 1 && !visited[pos + 1]) queue.push(pos + 1);
+                            if (y > 0 && !visited[pos - w]) queue.push(pos - w);
+                            if (y < h - 1 && !visited[pos + w]) queue.push(pos + w);
+                        }
+                    }
+
+                    if (stripped > 0) {
+                        ctx.putImageData(imgData, 0, 0);
+                        img.src = canvas.toDataURL('image/png');
+                    }
+                }
+            } catch (err) {
+                // Silently fallback if cross-origin canvas is restricted
+            }
+        }
+
+        if (img.complete && img.naturalWidth > 0) {
+            process();
+        } else {
+            img.addEventListener('load', process, { once: true });
+        }
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.partner-marquee-img').forEach(autoStripWhiteBg);
+        });
+    } else {
+        document.querySelectorAll('.partner-marquee-img').forEach(autoStripWhiteBg);
+    }
+})();
+</script>
 
 
 <!-- ==========================================
