@@ -434,6 +434,176 @@
         box-shadow: 0 0 20px rgba(0, 212, 255, 0.15);
     }
 
+    /* Warna sel kalender saat sudah ada artikel */
+    .cal-day-cell.cal-has-published {
+        background: rgba(16, 185, 129, 0.12);
+        border-color: rgba(16, 185, 129, 0.45);
+    }
+    .cal-day-cell.cal-has-published:hover {
+        background: rgba(16, 185, 129, 0.22);
+        border-color: #10b981;
+        box-shadow: 0 4px 18px rgba(16, 185, 129, 0.30);
+    }
+
+    .cal-day-cell.cal-has-scheduled {
+        background: rgba(0, 212, 255, 0.12);
+        border-color: rgba(0, 212, 255, 0.45);
+    }
+    .cal-day-cell.cal-has-scheduled:hover {
+        background: rgba(0, 212, 255, 0.22);
+        border-color: #00d4ff;
+        box-shadow: 0 4px 18px rgba(0, 212, 255, 0.30);
+    }
+
+    .cal-day-cell.cal-has-draft {
+        background: rgba(245, 158, 11, 0.12);
+        border-color: rgba(245, 158, 11, 0.45);
+    }
+    .cal-day-cell.cal-has-draft:hover {
+        background: rgba(245, 158, 11, 0.22);
+        border-color: #f59e0b;
+        box-shadow: 0 4px 18px rgba(245, 158, 11, 0.30);
+    }
+
+    .cal-day-cell.cal-has-mixed {
+        background: linear-gradient(135deg, rgba(16, 185, 129, 0.14), rgba(0, 212, 255, 0.14));
+        border-color: rgba(0, 212, 255, 0.50);
+    }
+    .cal-day-cell.cal-has-mixed:hover {
+        background: linear-gradient(135deg, rgba(16, 185, 129, 0.24), rgba(0, 212, 255, 0.24));
+        border-color: var(--cyan);
+        box-shadow: 0 4px 18px rgba(0, 212, 255, 0.30);
+    }
+
+    .cal-day-cell.today.cal-has-published {
+        border-color: #10b981;
+        box-shadow: 0 0 16px rgba(16, 185, 129, 0.35);
+    }
+    .cal-day-cell.today.cal-has-scheduled {
+        border-color: #00d4ff;
+        box-shadow: 0 0 16px rgba(0, 212, 255, 0.35);
+    }
+
+    /* Light mode untuk sel berwarna */
+    html[data-theme="light"] .cal-day-cell.cal-has-published {
+        background: #ecfdf5;
+        border-color: #6ee7b7;
+    }
+    html[data-theme="light"] .cal-day-cell.cal-has-published:hover {
+        background: #d1fae5;
+        border-color: #10b981;
+        box-shadow: 0 4px 14px rgba(16, 185, 129, 0.20);
+    }
+
+    html[data-theme="light"] .cal-day-cell.cal-has-scheduled {
+        background: #f0f9ff;
+        border-color: #7dd3fc;
+    }
+    html[data-theme="light"] .cal-day-cell.cal-has-scheduled:hover {
+        background: #e0f2fe;
+        border-color: #0284c7;
+        box-shadow: 0 4px 14px rgba(2, 132, 199, 0.20);
+    }
+
+    html[data-theme="light"] .cal-day-cell.cal-has-draft {
+        background: #fffbeb;
+        border-color: #fde68a;
+    }
+    html[data-theme="light"] .cal-day-cell.cal-has-draft:hover {
+        background: #fef3c7;
+        border-color: #f59e0b;
+        box-shadow: 0 4px 14px rgba(245, 158, 11, 0.20);
+    }
+
+    html[data-theme="light"] .cal-day-cell.cal-has-mixed {
+        background: linear-gradient(135deg, #ecfdf5, #f0f9ff);
+        border-color: #7dd3fc;
+    }
+
+    /* Indikator status & jumlah artikel */
+    .cal-colored-indicator-wrap {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin-top: auto;
+        margin-bottom: auto;
+        padding: 4px 0;
+    }
+
+    .cal-status-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 10px;
+        border-radius: 8px;
+        font-size: 11.5px;
+        font-weight: 700;
+        letter-spacing: 0.2px;
+        transition: all 0.15s ease;
+        white-space: nowrap;
+        justify-content: center;
+    }
+
+    .cal-status-pill .dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        flex-shrink: 0;
+    }
+
+    .cal-status-pill.pill-published {
+        background: rgba(16, 185, 129, 0.20);
+        color: #34d399;
+        border: 1px solid rgba(16, 185, 129, 0.40);
+    }
+
+    .cal-status-pill.pill-scheduled {
+        background: rgba(0, 212, 255, 0.20);
+        color: #00d4ff;
+        border: 1px solid rgba(0, 212, 255, 0.40);
+    }
+
+    .cal-status-pill.pill-draft {
+        background: rgba(245, 158, 11, 0.20);
+        color: #fbbf24;
+        border: 1px solid rgba(245, 158, 11, 0.40);
+    }
+
+    html[data-theme="light"] .cal-status-pill.pill-published {
+        background: #d1fae5;
+        color: #065f46;
+        border-color: #a7f3d0;
+    }
+    html[data-theme="light"] .cal-status-pill.pill-scheduled {
+        background: #e0f2fe;
+        color: #0369a1;
+        border-color: #bae6fd;
+    }
+    html[data-theme="light"] .cal-status-pill.pill-draft {
+        background: #fef3c7;
+        color: #92400e;
+        border-color: #fde68a;
+    }
+
+    .cal-click-detail-hint {
+        font-size: 10.5px;
+        color: var(--muted);
+        text-align: center;
+        opacity: 0;
+        transition: opacity 0.15s;
+        margin-top: 3px;
+        font-weight: 500;
+    }
+
+    .cal-day-cell:hover .cal-click-detail-hint {
+        opacity: 0.95;
+        color: var(--cyan);
+    }
+
+    html[data-theme="light"] .cal-day-cell:hover .cal-click-detail-hint {
+        color: #0284c7;
+    }
+
     .cal-cell-header {
         display: flex;
         justify-content: space-between;
@@ -1261,36 +1431,65 @@
         eventsWrap.className = 'cal-events-wrap';
 
         if (articles.length > 0) {
-            // TAMPILKAN SEMUA ARTIKEL PADA TANGGAL TERSEBUT
+            // Hitung komposisi status artikel pada tanggal ini
+            const statusCounts = {
+                scheduled: 0,
+                published: 0,
+                draft: 0
+            };
             articles.forEach(art => {
-                const chip = document.createElement('div');
-                chip.className = `cal-event-chip chip-${art.status}`;
-                chip.title = `${art.judul} (${art.status_label}${art.time ? ' - ' + art.time : ''})`;
-
-                const dot = document.createElement('span');
-                dot.style.width = '6px';
-                dot.style.height = '6px';
-                dot.style.borderRadius = '50%';
-                dot.style.flexShrink = '0';
-                if (art.status === 'scheduled') dot.style.background = '#00d4ff';
-                else if (art.status === 'published') dot.style.background = '#10b981';
-                else dot.style.background = '#f59e0b';
-                chip.appendChild(dot);
-
-                if (art.time) {
-                    const timeEl = document.createElement('span');
-                    timeEl.className = 'chip-time';
-                    timeEl.textContent = art.time.replace(' WIB', '');
-                    chip.appendChild(timeEl);
+                if (statusCounts[art.status] !== undefined) {
+                    statusCounts[art.status]++;
+                } else {
+                    statusCounts.published++;
                 }
-
-                const titleEl = document.createElement('span');
-                titleEl.className = 'chip-title';
-                titleEl.textContent = art.judul;
-                chip.appendChild(titleEl);
-
-                eventsWrap.appendChild(chip);
             });
+
+            // Beri warna latar belakang & border pada sel tanggal sesuai status artikel
+            if (statusCounts.scheduled > 0 && statusCounts.published > 0) {
+                cell.classList.add('cal-has-mixed');
+            } else if (statusCounts.scheduled > 0) {
+                cell.classList.add('cal-has-scheduled');
+            } else if (statusCounts.published > 0) {
+                cell.classList.add('cal-has-published');
+            } else if (statusCounts.draft > 0) {
+                cell.classList.add('cal-has-draft');
+            } else {
+                cell.classList.add('cal-has-published');
+            }
+
+            // Tampilkan indikator status dan jumlah artikel tanpa teks judul artikel yang membingungkan
+            const indicatorWrap = document.createElement('div');
+            indicatorWrap.className = 'cal-colored-indicator-wrap';
+
+            if (statusCounts.published > 0) {
+                const pill = document.createElement('div');
+                pill.className = 'cal-status-pill pill-published';
+                pill.innerHTML = `<span class="dot dot-published"></span> <span>${statusCounts.published} Terbit</span>`;
+                indicatorWrap.appendChild(pill);
+            }
+
+            if (statusCounts.scheduled > 0) {
+                const pill = document.createElement('div');
+                pill.className = 'cal-status-pill pill-scheduled';
+                pill.innerHTML = `<span class="dot dot-scheduled"></span> <span>${statusCounts.scheduled} Terjadwal</span>`;
+                indicatorWrap.appendChild(pill);
+            }
+
+            if (statusCounts.draft > 0) {
+                const pill = document.createElement('div');
+                pill.className = 'cal-status-pill pill-draft';
+                pill.innerHTML = `<span class="dot dot-draft"></span> <span>${statusCounts.draft} Draft</span>`;
+                indicatorWrap.appendChild(pill);
+            }
+
+            const clickHint = document.createElement('div');
+            clickHint.className = 'cal-click-detail-hint';
+            clickHint.textContent = 'Klik untuk detail ↗';
+            indicatorWrap.appendChild(clickHint);
+
+            eventsWrap.appendChild(indicatorWrap);
+            cell.title = `${articles.length} artikel pada tanggal ini (Klik untuk melihat daftar)`;
         } else {
             // Tampilan tanggal kosong: hint saat hover
             const emptyHint = document.createElement('div');
