@@ -108,13 +108,30 @@
 
                 {{-- Tab Link URL --}}
                 <div class="tab-pane {{ $activeTab === 'url' ? 'active' : '' }}" id="tab-url">
+                    {{-- Quick Auto-Fetch from domain --}}
+                    <div style="background:rgba(0,212,255,0.06);border:1px solid rgba(0,212,255,0.2);border-radius:12px;padding:16px;margin-bottom:16px;">
+                        <div style="font-size:12px;font-weight:700;color:var(--cyan);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.5px;">
+                            ⚡ Ambil Logo Otomatis dari Website / Domain
+                        </div>
+                        <div style="font-size:12px;color:var(--muted);margin-bottom:10px;">
+                            Cukup ketik domain web partner (contoh: <code>telkom.co.id</code> atau <code>gojek.com</code>), lalu klik <strong>Ambil Logo</strong>.
+                        </div>
+                        <div style="display:flex;gap:8px;">
+                            <input type="text" id="domainFetchInput" class="form-control" placeholder="Ketik domain, misal: telkom.co.id" style="background:rgba(0,0,0,0.35);">
+                            <button type="button" id="btnFetchLogo" style="padding:10px 18px;background:linear-gradient(135deg,var(--cyan),var(--purple));color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;">
+                                ⚡ Ambil Logo
+                            </button>
+                        </div>
+                    </div>
+
                     <div style="margin-bottom:8px;">
+                        <label class="form-label" style="font-size:11px;color:var(--muted);">Link / URL Logo Gambar</label>
                         <input type="url" name="logo_url" id="logoUrl" class="form-control" 
                                placeholder="https://contoh.com/logo-partner.png" 
                                value="{{ old('logo_url') }}">
-                        <p style="font-size:12px;color:var(--muted);margin-top:6px;">
-                            Masukkan link/URL langsung ke gambar logo (contoh: <code>https://logo.clearbit.com/telkom.co.id</code> atau URL gambar lainnya).
-                        </p>
+                        <div style="font-size:12px;color:var(--muted);margin-top:6px;line-height:1.5;">
+                            💡 <strong>Tips ambil link gambar:</strong> Buka gambar logo di browser &rarr; klik kanan pada gambar &rarr; pilih <em>"Salin Alamat Gambar" (Copy Image Address)</em>, lalu tempel di sini.
+                        </div>
                     </div>
                     <div class="preview-box" id="urlPreview" style="display:none;">
                         <img id="urlPreviewImg" src="" alt="URL Preview" style="display:none;max-height:60px;max-width:160px;object-fit:contain;filter:brightness(0) invert(1);opacity:0.85;">
@@ -162,7 +179,7 @@ if (logoFileInput) {
     });
 }
 
-// URL preview
+// URL preview & Auto-fetch
 const logoUrlInput = document.getElementById('logoUrl');
 const urlPreview = document.getElementById('urlPreview');
 const urlPreviewImg = document.getElementById('urlPreviewImg');
@@ -170,24 +187,44 @@ const urlPreviewStatus = document.getElementById('urlPreviewStatus');
 
 function checkUrlPreview() {
     if (!logoUrlInput) return;
-    const url = logoUrlInput.value.trim();
-    if (url && (url.startsWith('http://') || url.startsWith('https://'))) {
-        urlPreviewImg.src = url;
-        urlPreviewImg.onload = () => {
-            urlPreview.style.display = 'flex';
-            urlPreviewImg.style.display = 'block';
-            urlPreviewStatus.textContent = '✓ Preview logo dari URL valid';
-            urlPreviewStatus.style.color = 'var(--cyan)';
-        };
-        urlPreviewImg.onerror = () => {
-            urlPreview.style.display = 'flex';
-            urlPreviewImg.style.display = 'none';
-            urlPreviewStatus.textContent = '⚠️ Link URL gambar tidak dapat dimuat';
-            urlPreviewStatus.style.color = '#fca5a5';
-        };
-    } else {
+    let url = logoUrlInput.value.trim();
+    if (!url) {
         urlPreview.style.display = 'none';
+        return;
     }
+
+    if (url.includes('clearbit.com/')) {
+        const domain = url.split('clearbit.com/')[1].replace(/^\/+/, '');
+        url = 'https://unavatar.io/' + domain;
+        logoUrlInput.value = url;
+    }
+
+    urlPreview.style.display = 'flex';
+    urlPreviewImg.style.display = 'block';
+    urlPreviewImg.src = url;
+    urlPreviewStatus.textContent = 'Memuat preview logo...';
+    urlPreviewStatus.style.color = 'var(--muted)';
+
+    urlPreviewImg.onload = () => {
+        urlPreviewStatus.textContent = '✓ Preview logo valid dan berhasil dimuat';
+        urlPreviewStatus.style.color = 'var(--cyan)';
+    };
+
+    urlPreviewImg.onerror = () => {
+        try {
+            const u = new URL(url);
+            const host = u.hostname;
+            if (host && !url.includes('google.com/s2')) {
+                urlPreviewImg.src = 'https://www.google.com/s2/favicons?domain=' + encodeURIComponent(host) + '&sz=128';
+                urlPreviewStatus.textContent = '✓ Dimuat via Google Favicon';
+                urlPreviewStatus.style.color = '#fbbf24';
+                return;
+            }
+        } catch(e) {}
+        urlPreviewImg.style.display = 'none';
+        urlPreviewStatus.textContent = '⚠️ Link URL gambar tidak dapat dimuat. Pastikan alamat gambar langsung.';
+        urlPreviewStatus.style.color = '#fca5a5';
+    };
 }
 
 if (logoUrlInput) {
@@ -195,6 +232,24 @@ if (logoUrlInput) {
     if (logoUrlInput.value) {
         checkUrlPreview();
     }
+}
+
+// Auto-fetch button
+const btnFetchLogo = document.getElementById('btnFetchLogo');
+const domainFetchInput = document.getElementById('domainFetchInput');
+if (btnFetchLogo && domainFetchInput) {
+    btnFetchLogo.addEventListener('click', function() {
+        let val = domainFetchInput.value.trim();
+        if (!val) {
+            alert('Silakan ketik domain website partner (contoh: telkom.co.id)');
+            domainFetchInput.focus();
+            return;
+        }
+        val = val.replace(/^https?:\/\//i, '').split('/')[0].split('?')[0].trim();
+        if (!val) return;
+        logoUrlInput.value = 'https://unavatar.io/' + val;
+        checkUrlPreview();
+    });
 }
 </script>
 @endpush

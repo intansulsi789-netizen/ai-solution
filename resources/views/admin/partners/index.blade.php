@@ -97,12 +97,8 @@
 
         <div class="partner-logo-wrap">
             @if($p->logo)
-                @if(str_starts_with($p->logo, 'http'))
-                    <img src="{{ $p->logo }}" alt="{{ $p->nama }}"
-                         onerror="this.onerror=null;this.src='https://www.google.com/s2/favicons?domain={{ urlencode($p->logo) }}&sz=128';">
-                @else
-                    <img src="{{ asset('storage/' . $p->logo) }}" alt="{{ $p->nama }}">
-                @endif
+                <img src="{{ $p->logo_src }}" alt="{{ $p->nama }}"
+                     onerror="this.onerror=null;this.src='https://www.google.com/s2/favicons?domain={{ urlencode(parse_url($p->resolved_logo, PHP_URL_HOST) ?? $p->nama) }}&sz=128';">
             @else
                 <span style="font-size:28px;">🖼️</span>
             @endif

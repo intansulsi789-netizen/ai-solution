@@ -26,7 +26,7 @@ class AdminPartnerController extends Controller
             'nama'      => 'required|string|max:150',
             'urutan'    => 'required|integer|min:0',
             'logo_file' => 'nullable|file|mimetypes:image/png,image/jpeg,image/webp,image/svg+xml|max:2048',
-            'logo_url'  => 'nullable|url|max:500',
+            'logo_url'  => 'nullable|string|max:500',
         ]);
 
         if (!$request->hasFile('logo_file') && !$request->filled('logo_url')) {
@@ -37,7 +37,7 @@ class AdminPartnerController extends Controller
         if ($request->hasFile('logo_file')) {
             $logoPath = $request->file('logo_file')->store('partners', 'public');
         } elseif ($request->filled('logo_url')) {
-            $logoPath = trim($request->logo_url);
+            $logoPath = $this->normalizeLogoUrl($request->logo_url);
         }
 
         Partner::create([
@@ -65,7 +65,7 @@ class AdminPartnerController extends Controller
             'nama'      => 'required|string|max:150',
             'urutan'    => 'required|integer|min:0',
             'logo_file' => 'nullable|file|mimetypes:image/png,image/jpeg,image/webp,image/svg+xml|max:2048',
-            'logo_url'  => 'nullable|url|max:500',
+            'logo_url'  => 'nullable|string|max:500',
         ]);
 
         $logoPath = $partner->logo; // keep existing by default
@@ -81,7 +81,7 @@ class AdminPartnerController extends Controller
             if ($partner->logo && !str_starts_with($partner->logo, 'http')) {
                 Storage::disk('public')->delete($partner->logo);
             }
-            $logoPath = trim($request->logo_url);
+            $logoPath = $this->normalizeLogoUrl($request->logo_url);
         }
 
         $partner->update([
@@ -93,6 +93,30 @@ class AdminPartnerController extends Controller
 
         return redirect()->route('admin.partners.index')
             ->with('success', 'Partner berhasil diperbarui.');
+    }
+
+    /**
+     * Normalisasi URL logo agar selalu valid dan kompatibel.
+     */
+    protected function normalizeLogoUrl(?string $url): ?string
+    {
+        if (!$url) return null;
+        $url = trim($url);
+
+        // Jika link clearbit lama dimasukkan, otomatis dialihkan ke unavatar
+        if (str_contains($url, 'clearbit.com/')) {
+            $domain = ltrim(parse_url($url, PHP_URL_PATH), '/');
+            return 'https://unavatar.io/' . $domain;
+        }
+
+        // Jika user hanya memasukkan domain web (misal "indosatooredoo.com" tanpa http)
+        if (!str_starts_with($url, 'http://') && !str_starts_with($url, 'https://')) {
+            if (str_contains($url, '.') && !str_contains($url, ' ')) {
+                return 'https://unavatar.io/' . trim($url, '/');
+            }
+            $url = 'https://' . $url;
+        }
+
     }
 
     public function destroy($id)
