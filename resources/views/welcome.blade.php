@@ -2207,25 +2207,38 @@
         .section-divider-line {
             position: relative;
             width: 100%;
-            height: 1px;
-            background: linear-gradient(90deg, transparent 0%, rgba(0, 212, 255, 0.25) 20%, rgba(0, 212, 255, 0.65) 50%, rgba(124, 58, 237, 0.45) 80%, transparent 100%);
+            height: 1.5px;
+            background: linear-gradient(90deg, transparent 0%, rgba(0, 212, 255, 0.40) 18%, rgba(0, 212, 255, 0.95) 50%, rgba(124, 58, 237, 0.75) 82%, transparent 100%);
             margin: 0;
             overflow: visible;
             z-index: 15;
         }
+        .section-divider-line::before {
+            content: '';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 480px;
+            max-width: 90vw;
+            height: 26px;
+            background: radial-gradient(ellipse at center, rgba(0, 212, 255, 0.60) 0%, rgba(124, 58, 237, 0.35) 45%, transparent 75%);
+            filter: blur(8px);
+            pointer-events: none;
+        }
         .section-divider-line::after {
             content: '';
             position: absolute;
-            top: -1px;
+            top: -1.5px;
             left: 50%;
             transform: translateX(-50%);
-            width: 220px;
-            height: 3px;
-            background: radial-gradient(ellipse at center, rgba(0, 212, 255, 1) 0%, rgba(124, 58, 237, 0.75) 45%, transparent 80%);
-            filter: blur(1.5px);
+            width: 340px;
+            height: 4px;
+            background: radial-gradient(ellipse at center, #ffffff 0%, rgba(0, 212, 255, 1) 40%, rgba(124, 58, 237, 0.85) 70%, transparent 85%);
+            filter: blur(1.2px);
             border-radius: 50%;
             pointer-events: none;
-            box-shadow: 0 0 16px rgba(0, 212, 255, 0.9), 0 0 32px rgba(124, 58, 237, 0.5);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 1), 0 0 42px rgba(0, 212, 255, 0.85), 0 0 75px rgba(124, 58, 237, 0.6);
         }
 
         .section-top-aurora {
@@ -2233,12 +2246,12 @@
             top: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 900px;
+            width: 950px;
             max-width: 95vw;
-            height: 340px;
-            background: radial-gradient(ellipse 75% 100% at 50% 0%, rgba(0, 212, 255, 0.24) 0%, rgba(124, 58, 237, 0.15) 45%, transparent 75%);
+            height: 360px;
+            background: radial-gradient(ellipse 75% 100% at 50% 0%, rgba(0, 212, 255, 0.35) 0%, rgba(124, 58, 237, 0.22) 45%, transparent 75%);
             pointer-events: none;
-            filter: blur(40px);
+            filter: blur(45px);
             z-index: 0;
             animation: wawasan-aurora-breathe 8s ease-in-out infinite alternate;
         }
@@ -2581,8 +2594,8 @@
             align-items: center;
             gap: 10px;
             padding: 14px 34px;
-            background: rgba(0, 212, 255, 0.08);
-            border: 1px solid rgba(0, 212, 255, 0.35);
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.16) 0%, rgba(124, 58, 237, 0.20) 100%);
+            border: 1.5px solid rgba(0, 212, 255, 0.65);
             border-radius: 100px;
             color: #ffffff;
             font-family: 'Plus Jakarta Sans', sans-serif;
@@ -2590,21 +2603,23 @@
             font-weight: 700;
             text-decoration: none;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 20px rgba(0, 212, 255, 0.15);
+            box-shadow: 0 0 24px rgba(0, 212, 255, 0.30), 0 4px 20px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.30);
         }
         .btn-lihat-semua-artikel:hover {
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.22) 0%, rgba(124, 58, 237, 0.25) 100%);
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.30) 0%, rgba(124, 58, 237, 0.35) 100%);
             border-color: var(--cyan-neon);
-            color: var(--cyan-neon);
+            color: #ffffff;
             transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(0, 212, 255, 0.35);
+            box-shadow: 0 0 35px rgba(0, 212, 255, 0.65), 0 8px 30px rgba(124, 58, 237, 0.50), inset 0 1px 0 rgba(255, 255, 255, 0.50);
         }
         .btn-lihat-semua-artikel svg {
             transition: transform 0.3s ease;
             color: var(--cyan-neon);
+            filter: drop-shadow(0 0 6px var(--cyan-neon));
         }
         .btn-lihat-semua-artikel:hover svg {
             transform: translateX(5px);
+            filter: drop-shadow(0 0 10px var(--cyan-neon));
         }
         html[data-theme="light"] .btn-lihat-semua-artikel {
             background: #ffffff;
@@ -3047,12 +3062,12 @@
             top: -1px;
             left: 50%;
             transform: translateX(-50%);
-            width: 160px;
-            height: 3px;
-            background: radial-gradient(ellipse at center, #00d4ff 0%, #7c3aed 50%, transparent 80%);
+            width: 220px;
+            height: 3.5px;
+            background: radial-gradient(ellipse at center, #ffffff 0%, #00d4ff 40%, #7c3aed 70%, transparent 85%);
             filter: blur(1px);
             border-radius: 50%;
-            box-shadow: 0 0 12px #00d4ff;
+            box-shadow: 0 0 16px #00d4ff, 0 0 32px rgba(124, 58, 237, 0.6);
             z-index: 3;
             pointer-events: none;
         }
@@ -4450,6 +4465,7 @@
 <div class="section-divider-line"></div>
 
 <section id="konsultasi" class="konsultasi-section">
+    <div class="section-top-aurora"></div>
     <div class="konsultasi-bg-aurora"></div>
     <div class="konsultasi-grid-mesh"></div>
     <div class="konsultasi-ambient-glow-left"></div>
