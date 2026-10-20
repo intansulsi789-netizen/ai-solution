@@ -5364,7 +5364,7 @@
     // 4. Mitra & Partner dari database
     if (isset($partners) && count($partners) > 0) {
         foreach ($partners as $partner) {
-            $partnerName = $partner->nama_partner ?? '';
+            $partnerName = is_array($partner) ? ($partner['nama'] ?? $partner['nama_partner'] ?? '') : ($partner->nama ?? $partner->nama_partner ?? '');
             if (!empty($partnerName)) {
                 $searchData[] = [
                     'label'    => 'Partner: ' . $partnerName,
