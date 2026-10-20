@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Partner;
+use App\Services\SvgSanitizer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -25,9 +26,13 @@ class AdminPartnerController extends Controller
         $request->validate([
             'nama'                  => 'required|string|max:150',
             'urutan'                => 'required|integer|min:0',
-            'logo_file'             => 'nullable|file|mimetypes:image/png,image/jpeg,image/webp,image/svg+xml|max:5120',
+            'logo_file'             => 'nullable|file|mimes:png,jpeg,jpg,webp,svg|mimetypes:image/png,image/jpeg,image/webp,image/svg+xml|max:5120',
             'logo_url'              => 'nullable|string|max:500',
             'processed_logo_base64' => 'nullable|string',
+        ], [
+            'logo_file.mimes'     => 'Format file logo harus berupa PNG, JPG, JPEG, WEBP, atau SVG.',
+            'logo_file.mimetypes' => 'Format file logo tidak valid (harus gambar PNG, JPG, WEBP, atau SVG).',
+            'logo_file.max'       => 'Ukuran file logo maksimal adalah 5MB.',
         ]);
 
         if (!$request->filled('processed_logo_base64') && !$request->hasFile('logo_file') && !$request->filled('logo_url')) {
@@ -37,13 +42,31 @@ class AdminPartnerController extends Controller
         $logoPath = null;
         if ($request->filled('processed_logo_base64')) {
             $logoPath = $this->saveBase64TransparentLogo($request->processed_logo_base64);
+            if (!$logoPath) {
+                return back()->withInput()->withErrors(['processed_logo_base64' => 'Data gambar hasil olahan tidak valid atau gagal diproses.']);
+            }
         } elseif ($request->hasFile('logo_file')) {
-            $uploadedPath = $request->file('logo_file')->store('partners', 'public');
-            if ($request->boolean('auto_remove_bg', true)) {
-                $processed = $this->removeWhiteBackgroundGd(Storage::disk('public')->path($uploadedPath));
-                $logoPath = $processed ?: $uploadedPath;
+            $file = $request->file('logo_file');
+            if (SvgSanitizer::isSvg($file)) {
+                $sanitized = SvgSanitizer::validateAndSanitizeUploadedFile($file, 5120);
+                if (!$sanitized['valid']) {
+                    return back()->withInput()->withErrors(['logo_file' => $sanitized['error']]);
+                }
+                $filename = 'partners/' . uniqid('partner_svg_') . '.svg';
+                Storage::disk('public')->put($filename, $sanitized['sanitized_content']);
+                $logoPath = $filename;
             } else {
-                $logoPath = $uploadedPath;
+                $imageInfo = @getimagesize($file->getRealPath());
+                if (!$imageInfo || !in_array($imageInfo['mime'], ['image/png', 'image/jpeg', 'image/webp'], true)) {
+                    return back()->withInput()->withErrors(['logo_file' => 'File gambar yang diunggah tidak valid atau rusak.']);
+                }
+                $uploadedPath = $file->store('partners', 'public');
+                if ($request->boolean('auto_remove_bg', true)) {
+                    $processed = $this->removeWhiteBackgroundGd(Storage::disk('public')->path($uploadedPath));
+                    $logoPath = $processed ?: $uploadedPath;
+                } else {
+                    $logoPath = $uploadedPath;
+                }
             }
         } elseif ($request->filled('logo_url')) {
             $logoPath = $this->normalizeLogoUrl($request->logo_url);
@@ -73,34 +96,61 @@ class AdminPartnerController extends Controller
         $request->validate([
             'nama'                  => 'required|string|max:150',
             'urutan'                => 'required|integer|min:0',
-            'logo_file'             => 'nullable|file|mimetypes:image/png,image/jpeg,image/webp,image/svg+xml|max:5120',
+            'logo_file'             => 'nullable|file|mimes:png,jpeg,jpg,webp,svg|mimetypes:image/png,image/jpeg,image/webp,image/svg+xml|max:5120',
             'logo_url'              => 'nullable|string|max:500',
             'processed_logo_base64' => 'nullable|string',
+        ], [
+            'logo_file.mimes'     => 'Format file logo harus berupa PNG, JPG, JPEG, WEBP, atau SVG.',
+            'logo_file.mimetypes' => 'Format file logo tidak valid (harus gambar PNG, JPG, WEBP, atau SVG).',
+            'logo_file.max'       => 'Ukuran file logo maksimal adalah 5MB.',
         ]);
 
         $logoPath = $partner->logo; // keep existing by default
 
         if ($request->filled('processed_logo_base64')) {
+            $newLogo = $this->saveBase64TransparentLogo($request->processed_logo_base64);
+            if (!$newLogo) {
+                return back()->withInput()->withErrors(['processed_logo_base64' => 'Data gambar hasil olahan tidak valid atau gagal diproses.']);
+            }
             // Hapus file lama jika lokal
-            if ($partner->logo && !str_starts_with($partner->logo, 'http')) {
+            if ($partner->logo && !str_starts_with($partner->logo, 'http') && Storage::disk('public')->exists($partner->logo)) {
                 Storage::disk('public')->delete($partner->logo);
             }
-            $logoPath = $this->saveBase64TransparentLogo($request->processed_logo_base64);
+            $logoPath = $newLogo;
         } elseif ($request->hasFile('logo_file')) {
-            // delete old file if it's a stored path (not a URL)
-            if ($partner->logo && !str_starts_with($partner->logo, 'http')) {
-                Storage::disk('public')->delete($partner->logo);
-            }
-            $uploadedPath = $request->file('logo_file')->store('partners', 'public');
-            if ($request->boolean('auto_remove_bg', true)) {
-                $processed = $this->removeWhiteBackgroundGd(Storage::disk('public')->path($uploadedPath));
-                $logoPath = $processed ?: $uploadedPath;
+            $file = $request->file('logo_file');
+            if (SvgSanitizer::isSvg($file)) {
+                $sanitized = SvgSanitizer::validateAndSanitizeUploadedFile($file, 5120);
+                if (!$sanitized['valid']) {
+                    return back()->withInput()->withErrors(['logo_file' => $sanitized['error']]);
+                }
+                // Hapus file lama jika lokal
+                if ($partner->logo && !str_starts_with($partner->logo, 'http') && Storage::disk('public')->exists($partner->logo)) {
+                    Storage::disk('public')->delete($partner->logo);
+                }
+                $filename = 'partners/' . uniqid('partner_svg_') . '.svg';
+                Storage::disk('public')->put($filename, $sanitized['sanitized_content']);
+                $logoPath = $filename;
             } else {
-                $logoPath = $uploadedPath;
+                $imageInfo = @getimagesize($file->getRealPath());
+                if (!$imageInfo || !in_array($imageInfo['mime'], ['image/png', 'image/jpeg', 'image/webp'], true)) {
+                    return back()->withInput()->withErrors(['logo_file' => 'File gambar yang diunggah tidak valid atau rusak.']);
+                }
+                // delete old file if it's a stored path (not a URL)
+                if ($partner->logo && !str_starts_with($partner->logo, 'http') && Storage::disk('public')->exists($partner->logo)) {
+                    Storage::disk('public')->delete($partner->logo);
+                }
+                $uploadedPath = $file->store('partners', 'public');
+                if ($request->boolean('auto_remove_bg', true)) {
+                    $processed = $this->removeWhiteBackgroundGd(Storage::disk('public')->path($uploadedPath));
+                    $logoPath = $processed ?: $uploadedPath;
+                } else {
+                    $logoPath = $uploadedPath;
+                }
             }
         } elseif ($request->filled('logo_url')) {
             // delete old file if replacing local file with URL
-            if ($partner->logo && !str_starts_with($partner->logo, 'http')) {
+            if ($partner->logo && !str_starts_with($partner->logo, 'http') && Storage::disk('public')->exists($partner->logo)) {
                 Storage::disk('public')->delete($partner->logo);
             }
             $logoPath = $this->normalizeLogoUrl($request->logo_url);
@@ -122,13 +172,24 @@ class AdminPartnerController extends Controller
      */
     protected function saveBase64TransparentLogo(string $base64Data): ?string
     {
-        if (!preg_match('/^data:image\/(\w+);base64,/', $base64Data)) {
+        if (!preg_match('/^data:image\/png;base64,/', $base64Data)) {
             return null;
         }
 
         $data = substr($base64Data, strpos($base64Data, ',') + 1);
-        $decoded = base64_decode($data);
+        $decoded = base64_decode($data, true);
         if ($decoded === false) {
+            return null;
+        }
+
+        // Batas ukuran maksimal 5MB
+        if (strlen($decoded) > (5 * 1024 * 1024)) {
+            return null;
+        }
+
+        // Verifikasi bahwa data benar-benar gambar PNG yang valid
+        $imageInfo = @getimagesizefromstring($decoded);
+        if (!$imageInfo || ($imageInfo['mime'] ?? '') !== 'image/png') {
             return null;
         }
 

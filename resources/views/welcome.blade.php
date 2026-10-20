@@ -683,6 +683,16 @@
             color: #0f172a;
         }
 
+        html[data-theme="light"] .modal-form-errors {
+            background: #fef2f2;
+            border-color: #fecaca;
+            color: #991b1b;
+        }
+
+        html[data-theme="light"] .modal-form-errors-title {
+            color: #dc2626;
+        }
+
         html[data-theme="light"] .modal-form .form-control-c:focus {
             border-color: #0284c7;
             box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
@@ -3324,6 +3334,24 @@
             line-height: 1.5;
             margin: 0;
         }
+        .modal-form-errors {
+            background: rgba(239, 68, 68, 0.12);
+            border: 1px solid rgba(239, 68, 68, 0.35);
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-bottom: 18px;
+            color: #fca5a5;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+        .modal-form-errors-title {
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+            color: #f87171;
+        }
         .modal-form .form-group-c { margin-bottom: 16px; }
         .modal-form .form-label-c { display: block; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.8); margin-bottom: 7px; }
         .modal-form .form-control-c {
@@ -4604,6 +4632,20 @@
                 <p class="modal-subtitle">Isi form berikut dan tim kami akan menghubungi Anda segera.</p>
             </div>
 
+            @if($errors->any())
+            <div class="modal-form-errors">
+                <div class="modal-form-errors-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                    <span>Perhatian:</span>
+                </div>
+                <ul style="margin: 0; padding-left: 20px;">
+                    @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
+
             <form action="{{ route('konsultasi.store') }}" method="POST" class="modal-form" id="form-konsultasi-modal">
                 @csrf
                 <div class="form-group-c">
@@ -5684,8 +5726,8 @@
         }
     });
 
-    // Auto-open modal if session success (form just submitted)
-    @if(session('success'))
+    // Auto-open modal if session success or validation errors (form just submitted)
+    @if(session('success') || $errors->any())
     window.addEventListener('DOMContentLoaded', function() {
         openKonsultasiModal();
     });

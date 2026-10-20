@@ -183,19 +183,47 @@ Route::get('/wawasan/{slug}', function ($slug) use ($getArticles) {
 // FRONTEND ROUTES (POST)
 // ============================================================
 Route::post('/konsultasi', function (\Illuminate\Http\Request $request) {
-    $request->validate([
-        'nama' => 'required|string|max:255',
-        'email' => 'required|email|max:255',
-        'whatsapp' => 'nullable|string|max:20',
-        'kebutuhan' => 'required|string'
+    // Rate Limiting: Maksimal 5 pengiriman per menit per IP untuk mencegah spam
+    $throttleKey = 'konsultasi:' . ($request->ip() ?: 'unknown');
+
+    try {
+        $limiter = new \Illuminate\Cache\RateLimiter(\Illuminate\Support\Facades\Cache::store('file'));
+    } catch (\Throwable $e) {
+        $limiter = app(\Illuminate\Cache\RateLimiter::class);
+    }
+
+    if ($limiter->tooManyAttempts($throttleKey, 5)) {
+        $seconds = $limiter->availableIn($throttleKey);
+        return redirect('/#konsultasi')
+            ->withInput()
+            ->withErrors(['rate_limit' => "Terlalu banyak permintaan konsultasi. Mohon tunggu {$seconds} detik sebelum mengirim kembali."]);
+    }
+
+    $limiter->hit($throttleKey, 60);
+
+    $validated = $request->validate([
+        'nama'      => 'required|string|max:255',
+        'email'     => 'required|email|max:255',
+        'whatsapp'  => 'nullable|string|max:20',
+        'kebutuhan' => 'required|string|max:3000'
+    ], [
+        'nama.required'      => 'Nama lengkap wajib diisi.',
+        'nama.string'        => 'Nama lengkap harus berupa teks yang valid.',
+        'nama.max'           => 'Nama lengkap maksimal 255 karakter.',
+        'email.required'     => 'Alamat email wajib diisi.',
+        'email.email'        => 'Format alamat email tidak valid.',
+        'email.max'          => 'Alamat email maksimal 255 karakter.',
+        'whatsapp.max'       => 'Nomor WhatsApp maksimal 20 digit.',
+        'kebutuhan.required' => 'Kebutuhan AI Anda wajib diisi.',
+        'kebutuhan.max'      => 'Deskripsi kebutuhan maksimal 3000 karakter.',
     ]);
 
     \App\Models\Consultation::create([
-        'nama' => $request->nama,
-        'email' => $request->email,
-        'whatsapp' => $request->whatsapp,
-        'kebutuhan' => $request->kebutuhan,
-        'is_read' => false
+        'nama'      => strip_tags(trim($validated['nama'])),
+        'email'     => strtolower(trim($validated['email'])),
+        'whatsapp'  => !empty($validated['whatsapp']) ? trim($validated['whatsapp']) : null,
+        'kebutuhan' => strip_tags(trim($validated['kebutuhan'])),
+        'is_read'   => false
     ]);
 
     return redirect('/#konsultasi')->with('success', 'Pesan konsultasi Anda berhasil dikirim. Kami akan segera menghubungi Anda.');
