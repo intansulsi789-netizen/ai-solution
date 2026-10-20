@@ -477,11 +477,8 @@
 
     .cal-day-cell.today.cal-has-published {
         border-color: #10b981;
+        background: rgba(16, 185, 129, 0.16);
         box-shadow: 0 0 16px rgba(16, 185, 129, 0.35);
-    }
-    .cal-day-cell.today.cal-has-scheduled {
-        border-color: #00d4ff;
-        box-shadow: 0 0 16px rgba(0, 212, 255, 0.35);
     }
 
     /* Light mode untuk sel berwarna */
@@ -1206,20 +1203,16 @@
         <div class="cal-legend-bar">
             <div class="cal-legend-items">
                 <div class="cal-legend-item">
-                    <span class="cal-legend-dot dot-scheduled"></span>
-                    <span><strong>Scheduled</strong> (Terjadwal)</span>
-                </div>
-                <div class="cal-legend-item">
                     <span class="cal-legend-dot dot-published"></span>
-                    <span><strong>Published</strong> (Terbit)</span>
+                    <span><strong>Hijau (Terisi)</strong>: Sudah Diisi Artikel</span>
                 </div>
                 <div class="cal-legend-item">
-                    <span class="cal-legend-dot dot-draft"></span>
-                    <span><strong>Draft</strong> (Konsep)</span>
+                    <span class="cal-legend-dot" style="background: rgba(255,255,255,0.25); border: 1px dashed rgba(255,255,255,0.5);"></span>
+                    <span><strong>Kosong</strong>: Belum Diisi Artikel</span>
                 </div>
             </div>
             <div class="cal-hint">
-                💡 Klik tanggal untuk melihat daftar artikel, atau klik tanggal kosong untuk menjadwalkan artikel otomatis.
+                💡 Tanggal berwarna hijau menandakan artikel sudah diisi. Klik tanggal untuk melihat daftar, atau klik tanggal kosong untuk menjadwalkan artikel.
             </div>
         </div>
 
@@ -1445,43 +1438,28 @@
                 }
             });
 
-            // Beri warna latar belakang & border pada sel tanggal sesuai status artikel
-            if (statusCounts.scheduled > 0 && statusCounts.published > 0) {
-                cell.classList.add('cal-has-mixed');
-            } else if (statusCounts.scheduled > 0) {
-                cell.classList.add('cal-has-scheduled');
-            } else if (statusCounts.published > 0) {
-                cell.classList.add('cal-has-published');
-            } else if (statusCounts.draft > 0) {
-                cell.classList.add('cal-has-draft');
-            } else {
-                cell.classList.add('cal-has-published');
-            }
+            // Selalu beri warna hijau pada sel tanggal yang sudah diisi artikel
+            cell.classList.add('cal-has-published');
 
-            // Tampilkan indikator status dan jumlah artikel tanpa teks judul artikel yang membingungkan
+            // Tampilkan indikator status hijau menandakan tanggal sudah diisi artikel
             const indicatorWrap = document.createElement('div');
             indicatorWrap.className = 'cal-colored-indicator-wrap';
 
-            if (statusCounts.published > 0) {
-                const pill = document.createElement('div');
-                pill.className = 'cal-status-pill pill-published';
-                pill.innerHTML = `<span class="dot dot-published"></span> <span>${statusCounts.published} Terbit</span>`;
-                indicatorWrap.appendChild(pill);
+            let labelText = '';
+            if (statusCounts.published > 0 && statusCounts.scheduled === 0 && statusCounts.draft === 0) {
+                labelText = `${statusCounts.published} Terbit`;
+            } else if (statusCounts.scheduled > 0 && statusCounts.published === 0 && statusCounts.draft === 0) {
+                labelText = `${statusCounts.scheduled} Terjadwal`;
+            } else if (statusCounts.draft > 0 && statusCounts.published === 0 && statusCounts.scheduled === 0) {
+                labelText = `${statusCounts.draft} Draft`;
+            } else {
+                labelText = `${articles.length} Terisi`;
             }
 
-            if (statusCounts.scheduled > 0) {
-                const pill = document.createElement('div');
-                pill.className = 'cal-status-pill pill-scheduled';
-                pill.innerHTML = `<span class="dot dot-scheduled"></span> <span>${statusCounts.scheduled} Terjadwal</span>`;
-                indicatorWrap.appendChild(pill);
-            }
-
-            if (statusCounts.draft > 0) {
-                const pill = document.createElement('div');
-                pill.className = 'cal-status-pill pill-draft';
-                pill.innerHTML = `<span class="dot dot-draft"></span> <span>${statusCounts.draft} Draft</span>`;
-                indicatorWrap.appendChild(pill);
-            }
+            const pill = document.createElement('div');
+            pill.className = 'cal-status-pill pill-published';
+            pill.innerHTML = `<span class="dot dot-published"></span> <span>${labelText}</span>`;
+            indicatorWrap.appendChild(pill);
 
             const clickHint = document.createElement('div');
             clickHint.className = 'cal-click-detail-hint';
