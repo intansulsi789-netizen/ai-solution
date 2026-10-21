@@ -527,28 +527,28 @@
         }
 
         html[data-theme="light"] .logo-item {
-            background: #ffffff;
-            border: 1px solid rgba(15, 23, 42, 0.08);
-            border-radius: 14px;
-            padding: 10px 22px;
-            box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03);
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            padding: 8px 16px;
             transition: all 0.3s ease;
         }
 
         html[data-theme="light"] .logo-item:hover {
-            border-color: rgba(2, 132, 199, 0.30);
-            box-shadow: 0 6px 20px rgba(2, 132, 199, 0.10);
-            transform: translateY(-2px);
+            border: none;
+            box-shadow: none;
+            transform: translateY(-2px) scale(1.05);
         }
 
         html[data-theme="light"] .logo-item img {
             opacity: 0.95;
-            filter: none;
+            filter: drop-shadow(0 2px 6px rgba(0,0,0,0.08));
         }
 
         html[data-theme="light"] .logo-item:hover img {
             opacity: 1;
-            transform: scale(1.04);
+            transform: scale(1.05);
+            filter: drop-shadow(0 4px 12px rgba(2, 132, 199, 0.25));
         }
 
         /* Article Cards (Homepage) */
@@ -2681,40 +2681,38 @@
         }
 
         .logo-item {
-            padding: 12px 28px;
+            padding: 6px 16px;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
-            background: rgba(255, 255, 255, 0.96);
-            border: 1px solid rgba(255, 255, 255, 0.85);
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25), 0 0 20px rgba(0, 212, 255, 0.15);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            min-height: 64px;
-            min-width: 130px;
+            background: transparent;
+            border: none;
+            border-radius: 0;
+            box-shadow: none;
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
             transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .logo-item:hover {
-            transform: translateY(-4px) scale(1.04);
-            background: #ffffff;
-            border-color: rgba(0, 212, 255, 0.9);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), 0 0 25px rgba(0, 212, 255, 0.4);
+            transform: translateY(-2px) scale(1.08);
+            background: transparent;
+            border: none;
+            box-shadow: none;
         }
         .logo-item img {
-            height: 42px;
+            height: 46px;
             width: auto;
-            max-width: 140px;
+            max-width: 160px;
             object-fit: contain;
             opacity: 1;
-            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.06));
+            filter: drop-shadow(0 0 1.2px rgba(255, 255, 255, 0.85)) drop-shadow(0 3px 8px rgba(0, 0, 0, 0.45));
             transition: all 0.35s ease;
         }
         .logo-item:hover img {
             opacity: 1;
-            filter: drop-shadow(0 2px 6px rgba(0,0,0,0.12));
-            transform: scale(1.04);
+            filter: drop-shadow(0 0 2.5px #ffffff) drop-shadow(0 0 14px rgba(0, 212, 255, 0.5));
+            transform: scale(1.05);
         }
 
         @media (max-width: 900px) {
@@ -2744,17 +2742,17 @@
                 content: none !important;
             }
             .logo-marquee-wrapper::before, .logo-marquee-wrapper::after { width: 8%; }
-            .logo-item { padding: 10px 20px; min-height: 52px; min-width: 100px; border-radius: 12px; }
-            .logo-item img { height: 34px; max-width: 110px; }
+            .logo-item { padding: 4px 10px; }
+            .logo-item img { height: 36px; max-width: 125px; }
             .logo-marquee-track { gap: 32px; }
-            .logo-marquee-track.reverse { margin-top: 20px; }
+            .logo-marquee-track.reverse { margin-top: 18px; }
         }
         @media (max-width: 640px) {
-            .logo-marquee-wrapper { padding: 14px 0; }
-            .logo-item { padding: 8px 16px; min-height: 46px; min-width: 85px; border-radius: 10px; }
-            .logo-item img { height: 28px; max-width: 90px; }
+            .logo-marquee-wrapper { padding: 12px 0; }
+            .logo-item { padding: 2px 6px; }
+            .logo-item img { height: 30px; max-width: 100px; }
             .logo-marquee-track { gap: 20px; }
-            .logo-marquee-track.reverse { margin-top: 16px; }
+            .logo-marquee-track.reverse { margin-top: 14px; }
         }
 
 
