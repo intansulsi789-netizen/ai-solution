@@ -174,7 +174,14 @@ Route::get('/wawasan/{slug}', function ($slug) use ($getArticles) {
     if (!$articleData) {
         abort(404);
     }
-    $otherArticles = collect($articles)->where('slug', '!=', $slug)->values()->all();
+    $currCat = $articleData['category'] ?? '';
+    $otherArticles = collect($articles)
+        ->where('slug', '!=', $slug)
+        ->sortByDesc(function ($item) use ($currCat) {
+            return ($item['category'] ?? '') === $currCat ? 1 : 0;
+        })
+        ->values()
+        ->all();
     return view('article-detail', ['article' => $articleData, 'allArticles' => $otherArticles]);
 })->name('article.detail');
 

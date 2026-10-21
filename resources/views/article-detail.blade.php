@@ -808,6 +808,36 @@
             font-size: 12px;
             color: var(--text-dim);
         }
+        .btn-more-articles {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 28px;
+            background: rgba(0, 212, 255, 0.08);
+            border: 1px solid rgba(0, 212, 255, 0.25);
+            border-radius: 100px;
+            color: var(--cyan-neon);
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+        .btn-more-articles:hover {
+            background: rgba(0, 212, 255, 0.18);
+            border-color: var(--cyan-neon);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0, 212, 255, 0.25);
+        }
+        html[data-theme="light"] .btn-more-articles {
+            background: rgba(2, 132, 199, 0.08);
+            border-color: rgba(2, 132, 199, 0.25);
+            color: #0284c7;
+        }
+        html[data-theme="light"] .btn-more-articles:hover {
+            background: rgba(2, 132, 199, 0.15);
+            border-color: #0284c7;
+            box-shadow: 0 4px 16px rgba(2, 132, 199, 0.15);
+        }
 
         /* ===== BOTTOM CTA ===== */
         .bottom-cta {
@@ -1085,7 +1115,7 @@
                 <div class="sidebar-title">Artikel Terkait</div>
                 @foreach(array_slice($allArticles, 0, 2) as $related)
                 <a href="{{ route('article.detail', ['slug' => $related['slug']]) }}" class="sidebar-related-item">
-                    <img src="{{ $related['image'] }}" alt="{{ $related['title'] }}" class="sidebar-related-img">
+                    <img src="{{ $related['image'] }}" alt="{{ $related['title'] }}" class="sidebar-related-img" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80';">
                     <div class="sidebar-related-info">
                         <div class="sidebar-related-title">{{ $related['title'] }}</div>
                         <div class="sidebar-related-cat">{{ $related['category'] }}</div>
@@ -1104,12 +1134,16 @@
     </div>
 
     <!-- Related Articles Bottom Section -->
+    @php
+        $relatedArticles = array_slice($allArticles, 0, 3);
+    @endphp
+    @if(count($relatedArticles) > 0)
     <section class="related-section">
         <h2 class="related-section-title">Artikel Terkait</h2>
         <div class="related-grid">
-            @foreach($allArticles as $related)
+            @foreach($relatedArticles as $related)
             <a href="{{ route('article.detail', ['slug' => $related['slug']]) }}" class="related-card">
-                <img src="{{ $related['image'] }}" alt="{{ $related['title'] }}" class="related-card-img">
+                <img src="{{ $related['image'] }}" alt="{{ $related['title'] }}" class="related-card-img" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80';">
                 <div class="related-card-body">
                     <div class="related-card-cat">{{ $related['category'] }}</div>
                     <div class="related-card-title">{{ $related['title'] }}</div>
@@ -1118,7 +1152,16 @@
             </a>
             @endforeach
         </div>
+        @if(count($allArticles) > 3)
+        <div style="text-align: center; margin-top: 36px;">
+            <a href="{{ route('articles.index') }}" class="btn-more-articles">
+                Lihat Semua Artikel
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+        </div>
+        @endif
     </section>
+    @endif
 
     <!-- Bottom CTA -->
     <div class="bottom-cta">
