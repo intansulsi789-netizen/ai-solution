@@ -56,6 +56,12 @@
         font-size: 12px; font-weight: 700; color: var(--cyan); text-transform: uppercase; letter-spacing: 1px;
         margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between;
     }
+    .preview-sublabel {
+        font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;
+    }
+    .preview-info-box {
+        font-size: 11.5px; color: var(--muted); margin-top: 14px; line-height: 1.5;
+    }
     .sim-navbar {
         background: rgba(5, 12, 40, 0.95); border: 1px solid rgba(0,212,255,0.2); border-radius: 12px;
         padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;
@@ -75,13 +81,127 @@
     }
     .sim-logo-icon img { width: 100%; height: 100%; object-fit: contain; padding: 4px; }
     .sim-logo-icon svg { width: 22px; height: 22px; }
-    .sim-logo-text { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 18px; font-weight: 800; color: #fff; }
-    .sim-logo-text span { color: var(--cyan); }
+    .sim-logo-text {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-size: 18px;
+        font-weight: 800;
+        display: inline-flex;
+        align-items: center;
+    }
+    .sim-logo-highlight {
+        color: #00d4ff !important;
+        text-shadow: 0 0 12px rgba(0, 212, 255, 0.35);
+    }
+    .sim-logo-rest {
+        color: #ffffff !important;
+        margin-left: 4px;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    }
+    .sim-menu-badge {
+        font-size: 12px;
+        padding: 4px 12px;
+        border-radius: 100px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        color: rgba(255, 255, 255, 0.85);
+    }
 
     .btn-submit { background:linear-gradient(135deg,var(--cyan),var(--purple));color:#fff;padding:13px 32px;border-radius:10px;border:none;font-weight:700;font-size:14px;cursor:pointer;transition:opacity 0.2s, transform 0.2s; }
     .btn-submit:hover { opacity:0.95; transform:translateY(-1px); }
     .error-box { background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);color:#fca5a5;padding:16px;border-radius:10px;margin-bottom:24px;font-size:14px; }
     .success-box { background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);color:#86efac;padding:16px;border-radius:10px;margin-bottom:24px;font-size:14px; }
+
+    /* =========================================================
+       ADMIN LIGHT MODE STYLING & HIGH-CONTRAST PREVIEW
+       ========================================================= */
+    html[data-theme="light"] .mode-card {
+        background: #f8fafc !important;
+        border: 2px solid rgba(15, 23, 42, 0.12) !important;
+    }
+    html[data-theme="light"] .mode-card:hover {
+        background: rgba(2, 132, 199, 0.04) !important;
+        border-color: rgba(2, 132, 199, 0.4) !important;
+    }
+    html[data-theme="light"] .mode-card.active {
+        background: rgba(2, 132, 199, 0.08) !important;
+        border-color: #0284c7 !important;
+        box-shadow: 0 0 0 1px #0284c7 !important;
+    }
+    html[data-theme="light"] .mode-card-title {
+        color: #0f172a !important;
+    }
+    html[data-theme="light"] .mode-card-desc {
+        color: #64748b !important;
+    }
+    html[data-theme="light"] #customLogoSection {
+        background: #f8fafc !important;
+        border: 1px solid rgba(15, 23, 42, 0.12) !important;
+    }
+    html[data-theme="light"] .upload-zone {
+        background: #ffffff !important;
+        border: 2px dashed rgba(2, 132, 199, 0.35) !important;
+    }
+    html[data-theme="light"] .upload-zone:hover {
+        background: rgba(2, 132, 199, 0.04) !important;
+        border-color: #0284c7 !important;
+    }
+    html[data-theme="light"] .upload-zone p {
+        color: #475569 !important;
+    }
+    html[data-theme="light"] .tab-row {
+        background: #e2e8f0 !important;
+        border: 1px solid rgba(15, 23, 42, 0.12) !important;
+    }
+    html[data-theme="light"] .tab-btn {
+        color: #64748b !important;
+    }
+    html[data-theme="light"] .tab-btn.active {
+        background: #ffffff !important;
+        color: #0284c7 !important;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08) !important;
+    }
+    html[data-theme="light"] .preview-stage {
+        background: #f8fafc !important;
+        border: 1px solid rgba(15, 23, 42, 0.12) !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04) !important;
+    }
+    html[data-theme="light"] .preview-stage-title {
+        color: #0284c7 !important;
+    }
+    html[data-theme="light"] .preview-sublabel {
+        color: #334155 !important;
+    }
+    html[data-theme="light"] .preview-info-box {
+        color: #475569 !important;
+    }
+
+    /* Proteksi Mutlak: Teks Logo dan Tombol Menu di Navbar & Footer Tetap Putih Cerah & Kontras */
+    html[data-theme="light"] .sim-logo-rest,
+    html[data-theme="light"] #simRestText,
+    html[data-theme="light"] #simFootRest,
+    html[data-theme="light"] .form-wrap .sim-navbar .sim-logo-rest,
+    html[data-theme="light"] .form-wrap .sim-footer .sim-logo-rest,
+    html[data-theme="light"] .form-wrap .sim-navbar #simRestText,
+    html[data-theme="light"] .form-wrap .sim-footer #simFootRest {
+        color: #ffffff !important;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6) !important;
+    }
+    html[data-theme="light"] .sim-logo-highlight,
+    html[data-theme="light"] #simHighlightText,
+    html[data-theme="light"] #simFootHighlight,
+    html[data-theme="light"] .form-wrap .sim-navbar .sim-logo-highlight,
+    html[data-theme="light"] .form-wrap .sim-footer .sim-logo-highlight,
+    html[data-theme="light"] .form-wrap .sim-navbar #simHighlightText,
+    html[data-theme="light"] .form-wrap .sim-footer #simFootHighlight {
+        color: #00d4ff !important;
+        text-shadow: 0 0 12px rgba(0, 212, 255, 0.45) !important;
+    }
+    html[data-theme="light"] .sim-menu-badge,
+    html[data-theme="light"] .form-wrap .sim-navbar .sim-menu-badge {
+        background: rgba(255, 255, 255, 0.12) !important;
+        border-color: rgba(255, 255, 255, 0.35) !important;
+        color: #ffffff !important;
+    }
 
     @media (max-width: 900px) {
         .form-grid { grid-template-columns: 1fr; }
@@ -204,7 +324,7 @@
                     </div>
 
                     {{-- Simulation in Navbar --}}
-                    <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">
+                    <div class="preview-sublabel">
                         1. Tampilan di Navbar (Header Utama)
                     </div>
                     <div class="sim-navbar">
@@ -228,15 +348,15 @@
                                 @endif
                             </div>
                             <span class="sim-logo-text">
-                                <span id="simHighlightText">{{ $cms->site_name_highlight ?? 'AI' }}</span>
-                                <span id="simRestText" style="color:#fff;margin-left:4px;">{{ $cms->site_name_rest ?? 'Jogja Solutions' }}</span>
+                                <span id="simHighlightText" class="sim-logo-highlight">{{ $cms->site_name_highlight ?? 'AI' }}</span>
+                                <span id="simRestText" class="sim-logo-rest">{{ $cms->site_name_rest ?? 'Jogja Solutions' }}</span>
                             </span>
                         </div>
-                        <span style="font-size:12px;color:rgba(255,255,255,0.4);border:1px solid rgba(255,255,255,0.1);padding:4px 10px;border-radius:100px;">Menu</span>
+                        <span class="sim-menu-badge">Menu</span>
                     </div>
 
                     {{-- Simulation in Footer --}}
-                    <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;margin-top:16px;">
+                    <div class="preview-sublabel" style="margin-top:16px;">
                         2. Tampilan di Footer (Bagian Bawah)
                     </div>
                     <div class="sim-footer">
@@ -260,13 +380,13 @@
                                 @endif
                             </div>
                             <span class="sim-logo-text">
-                                <span id="simFootHighlight">{{ $cms->site_name_highlight ?? 'AI' }}</span>
-                                <span id="simFootRest" style="color:#fff;margin-left:4px;">{{ $cms->site_name_rest ?? 'Jogja Solutions' }}</span>
+                                <span id="simFootHighlight" class="sim-logo-highlight">{{ $cms->site_name_highlight ?? 'AI' }}</span>
+                                <span id="simFootRest" class="sim-logo-rest">{{ $cms->site_name_rest ?? 'Jogja Solutions' }}</span>
                             </span>
                         </div>
                     </div>
 
-                    <div style="font-size:11px;color:var(--muted);margin-top:12px;line-height:1.5;">
+                    <div class="preview-info-box">
                         ℹ️ Logo dan nama ini akan otomatis diperbarui di seluruh halaman website, artikel, layanan, serta footer.
                     </div>
                 </div>
