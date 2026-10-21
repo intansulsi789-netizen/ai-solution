@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Article;
+use App\Services\ArticleImageService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -141,6 +142,24 @@ class AdminArticleController extends Controller
         })->values();
     }
 
+    /**
+     * AJAX endpoint: Resolusi dan validasi URL banner gambar (Google Images, Pinterest, atau link langsung).
+     */
+    public function resolveBannerUrl(Request $request)
+    {
+        $request->validate([
+            'url' => 'required|string|max:2048',
+        ], [
+            'url.required' => 'URL gambar wajib diisi.',
+            'url.max'      => 'Panjang URL melebihi batas 2048 karakter.',
+        ]);
+
+        $result = ArticleImageService::resolveUrl($request->url);
+        $statusCode = ($result['success'] ?? false) ? 200 : 422;
+
+        return response()->json($result, $statusCode);
+    }
+
     public function create()
     {
         return view('admin.articles.create');
@@ -193,7 +212,29 @@ class AdminArticleController extends Controller
         // Penanganan Gambar (Upload vs URL)
         $imageType = $request->input('image_type', 'upload');
         if ($imageType === 'url' && $request->filled('gambar_url')) {
-            $data['gambar'] = trim($request->input('gambar_url'));
+            $inputUrl = trim($request->input('gambar_url'));
+            $resolved = ArticleImageService::resolveUrl($inputUrl);
+
+            if (!$resolved['success'] || empty($resolved['image_url'])) {
+                return back()->withInput()->withErrors([
+                    'gambar_url' => $resolved['message'] ?? 'URL gambar tidak valid atau tidak dapat diakses.'
+                ]);
+            }
+
+            $finalImageUrl = $resolved['image_url'];
+
+            // Jika admin memilih untuk menyimpan salinan ke server lokal (via centang checkbox)
+            if ($request->boolean('simpan_ke_server', false)) {
+                $downloadResult = ArticleImageService::downloadAndStore($finalImageUrl);
+                if (!$downloadResult['success']) {
+                    return back()->withInput()->withErrors([
+                        'gambar_url' => 'Gagal mengunduh gambar ke server lokal: ' . ($downloadResult['error'] ?? 'Gambar tidak dapat diakses atau bukan format gambar valid.')
+                    ]);
+                }
+                $data['gambar'] = $downloadResult['path'];
+            } else {
+                $data['gambar'] = $finalImageUrl;
+            }
         } elseif ($request->hasFile('gambar')) {
             $data['gambar'] = $request->file('gambar')->store('articles', 'public');
         } else {
@@ -285,14 +326,39 @@ class AdminArticleController extends Controller
         // Penanganan Gambar (Pertahankan gambar lama jika tidak diganti)
         $imageType = $request->input('image_type');
         if ($imageType === 'url' && $request->filled('gambar_url')) {
-            // Hapus file fisik lokal lama jika sebelumnya bukan URL
-            if ($article->gambar && !str_starts_with($article->gambar, 'http')) {
-                Storage::disk('public')->delete($article->gambar);
+            $inputUrl = trim($request->input('gambar_url'));
+            $resolved = ArticleImageService::resolveUrl($inputUrl);
+
+            if (!$resolved['success'] || empty($resolved['image_url'])) {
+                return back()->withInput()->withErrors([
+                    'gambar_url' => $resolved['message'] ?? 'URL gambar tidak valid atau tidak dapat diakses.'
+                ]);
             }
-            $data['gambar'] = trim($request->input('gambar_url'));
+
+            $finalImageUrl = $resolved['image_url'];
+
+            // Jika memilih menyimpan ke server lokal (via centang checkbox)
+            if ($request->boolean('simpan_ke_server', false)) {
+                $downloadResult = ArticleImageService::downloadAndStore($finalImageUrl);
+                if (!$downloadResult['success']) {
+                    return back()->withInput()->withErrors([
+                        'gambar_url' => 'Gagal mengunduh gambar ke server lokal: ' . ($downloadResult['error'] ?? 'Gambar tidak dapat diakses atau bukan format gambar valid.')
+                    ]);
+                }
+
+                if ($article->gambar && !str_starts_with($article->gambar, 'http') && Storage::disk('public')->exists($article->gambar)) {
+                    Storage::disk('public')->delete($article->gambar);
+                }
+                $data['gambar'] = $downloadResult['path'];
+            } else {
+                if ($article->gambar && !str_starts_with($article->gambar, 'http') && Storage::disk('public')->exists($article->gambar)) {
+                    Storage::disk('public')->delete($article->gambar);
+                }
+                $data['gambar'] = $finalImageUrl;
+            }
         } elseif ($request->hasFile('gambar')) {
             // Hapus file fisik lokal lama
-            if ($article->gambar && !str_starts_with($article->gambar, 'http')) {
+            if ($article->gambar && !str_starts_with($article->gambar, 'http') && Storage::disk('public')->exists($article->gambar)) {
                 Storage::disk('public')->delete($article->gambar);
             }
             $data['gambar'] = $request->file('gambar')->store('articles', 'public');

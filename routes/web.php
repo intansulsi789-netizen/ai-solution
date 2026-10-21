@@ -266,6 +266,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
 
         Route::get('articles/calendar', [\App\Http\Controllers\Admin\AdminArticleController::class, 'calendar'])->name('articles.calendar');
+        Route::post('articles/resolve-banner-url', [\App\Http\Controllers\Admin\AdminArticleController::class, 'resolveBannerUrl'])->name('articles.resolveBannerUrl');
         Route::resource('articles', \App\Http\Controllers\Admin\AdminArticleController::class);
 
         Route::get('consultations', [\App\Http\Controllers\Admin\AdminConsultationController::class, 'index'])->name('consultations.index');

@@ -140,7 +140,7 @@
                         <button type="button" class="tab-pill {{ $defaultTab === 'current' ? 'active' : '' }}" id="tab-current">🖼️ Pertahankan Gambar Saat Ini</button>
                     @endif
                     <button type="button" class="tab-pill {{ $defaultTab === 'upload' ? 'active' : '' }}" id="tab-upload">📁 Upload dari Komputer</button>
-                    <button type="button" class="tab-pill {{ $defaultTab === 'url' ? 'active' : '' }}" id="tab-url">🌐 URL Gambar Eksternal</button>
+                    <button type="button" class="tab-pill {{ $defaultTab === 'url' ? 'active' : '' }}" id="tab-url">🌐 Tempel Link Gambar / URL</button>
                 </div>
                 <input type="hidden" name="image_type" id="image_type" value="{{ $defaultTab }}">
 
@@ -159,19 +159,39 @@
 
                 <!-- URL Input -->
                 <div id="section-url" style="{{ $defaultTab === 'url' ? '' : 'display:none;' }}">
-                    <input type="url" name="gambar_url" id="gambar_url" class="form-control" value="{{ old('gambar_url', $isCurrentUrl ? $article->gambar : '') }}" placeholder="https://images.unsplash.com/... atau URL gambar lainnya">
-                    <small style="color: var(--muted); font-size: 12px; margin-top: 5px; display: block;">Masukkan tautan gambar langsung. Memasukkan URL baru akan menggantikan gambar lama.</small>
+                    <div style="display: flex; gap: 8px;">
+                        <input type="url" name="gambar_url" id="gambar_url" class="form-control" value="{{ old('gambar_url', $isCurrentUrl ? $article->gambar : '') }}" placeholder="https://... (Link gambar langsung, Google Images, atau Pinterest)" style="flex: 1;">
+                        <button type="button" id="btn-resolve-url" style="background: rgba(0, 212, 255, 0.15); border: 1px solid rgba(0, 212, 255, 0.35); color: var(--cyan); padding: 0 16px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; display: inline-flex; align-items: center; gap: 6px;">
+                            <span id="btn-resolve-spinner" style="display: none;">⏳</span>
+                            <span id="btn-resolve-text">Periksa Link</span>
+                        </button>
+                    </div>
+                    <small style="color: var(--muted); font-size: 12px; margin-top: 5px; display: block;">
+                        Mendukung tautan gambar langsung (.jpg, .png, .webp, Unsplash), tautan Google Images (otomatis ekstrak gambar asli), dan pin Pinterest. Memasukkan tautan baru akan menggantikan banner lama saat disimpan.
+                    </small>
+
+                    <!-- Opsi: Simpan Salinan ke Server -->
+                    <div style="margin-top: 12px; background: rgba(255,255,255,0.03); padding: 10px 14px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.07); display: flex; align-items: flex-start; gap: 10px;">
+                        <input type="checkbox" name="simpan_ke_server" id="simpan_ke_server" value="1" {{ old('simpan_ke_server', '1') === '1' ? 'checked' : '' }} style="margin-top: 3px; accent-color: var(--cyan); width: 16px; height: 16px; cursor: pointer;">
+                        <label for="simpan_ke_server" style="font-size: 12.5px; color: var(--text); cursor: pointer; line-height: 1.45; margin: 0;">
+                            <strong style="color: #fff;">Simpan salinan gambar ke server lokal</strong> <span style="color: var(--cyan); font-size: 11px; font-weight: 700;">(Direkomendasikan)</span><br>
+                            <span style="color: var(--muted);">Mengunduh dan menyimpan gambar secara aman ke server lokal AI Solution agar banner tidak hilang jika situs sumber membatasi akses langsung (hotlink protection) atau tautan dihapus.</span>
+                        </label>
+                    </div>
+
+                    <!-- Status / Feedback Message -->
+                    <div id="url-status-msg" style="display: none; margin-top: 10px; padding: 10px 14px; border-radius: 8px; font-size: 12.5px;"></div>
                 </div>
 
                 <!-- Preview Area -->
-                <div id="preview-box" class="preview-box" style="{{ $initialImgSrc ? 'display:flex;' : 'display:none;' }}">
+                <div id="preview-box" class="preview-box" style="{{ $initialImgSrc ? 'display:flex;' : 'display:none;' }}; margin-top: 14px;">
                     <img id="preview-img" class="preview-img" src="{{ $initialImgSrc }}" alt="Preview">
-                    <div>
+                    <div style="flex: 1;">
                         <div style="font-size: 13px; font-weight: 600; color: #fff; margin-bottom: 4px;" id="preview-title">
-                            {{ $article->gambar ? 'Gambar Aktif' : 'Preview Banner' }}
+                            {{ $article->gambar ? 'Gambar Banner Aktif' : 'Preview Banner' }}
                         </div>
-                        <div style="font-size: 12px; color: var(--muted);" id="preview-info">
-                            {{ $isCurrentUrl ? 'URL Eksternal: ' . Str::limit($article->gambar, 50) : ($article->gambar ? 'File tersimpan: ' . $article->gambar : 'Siap digunakan') }}
+                        <div style="font-size: 12px; color: var(--muted); word-break: break-all;" id="preview-info">
+                            {{ $isCurrentUrl ? 'URL Eksternal: ' . Str::limit($article->gambar, 60) : ($article->gambar ? 'File tersimpan: ' . $article->gambar : 'Siap digunakan') }}
                         </div>
                     </div>
                 </div>
@@ -308,8 +328,51 @@
     const previewImg   = document.getElementById('preview-img');
     const previewTitle = document.getElementById('preview-title');
     const previewInfo  = document.getElementById('preview-info');
+    const btnResolve   = document.getElementById('btn-resolve-url');
+    const btnResolveSpinner = document.getElementById('btn-resolve-spinner');
+    const btnResolveText    = document.getElementById('btn-resolve-text');
+    const urlStatusMsg = document.getElementById('url-status-msg');
 
     const originalImgSrc = "{{ $initialImgSrc }}";
+
+    function showStatusMessage(type, msg) {
+        if (!urlStatusMsg) return;
+        urlStatusMsg.style.display = 'block';
+        if (type === 'success') {
+            urlStatusMsg.style.background = 'rgba(16, 185, 129, 0.15)';
+            urlStatusMsg.style.border = '1px solid rgba(16, 185, 129, 0.35)';
+            urlStatusMsg.style.color = '#34d399';
+        } else if (type === 'warning') {
+            urlStatusMsg.style.background = 'rgba(245, 158, 11, 0.15)';
+            urlStatusMsg.style.border = '1px solid rgba(245, 158, 11, 0.35)';
+            urlStatusMsg.style.color = '#fbbf24';
+        } else {
+            urlStatusMsg.style.background = 'rgba(239, 68, 68, 0.15)';
+            urlStatusMsg.style.border = '1px solid rgba(239, 68, 68, 0.35)';
+            urlStatusMsg.style.color = '#f87171';
+        }
+        urlStatusMsg.innerHTML = msg;
+    }
+
+    function hideStatusMessage() {
+        if (!urlStatusMsg) return;
+        urlStatusMsg.style.display = 'none';
+        urlStatusMsg.innerHTML = '';
+    }
+
+    function checkAndExtractGoogleUrl(rawUrl) {
+        if (!rawUrl) return null;
+        try {
+            if (rawUrl.includes('google.') && (rawUrl.includes('/imgres') || rawUrl.includes('imgurl='))) {
+                const parsed = new URL(rawUrl);
+                const imgParam = parsed.searchParams.get('imgurl');
+                if (imgParam && (imgParam.startsWith('http://') || imgParam.startsWith('https://'))) {
+                    return decodeURIComponent(imgParam);
+                }
+            }
+        } catch (e) {}
+        return null;
+    }
 
     function resetPillClasses() {
         if (tabCurrent) tabCurrent.classList.remove('active');
@@ -318,6 +381,7 @@
         if (secCurrent) secCurrent.style.display = 'none';
         secUpload.style.display = 'none';
         secUrl.style.display = 'none';
+        hideStatusMessage();
     }
 
     if (tabCurrent) {
@@ -328,8 +392,8 @@
             secCurrent.style.display = 'block';
             if (originalImgSrc) {
                 previewImg.src = originalImgSrc;
-                previewTitle.textContent = 'Gambar Saat Ini (Dipertahankan)';
-                previewInfo.textContent = 'Tidak akan diganti saat disimpan';
+                previewTitle.textContent = 'Gambar Banner Aktif (Dipertahankan)';
+                previewInfo.textContent = 'Tidak akan diganti saat artikel disimpan';
                 previewBox.style.display = 'flex';
             }
         });
@@ -340,7 +404,7 @@
         tabUpload.classList.add('active');
         imageType.value = 'upload';
         secUpload.style.display = 'block';
-        updateImagePreview();
+        updateImagePreview(false);
     });
 
     tabUrl.addEventListener('click', function() {
@@ -348,29 +412,67 @@
         tabUrl.classList.add('active');
         imageType.value = 'url';
         secUrl.style.display = 'block';
-        updateImagePreview();
+        updateImagePreview(false);
     });
 
-    function updateImagePreview() {
+    function updateImagePreview(autoResolve = true) {
         if (imageType.value === 'url') {
-            const urlVal = inputUrl.value.trim();
-            if (urlVal && (urlVal.startsWith('http://') || urlVal.startsWith('https://'))) {
+            let urlVal = inputUrl.value.trim();
+            if (!urlVal) {
+                if (originalImgSrc) {
+                    previewImg.src = originalImgSrc;
+                    previewTitle.textContent = 'Gambar Banner Aktif';
+                    previewInfo.textContent = 'Masukkan URL baru untuk mengganti gambar';
+                    previewBox.style.display = 'flex';
+                } else {
+                    previewBox.style.display = 'none';
+                }
+                hideStatusMessage();
+                return;
+            }
+
+            // Cek Google Images di sisi browser
+            const extractedGoogle = checkAndExtractGoogleUrl(urlVal);
+            if (extractedGoogle) {
+                urlVal = extractedGoogle;
+                inputUrl.value = extractedGoogle;
+                showStatusMessage('success', '✓ Link gambar asli berhasil diekstrak dari Google Images.');
+            }
+
+            // Cek apakah link gambar langsung
+            const isDirect = /\.(jpg|jpeg|png|webp|gif|avif)(\?.*)?$/i.test(urlVal) ||
+                             urlVal.includes('images.unsplash.com') ||
+                             urlVal.includes('i.pinimg.com') ||
+                             urlVal.includes('picsum.photos');
+
+            if (isDirect) {
                 previewImg.src = urlVal;
-                previewTitle.textContent = 'Preview Banner (URL Eksternal Baru)';
-                previewInfo.textContent = urlVal.length > 50 ? urlVal.substring(0, 50) + '...' : urlVal;
+                previewTitle.textContent = 'Preview Banner (Link Gambar Baru)';
+                previewInfo.textContent = urlVal.length > 60 ? urlVal.substring(0, 60) + '...' : urlVal;
                 previewBox.style.display = 'flex';
+                if (!extractedGoogle) hideStatusMessage();
+
                 previewImg.onerror = function() {
-                    previewInfo.textContent = '⚠️ Gambar tidak dapat dimuat dari URL ini.';
+                    previewInfo.textContent = '⚠️ Gambar tidak dapat dimuat langsung di browser dari tautan ini.';
+                    showStatusMessage('warning', '⚠️ Browser dibatasi memuat gambar ini langsung (mungkin hotlink protection). Opsi "Simpan salinan ke server" aktif, sehingga sistem akan mencoba mengunduhnya saat artikel disimpan.');
                 };
-            } else if (originalImgSrc) {
-                previewImg.src = originalImgSrc;
-                previewTitle.textContent = 'Gambar Banner Saat Ini';
-                previewInfo.textContent = 'Masukkan URL baru untuk mengganti gambar';
-                previewBox.style.display = 'flex';
+                previewImg.onload = function() {
+                    if (!extractedGoogle) hideStatusMessage();
+                };
+            } else if (autoResolve && (urlVal.includes('pinterest.com') || urlVal.includes('pin.it') || urlVal.startsWith('http'))) {
+                resolveUrlWithServer(urlVal);
             } else {
-                previewBox.style.display = 'none';
+                if (originalImgSrc) {
+                    previewImg.src = originalImgSrc;
+                    previewTitle.textContent = 'Gambar Banner Aktif';
+                    previewInfo.textContent = 'Klik "Periksa Link" untuk memverifikasi tautan baru.';
+                    previewBox.style.display = 'flex';
+                } else {
+                    previewBox.style.display = 'none';
+                }
             }
         } else if (imageType.value === 'upload') {
+            hideStatusMessage();
             const file = inputGambar.files[0];
             if (file) {
                 previewImg.src = URL.createObjectURL(file);
@@ -379,7 +481,7 @@
                 previewBox.style.display = 'flex';
             } else if (originalImgSrc) {
                 previewImg.src = originalImgSrc;
-                previewTitle.textContent = 'Gambar Banner Saat Ini';
+                previewTitle.textContent = 'Gambar Banner Aktif';
                 previewInfo.textContent = 'Pilih file baru untuk mengganti gambar';
                 previewBox.style.display = 'flex';
             } else {
@@ -388,8 +490,90 @@
         }
     }
 
-    inputGambar.addEventListener('change', updateImagePreview);
-    inputUrl.addEventListener('input', updateImagePreview);
+    let resolveTimer = null;
+    function resolveUrlWithServer(urlVal) {
+        if (!urlVal || !urlVal.startsWith('http')) return;
+
+        if (btnResolveSpinner) btnResolveSpinner.style.display = 'inline-block';
+        if (btnResolveText) btnResolveText.textContent = 'Memeriksa...';
+
+        fetch('{{ route("admin.articles.resolveBannerUrl") }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({ url: urlVal })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (btnResolveSpinner) btnResolveSpinner.style.display = 'none';
+            if (btnResolveText) btnResolveText.textContent = 'Periksa Link';
+
+            if (data.success && data.image_url) {
+                inputUrl.value = data.image_url;
+                previewImg.src = data.image_url;
+                previewTitle.textContent = 'Preview Banner (Tautan Baru Terdeteksi)';
+                previewInfo.textContent = data.image_url.length > 60 ? data.image_url.substring(0, 60) + '...' : data.image_url;
+                previewBox.style.display = 'flex';
+                showStatusMessage('success', data.message || '✓ Gambar berhasil ditemukan dari sumber.');
+
+                previewImg.onerror = function() {
+                    showStatusMessage('warning', '⚠️ Gambar ditemukan tetapi situs sumber memblokir pratinjau browser. Opsi "Simpan salinan ke server" akan mengunduhnya saat artikel disimpan.');
+                };
+            } else {
+                showStatusMessage('error', data.message || '⚠️ Tidak dapat menemukan gambar dari tautan tersebut.');
+            }
+        })
+        .catch(err => {
+            if (btnResolveSpinner) btnResolveSpinner.style.display = 'none';
+            if (btnResolveText) btnResolveText.textContent = 'Periksa Link';
+            showStatusMessage('error', '⚠️ Terjadi kesalahan saat memeriksa tautan gambar.');
+        });
+    }
+
+    if (btnResolve) {
+        btnResolve.addEventListener('click', function() {
+            const urlVal = inputUrl.value.trim();
+            if (urlVal) resolveUrlWithServer(urlVal);
+        });
+    }
+
+    inputGambar.addEventListener('change', function() {
+        updateImagePreview(false);
+    });
+
+    inputUrl.addEventListener('input', function() {
+        clearTimeout(resolveTimer);
+        const val = this.value.trim();
+
+        const extractedGoogle = checkAndExtractGoogleUrl(val);
+        if (extractedGoogle) {
+            this.value = extractedGoogle;
+            updateImagePreview(false);
+            return;
+        }
+
+        if (val.includes('pinterest.com') || val.includes('pin.it')) {
+            resolveTimer = setTimeout(() => {
+                updateImagePreview(true);
+            }, 800);
+        } else {
+            updateImagePreview(false);
+        }
+    });
+
+    inputUrl.addEventListener('paste', function() {
+        setTimeout(() => {
+            const val = this.value.trim();
+            const extracted = checkAndExtractGoogleUrl(val);
+            if (extracted) {
+                this.value = extracted;
+            }
+            updateImagePreview(true);
+        }, 80);
+    });
 
     // Status Cards & Schedule Picker
     const statusCards   = document.querySelectorAll('.status-card');

@@ -124,7 +124,7 @@
 
                 <div class="tab-pills">
                     <button type="button" class="tab-pill {{ old('image_type', 'upload') === 'upload' ? 'active' : '' }}" id="tab-upload">📁 Upload dari Komputer</button>
-                    <button type="button" class="tab-pill {{ old('image_type') === 'url' ? 'active' : '' }}" id="tab-url">🌐 URL Gambar Eksternal</button>
+                    <button type="button" class="tab-pill {{ old('image_type') === 'url' ? 'active' : '' }}" id="tab-url">🌐 Tempel Link Gambar / URL</button>
                 </div>
                 <input type="hidden" name="image_type" id="image_type" value="{{ old('image_type', 'upload') }}">
 
@@ -136,16 +136,36 @@
 
                 <!-- URL Input -->
                 <div id="section-url" style="{{ old('image_type') === 'url' ? '' : 'display:none;' }}">
-                    <input type="url" name="gambar_url" id="gambar_url" class="form-control" value="{{ old('gambar_url') }}" placeholder="https://images.unsplash.com/... atau URL gambar lainnya">
-                    <small style="color: var(--muted); font-size: 12px; margin-top: 5px; display: block;">Masukkan tautan gambar langsung (URL valid). Gambar akan dimuat otomatis.</small>
+                    <div style="display: flex; gap: 8px;">
+                        <input type="url" name="gambar_url" id="gambar_url" class="form-control" value="{{ old('gambar_url') }}" placeholder="https://... (Link gambar langsung, Google Images, atau Pinterest)" style="flex: 1;">
+                        <button type="button" id="btn-resolve-url" style="background: rgba(0, 212, 255, 0.15); border: 1px solid rgba(0, 212, 255, 0.35); color: var(--cyan); padding: 0 16px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; display: inline-flex; align-items: center; gap: 6px;">
+                            <span id="btn-resolve-spinner" style="display: none;">⏳</span>
+                            <span id="btn-resolve-text">Periksa Link</span>
+                        </button>
+                    </div>
+                    <small style="color: var(--muted); font-size: 12px; margin-top: 5px; display: block;">
+                        Mendukung link gambar langsung (.jpg, .png, .webp, Unsplash), link Google Images (otomatis mengekstrak gambar asli), dan pin Pinterest.
+                    </small>
+
+                    <!-- Opsi: Simpan Salinan ke Server -->
+                    <div style="margin-top: 12px; background: rgba(255,255,255,0.03); padding: 10px 14px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.07); display: flex; align-items: flex-start; gap: 10px;">
+                        <input type="checkbox" name="simpan_ke_server" id="simpan_ke_server" value="1" {{ old('simpan_ke_server', '1') === '1' ? 'checked' : '' }} style="margin-top: 3px; accent-color: var(--cyan); width: 16px; height: 16px; cursor: pointer;">
+                        <label for="simpan_ke_server" style="font-size: 12.5px; color: var(--text); cursor: pointer; line-height: 1.45; margin: 0;">
+                            <strong style="color: #fff;">Simpan salinan gambar ke server lokal</strong> <span style="color: var(--cyan); font-size: 11px; font-weight: 700;">(Direkomendasikan)</span><br>
+                            <span style="color: var(--muted);">Mengunduh dan menyimpan gambar secara aman ke server lokal AI Solution agar banner tidak hilang jika situs sumber membatasi akses langsung (hotlink protection) atau tautan dihapus.</span>
+                        </label>
+                    </div>
+
+                    <!-- Status / Feedback Message -->
+                    <div id="url-status-msg" style="display: none; margin-top: 10px; padding: 10px 14px; border-radius: 8px; font-size: 12.5px;"></div>
                 </div>
 
                 <!-- Preview Area -->
-                <div id="preview-box" class="preview-box">
+                <div id="preview-box" class="preview-box" style="margin-top: 14px;">
                     <img id="preview-img" class="preview-img" src="" alt="Preview">
-                    <div>
+                    <div style="flex: 1;">
                         <div style="font-size: 13px; font-weight: 600; color: #fff; margin-bottom: 4px;" id="preview-title">Preview Banner</div>
-                        <div style="font-size: 12px; color: var(--muted);" id="preview-info">Gambar siap digunakan</div>
+                        <div style="font-size: 12px; color: var(--muted); word-break: break-all;" id="preview-info">Gambar siap digunakan</div>
                     </div>
                 </div>
             </div>
@@ -307,21 +327,93 @@
         updateImagePreview();
     });
 
-    function updateImagePreview() {
+    const statusMsgBox     = document.getElementById('url-status-msg');
+    const btnResolve       = document.getElementById('btn-resolve-url');
+    const btnResolveSpinner = document.getElementById('btn-resolve-spinner');
+    const btnResolveText   = document.getElementById('btn-resolve-text');
+
+    function showStatusMessage(type, text) {
+        if (!statusMsgBox) return;
+        statusMsgBox.style.display = 'block';
+        if (type === 'success') {
+            statusMsgBox.style.background = 'rgba(74, 222, 128, 0.12)';
+            statusMsgBox.style.border = '1px solid rgba(74, 222, 128, 0.35)';
+            statusMsgBox.style.color = '#4ade80';
+        } else if (type === 'warning') {
+            statusMsgBox.style.background = 'rgba(251, 191, 36, 0.12)';
+            statusMsgBox.style.border = '1px solid rgba(251, 191, 36, 0.35)';
+            statusMsgBox.style.color = '#fbbf24';
+        } else {
+            statusMsgBox.style.background = 'rgba(239, 68, 68, 0.12)';
+            statusMsgBox.style.border = '1px solid rgba(239, 68, 68, 0.35)';
+            statusMsgBox.style.color = '#fca5a5';
+        }
+        statusMsgBox.textContent = text;
+    }
+
+    function hideStatusMessage() {
+        if (statusMsgBox) statusMsgBox.style.display = 'none';
+    }
+
+    // Ekstraksi otomatis parameter imgurl Google Images di sisi client
+    function checkAndExtractGoogleUrl(rawUrl) {
+        try {
+            const parsed = new URL(rawUrl);
+            if (parsed.hostname.includes('google.') && parsed.searchParams.has('imgurl')) {
+                const imgUrl = parsed.searchParams.get('imgurl');
+                if (imgUrl && (imgUrl.startsWith('http://') || imgUrl.startsWith('https://'))) {
+                    return imgUrl;
+                }
+            }
+        } catch (e) {}
+        return null;
+    }
+
+    function updateImagePreview(autoResolve = true) {
         if (imageType.value === 'url') {
-            const urlVal = inputUrl.value.trim();
-            if (urlVal && (urlVal.startsWith('http://') || urlVal.startsWith('https://'))) {
+            let urlVal = inputUrl.value.trim();
+            if (!urlVal) {
+                previewBox.style.display = 'none';
+                hideStatusMessage();
+                return;
+            }
+
+            // Cek Google Images di client terlebih dahulu
+            const extractedGoogle = checkAndExtractGoogleUrl(urlVal);
+            if (extractedGoogle) {
+                urlVal = extractedGoogle;
+                inputUrl.value = extractedGoogle;
+                showStatusMessage('success', '✓ Link gambar asli berhasil diekstrak dari Google Images.');
+            }
+
+            // Jika URL adalah gambar langsung
+            const isDirect = /\.(jpg|jpeg|png|webp|gif|avif)(\?.*)?$/i.test(urlVal) ||
+                             urlVal.includes('images.unsplash.com') ||
+                             urlVal.includes('i.pinimg.com') ||
+                             urlVal.includes('picsum.photos');
+
+            if (isDirect) {
                 previewImg.src = urlVal;
-                previewTitle.textContent = 'Preview Banner (URL Eksternal)';
-                previewInfo.textContent = urlVal.length > 50 ? urlVal.substring(0, 50) + '...' : urlVal;
+                previewTitle.textContent = 'Preview Banner (Link Gambar)';
+                previewInfo.textContent = urlVal.length > 60 ? urlVal.substring(0, 60) + '...' : urlVal;
                 previewBox.style.display = 'flex';
+                if (!extractedGoogle) hideStatusMessage();
+
                 previewImg.onerror = function() {
-                    previewInfo.textContent = '⚠️ Gambar tidak dapat dimuat dari URL ini.';
+                    previewInfo.textContent = '⚠️ Gambar tidak dapat dimuat langsung di browser dari tautan ini.';
+                    showStatusMessage('warning', '⚠️ Browser dibatasi memuat gambar ini langsung (mungkin hotlink protection situs sumber). Opsi "Simpan salinan ke server" aktif, sehingga sistem akan mencoba mengunduhnya saat artikel disimpan.');
                 };
+                previewImg.onload = function() {
+                    if (!extractedGoogle) hideStatusMessage();
+                };
+            } else if (autoResolve && (urlVal.includes('pinterest.com') || urlVal.includes('pin.it') || urlVal.startsWith('http'))) {
+                // Tautan Pinterest atau halaman sumber: jalankan server resolver
+                resolveUrlWithServer(urlVal);
             } else {
                 previewBox.style.display = 'none';
             }
         } else {
+            hideStatusMessage();
             const file = inputGambar.files[0];
             if (file) {
                 previewImg.src = URL.createObjectURL(file);
@@ -334,11 +426,73 @@
         }
     }
 
+    let resolveTimer = null;
+    function resolveUrlWithServer(urlVal) {
+        if (!urlVal || !urlVal.startsWith('http')) return;
+
+        if (btnResolveSpinner) btnResolveSpinner.style.display = 'inline-block';
+        if (btnResolveText) btnResolveText.textContent = 'Memeriksa...';
+
+        fetch('{{ route("admin.articles.resolveBannerUrl") }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({ url: urlVal })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (btnResolveSpinner) btnResolveSpinner.style.display = 'none';
+            if (btnResolveText) btnResolveText.textContent = 'Periksa Link';
+
+            if (data.success && data.image_url) {
+                inputUrl.value = data.image_url;
+                previewImg.src = data.image_url;
+                previewTitle.textContent = 'Preview Banner (Terdeteksi)';
+                previewInfo.textContent = data.image_url.length > 60 ? data.image_url.substring(0, 60) + '...' : data.image_url;
+                previewBox.style.display = 'flex';
+                showStatusMessage('success', data.message || '✓ Gambar berhasil ditemukan dari sumber.');
+
+                previewImg.onerror = function() {
+                    showStatusMessage('warning', '⚠️ Gambar ditemukan tetapi situs sumber memblokir pratinjau browser. Opsi "Simpan salinan ke server" akan mengunduhnya saat form disimpan.');
+                };
+            } else {
+                previewBox.style.display = 'none';
+                showStatusMessage('error', data.message || '⚠️ Tidak dapat menemukan gambar dari tautan tersebut.');
+            }
+        })
+        .catch(err => {
+            if (btnResolveSpinner) btnResolveSpinner.style.display = 'none';
+            if (btnResolveText) btnResolveText.textContent = 'Periksa Link';
+            showStatusMessage('error', '⚠️ Terjadi kesalahan saat memeriksa tautan gambar.');
+        });
+    }
+
+    if (btnResolve) {
+        btnResolve.addEventListener('click', function() {
+            const urlVal = inputUrl.value.trim();
+            if (urlVal) resolveUrlWithServer(urlVal);
+        });
+    }
+
     inputGambar.addEventListener('change', updateImagePreview);
-    inputUrl.addEventListener('input', updateImagePreview);
+    inputUrl.addEventListener('input', function() {
+        clearTimeout(resolveTimer);
+        const urlVal = this.value.trim();
+        // Cek langsung jika Google Images atau link gambar
+        if (checkAndExtractGoogleUrl(urlVal)) {
+            updateImagePreview(false);
+        } else if (/\.(jpg|jpeg|png|webp|gif)(\?.*)?$/i.test(urlVal) || urlVal.includes('i.pinimg.com') || urlVal.includes('unsplash.com')) {
+            updateImagePreview(false);
+        } else {
+            resolveTimer = setTimeout(() => updateImagePreview(true), 700);
+        }
+    });
 
     // Initial preview check
-    updateImagePreview();
+    updateImagePreview(false);
 
     // Status Cards & Schedule Picker
     const statusCards   = document.querySelectorAll('.status-card');
