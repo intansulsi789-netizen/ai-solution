@@ -1027,10 +1027,20 @@
             color: var(--cyan-neon);
         }
 
-        /* Responsive */
         @media (max-width: 1200px) {
             .wawasan-circuit-flank {
-                display: none;
+                display: block;
+                width: 90px;
+                opacity: 0.35;
+                pointer-events: none;
+            }
+            .wawasan-circuit-left { left: 0; }
+            .wawasan-circuit-right { right: 0; }
+        }
+        @media (max-width: 768px) {
+            .wawasan-circuit-flank {
+                width: 60px;
+                opacity: 0.20;
             }
         }
 

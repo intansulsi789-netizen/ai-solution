@@ -323,7 +323,18 @@
         }
         @media (max-width: 1100px) {
             .article-circuit-flank {
-                display: none;
+                display: block;
+                width: 80px;
+                opacity: 0.35;
+                pointer-events: none;
+            }
+            .article-circuit-left { left: 0; }
+            .article-circuit-right { right: 0; }
+        }
+        @media (max-width: 640px) {
+            .article-circuit-flank {
+                width: 50px;
+                opacity: 0.20;
             }
         }
 
