@@ -414,6 +414,18 @@
         html[data-theme="light"] .partner-ambient-aura {
             background: radial-gradient(ellipse at center, rgba(2, 132, 199, 0.07) 0%, rgba(124, 58, 237, 0.04) 45%, transparent 70%);
         }
+        html[data-theme="light"] .tentang-center-glow {
+            background: radial-gradient(ellipse 65% 55% at 50% 35%, rgba(2, 132, 199, 0.12) 0%, rgba(124, 58, 237, 0.08) 38%, transparent 75%);
+        }
+        html[data-theme="light"] .tentang-halo-ring {
+            background: radial-gradient(ellipse at center, rgba(2, 132, 199, 0.08) 0%, rgba(124, 58, 237, 0.05) 45%, transparent 70%);
+        }
+        html[data-theme="light"] .tentang-tech-grid {
+            background-image: 
+                radial-gradient(circle at center, rgba(2, 132, 199, 0.12) 1.5px, transparent 1.5px),
+                linear-gradient(rgba(2, 132, 199, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(2, 132, 199, 0.03) 1px, transparent 1px);
+        }
         html[data-theme="light"] .services-grid-mesh,
         html[data-theme="light"] .wawasan-grid-mesh,
         html[data-theme="light"] .section-grid-mesh {
@@ -2320,6 +2332,147 @@
             filter: blur(75px);
             z-index: 0;
             animation: ambient-pulse-purple 10s ease-in-out infinite alternate;
+        }
+
+        /* Tentang Kami - Luminous Hero Backdrop Elements */
+        .tentang-hero-wrapper {
+            position: relative;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 2;
+        }
+        .tentang-center-glow {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 880px;
+            max-width: 95vw;
+            height: 520px;
+            background: radial-gradient(ellipse 65% 55% at 50% 35%, rgba(0, 212, 255, 0.38) 0%, rgba(124, 58, 237, 0.28) 38%, rgba(0, 168, 255, 0.12) 65%, transparent 80%);
+            filter: blur(55px);
+            pointer-events: none;
+            z-index: 0;
+            animation: tentang-aurora-glow 8s ease-in-out infinite alternate;
+        }
+        .tentang-halo-ring {
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 620px;
+            height: 380px;
+            border-radius: 50%;
+            background: radial-gradient(ellipse at center, rgba(0, 212, 255, 0.22) 0%, rgba(124, 58, 237, 0.15) 45%, transparent 70%);
+            filter: blur(30px);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .tentang-tech-grid {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 920px;
+            max-width: 100vw;
+            height: 540px;
+            background-image: 
+                radial-gradient(circle at center, rgba(0, 212, 255, 0.25) 1.5px, transparent 1.5px),
+                linear-gradient(rgba(0, 212, 255, 0.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 212, 255, 0.06) 1px, transparent 1px);
+            background-size: 32px 32px, 64px 64px, 64px 64px;
+            mask-image: radial-gradient(ellipse 70% 60% at 50% 45%, black 30%, transparent 80%);
+            -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 45%, black 30%, transparent 80%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .tentang-cyber-orbit {
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 540px;
+            height: 540px;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.65;
+        }
+        .tentang-flow-beam {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            margin: 30px auto 10px;
+            position: relative;
+            z-index: 2;
+        }
+        .tentang-beam-line {
+            width: 2px;
+            height: 48px;
+            background: linear-gradient(180deg, rgba(0, 212, 255, 0.85) 0%, rgba(124, 58, 237, 0.65) 70%, transparent 100%);
+            border-radius: 2px;
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+        .tentang-beam-runner {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 14px;
+            background: #ffffff;
+            border-radius: 2px;
+            box-shadow: 0 0 8px #00d4ff;
+            animation: beam-drop 2.4s ease-in-out infinite;
+        }
+        .tentang-beam-node {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--cyan-neon);
+            box-shadow: 0 0 10px var(--cyan-neon), 0 0 20px rgba(0, 212, 255, 0.6);
+            animation: blink-dot 2s ease infinite;
+        }
+        .tentang-floating-sparks {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .tentang-spark {
+            position: absolute;
+            border-radius: 50%;
+            background: #00d4ff;
+            box-shadow: 0 0 10px #00d4ff, 0 0 18px rgba(0, 212, 255, 0.8);
+            animation: spark-float 4.5s ease-in-out infinite alternate;
+        }
+        .spark-1 { width: 5px; height: 5px; top: 18%; left: 10%; animation-delay: 0s; }
+        .spark-2 { width: 4px; height: 4px; top: 25%; right: 12%; animation-delay: 1.2s; background: #a78bfa; box-shadow: 0 0 10px #a78bfa; }
+        .spark-3 { width: 6px; height: 6px; top: 58%; left: 6%; animation-delay: 2.1s; }
+        .spark-4 { width: 4px; height: 4px; top: 68%; right: 8%; animation-delay: 0.8s; background: #ec4899; box-shadow: 0 0 10px #ec4899; }
+        .spark-5 { width: 5px; height: 5px; top: 42%; left: 18%; animation-delay: 1.7s; }
+        .spark-6 { width: 5px; height: 5px; top: 46%; right: 18%; animation-delay: 2.5s; }
+
+        @keyframes tentang-aurora-glow {
+            0% { transform: translateX(-50%) scale(0.95); opacity: 0.85; }
+            50% { transform: translateX(-50%) scale(1.08); opacity: 1; filter: blur(48px); }
+            100% { transform: translateX(-50%) scale(1); opacity: 0.9; }
+        }
+        @keyframes beam-drop {
+            0% { transform: translateY(-100%); opacity: 0; }
+            30% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { transform: translateY(350%); opacity: 0; }
+        }
+        @keyframes spark-float {
+            0% { transform: translateY(0) scale(0.8); opacity: 0.4; }
+            50% { transform: translateY(-12px) scale(1.2); opacity: 1; }
+            100% { transform: translateY(6px) scale(0.9); opacity: 0.5; }
         }
 
         .section-divider-line {
@@ -4255,20 +4408,57 @@
     @endphp
 
     <!-- HERO -->
-    <div style="text-align:center; max-width:700px; margin:0 auto 80px; display:flex; flex-direction:column; align-items:center;">
-        <div style="display:inline-flex; align-items:center; gap:8px; font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--cyan-neon); padding:7px 18px; background:rgba(0,212,255,0.08); border:1px solid rgba(0,212,255,0.20); border-radius:100px; margin-bottom:28px;">
+    <div class="tentang-hero-wrapper">
+        <!-- Luminous Glow, Halo, Grid & AI Radar Elements -->
+        <div class="tentang-center-glow" aria-hidden="true"></div>
+        <div class="tentang-halo-ring" aria-hidden="true"></div>
+        <div class="tentang-tech-grid" aria-hidden="true"></div>
+        
+        <svg class="tentang-cyber-orbit" viewBox="0 0 520 520" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="260" cy="260" r="230" stroke="rgba(0, 212, 255, 0.32)" stroke-width="1.5" stroke-dasharray="8 12" class="hud-ring-outer" />
+            <circle cx="260" cy="260" r="175" stroke="rgba(167, 139, 250, 0.40)" stroke-width="1.8" stroke-dasharray="32 16 8 16" class="hud-ring-mid" />
+            <circle cx="260" cy="260" r="115" stroke="rgba(0, 212, 255, 0.50)" stroke-width="1.2" stroke-dasharray="6 6" class="hud-ring-inner" />
+            <line x1="260" y1="20" x2="260" y2="70" stroke="rgba(0, 212, 255, 0.50)" stroke-width="1.5" />
+            <line x1="260" y1="450" x2="260" y2="500" stroke="rgba(0, 212, 255, 0.50)" stroke-width="1.5" />
+            <line x1="20" y1="260" x2="70" y2="260" stroke="rgba(0, 212, 255, 0.50)" stroke-width="1.5" />
+            <line x1="450" y1="260" x2="500" y2="260" stroke="rgba(0, 212, 255, 0.50)" stroke-width="1.5" />
+            <circle cx="260" cy="30" r="4" fill="#00d4ff" />
+            <circle cx="260" cy="490" r="4" fill="#a78bfa" />
+            <circle cx="435" cy="260" r="4" fill="#00d4ff" />
+            <circle cx="85" cy="260" r="4" fill="#a78bfa" />
+        </svg>
+
+        <div class="tentang-floating-sparks" aria-hidden="true">
+            <span class="tentang-spark spark-1"></span>
+            <span class="tentang-spark spark-2"></span>
+            <span class="tentang-spark spark-3"></span>
+            <span class="tentang-spark spark-4"></span>
+            <span class="tentang-spark spark-5"></span>
+            <span class="tentang-spark spark-6"></span>
+        </div>
+
+        <div style="display:inline-flex; align-items:center; gap:8px; font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--cyan-neon); padding:7px 18px; background:rgba(0,212,255,0.08); border:1px solid rgba(0,212,255,0.20); border-radius:100px; margin-bottom:28px; position:relative; z-index:2;">
             <span style="width:7px;height:7px;border-radius:50%;background:var(--cyan-neon);box-shadow:0 0 8px var(--cyan-neon);animation:blink-dot 2s ease infinite;"></span>
             TENTANG KAMI
         </div>
-        <h2 style="font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(32px,4.5vw,56px);font-weight:800;line-height:1.1;letter-spacing:-1.5px;background:linear-gradient(135deg,#ffffff 0%,#a78bfa 45%,#00d4ff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:20px;">{{ $aboutJudul }}</h2>
-        <p style="font-size:clamp(15px,1.8vw,18px);color:var(--white-80);line-height:1.65;max-width:620px;">{{ $aboutDeskripsi }}</p>
+        <h2 style="font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(32px,4.5vw,56px);font-weight:800;line-height:1.1;letter-spacing:-1.5px;background:linear-gradient(135deg,#ffffff 0%,#a78bfa 45%,#00d4ff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:20px;position:relative;z-index:2;">{{ $aboutJudul }}</h2>
+        <p style="font-size:clamp(15px,1.8vw,18px);color:var(--white-80);line-height:1.65;max-width:620px;position:relative;z-index:2;">{{ $aboutDeskripsi }}</p>
+
+        <!-- Connecting Tech Flow Beam -->
+        <div class="tentang-flow-beam" aria-hidden="true">
+            <div class="tentang-beam-node"></div>
+            <div class="tentang-beam-line">
+                <div class="tentang-beam-runner"></div>
+            </div>
+            <div class="tentang-beam-node" style="background:#a78bfa;box-shadow:0 0 12px #a78bfa;"></div>
+        </div>
     </div>
 
     <!-- PROFILE -->
-    <div style="text-align:center;margin-bottom:16px;">
+    <div style="text-align:center;margin-bottom:16px;position:relative;z-index:2;">
         <div style="font-size:12px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--cyan-neon);">CEO</div>
     </div>
-    <h3 style="font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(24px,3vw,38px);font-weight:700;letter-spacing:-0.8px;text-align:center;margin-bottom:50px;">Kenali CEO Kami</h3>
+    <h3 style="font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(24px,3vw,38px);font-weight:700;letter-spacing:-0.8px;text-align:center;margin-bottom:50px;position:relative;z-index:2;">Kenali CEO Kami</h3>
 
     <div class="profile-container">
         <div class="profile-photo-wrap">
