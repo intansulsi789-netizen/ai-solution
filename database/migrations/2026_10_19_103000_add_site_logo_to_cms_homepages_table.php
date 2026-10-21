@@ -16,7 +16,7 @@ return new class extends Migration
                 $table->string('site_logo')->nullable()->after('id');
             }
             if (!Schema::hasColumn('cms_homepages', 'site_logo_type')) {
-                $table->string('site_logo_type')->default('icon_text')->after('site_logo');
+                $table->string('site_logo_type')->default('default')->after('site_logo');
             }
             if (!Schema::hasColumn('cms_homepages', 'site_name_highlight')) {
                 $table->string('site_name_highlight')->default('AI')->after('site_logo_type');
