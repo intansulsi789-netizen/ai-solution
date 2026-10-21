@@ -2390,54 +2390,6 @@
             pointer-events: none;
             z-index: 0;
         }
-        .tentang-cyber-orbit {
-            position: absolute;
-            top: -50px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 540px;
-            height: 540px;
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0.65;
-        }
-        .tentang-flow-beam {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-            margin: 30px auto 10px;
-            position: relative;
-            z-index: 2;
-        }
-        .tentang-beam-line {
-            width: 2px;
-            height: 48px;
-            background: linear-gradient(180deg, rgba(0, 212, 255, 0.85) 0%, rgba(124, 58, 237, 0.65) 70%, transparent 100%);
-            border-radius: 2px;
-            box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
-            position: relative;
-            overflow: hidden;
-        }
-        .tentang-beam-runner {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 14px;
-            background: #ffffff;
-            border-radius: 2px;
-            box-shadow: 0 0 8px #00d4ff;
-            animation: beam-drop 2.4s ease-in-out infinite;
-        }
-        .tentang-beam-node {
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            background: var(--cyan-neon);
-            box-shadow: 0 0 10px var(--cyan-neon), 0 0 20px rgba(0, 212, 255, 0.6);
-            animation: blink-dot 2s ease infinite;
-        }
         .tentang-floating-sparks {
             position: absolute;
             inset: 0;
@@ -2462,12 +2414,6 @@
             0% { transform: translateX(-50%) scale(0.95); opacity: 0.85; }
             50% { transform: translateX(-50%) scale(1.08); opacity: 1; filter: blur(48px); }
             100% { transform: translateX(-50%) scale(1); opacity: 0.9; }
-        }
-        @keyframes beam-drop {
-            0% { transform: translateY(-100%); opacity: 0; }
-            30% { opacity: 1; }
-            80% { opacity: 1; }
-            100% { transform: translateY(350%); opacity: 0; }
         }
         @keyframes spark-float {
             0% { transform: translateY(0) scale(0.8); opacity: 0.4; }
@@ -4415,20 +4361,6 @@
         <div class="tentang-halo-ring" aria-hidden="true"></div>
         <div class="tentang-tech-grid" aria-hidden="true"></div>
         
-        <svg class="tentang-cyber-orbit" viewBox="0 0 520 520" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <circle cx="260" cy="260" r="230" stroke="rgba(0, 212, 255, 0.32)" stroke-width="1.5" stroke-dasharray="8 12" class="hud-ring-outer" />
-            <circle cx="260" cy="260" r="175" stroke="rgba(167, 139, 250, 0.40)" stroke-width="1.8" stroke-dasharray="32 16 8 16" class="hud-ring-mid" />
-            <circle cx="260" cy="260" r="115" stroke="rgba(0, 212, 255, 0.50)" stroke-width="1.2" stroke-dasharray="6 6" class="hud-ring-inner" />
-            <line x1="260" y1="20" x2="260" y2="70" stroke="rgba(0, 212, 255, 0.50)" stroke-width="1.5" />
-            <line x1="260" y1="450" x2="260" y2="500" stroke="rgba(0, 212, 255, 0.50)" stroke-width="1.5" />
-            <line x1="20" y1="260" x2="70" y2="260" stroke="rgba(0, 212, 255, 0.50)" stroke-width="1.5" />
-            <line x1="450" y1="260" x2="500" y2="260" stroke="rgba(0, 212, 255, 0.50)" stroke-width="1.5" />
-            <circle cx="260" cy="30" r="4" fill="#00d4ff" />
-            <circle cx="260" cy="490" r="4" fill="#a78bfa" />
-            <circle cx="435" cy="260" r="4" fill="#00d4ff" />
-            <circle cx="85" cy="260" r="4" fill="#a78bfa" />
-        </svg>
-
         <div class="tentang-floating-sparks" aria-hidden="true">
             <span class="tentang-spark spark-1"></span>
             <span class="tentang-spark spark-2"></span>
@@ -4444,15 +4376,6 @@
         </div>
         <h2 style="font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(32px,4.5vw,56px);font-weight:800;line-height:1.1;letter-spacing:-1.5px;background:linear-gradient(135deg,#ffffff 0%,#a78bfa 45%,#00d4ff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:20px;position:relative;z-index:2;">{{ $aboutJudul }}</h2>
         <p style="font-size:clamp(15px,1.8vw,18px);color:var(--white-80);line-height:1.65;max-width:620px;position:relative;z-index:2;">{{ $aboutDeskripsi }}</p>
-
-        <!-- Connecting Tech Flow Beam -->
-        <div class="tentang-flow-beam" aria-hidden="true">
-            <div class="tentang-beam-node"></div>
-            <div class="tentang-beam-line">
-                <div class="tentang-beam-runner"></div>
-            </div>
-            <div class="tentang-beam-node" style="background:#a78bfa;box-shadow:0 0 12px #a78bfa;"></div>
-        </div>
     </div>
 
     <!-- PROFILE -->
