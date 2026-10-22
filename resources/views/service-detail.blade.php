@@ -6,13 +6,42 @@
     }
     $waMessage = 'Halo, saya ingin berkonsultasi mengenai layanan ' . $service['title'] . '.';
     $waUrl     = 'https://wa.me/' . $waNumber . '?text=' . rawurlencode($waMessage);
+
+    $canonicalDomain = 'https://aisolution.duckdns.org';
+    $canonicalUrl    = $canonicalDomain . '/layanan/' . $service['slug'];
+    $serviceImage    = !empty($service['image']) ? (str_starts_with($service['image'], 'http') ? $service['image'] : $canonicalDomain . '/' . ltrim($service['image'], '/')) : $canonicalDomain . '/images/og-default.jpg';
+    $serviceMetaDesc = \Illuminate\Support\Str::limit(strip_tags($service['desc'] ?? ''), 160);
 @endphp
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $service['title'] }} - AI Jogja Solutions</title>
+    <title>{{ $service['title'] }} - AI Solution</title>
+    <meta name="description" content="{{ $serviceMetaDesc }}">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{{ $canonicalUrl }}">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpeg" href="{{ asset('images/favicon.jpg') }}">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ $canonicalUrl }}">
+    <meta property="og:title" content="{{ $service['title'] }} - AI Solution">
+    <meta property="og:description" content="{{ $serviceMetaDesc }}">
+    <meta property="og:image" content="{{ $serviceImage }}">
+    <meta property="og:site_name" content="AI Solution">
+    <meta property="og:locale" content="id_ID">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="{{ $canonicalUrl }}">
+    <meta name="twitter:title" content="{{ $service['title'] }} - AI Solution">
+    <meta name="twitter:description" content="{{ $serviceMetaDesc }}">
+    <meta name="twitter:image" content="{{ $serviceImage }}">
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
     
     {{-- Strictly Dark Mode on public pages --}}

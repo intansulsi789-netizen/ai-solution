@@ -247,7 +247,7 @@ Route::get('/sitemap.xml', function () {
 });
 
 Route::get('/robots.txt', function () {
-    $content = "User-agent: *\nDisallow: /admin\nAllow: /\n\nSitemap: " . url('/sitemap.xml');
+    $content = "User-agent: *\nDisallow: /admin\nAllow: /\n\nSitemap: https://aisolution.duckdns.org/sitemap.xml";
     return response($content)->header('Content-Type', 'text/plain');
 });
 

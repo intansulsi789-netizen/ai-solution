@@ -1,13 +1,13 @@
 <?php echo '<?xml version="1.0" encoding="UTF-8"?>'; ?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-        <loc>{{ url('/') }}</loc>
+        <loc>https://aisolution.duckdns.org/</loc>
         <lastmod>{{ now()->tz('UTC')->toAtomString() }}</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
     </url>
     <url>
-        <loc>{{ url('/wawasan') }}</loc>
+        <loc>https://aisolution.duckdns.org/wawasan</loc>
         <lastmod>{{ now()->tz('UTC')->toAtomString() }}</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.9</priority>
@@ -15,7 +15,7 @@
 
     @foreach ($services as $service)
     <url>
-        <loc>{{ url('/layanan/' . $service->slug) }}</loc>
+        <loc>https://aisolution.duckdns.org/layanan/{{ $service->slug }}</loc>
         <lastmod>{{ $service->updated_at->tz('UTC')->toAtomString() }}</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
@@ -23,7 +23,7 @@
     @endforeach
     @foreach ($articles as $article)
     <url>
-        <loc>{{ url('/wawasan/' . $article->slug) }}</loc>
+        <loc>https://aisolution.duckdns.org/wawasan/{{ $article->slug }}</loc>
         <lastmod>{{ $article->updated_at->tz('UTC')->toAtomString() }}</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.7</priority>

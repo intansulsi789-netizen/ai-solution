@@ -10,6 +10,10 @@
     $cmsSeo = $cmsSeo ?? \App\Models\CmsSeo::first();
     $metaTitle = ($cmsSeo && $cmsSeo->meta_title) ? 'Wawasan & Artikel - ' . $cmsSeo->meta_title : 'Wawasan & Artikel AI - AI Solution';
     $metaDesc  = ($cmsSeo && $cmsSeo->meta_description) ? $cmsSeo->meta_description : 'Eksplorasi wawasan, berita, dan artikel terkini seputar implementasi kecerdasan buatan untuk akselerasi bisnis dari AI Solution.';
+
+    $canonicalDomain = 'https://aisolution.duckdns.org';
+    $canonicalUrl    = $canonicalDomain . '/wawasan';
+    $ogImage         = $canonicalDomain . '/images/og-default.jpg';
 @endphp
 <!DOCTYPE html>
 <html lang="id">
@@ -18,6 +22,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="{{ $metaDesc }}">
     <title>{{ $metaTitle }}</title>
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{{ $canonicalUrl }}">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpeg" href="{{ asset('images/favicon.jpg') }}">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ $canonicalUrl }}">
+    <meta property="og:title" content="{{ $metaTitle }}">
+    <meta property="og:description" content="{{ $metaDesc }}">
+    <meta property="og:image" content="{{ $ogImage }}">
+    <meta property="og:site_name" content="AI Solution">
+    <meta property="og:locale" content="id_ID">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="{{ $canonicalUrl }}">
+    <meta name="twitter:title" content="{{ $metaTitle }}">
+    <meta name="twitter:description" content="{{ $metaDesc }}">
+    <meta name="twitter:image" content="{{ $ogImage }}">
 
     <!-- Google Fonts: Inter + Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
