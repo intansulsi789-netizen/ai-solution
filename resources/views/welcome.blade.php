@@ -4367,7 +4367,7 @@
 
     @php
         $aboutJudul     = ($cmsAbout && $cmsAbout->judul)        ? $cmsAbout->judul        : 'Membangun Solusi AI untuk Kebutuhan Nyata';
-        $aboutDeskripsi = ($cmsAbout && $cmsAbout->deskripsi)     ? $cmsAbout->deskripsi     : 'Kami menghadirkan solusi berbasis AI untuk membantu kebutuhan digital melalui teknologi yang dirancang sesuai tujuan dan kebutuhan setiap client.';
+        $aboutDeskripsi = ($cmsAbout && $cmsAbout->deskripsi)     ? $cmsAbout->deskripsi     : 'Kami menyediakan berbagai jasa berbasis teknologi AI yang disesuaikan dengan kebutuhan setiap klien, mulai dari mendukung pekerjaan digital hingga membantu bisnis meningkatkan efisiensi, kreativitas, dan produktivitas.';
         $ceoNama        = ($cmsAbout && $cmsAbout->nama_ceo)      ? $cmsAbout->nama_ceo      : 'Hero Swaradani';
         $ceoJabatan     = ($cmsAbout && $cmsAbout->jabatan_ceo)   ? $cmsAbout->jabatan_ceo   : 'Founder & CEO · AI Solution';
         $ceoDeskripsi   = ($cmsAbout && $cmsAbout->deskripsi_ceo) ? $cmsAbout->deskripsi_ceo : 'Seorang praktisi teknologi AI berpengalaman yang berdedikasi dalam membangun solusi berbasis kecerdasan buatan yang berdampak nyata.';
