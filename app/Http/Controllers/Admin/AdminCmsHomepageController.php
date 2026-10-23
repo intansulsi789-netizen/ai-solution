@@ -16,7 +16,7 @@ class AdminCmsHomepageController extends Controller
             $cms = new CmsHomepage([
                 'hero_badge' => 'JASA AI UNTUK KEBUTUHAN ANDA',
                 'hero_title' => 'Solusi AI Cerdas Untuk semua pekerjaan',
-                'hero_description' => 'Satu platform AI yang mendukung berbagai profesi dan industri untuk bekerja lebih cepat, lebih cerdas, dan lebih efisien.',
+                'hero_description' => 'Layanan AI inovatif untuk membantu bisnis dan individu bekerja lebih efektif, meningkatkan produktivitas, dan mewujudkan ide menjadi solusi nyata.',
                 'hero_btn1_text' => 'Lihat Layanan AI',
                 'hero_btn1_link' => '#layanan',
                 'hero_btn2_text' => 'Konsultasikan Kebutuhan',

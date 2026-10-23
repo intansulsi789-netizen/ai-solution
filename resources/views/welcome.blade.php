@@ -1353,7 +1353,7 @@
         .hero-subheading {
             font-size: clamp(18px, 2.5vw, 26px);
             font-weight: 400;
-            color: rgba(255, 255, 255, 0.80);
+            color: #FFFFFF;
             line-height: 1.6;
             max-width: 900px;
             margin-bottom: 48px;
@@ -3969,7 +3969,7 @@
             $titleLine1 = implode(' ', array_slice($words, 0, $half));
             $titleLine2 = implode(' ', array_slice($words, $half));
 
-            $heroDesc  = (isset($cmsHomepage) && $cmsHomepage->hero_description) ? $cmsHomepage->hero_description : 'Satu platform AI yang mendukung berbagai profesi dan industri untuk bekerja lebih cepat, lebih cerdas, dan lebih efisien.';
+            $heroDesc  = (isset($cmsHomepage) && $cmsHomepage->hero_description) ? $cmsHomepage->hero_description : 'Layanan AI inovatif untuk membantu bisnis dan individu bekerja lebih efektif, meningkatkan produktivitas, dan mewujudkan ide menjadi solusi nyata.';
             
             $heroBtn1Text = (isset($cmsHomepage) && $cmsHomepage->hero_btn1_text) ? $cmsHomepage->hero_btn1_text : 'Lihat Layanan AI';
             $heroBtn1Link = (isset($cmsHomepage) && $cmsHomepage->hero_btn1_link) ? $cmsHomepage->hero_btn1_link : '#layanan';
