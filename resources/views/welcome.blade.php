@@ -4081,7 +4081,7 @@
     <!-- HEADER -->
     <header class="page-header">
         <h1 class="page-title">Kreasi Cerdas AI</h1>
-        <p class="page-subtitle">Solusi AI untuk membantu memahami kebutuhan, menyederhanakan pekerjaan, dan menciptakan hasil yang lebih cepat.</p>
+        <p class="page-subtitle">Beragam layanan berbasis AI untuk membantu bisnis dan individu menyederhanakan pekerjaan, meningkatkan produktivitas, dan mencapai hasil yang lebih optimal.</p>
     </header>
 
     <!-- WHAT IS AI SOLUTION -->
@@ -4089,7 +4089,7 @@
         <div class="section-tag">Pengenalan</div>
         <h2 class="section-title">Apa Itu AI Solution?</h2>
         <p class="section-desc">
-            AI Solution adalah solusi berbasis kecerdasan buatan yang dirancang untuk membantu menyelesaikan berbagai kebutuhan dan permasalahan melalui teknologi AI.
+            AI Solution adalah penyedia jasa dan layanan berbasis kecerdasan buatan (AI) yang membantu bisnis dan individu memenuhi berbagai kebutuhan pekerjaan melalui solusi teknologi yang efektif, kreatif, dan inovatif.
         </p>
 
         <!-- FLOW DIAGRAM -->
