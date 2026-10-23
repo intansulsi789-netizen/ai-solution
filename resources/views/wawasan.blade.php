@@ -814,6 +814,13 @@
             flex-direction: column;
             align-items: center;
             gap: 18px;
+            padding: 28px 36px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 4px 32px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.06);
         }
 
         .pagination-info {
@@ -938,6 +945,12 @@
             width: 32px;
             color: var(--text-dim);
             font-weight: 700;
+        }
+
+        html[data-theme="light"] .pagination-wrapper {
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid rgba(15, 23, 42, 0.10);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07), inset 0 1px 0 rgba(255,255,255,0.9);
         }
 
         /* ==========================================
