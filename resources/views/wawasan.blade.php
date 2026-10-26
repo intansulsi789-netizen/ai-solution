@@ -581,6 +581,10 @@
             height: 100%;
             position: relative;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.40), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            box-sizing: border-box;
+            min-width: 0;
+            width: 100%;
+            max-width: 100%;
         }
 
         html[data-theme="light"] .article-card {
@@ -1086,6 +1090,10 @@
         @media (max-width: 1024px) {
             .wawasan-grid {
                 grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+            .article-img-wrap {
+                height: 200px;
             }
         }
 
@@ -1099,19 +1107,150 @@
             .bottom-cta-box {
                 padding: 40px 20px;
             }
+            .wawasan-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 14px;
+            }
+            .article-img-wrap {
+                height: 170px;
+            }
+            .article-content {
+                padding: 20px 16px;
+            }
+            .article-title {
+                font-size: 16px;
+                margin-bottom: 10px;
+            }
+            .article-desc {
+                font-size: 13px;
+                margin-bottom: 18px;
+            }
         }
 
         @media (max-width: 640px) {
             .wawasan-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+            .article-card {
+                border-radius: 18px;
             }
             .article-img-wrap {
-                height: 200px;
+                height: 140px;
+            }
+            .article-content {
+                padding: 16px 12px;
+            }
+            .article-category {
+                font-size: 9.5px;
+                padding: 4px 10px;
+            }
+            .article-date {
+                font-size: 11px;
+            }
+            .article-title {
+                font-size: 14px;
+                line-height: 1.35;
+                margin-bottom: 8px;
+            }
+            .article-desc {
+                font-size: 11.5px;
+                line-height: 1.45;
+                margin-bottom: 14px;
+                -webkit-line-clamp: 2;
+            }
+            .article-btn {
+                font-size: 11.5px;
+                gap: 5px;
+            }
+            .article-btn svg {
+                width: 13px;
+                height: 13px;
             }
             .footer-inner {
                 flex-direction: column;
                 text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .wawasan-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+                margin-top: 24px;
+            }
+            .article-card {
+                border-radius: 14px;
+            }
+            .article-img-wrap {
+                height: 115px;
+            }
+            .article-content {
+                padding: 14px 10px;
+            }
+            .article-category {
+                font-size: 8.5px;
+                padding: 3px 8px;
+                letter-spacing: 0.8px;
+            }
+            .article-date {
+                font-size: 10px;
+            }
+            .article-title {
+                font-size: clamp(11.5px, 3.4vw, 13.5px);
+                line-height: 1.3;
+                margin-bottom: 6px;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+            .article-desc {
+                font-size: clamp(9.5px, 2.7vw, 11px);
+                line-height: 1.4;
+                margin-bottom: 12px;
+                -webkit-line-clamp: 2;
+            }
+            .article-btn {
+                font-size: 10.5px;
+                gap: 4px;
+            }
+            .article-btn svg {
+                width: 11px;
+                height: 11px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .wawasan-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+            .article-card {
+                border-radius: 12px;
+            }
+            .article-img-wrap {
+                height: 95px;
+            }
+            .article-content {
+                padding: 12px 8px;
+            }
+            .article-category {
+                font-size: 7.5px;
+                padding: 2px 6px;
+            }
+            .article-date {
+                font-size: 9px;
+            }
+            .article-title {
+                font-size: 11px;
+                line-height: 1.25;
+            }
+            .article-desc {
+                font-size: 9px;
+            }
+            .article-btn {
+                font-size: 9.5px;
             }
         }
 
