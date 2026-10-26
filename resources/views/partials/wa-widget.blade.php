@@ -349,9 +349,49 @@ html[data-theme="light"] .wa-footer {
 }
 
 /* === Responsive === */
+@media (max-width: 768px) {
+    #wa-widget {
+        bottom: 20px;
+        right: 16px;
+    }
+    #wa-toggle-btn {
+        width: 50px;
+        height: 50px;
+        box-shadow:
+            0 0 0 0 rgba(37, 211, 102, 0.45),
+            0 6px 20px rgba(37, 211, 102, 0.35);
+    }
+    #wa-toggle-btn svg {
+        width: 26px;
+        height: 26px;
+    }
+    #wa-panel {
+        width: calc(100vw - 32px);
+        max-width: 360px;
+        right: 0;
+        bottom: 62px;
+        max-height: calc(100vh - 85px);
+        overflow-y: auto;
+    }
+}
 @media (max-width: 480px) {
-    #wa-widget { bottom: 32px; right: 16px; }
-    #wa-panel  { width: calc(100vw - 32px); right: 0; }
+    #wa-widget {
+        bottom: 18px;
+        right: 14px;
+    }
+    #wa-toggle-btn {
+        width: 48px;
+        height: 48px;
+    }
+    #wa-toggle-btn svg {
+        width: 24px;
+        height: 24px;
+    }
+    #wa-panel {
+        width: calc(100vw - 28px);
+        bottom: 58px;
+        border-radius: 18px;
+    }
 }
 </style>
 
