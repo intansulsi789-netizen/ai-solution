@@ -1217,6 +1217,88 @@
             .solutions-title { font-size: 18px; }
             .solutions-subtitle { font-size: 11px; }
         }
+        /* === Responsive: "Bagaimana Layanan Ini Membantu?" section only === */
+        @media (max-width: 480px) {
+            .benefits-section-wrap .content-section-title {
+                font-size: 20px;
+                gap: 10px;
+                margin-bottom: 18px;
+                letter-spacing: -0.3px;
+            }
+            .benefits-section-wrap .content-title-icon {
+                width: 32px;
+                height: 32px;
+                border-radius: 9px;
+            }
+            .benefits-section-wrap .content-title-icon svg {
+                width: 18px;
+                height: 18px;
+            }
+            .benefits-section-wrap .benefits-list {
+                gap: 10px;
+                margin-bottom: 28px;
+            }
+            .benefits-section-wrap .benefit-item {
+                padding: 14px 14px;
+                gap: 12px;
+                border-radius: 14px;
+                flex-direction: row;
+            }
+            .benefits-section-wrap .benefit-icon {
+                width: 32px;
+                height: 32px;
+                border-radius: 8px;
+            }
+            .benefits-section-wrap .benefit-icon svg {
+                width: 15px;
+                height: 15px;
+            }
+            .benefits-section-wrap .benefit-text {
+                font-size: 14px;
+                line-height: 1.55;
+            }
+            .benefits-section-wrap .content-card {
+                padding: 20px 16px;
+                border-radius: 18px;
+            }
+            .benefits-section-wrap {
+                padding: 36px 0 60px;
+            }
+        }
+        @media (max-width: 360px) {
+            .benefits-section-wrap .content-section-title {
+                font-size: 18px;
+                gap: 8px;
+                margin-bottom: 14px;
+            }
+            .benefits-section-wrap .content-title-icon {
+                width: 28px;
+                height: 28px;
+            }
+            .benefits-section-wrap .content-title-icon svg {
+                width: 16px;
+                height: 16px;
+            }
+            .benefits-section-wrap .benefit-item {
+                padding: 12px 12px;
+                gap: 10px;
+            }
+            .benefits-section-wrap .benefit-icon {
+                width: 28px;
+                height: 28px;
+            }
+            .benefits-section-wrap .benefit-icon svg {
+                width: 13px;
+                height: 13px;
+            }
+            .benefits-section-wrap .benefit-text {
+                font-size: 13px;
+                line-height: 1.5;
+            }
+            .benefits-section-wrap .content-card {
+                padding: 16px 12px;
+            }
+        }
     </style>
 </head>
 <body>
