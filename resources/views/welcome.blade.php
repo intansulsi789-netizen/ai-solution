@@ -2226,18 +2226,22 @@
 
         .section-header { text-align: center; margin-bottom: 50px; position: relative; z-index: 2; }
 
-        /* 16 CARDS GRID */
+        /* 16 CARDS GRID - 4 COLUMNS AT ALL BREAKPOINTS */
+        #layanan .services-grid,
+        .services-section .services-grid,
         .services-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            display: grid !important;
+            grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
             gap: 24px;
-            width: 100%;
-            max-width: 100%;
-            box-sizing: border-box;
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
             position: relative;
             z-index: 2;
         }
         
+        #layanan .service-card,
+        .services-section .service-card,
         .service-card {
             background: rgba(10, 20, 50, 0.45);
             backdrop-filter: blur(14px);
@@ -2251,9 +2255,10 @@
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             overflow: hidden;
             cursor: pointer;
-            box-sizing: border-box;
-            min-width: 0;
-            width: 100%;
+            box-sizing: border-box !important;
+            min-width: 0 !important;
+            width: 100% !important;
+            max-width: 100% !important;
         }
         
         /* Card Laser Accent Line */
@@ -2293,22 +2298,24 @@
         .card-number { position: absolute; top: 20px; right: 24px; font-size: 48px; font-weight: 900; color: rgba(255, 255, 255, 0.04); font-family: 'Plus Jakarta Sans', sans-serif; transition: 0.3s; z-index: 0; }
         .service-card:hover .card-number { color: rgba(0, 168, 255, 0.12); transform: scale(1.1); }
         
-        .card-icon { width: 50px; height: 50px; border-radius: 14px; background: rgba(0, 168, 255, 0.1); display: flex; align-items: center; justify-content: center; margin-bottom: 24px; border: 1px solid rgba(0, 168, 255, 0.2); color: var(--cyan-neon); transition: 0.3s; z-index: 2; position: relative; box-shadow: 0 0 15px rgba(0, 168, 255, 0.15); }
+        .card-icon { width: 50px; height: 50px; border-radius: 14px; background: rgba(0, 168, 255, 0.1); display: flex; align-items: center; justify-content: center; margin-bottom: 24px; border: 1px solid rgba(0, 168, 255, 0.2); color: var(--cyan-neon); transition: 0.3s; z-index: 2; position: relative; box-shadow: 0 0 15px rgba(0, 168, 255, 0.15); flex-shrink: 0; }
         .service-card:hover .card-icon { background: linear-gradient(135deg, #00a8ff 0%, #7c3aed 100%); color: white; border-color: transparent; box-shadow: 0 0 25px rgba(0, 168, 255, 0.55); transform: scale(1.08); }
         
-        .card-title { font-size: 18px; font-weight: 700; margin-bottom: 12px; color: var(--white); z-index: 2; position: relative; font-family: 'Plus Jakarta Sans', sans-serif; }
-        .card-desc { font-size: 14px; color: rgba(255, 255, 255, 0.6); line-height: 1.6; margin-bottom: 24px; flex-grow: 1; z-index: 2; position: relative; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .card-title { font-size: 18px; font-weight: 700; margin-bottom: 12px; color: var(--white); z-index: 2; position: relative; font-family: 'Plus Jakarta Sans', sans-serif; word-break: break-word; overflow-wrap: anywhere; }
+        .card-desc { font-size: 14px; color: rgba(255, 255, 255, 0.6); line-height: 1.6; margin-bottom: 24px; flex-grow: 1; z-index: 2; position: relative; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; word-break: break-word; overflow-wrap: anywhere; }
         
-        .card-btn { margin-top: auto; display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--cyan-neon); background: none; border: none; cursor: pointer; padding: 0; z-index: 2; position: relative; transition: 0.3s; }
-        .card-btn svg { width: 14px; height: 14px; transition: transform 0.3s; }
+        .card-btn { margin-top: auto; display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--cyan-neon); background: none; border: none; cursor: pointer; padding: 0; z-index: 2; position: relative; transition: 0.3s; word-break: break-word; overflow-wrap: anywhere; }
+        .card-btn svg { width: 14px; height: 14px; transition: transform 0.3s; flex-shrink: 0; }
         .service-card:hover .card-btn { color: var(--purple-light); }
         .service-card:hover .card-btn svg { transform: translateX(4px); }
 
-        /* RESPONSIVE GRID - 4 COLUMNS ON ALL SCREENS */
+        /* RESPONSIVE GRID - STRICT 4 COLUMNS ON ALL SCREENS */
         @media (max-width: 1024px) {
+            #layanan .services-grid,
+            .services-section .services-grid,
             .services-grid {
-                grid-template-columns: repeat(4, 1fr);
-                gap: 14px;
+                grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+                gap: 14px !important;
             }
             .service-card {
                 padding: 22px 14px 20px;
@@ -2356,9 +2363,11 @@
             }
         }
         @media (max-width: 768px) {
+            #layanan .services-grid,
+            .services-section .services-grid,
             .services-grid {
-                grid-template-columns: repeat(4, 1fr);
-                gap: 8px;
+                grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+                gap: 8px !important;
             }
             .service-card {
                 padding: 14px 8px 16px;
@@ -2384,7 +2393,6 @@
                 font-size: 11px;
                 line-height: 1.25;
                 margin-bottom: 6px;
-                word-break: break-word;
             }
             .card-desc {
                 font-size: 9px;
@@ -2423,9 +2431,11 @@
             }
         }
         @media (max-width: 480px) {
+            #layanan .services-grid,
+            .services-section .services-grid,
             .services-grid {
-                grid-template-columns: repeat(4, 1fr);
-                gap: 5px;
+                grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+                gap: 5px !important;
             }
             .service-card {
                 padding: 10px 5px 12px;
@@ -2483,8 +2493,11 @@
             }
         }
         @media (max-width: 360px) {
+            #layanan .services-grid,
+            .services-section .services-grid,
             .services-grid {
-                gap: 4px;
+                grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+                gap: 4px !important;
             }
             .service-card {
                 padding: 8px 4px 10px;
