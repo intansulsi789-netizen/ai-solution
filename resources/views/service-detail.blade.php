@@ -1155,8 +1155,14 @@
             }
             .hero-tech-floating.left-side { left: 8px; }
             .hero-tech-floating.right-side { right: 8px; }
-            .solutions-grid { grid-template-columns: repeat(2, 1fr); }
-            .solution-card { min-height: 200px; }
+            .solutions-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+            .solution-card { min-height: 180px; padding: 22px 18px 18px; }
+            .solution-top { gap: 10px; margin-bottom: 14px; }
+            .solution-icon { width: 36px; height: 36px; }
+            .solution-icon svg { width: 17px; height: 17px; }
+            .solution-number { font-size: 26px; }
+            .solution-card-title { font-size: 14px; }
+            .solution-card-desc { font-size: 12px; }
             .detail-container {
                 flex-direction: column-reverse;
                 gap: 40px;
@@ -1179,13 +1185,37 @@
                 gap: 32px;
                 margin-top: 20px;
             }
-            .solutions-grid { grid-template-columns: 1fr; gap: 16px; }
-            .solution-card { min-height: auto; padding: 24px 20px 20px; }
-            .solutions-title { font-size: 22px; }
+            .solutions-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .solution-card { min-height: auto; padding: 14px 10px 12px; border-radius: 12px; }
+            .solution-top { gap: 8px; margin-bottom: 10px; }
+            .solution-icon { width: 30px; height: 30px; border-radius: 8px; }
+            .solution-icon svg { width: 14px; height: 14px; }
+            .solution-number { font-size: 20px; }
+            .solution-card-title { font-size: 12px; margin-bottom: 4px; }
+            .solution-card-desc { font-size: 10px; line-height: 1.4; }
+            .solution-glow-line { padding-top: 8px; }
+            .solution-card::after { width: 30px; height: 30px; }
+            .solutions-title { font-size: 20px; }
+            .solutions-subtitle { font-size: 12px; }
+            .solutions-header { margin-bottom: 16px; }
             .content-card { padding: 24px; }
             .cta-box { padding: 32px 20px; }
             .benefit-item { padding: 16px; flex-direction: column; gap: 12px; }
             .benefit-icon { width: 40px; height: 40px; }
+        }
+        @media (max-width: 380px) {
+            .solutions-grid { gap: 6px; }
+            .solution-card { padding: 10px 8px 10px; border-radius: 10px; }
+            .solution-top { gap: 6px; margin-bottom: 8px; }
+            .solution-icon { width: 24px; height: 24px; border-radius: 6px; }
+            .solution-icon svg { width: 12px; height: 12px; }
+            .solution-number { font-size: 16px; }
+            .solution-card-title { font-size: 10px; margin-bottom: 3px; }
+            .solution-card-desc { font-size: 9px; line-height: 1.35; }
+            .solution-glow-line { padding-top: 6px; }
+            .solution-card::after { width: 22px; height: 22px; }
+            .solutions-title { font-size: 18px; }
+            .solutions-subtitle { font-size: 11px; }
         }
     </style>
 </head>
