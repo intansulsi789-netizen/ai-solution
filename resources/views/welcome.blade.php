@@ -1775,7 +1775,7 @@
 
         .page-subtitle {
             font-size: clamp(16px, 2vw, 20px);
-            color: rgba(255, 255, 255, 0.7);
+            color: #ffffff;
             line-height: 1.6;
         }
 
