@@ -1033,6 +1033,7 @@
         }
         .benefit-item {
             display: flex;
+            align-items: center;
             gap: 18px;
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.04), rgba(0, 212, 255, 0.02));
             padding: 22px 24px;
@@ -1088,6 +1089,9 @@
             line-height: 1.55;
             align-self: center;
             font-weight: 500;
+            flex: 1;
+            min-width: 0;
+            word-break: break-word;
         }
 
         /* CTA Section */
@@ -1199,9 +1203,6 @@
             .solutions-subtitle { font-size: 12px; }
             .solutions-header { margin-bottom: 16px; }
             .content-card { padding: 24px; }
-            .cta-box { padding: 32px 20px; }
-            .benefit-item { padding: 16px; flex-direction: column; gap: 12px; }
-            .benefit-icon { width: 40px; height: 40px; }
         }
         @media (max-width: 380px) {
             .solutions-grid { gap: 6px; }
@@ -1217,13 +1218,178 @@
             .solutions-title { font-size: 18px; }
             .solutions-subtitle { font-size: 11px; }
         }
-        /* === Responsive: "Bagaimana Layanan Ini Membantu?" section only === */
-        @media (max-width: 480px) {
+        /* ==========================================================================
+           RESPONSIVE: "Bagaimana Layanan Ini Membantu?" & "Siap Mengimplementasikan Solusi Ini?"
+           (Desktop > 1024px untouched. Tablet/iPad & Mobile optimized)
+           ========================================================================== */
+
+        /* --- iPad Pro & Tablet Landscape (1024px) --- */
+        @media (max-width: 1024px) {
+            .benefits-section-wrap {
+                padding: 44px 0 85px;
+                overflow: hidden;
+            }
+            .benefits-section-wrap .content-card {
+                padding: 38px 32px;
+                border-radius: 24px;
+            }
+            .benefits-section-wrap .content-section-title {
+                font-size: 24px;
+                gap: 13px;
+                margin-bottom: 24px;
+                letter-spacing: -0.4px;
+            }
+            .benefits-section-wrap .content-title-icon {
+                width: 38px;
+                height: 38px;
+                border-radius: 11px;
+            }
+            .benefits-section-wrap .content-title-icon svg {
+                width: 20px;
+                height: 20px;
+            }
+            .benefits-section-wrap .benefits-list {
+                gap: 14px;
+                margin-bottom: 34px;
+            }
+            .benefits-section-wrap .benefit-item {
+                padding: 18px 22px;
+                gap: 16px;
+                border-radius: 16px;
+                flex-direction: row;
+                align-items: center;
+                text-align: left;
+            }
+            .benefits-section-wrap .benefit-icon {
+                width: 34px;
+                height: 34px;
+                border-radius: 9px;
+                flex-shrink: 0;
+            }
+            .benefits-section-wrap .benefit-icon svg {
+                width: 17px;
+                height: 17px;
+            }
+            .benefits-section-wrap .benefit-text {
+                font-size: 15px;
+                line-height: 1.55;
+                text-align: left;
+            }
+            /* CTA Box */
+            .benefits-section-wrap .cta-box {
+                margin-top: 32px;
+                padding: 34px 28px;
+                border-radius: 20px;
+            }
+            .benefits-section-wrap .cta-title {
+                font-size: 22px;
+                margin-bottom: 10px;
+                letter-spacing: -0.4px;
+            }
+            .benefits-section-wrap .cta-desc {
+                font-size: 14.5px;
+                margin-bottom: 22px;
+                max-width: 560px;
+                line-height: 1.55;
+            }
+            .benefits-section-wrap .btn-cta {
+                font-size: 14.5px;
+                padding: 13px 28px;
+                gap: 9px;
+            }
+        }
+
+        /* --- iPad Air & Tablet Portrait (820px / 768px) --- */
+        @media (max-width: 820px) {
+            .benefits-section-wrap {
+                padding: 38px 0 90px;
+            }
+            .benefits-section-wrap .content-card {
+                padding: 30px 24px;
+                border-radius: 20px;
+            }
+            .benefits-section-wrap .content-section-title {
+                font-size: 22px;
+                gap: 12px;
+                margin-bottom: 20px;
+            }
+            .benefits-section-wrap .content-title-icon {
+                width: 34px;
+                height: 34px;
+                border-radius: 10px;
+            }
+            .benefits-section-wrap .content-title-icon svg {
+                width: 18px;
+                height: 18px;
+            }
+            .benefits-section-wrap .benefits-list {
+                gap: 12px;
+                margin-bottom: 30px;
+            }
+            .benefits-section-wrap .benefit-item {
+                padding: 15px 18px;
+                gap: 14px;
+                border-radius: 14px;
+                flex-direction: row;
+                align-items: center;
+                text-align: left;
+            }
+            .benefits-section-wrap .benefit-icon {
+                width: 32px;
+                height: 32px;
+                border-radius: 8px;
+                flex-shrink: 0;
+            }
+            .benefits-section-wrap .benefit-icon svg {
+                width: 16px;
+                height: 16px;
+            }
+            .benefits-section-wrap .benefit-text {
+                font-size: 14px;
+                line-height: 1.52;
+                text-align: left;
+            }
+            /* CTA Box */
+            .benefits-section-wrap .cta-box {
+                margin-top: 26px;
+                padding: 28px 22px;
+                border-radius: 18px;
+            }
+            .benefits-section-wrap .cta-title {
+                font-size: 20px;
+                margin-bottom: 8px;
+            }
+            .benefits-section-wrap .cta-desc {
+                font-size: 13.5px;
+                margin-bottom: 18px;
+                max-width: 480px;
+                line-height: 1.52;
+            }
+            .benefits-section-wrap .btn-cta {
+                font-size: 13.5px;
+                padding: 12px 24px;
+                gap: 8px;
+            }
+            .tech-circuit-left, .tech-circuit-right {
+                width: 70px;
+                height: 180px;
+                opacity: 0.25;
+            }
+        }
+
+        /* --- Large Mobile & Small Tablet (640px) --- */
+        @media (max-width: 640px) {
+            .benefits-section-wrap {
+                padding: 32px 0 92px;
+            }
+            .benefits-section-wrap .content-card {
+                padding: 24px 18px;
+                border-radius: 18px;
+            }
             .benefits-section-wrap .content-section-title {
                 font-size: 20px;
-                gap: 10px;
+                gap: 11px;
                 margin-bottom: 18px;
-                letter-spacing: -0.3px;
             }
             .benefits-section-wrap .content-title-icon {
                 width: 32px;
@@ -1231,72 +1397,303 @@
                 border-radius: 9px;
             }
             .benefits-section-wrap .content-title-icon svg {
-                width: 18px;
-                height: 18px;
+                width: 17px;
+                height: 17px;
             }
             .benefits-section-wrap .benefits-list {
-                gap: 10px;
-                margin-bottom: 28px;
+                gap: 11px;
+                margin-bottom: 24px;
             }
             .benefits-section-wrap .benefit-item {
-                padding: 14px 14px;
-                gap: 12px;
-                border-radius: 14px;
+                padding: 13px 15px;
+                gap: 13px;
+                border-radius: 13px;
                 flex-direction: row;
+                align-items: center;
+                text-align: left;
             }
             .benefits-section-wrap .benefit-icon {
-                width: 32px;
-                height: 32px;
+                width: 30px;
+                height: 30px;
                 border-radius: 8px;
+                flex-shrink: 0;
             }
             .benefits-section-wrap .benefit-icon svg {
                 width: 15px;
                 height: 15px;
             }
             .benefits-section-wrap .benefit-text {
-                font-size: 14px;
-                line-height: 1.55;
+                font-size: 13.5px;
+                line-height: 1.5;
+                text-align: left;
             }
-            .benefits-section-wrap .content-card {
-                padding: 20px 16px;
-                border-radius: 18px;
+            /* CTA Box */
+            .benefits-section-wrap .cta-box {
+                margin-top: 22px;
+                padding: 22px 18px;
+                border-radius: 16px;
             }
-            .benefits-section-wrap {
-                padding: 36px 0 60px;
+            .benefits-section-wrap .cta-title {
+                font-size: 18px;
+                margin-bottom: 8px;
+            }
+            .benefits-section-wrap .cta-desc {
+                font-size: 13px;
+                margin-bottom: 16px;
+                line-height: 1.5;
+            }
+            .benefits-section-wrap .btn-cta {
+                font-size: 13px;
+                padding: 11px 22px;
+                gap: 8px;
             }
         }
-        @media (max-width: 360px) {
+
+        /* --- Standard Mobile (480px / 430px / 390px) --- */
+        @media (max-width: 480px) {
+            .benefits-section-wrap {
+                padding: 26px 0 95px;
+            }
+            .benefits-section-wrap .content-card {
+                padding: 20px 14px;
+                border-radius: 16px;
+            }
             .benefits-section-wrap .content-section-title {
                 font-size: 18px;
-                gap: 8px;
-                margin-bottom: 14px;
+                gap: 10px;
+                margin-bottom: 16px;
+                letter-spacing: -0.3px;
+                text-align: left;
             }
             .benefits-section-wrap .content-title-icon {
-                width: 28px;
-                height: 28px;
+                width: 30px;
+                height: 30px;
+                border-radius: 8px;
+                flex-shrink: 0;
             }
             .benefits-section-wrap .content-title-icon svg {
                 width: 16px;
                 height: 16px;
             }
-            .benefits-section-wrap .benefit-item {
-                padding: 12px 12px;
+            .benefits-section-wrap .benefits-list {
                 gap: 10px;
+                margin-bottom: 22px;
+            }
+            .benefits-section-wrap .benefit-item {
+                padding: 12px 13px;
+                gap: 12px;
+                border-radius: 12px;
+                flex-direction: row;
+                align-items: center;
+                text-align: left;
             }
             .benefits-section-wrap .benefit-icon {
                 width: 28px;
                 height: 28px;
+                border-radius: 7px;
+                flex-shrink: 0;
+            }
+            .benefits-section-wrap .benefit-icon svg {
+                width: 14px;
+                height: 14px;
+            }
+            .benefits-section-wrap .benefit-text {
+                font-size: 13px;
+                line-height: 1.48;
+                text-align: left;
+            }
+            /* CTA Box: compact, tidy, proportional */
+            .benefits-section-wrap .cta-box {
+                margin-top: 20px;
+                padding: 18px 14px;
+                border-radius: 15px;
+            }
+            .benefits-section-wrap .cta-title {
+                font-size: 16.5px;
+                margin-bottom: 6px;
+                letter-spacing: -0.2px;
+            }
+            .benefits-section-wrap .cta-desc {
+                font-size: 12px;
+                margin-bottom: 15px;
+                line-height: 1.46;
+                padding: 0 4px;
+            }
+            .benefits-section-wrap .btn-cta {
+                font-size: 12.5px;
+                padding: 10px 20px;
+                gap: 7px;
+                width: 100%;
+                max-width: 280px;
+                margin: 0 auto;
+                justify-content: center;
+            }
+            .benefits-section-wrap .btn-cta svg {
+                width: 15px;
+                height: 15px;
+            }
+            .tech-circuit-left, .tech-circuit-right {
+                display: none;
+            }
+        }
+
+        /* --- Smaller Mobile (375px / 360px) --- */
+        @media (max-width: 375px) {
+            .benefits-section-wrap {
+                padding: 22px 0 95px;
+            }
+            .benefits-section-wrap .content-card {
+                padding: 16px 12px;
+                border-radius: 14px;
+            }
+            .benefits-section-wrap .content-section-title {
+                font-size: 16.5px;
+                gap: 8px;
+                margin-bottom: 14px;
+            }
+            .benefits-section-wrap .content-title-icon {
+                width: 26px;
+                height: 26px;
+                border-radius: 7px;
+            }
+            .benefits-section-wrap .content-title-icon svg {
+                width: 14px;
+                height: 14px;
+            }
+            .benefits-section-wrap .benefits-list {
+                gap: 8px;
+                margin-bottom: 18px;
+            }
+            .benefits-section-wrap .benefit-item {
+                padding: 10px 11px;
+                gap: 10px;
+                border-radius: 11px;
+                flex-direction: row;
+                align-items: center;
+                text-align: left;
+            }
+            .benefits-section-wrap .benefit-icon {
+                width: 26px;
+                height: 26px;
+                border-radius: 6px;
+                flex-shrink: 0;
             }
             .benefits-section-wrap .benefit-icon svg {
                 width: 13px;
                 height: 13px;
             }
             .benefits-section-wrap .benefit-text {
-                font-size: 13px;
-                line-height: 1.5;
+                font-size: 12px;
+                line-height: 1.45;
+                text-align: left;
+            }
+            /* CTA Box */
+            .benefits-section-wrap .cta-box {
+                margin-top: 16px;
+                padding: 16px 11px;
+                border-radius: 14px;
+            }
+            .benefits-section-wrap .cta-title {
+                font-size: 15px;
+                margin-bottom: 6px;
+            }
+            .benefits-section-wrap .cta-desc {
+                font-size: 11.5px;
+                margin-bottom: 13px;
+                line-height: 1.42;
+            }
+            .benefits-section-wrap .btn-cta {
+                font-size: 11.5px;
+                padding: 9px 16px;
+                gap: 6px;
+                width: 100%;
+                max-width: 250px;
+                margin: 0 auto;
+                justify-content: center;
+            }
+            .benefits-section-wrap .btn-cta svg {
+                width: 14px;
+                height: 14px;
+            }
+        }
+
+        /* --- Ultra-Narrow Mobile (≤ 330px, e.g., Galaxy Fold 320px) --- */
+        @media (max-width: 330px) {
+            .benefits-section-wrap {
+                padding: 18px 0 95px;
             }
             .benefits-section-wrap .content-card {
-                padding: 16px 12px;
+                padding: 14px 9px;
+                border-radius: 12px;
+            }
+            .benefits-section-wrap .content-section-title {
+                font-size: 15px;
+                gap: 7px;
+                margin-bottom: 12px;
+            }
+            .benefits-section-wrap .content-title-icon {
+                width: 24px;
+                height: 24px;
+                border-radius: 6px;
+            }
+            .benefits-section-wrap .content-title-icon svg {
+                width: 13px;
+                height: 13px;
+            }
+            .benefits-section-wrap .benefits-list {
+                gap: 7px;
+                margin-bottom: 16px;
+            }
+            .benefits-section-wrap .benefit-item {
+                padding: 9px 9px;
+                gap: 8px;
+                border-radius: 9px;
+                flex-direction: row;
+                align-items: center;
+                text-align: left;
+            }
+            .benefits-section-wrap .benefit-icon {
+                width: 24px;
+                height: 24px;
+                border-radius: 6px;
+                flex-shrink: 0;
+            }
+            .benefits-section-wrap .benefit-icon svg {
+                width: 12px;
+                height: 12px;
+            }
+            .benefits-section-wrap .benefit-text {
+                font-size: 11px;
+                line-height: 1.4;
+                text-align: left;
+            }
+            /* CTA Box */
+            .benefits-section-wrap .cta-box {
+                margin-top: 14px;
+                padding: 13px 9px;
+                border-radius: 12px;
+            }
+            .benefits-section-wrap .cta-title {
+                font-size: 14px;
+                margin-bottom: 5px;
+            }
+            .benefits-section-wrap .cta-desc {
+                font-size: 10.5px;
+                margin-bottom: 11px;
+                line-height: 1.38;
+            }
+            .benefits-section-wrap .btn-cta {
+                font-size: 10.5px;
+                padding: 8px 12px;
+                gap: 5px;
+                width: 100%;
+                max-width: 220px;
+                margin: 0 auto;
+                justify-content: center;
+            }
+            .benefits-section-wrap .btn-cta svg {
+                width: 13px;
+                height: 13px;
             }
         }
     </style>
