@@ -1816,7 +1816,10 @@
             justify-content: center;
             gap: 24px;
             width: 100%;
-            flex-wrap: wrap;
+            max-width: 1000px;
+            margin: 0 auto;
+            flex-wrap: nowrap;
+            box-sizing: border-box;
         }
 
         .flow-card {
@@ -1829,11 +1832,14 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             gap: 16px;
             min-width: 220px;
+            flex: 0 1 240px;
             position: relative;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            box-sizing: border-box;
         }
 
         .flow-card:hover {
@@ -1864,6 +1870,19 @@
             border: 1px solid rgba(255,255,255,0.1);
             color: rgba(255, 255, 255, 0.85);
             transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .flow-icon svg {
+            width: 24px;
+            height: 24px;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .flow-card.ai-center .flow-icon svg {
+            width: 28px;
+            height: 28px;
         }
 
         .flow-card:hover .flow-icon {
@@ -1883,13 +1902,23 @@
             font-size: 18px;
             font-weight: 600;
             letter-spacing: 0.5px;
+            text-align: center;
+            white-space: nowrap;
         }
 
         .flow-arrow {
             display: flex;
             align-items: center;
+            justify-content: center;
             color: rgba(0, 168, 255, 0.5);
             animation: move-arrow 1.5s infinite;
+            flex-shrink: 0;
+        }
+
+        .flow-arrow svg {
+            width: 32px;
+            height: 32px;
+            display: block;
         }
 
         @keyframes move-arrow {
@@ -1898,33 +1927,201 @@
             100% { transform: translateX(5px); opacity: 0.3; }
         }
 
+        @keyframes move-arrow-sm {
+            0% { transform: translateX(-3px); opacity: 0.3; }
+            50% { opacity: 1; color: var(--cyan-neon); }
+            100% { transform: translateX(3px); opacity: 0.3; }
+        }
+
+        @keyframes move-arrow-xs {
+            0% { transform: translateX(-2px); opacity: 0.3; }
+            50% { opacity: 1; color: var(--cyan-neon); }
+            100% { transform: translateX(2px); opacity: 0.3; }
+        }
+
         @keyframes pulse-glow {
             0% { box-shadow: 0 0 15px rgba(124, 58, 237, 0.4); }
             100% { box-shadow: 0 0 30px rgba(0, 212, 255, 0.6); }
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 991px) {
             .flow-diagram {
-                flex-direction: column;
                 gap: 16px;
-                align-items: center;
-                width: 100%;
             }
             .flow-card {
+                min-width: 150px;
+                flex: 1 1 0;
+                max-width: 220px;
+                padding: 24px 18px;
+                border-radius: 18px;
+                gap: 14px;
+            }
+            .flow-icon {
+                width: 48px;
+                height: 48px;
+                border-radius: 12px;
+            }
+            .flow-icon svg {
+                width: 22px;
+                height: 22px;
+            }
+            .flow-card.ai-center .flow-icon svg {
+                width: 24px;
+                height: 24px;
+            }
+            .flow-text {
+                font-size: 15px;
+            }
+            .flow-arrow svg {
+                width: 26px;
+                height: 26px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .flow-diagram {
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
                 width: 100%;
-                max-width: 320px;
-                padding: 24px 20px;
-                min-width: auto;
+                max-width: 100%;
+                flex-wrap: nowrap;
+            }
+            .flow-card {
+                flex: 1 1 0;
+                min-width: 0;
+                max-width: none;
+                width: auto;
+                padding: 18px 10px;
+                border-radius: 14px;
+                gap: 10px;
+            }
+            .flow-card:hover {
+                transform: translateY(-3px);
+            }
+            .flow-icon {
+                width: 42px;
+                height: 42px;
+                border-radius: 10px;
+            }
+            .flow-icon svg {
+                width: 19px;
+                height: 19px;
+            }
+            .flow-card.ai-center .flow-icon svg {
+                width: 21px;
+                height: 21px;
+            }
+            .flow-text {
+                font-size: 13px;
+                letter-spacing: 0.3px;
             }
             .flow-arrow {
-                transform: rotate(90deg);
-                margin: 8px 0;
-                animation: move-arrow-mobile 1.5s infinite;
+                animation: move-arrow-sm 1.5s infinite;
             }
-            @keyframes move-arrow-mobile {
-                0% { transform: rotate(90deg) translateY(-5px); opacity: 0.3; }
-                50% { opacity: 1; color: var(--cyan-neon); }
-                100% { transform: rotate(90deg) translateY(5px); opacity: 0.3; }
+            .flow-arrow svg {
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .flow-diagram {
+                gap: 6px;
+            }
+            .flow-card {
+                padding: 14px 6px;
+                border-radius: 12px;
+                gap: 8px;
+            }
+            .flow-icon {
+                width: 36px;
+                height: 36px;
+                border-radius: 9px;
+            }
+            .flow-icon svg {
+                width: 16px;
+                height: 16px;
+            }
+            .flow-card.ai-center .flow-icon svg {
+                width: 18px;
+                height: 18px;
+            }
+            .flow-text {
+                font-size: 11px;
+                letter-spacing: 0.2px;
+            }
+            .flow-arrow svg {
+                width: 16px;
+                height: 16px;
+            }
+        }
+
+        @media (max-width: 375px) {
+            .flow-diagram {
+                gap: 4px;
+            }
+            .flow-card {
+                padding: 12px 4px;
+                border-radius: 10px;
+                gap: 6px;
+            }
+            .flow-icon {
+                width: 32px;
+                height: 32px;
+                border-radius: 8px;
+            }
+            .flow-icon svg {
+                width: 15px;
+                height: 15px;
+            }
+            .flow-card.ai-center .flow-icon svg {
+                width: 16px;
+                height: 16px;
+            }
+            .flow-text {
+                font-size: 10px;
+                letter-spacing: 0;
+            }
+            .flow-arrow {
+                animation: move-arrow-xs 1.5s infinite;
+            }
+            .flow-arrow svg {
+                width: 13px;
+                height: 13px;
+            }
+        }
+
+        @media (max-width: 330px) {
+            .flow-diagram {
+                gap: 3px;
+            }
+            .flow-card {
+                padding: 10px 3px;
+                border-radius: 8px;
+                gap: 5px;
+            }
+            .flow-icon {
+                width: 28px;
+                height: 28px;
+                border-radius: 7px;
+            }
+            .flow-icon svg {
+                width: 13px;
+                height: 13px;
+            }
+            .flow-card.ai-center .flow-icon svg {
+                width: 14px;
+                height: 14px;
+            }
+            .flow-text {
+                font-size: 9px;
+                letter-spacing: 0;
+            }
+            .flow-arrow svg {
+                width: 11px;
+                height: 11px;
             }
         }
 
