@@ -1491,7 +1491,7 @@
                 <circle cx="11" cy="11" r="8"></circle>
                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
-            <input type="text" class="quick-search-input" id="quick-search-input" placeholder="Cari menu... (Ctrl+K)" autocomplete="off">
+            <input type="text" class="quick-search-input" id="quick-search-input" placeholder="Cari menu..." autocomplete="off">
             <div class="quick-search-results" id="quick-search-results"></div>
         </div>
         <div class="topbar-right">
@@ -1738,15 +1738,6 @@
             }
         });
 
-        // Ctrl+K to focus search — separate listener on document for reliability
-        document.addEventListener('keydown', function (e) {
-            if ((e.ctrlKey || e.metaKey) && (e.key === 'k' || e.key === 'K' || e.code === 'KeyK')) {
-                e.preventDefault();
-                e.stopPropagation();
-                input.focus();
-                input.select();
-            }
-        }, true);
 
         // Keyboard navigation in results
         input.addEventListener('keydown', function (e) {
