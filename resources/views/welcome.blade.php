@@ -3917,50 +3917,6 @@
             .konsultasi-side-svg { width: 105px; height: 105px; }
             .konsultasi-response-gauge { width: 135px; }
         }
-        @media (max-width: 1024px) {
-            .konsultasi-side-decor {
-                display: flex;
-                opacity: 0.40;
-                pointer-events: none;
-                z-index: 1;
-            }
-            .konsultasi-side-left {
-                left: -20px;
-                transform: translateY(-50%) scale(0.72);
-                transform-origin: left center;
-            }
-            .konsultasi-side-right {
-                right: -20px;
-                transform: translateY(-50%) scale(0.72);
-                transform-origin: right center;
-            }
-        }
-        @media (max-width: 768px) {
-            .konsultasi-side-decor {
-                opacity: 0.24;
-            }
-            .konsultasi-side-left {
-                left: -40px;
-                transform: translateY(-50%) scale(0.52);
-            }
-            .konsultasi-side-right {
-                right: -40px;
-                transform: translateY(-50%) scale(0.52);
-            }
-        }
-        @media (max-width: 480px) {
-            .konsultasi-side-decor {
-                opacity: 0.16;
-            }
-            .konsultasi-side-left {
-                left: -55px;
-                transform: translateY(-50%) scale(0.42);
-            }
-            .konsultasi-side-right {
-                right: -55px;
-                transform: translateY(-50%) scale(0.42);
-            }
-        }
 
         .konsultasi-card {
             background: linear-gradient(135deg, rgba(12, 22, 65, 0.70) 0%, rgba(18, 14, 50, 0.65) 50%, rgba(8, 16, 52, 0.75) 100%);
@@ -4180,6 +4136,450 @@
             flex-wrap: wrap;
             justify-content: center;
         }
+
+        /* ==========================================
+           RESPONSIVE KONSULTASI (HP & IPAD/TABLET)
+        ========================================== */
+        /* iPad Pro / Large Tablet (1024px) */
+        @media (max-width: 1024px) {
+            #konsultasi.konsultasi-section {
+                padding: 80px 20px 80px;
+            }
+            .konsultasi-wrapper {
+                position: relative;
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .konsultasi-card {
+                max-width: 680px;
+                padding: 44px 30px 40px;
+                border-radius: 24px;
+            }
+            .konsultasi-side-decor {
+                display: flex;
+                opacity: 0.85;
+                pointer-events: none;
+                z-index: 2;
+                width: 140px;
+            }
+            .konsultasi-side-left {
+                left: 6px;
+                transform: translateY(-50%) scale(0.82);
+                transform-origin: left center;
+            }
+            .konsultasi-side-right {
+                right: 6px;
+                transform: translateY(-50%) scale(0.82);
+                transform-origin: right center;
+            }
+            .konsultasi-btn-row {
+                flex-direction: row;
+                gap: 14px;
+                flex-wrap: nowrap;
+                justify-content: center;
+                width: 100%;
+            }
+            .konsultasi-btn-row .konsultasi-open-btn,
+            .konsultasi-btn-row .konsultasi-btn {
+                width: auto;
+                padding: 13px 24px;
+                font-size: 14px;
+                white-space: nowrap;
+            }
+            .konsultasi-title {
+                font-size: 32px;
+                margin-bottom: 10px;
+            }
+            .konsultasi-desc {
+                font-size: 14px;
+                max-width: 500px;
+                margin-bottom: 24px;
+            }
+        }
+
+        /* iPad Air / 10th Gen (820px - 850px) */
+        @media (max-width: 850px) {
+            #konsultasi.konsultasi-section {
+                padding: 70px 16px 70px;
+            }
+            .konsultasi-card {
+                max-width: 540px;
+                padding: 38px 24px 34px;
+                border-radius: 22px;
+            }
+            .konsultasi-side-decor {
+                width: 115px;
+                opacity: 0.80;
+            }
+            .konsultasi-side-left {
+                left: 4px;
+                transform: translateY(-50%) scale(0.70);
+                transform-origin: left center;
+            }
+            .konsultasi-side-right {
+                right: 4px;
+                transform: translateY(-50%) scale(0.70);
+                transform-origin: right center;
+            }
+            .konsultasi-btn-row {
+                flex-direction: row;
+                gap: 12px;
+                flex-wrap: nowrap;
+                justify-content: center;
+                width: 100%;
+            }
+            .konsultasi-btn-row .konsultasi-open-btn,
+            .konsultasi-btn-row .konsultasi-btn {
+                width: auto;
+                padding: 12px 18px;
+                font-size: 13.5px;
+                white-space: nowrap;
+            }
+            .konsultasi-title {
+                font-size: 28px;
+                margin-bottom: 8px;
+            }
+            .konsultasi-desc {
+                font-size: 13.5px;
+                max-width: 460px;
+                margin-bottom: 22px;
+            }
+        }
+
+        /* iPad Mini / Portrait Tablet (768px) */
+        @media (max-width: 768px) {
+            #konsultasi.konsultasi-section {
+                padding: 64px 14px 64px;
+            }
+            .konsultasi-card {
+                max-width: 500px;
+                padding: 34px 20px 32px;
+                border-radius: 20px;
+            }
+            .konsultasi-side-decor {
+                width: 110px;
+                opacity: 0.78;
+            }
+            .konsultasi-side-left {
+                left: 2px;
+                transform: translateY(-50%) scale(0.65);
+                transform-origin: left center;
+            }
+            .konsultasi-side-right {
+                right: 2px;
+                transform: translateY(-50%) scale(0.65);
+                transform-origin: right center;
+            }
+            .konsultasi-btn-row {
+                flex-direction: row;
+                gap: 10px;
+                flex-wrap: nowrap;
+                justify-content: center;
+                width: 100%;
+            }
+            .konsultasi-btn-row .konsultasi-open-btn,
+            .konsultasi-btn-row .konsultasi-btn {
+                width: auto;
+                padding: 11px 15px;
+                font-size: 13px;
+                white-space: nowrap;
+                gap: 7px;
+            }
+            .konsultasi-btn-row .konsultasi-open-btn svg,
+            .konsultasi-btn-row .konsultasi-btn svg {
+                width: 15px;
+                height: 15px;
+            }
+            .konsultasi-title {
+                font-size: 25px;
+                margin-bottom: 8px;
+            }
+            .konsultasi-desc {
+                font-size: 13px;
+                max-width: 440px;
+                margin-bottom: 20px;
+            }
+        }
+
+        /* Mobile / Smartphone (≤ 680px, including 430px, 390px, 360px, 320px) */
+        @media (max-width: 680px) {
+            #konsultasi.konsultasi-section {
+                padding: 36px 14px 85px;
+                overflow: hidden;
+            }
+            .konsultasi-wrapper {
+                flex-direction: column;
+                align-items: center;
+                gap: 12px;
+                width: 100%;
+            }
+            .konsultasi-side-decor {
+                position: static;
+                transform: none;
+                width: 100%;
+                max-width: 440px;
+                opacity: 0.92;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                gap: 8px;
+                box-sizing: border-box;
+                padding: 0 4px;
+                pointer-events: none;
+            }
+            .konsultasi-side-left {
+                left: auto;
+                animation: none;
+            }
+            .konsultasi-side-right {
+                right: auto;
+                animation: none;
+            }
+            .konsultasi-side-svg {
+                display: none;
+            }
+            .konsultasi-telemetry-pill {
+                width: auto;
+                flex: 1;
+                max-width: 220px;
+                padding: 6px 10px;
+                border-radius: 9px;
+                gap: 8px;
+            }
+            .konsultasi-telemetry-pill.pill-alt {
+                max-width: 220px;
+            }
+            .pill-dot {
+                width: 6px;
+                height: 6px;
+            }
+            .pill-title {
+                font-size: 8.5px;
+                letter-spacing: 0.5px;
+            }
+            .pill-sub {
+                font-size: 7.5px;
+            }
+            .konsultasi-eq-bars {
+                width: 90px;
+                height: 22px;
+                padding: 3px 6px;
+                gap: 3px;
+                border-radius: 6px;
+            }
+            .konsultasi-response-gauge {
+                width: 115px;
+                padding: 6px 8px;
+                border-radius: 8px;
+                gap: 3px;
+            }
+            .gauge-label {
+                font-size: 8px;
+            }
+            .gauge-val {
+                font-size: 8px;
+            }
+            .gauge-bar {
+                height: 3px;
+            }
+            .konsultasi-card {
+                width: 100%;
+                max-width: 440px;
+                padding: 30px 16px 26px;
+                border-radius: 20px;
+                box-sizing: border-box;
+                position: relative;
+                z-index: 2;
+            }
+            .konsultasi-card::after {
+                width: 160px;
+                height: 3px;
+            }
+            .card-corner {
+                width: 12px;
+                height: 12px;
+            }
+            .konsultasi-icon {
+                width: 46px;
+                height: 46px;
+                border-radius: 13px;
+                margin-bottom: 10px;
+            }
+            .konsultasi-icon svg {
+                width: 22px;
+                height: 22px;
+            }
+            .konsultasi-radar-wave {
+                width: 110px;
+                height: 110px;
+                top: 60px;
+            }
+            .konsultasi-label {
+                font-size: 10px;
+                letter-spacing: 2px;
+                margin-bottom: 6px;
+            }
+            .konsultasi-title {
+                font-size: 21px;
+                letter-spacing: -0.5px;
+                line-height: 1.25;
+                margin-bottom: 8px;
+            }
+            .konsultasi-desc {
+                font-size: 12.5px;
+                line-height: 1.5;
+                margin-bottom: 20px;
+                max-width: 95%;
+            }
+            .konsultasi-btn-row {
+                flex-direction: column;
+                gap: 10px;
+                width: 100%;
+                align-items: center;
+            }
+            .konsultasi-btn-row .konsultasi-open-btn,
+            .konsultasi-btn-row .konsultasi-btn {
+                width: 100%;
+                max-width: 320px;
+                padding: 12px 18px;
+                font-size: 13px;
+                justify-content: center;
+                box-sizing: border-box;
+                text-align: center;
+                white-space: nowrap;
+            }
+            .konsultasi-btn-row .konsultasi-open-btn svg,
+            .konsultasi-btn-row .konsultasi-btn svg {
+                width: 16px;
+                height: 16px;
+                flex-shrink: 0;
+            }
+        }
+
+        /* HP Sedang (≤ 375px, e.g. 360px) */
+        @media (max-width: 375px) {
+            #konsultasi.konsultasi-section {
+                padding: 30px 10px 80px;
+            }
+            .konsultasi-wrapper {
+                gap: 10px;
+            }
+            .konsultasi-card {
+                padding: 26px 14px 22px;
+                border-radius: 18px;
+            }
+            .konsultasi-icon {
+                width: 40px;
+                height: 40px;
+                border-radius: 11px;
+                margin-bottom: 8px;
+            }
+            .konsultasi-icon svg {
+                width: 20px;
+                height: 20px;
+            }
+            .konsultasi-title {
+                font-size: 19px;
+                margin-bottom: 6px;
+            }
+            .konsultasi-desc {
+                font-size: 11.5px;
+                line-height: 1.45;
+                margin-bottom: 16px;
+            }
+            .konsultasi-btn-row .konsultasi-open-btn,
+            .konsultasi-btn-row .konsultasi-btn {
+                max-width: 290px;
+                padding: 11px 14px;
+                font-size: 12px;
+                gap: 7px;
+            }
+            .konsultasi-telemetry-pill {
+                max-width: 175px;
+                padding: 5px 8px;
+            }
+            .pill-title {
+                font-size: 8px;
+            }
+            .pill-sub {
+                font-size: 7px;
+            }
+            .konsultasi-eq-bars {
+                width: 80px;
+                height: 20px;
+            }
+            .konsultasi-response-gauge {
+                width: 100px;
+                padding: 4px 6px;
+            }
+        }
+
+        /* HP Ekstra Kecil (≤ 330px, e.g. 320px) */
+        @media (max-width: 330px) {
+            #konsultasi.konsultasi-section {
+                padding: 26px 8px 75px;
+            }
+            .konsultasi-wrapper {
+                gap: 8px;
+            }
+            .konsultasi-card {
+                padding: 22px 10px 18px;
+                border-radius: 16px;
+            }
+            .konsultasi-icon {
+                width: 36px;
+                height: 36px;
+                border-radius: 10px;
+                margin-bottom: 6px;
+            }
+            .konsultasi-icon svg {
+                width: 18px;
+                height: 18px;
+            }
+            .konsultasi-title {
+                font-size: 17px;
+                margin-bottom: 5px;
+            }
+            .konsultasi-desc {
+                font-size: 10.5px;
+                line-height: 1.4;
+                margin-bottom: 14px;
+            }
+            .konsultasi-btn-row .konsultasi-open-btn,
+            .konsultasi-btn-row .konsultasi-btn {
+                max-width: 270px;
+                padding: 10px 10px;
+                font-size: 11px;
+                gap: 6px;
+            }
+            .konsultasi-btn-row .konsultasi-open-btn svg,
+            .konsultasi-btn-row .konsultasi-btn svg {
+                width: 14px;
+                height: 14px;
+            }
+            .konsultasi-telemetry-pill {
+                max-width: 155px;
+                padding: 5px 7px;
+            }
+            .pill-title {
+                font-size: 7.5px;
+            }
+            .pill-sub {
+                font-size: 6.5px;
+            }
+            .konsultasi-eq-bars {
+                width: 65px;
+                height: 18px;
+                gap: 2px;
+            }
+            .konsultasi-response-gauge {
+                width: 90px;
+                padding: 4px 5px;
+            }
+        }
         /* ==========================================
            MODAL
         ========================================== */
@@ -4358,31 +4758,11 @@
             font-family: 'Plus Jakarta Sans', sans-serif;
         }
         .modal-success .btn-close-success:hover { background: rgba(255,255,255,0.14); color: #fff; }
-        @media (max-width: 640px) {
-            .konsultasi-card {
-                padding: 32px 18px 28px;
-                border-radius: 20px;
-                position: relative;
-                z-index: 2;
-            }
-        }
         @media (max-width: 540px) {
             .modal-box {
                 padding: 28px 18px 24px;
                 border-radius: 20px;
                 max-width: 100%;
-            }
-            .konsultasi-btn-row {
-                flex-direction: column;
-                gap: 12px;
-                width: 100%;
-            }
-            .konsultasi-btn-row .konsultasi-open-btn,
-            .konsultasi-btn-row .konsultasi-btn {
-                width: 100%;
-                justify-content: center;
-                box-sizing: border-box;
-                text-align: center;
             }
         }
         @keyframes ambient-pulse-blue {
