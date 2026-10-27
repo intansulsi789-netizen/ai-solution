@@ -3116,16 +3116,18 @@
             to   { filter: hue-rotate(360deg); }
         }
         .profile-photo {
-            width: 200px; height: 200px;
+            width: 100%; height: 100%;
             border-radius: 50%; object-fit: cover; object-position: top;
             border: 4px solid var(--navy-800);
             position: relative; z-index: 1;
+            display: block;
         }
-        .profile-info { flex: 1; }
+        .profile-info { flex: 1; min-width: 0; }
         .profile-name {
             font-family: 'Plus Jakarta Sans', sans-serif;
             font-size: 30px; font-weight: 800; letter-spacing: -0.5px;
             margin-bottom: 6px;
+            word-break: break-word;
         }
         .profile-role {
             display: inline-flex; align-items: center; gap: 8px;
@@ -3135,12 +3137,14 @@
             border: 1px solid rgba(0,168,255,0.22);
             border-radius: 100px; padding: 5px 14px;
             margin-bottom: 20px;
+            max-width: 100%; box-sizing: border-box;
         }
         .profile-desc {
             font-size: 16px; color: rgba(255,255,255,0.68); line-height: 1.7;
             margin-bottom: 28px;
+            word-break: break-word;
         }
-        .profile-socials { display: flex; gap: 12px; }
+        .profile-socials { display: flex; gap: 12px; flex-wrap: wrap; }
         .social-btn {
             display: flex; align-items: center; justify-content: center;
             width: 40px; height: 40px; border-radius: 10px;
@@ -3263,22 +3267,129 @@
             transform: scale(1.05);
         }
 
-        @media (max-width: 900px) {
-            .profile-container { flex-direction: column; text-align: center; padding: 36px 24px; gap: 32px; position: relative; overflow: hidden; }
+        /* ==========================================
+           RESPONSIVE CEO PROFILE SECTION
+           Desktop (> 1024px) tetap acuan utama (horizontal)
+           HP dan iPad: Tetap horizontal (Foto di KIRI, Info di KANAN)
+        ========================================== */
+        
+        /* iPad Pro (≤ 1024px) */
+        @media (max-width: 1024px) {
+            .profile-container {
+                display: flex !important;
+                flex-direction: row !important;
+                align-items: center !important;
+                text-align: left !important;
+                max-width: 860px;
+                padding: 38px 42px;
+                gap: 38px;
+                border-radius: 26px;
+            }
+            .profile-photo-wrap {
+                width: 165px;
+                height: 165px;
+            }
+            .profile-photo {
+                border-width: 4px;
+            }
+            .profile-name {
+                font-size: 26px;
+                margin-bottom: 5px;
+            }
+            .profile-role {
+                font-size: 13px;
+                padding: 5px 13px;
+                margin-bottom: 16px;
+                gap: 7px;
+            }
+            .profile-desc {
+                font-size: 14.5px;
+                line-height: 1.6;
+                margin-bottom: 22px;
+            }
             .profile-socials {
-                justify-content: center;
+                justify-content: flex-start !important;
+                gap: 10px;
+            }
+            .social-btn {
+                width: 38px;
+                height: 38px;
+                border-radius: 9px;
+            }
+            .social-btn svg {
+                width: 17px;
+                height: 17px;
+            }
+        }
+
+        /* iPad Air / iPad Mini (≤ 900px, e.g. 768px, 820px) */
+        @media (max-width: 900px) {
+            .tentang-ceo-heading {
+                margin-bottom: 34px !important;
+            }
+            .profile-container {
+                display: flex !important;
+                flex-direction: row !important;
+                align-items: center !important;
+                text-align: left !important;
+                max-width: 100%;
+                padding: 30px 28px;
+                gap: 28px;
+                border-radius: 22px;
+                position: relative;
+                overflow: hidden;
+            }
+            .profile-photo-wrap {
+                width: 135px;
+                height: 135px;
+            }
+            .profile-photo {
+                border-width: 3.5px;
+            }
+            .profile-photo-wrap::after {
+                filter: blur(14px);
+            }
+            .profile-name {
+                font-size: 22px;
+                margin-bottom: 4px;
+            }
+            .profile-role {
+                font-size: 12px;
+                padding: 4px 11px;
+                margin-bottom: 14px;
+                gap: 6px;
+            }
+            .profile-role svg {
+                width: 13px;
+                height: 13px;
+            }
+            .profile-desc {
+                font-size: 13.5px;
+                line-height: 1.55;
+                margin-bottom: 18px;
+            }
+            .profile-socials {
+                justify-content: flex-start !important;
                 align-items: center;
                 position: relative;
                 z-index: 2;
                 list-style: none;
+                gap: 9px;
                 -webkit-tap-highlight-color: transparent;
             }
             .social-btn {
+                width: 36px;
+                height: 36px;
+                border-radius: 9px;
                 -webkit-tap-highlight-color: transparent;
                 outline: none;
                 -webkit-touch-callout: none;
                 user-select: none;
                 -webkit-user-select: none;
+            }
+            .social-btn svg {
+                width: 16px;
+                height: 16px;
             }
             .social-btn:focus, .social-btn:active {
                 outline: none;
@@ -3294,6 +3405,262 @@
             .logo-item img { height: 36px; max-width: 125px; }
             .logo-marquee-track { gap: 32px; }
             .logo-marquee-track.reverse { margin-top: 18px; }
+        }
+
+        /* HP Landscape / Phablet (≤ 680px) */
+        @media (max-width: 680px) {
+            .tentang-ceo-heading {
+                margin-bottom: 26px !important;
+            }
+            .profile-container {
+                display: flex !important;
+                flex-direction: row !important;
+                align-items: center !important;
+                text-align: left !important;
+                padding: 22px 18px;
+                gap: 18px;
+                border-radius: 20px;
+            }
+            .profile-photo-wrap {
+                width: 110px;
+                height: 110px;
+            }
+            .profile-photo {
+                border-width: 3px;
+            }
+            .profile-photo-wrap::before {
+                inset: -3px;
+            }
+            .profile-photo-wrap::after {
+                inset: -3px;
+                filter: blur(12px);
+            }
+            .profile-name {
+                font-size: 19px;
+                margin-bottom: 4px;
+            }
+            .profile-role {
+                font-size: 11px;
+                padding: 3.5px 9px;
+                margin-bottom: 10px;
+                gap: 5px;
+            }
+            .profile-role svg {
+                width: 12px;
+                height: 12px;
+            }
+            .profile-desc {
+                font-size: 12px;
+                line-height: 1.5;
+                margin-bottom: 14px;
+            }
+            .profile-socials {
+                justify-content: flex-start !important;
+                gap: 8px;
+            }
+            .social-btn {
+                width: 32px;
+                height: 32px;
+                border-radius: 8px;
+            }
+            .social-btn svg {
+                width: 15px;
+                height: 15px;
+            }
+        }
+
+        /* HP Standar & iPhone (≤ 480px, e.g. 390px, 430px) */
+        @media (max-width: 480px) {
+            .tentang-ceo-heading {
+                margin-bottom: 22px !important;
+            }
+            .profile-container {
+                display: flex !important;
+                flex-direction: row !important;
+                align-items: center !important;
+                text-align: left !important;
+                padding: 18px 14px;
+                gap: 14px;
+                border-radius: 18px;
+            }
+            .profile-photo-wrap {
+                width: 92px;
+                height: 92px;
+            }
+            .profile-photo {
+                border-width: 2.5px;
+            }
+            .profile-photo-wrap::before {
+                inset: -3px;
+            }
+            .profile-photo-wrap::after {
+                inset: -3px;
+                filter: blur(10px);
+            }
+            .profile-name {
+                font-size: 17px;
+                margin-bottom: 3px;
+                letter-spacing: -0.3px;
+            }
+            .profile-role {
+                font-size: 10px;
+                padding: 3px 8px;
+                margin-bottom: 8px;
+                gap: 4px;
+            }
+            .profile-role svg {
+                width: 11px;
+                height: 11px;
+            }
+            .profile-desc {
+                font-size: 11px;
+                line-height: 1.45;
+                margin-bottom: 12px;
+            }
+            .profile-socials {
+                justify-content: flex-start !important;
+                gap: 7px;
+            }
+            .social-btn {
+                width: 30px;
+                height: 30px;
+                border-radius: 8px;
+            }
+            .social-btn svg {
+                width: 14px;
+                height: 14px;
+            }
+        }
+
+        /* HP Sedang (≤ 375px, e.g. 360px) */
+        @media (max-width: 375px) {
+            .tentang-section {
+                padding: 36px 12px !important;
+            }
+            .tentang-ceo-heading {
+                margin-bottom: 18px !important;
+            }
+            .profile-container {
+                display: flex !important;
+                flex-direction: row !important;
+                align-items: center !important;
+                text-align: left !important;
+                padding: 15px 11px;
+                gap: 11px;
+                border-radius: 16px;
+            }
+            .profile-photo-wrap {
+                width: 80px;
+                height: 80px;
+            }
+            .profile-photo {
+                border-width: 2px;
+            }
+            .profile-photo-wrap::before {
+                inset: -2.5px;
+            }
+            .profile-photo-wrap::after {
+                inset: -2.5px;
+                filter: blur(8px);
+            }
+            .profile-name {
+                font-size: 15.5px;
+                margin-bottom: 2px;
+                letter-spacing: -0.2px;
+            }
+            .profile-role {
+                font-size: 9.5px;
+                padding: 2.5px 7px;
+                margin-bottom: 7px;
+                gap: 4px;
+            }
+            .profile-role svg {
+                width: 10px;
+                height: 10px;
+            }
+            .profile-desc {
+                font-size: 10.5px;
+                line-height: 1.4;
+                margin-bottom: 10px;
+            }
+            .profile-socials {
+                justify-content: flex-start !important;
+                gap: 6px;
+            }
+            .social-btn {
+                width: 28px;
+                height: 28px;
+                border-radius: 7px;
+            }
+            .social-btn svg {
+                width: 13px;
+                height: 13px;
+            }
+        }
+
+        /* HP Ekstra Kecil (≤ 330px, e.g. 320px) */
+        @media (max-width: 330px) {
+            .tentang-section {
+                padding: 30px 8px !important;
+            }
+            .tentang-ceo-heading {
+                margin-bottom: 16px !important;
+            }
+            .profile-container {
+                display: flex !important;
+                flex-direction: row !important;
+                align-items: center !important;
+                text-align: left !important;
+                padding: 12px 9px;
+                gap: 9px;
+                border-radius: 14px;
+            }
+            .profile-photo-wrap {
+                width: 68px;
+                height: 68px;
+            }
+            .profile-photo {
+                border-width: 2px;
+            }
+            .profile-photo-wrap::before {
+                inset: -2px;
+            }
+            .profile-photo-wrap::after {
+                inset: -2px;
+                filter: blur(6px);
+            }
+            .profile-name {
+                font-size: 14px;
+                margin-bottom: 2px;
+            }
+            .profile-role {
+                font-size: 8.5px;
+                padding: 2px 6px;
+                margin-bottom: 6px;
+                gap: 3px;
+            }
+            .profile-role svg {
+                width: 9px;
+                height: 9px;
+            }
+            .profile-desc {
+                font-size: 9.5px;
+                line-height: 1.35;
+                margin-bottom: 8px;
+            }
+            .profile-socials {
+                justify-content: flex-start !important;
+                gap: 5px;
+            }
+            .social-btn {
+                width: 25px;
+                height: 25px;
+                border-radius: 6px;
+            }
+            .social-btn svg {
+                width: 12px;
+                height: 12px;
+            }
         }
         @media (max-width: 640px) {
             .logo-marquee-wrapper { padding: 12px 0; }
@@ -5441,7 +5808,7 @@
     <div style="text-align:center;margin-bottom:16px;position:relative;z-index:2;">
         <div style="font-size:12px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--cyan-neon);">CEO</div>
     </div>
-    <h3 style="font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(24px,3vw,38px);font-weight:700;letter-spacing:-0.8px;text-align:center;margin-bottom:50px;position:relative;z-index:2;">Kenali CEO Kami</h3>
+    <h3 class="tentang-ceo-heading" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(24px,3vw,38px);font-weight:700;letter-spacing:-0.8px;text-align:center;margin-bottom:50px;position:relative;z-index:2;">Kenali CEO Kami</h3>
 
     <div class="profile-container">
         <div class="profile-photo-wrap">
@@ -5451,7 +5818,7 @@
                 class="profile-photo"
                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
             >
-            <div style="display:none;width:200px;height:200px;border-radius:50%;background:linear-gradient(135deg,#00a8ff,#7c3aed);align-items:center;justify-content:center;position:relative;z-index:1;">
+            <div style="display:none;width:100%;height:100%;border-radius:50%;background:linear-gradient(135deg,#00a8ff,#7c3aed);align-items:center;justify-content:center;position:relative;z-index:1;">
                 <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
             </div>
         </div>
