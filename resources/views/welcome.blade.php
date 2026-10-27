@@ -1945,6 +1945,37 @@
         }
 
         @media (max-width: 991px) {
+            #pengenalan.layanan-section {
+                gap: 40px;
+                padding: 60px 20px 70px;
+            }
+            .page-header {
+                max-width: 680px;
+            }
+            .page-header .page-title {
+                font-size: 38px;
+                letter-spacing: -1px;
+                margin-bottom: 16px;
+            }
+            .page-header .page-subtitle {
+                font-size: 15.5px;
+                line-height: 1.6;
+            }
+            .section-what-is .section-tag {
+                font-size: 12px;
+                letter-spacing: 2px;
+                margin-bottom: 12px;
+            }
+            .section-what-is .section-title {
+                font-size: 26px;
+                margin-bottom: 14px;
+            }
+            .section-what-is .section-desc {
+                font-size: 15px;
+                line-height: 1.65;
+                max-width: 620px;
+                margin: 0 auto 36px;
+            }
             .flow-diagram {
                 gap: 16px;
             }
@@ -1979,6 +2010,37 @@
         }
 
         @media (max-width: 768px) {
+            #pengenalan.layanan-section {
+                gap: 30px;
+                padding: 44px 16px 56px;
+            }
+            .page-header {
+                max-width: 580px;
+            }
+            .page-header .page-title {
+                font-size: 30px;
+                letter-spacing: -0.8px;
+                margin-bottom: 12px;
+            }
+            .page-header .page-subtitle {
+                font-size: 14px;
+                line-height: 1.55;
+            }
+            .section-what-is .section-tag {
+                font-size: 11.5px;
+                letter-spacing: 1.5px;
+                margin-bottom: 10px;
+            }
+            .section-what-is .section-title {
+                font-size: 22px;
+                margin-bottom: 12px;
+            }
+            .section-what-is .section-desc {
+                font-size: 13.5px;
+                line-height: 1.55;
+                max-width: 540px;
+                margin: 0 auto 26px;
+            }
             .flow-diagram {
                 flex-direction: row;
                 align-items: center;
@@ -1993,7 +2055,7 @@
                 min-width: 0;
                 max-width: none;
                 width: auto;
-                padding: 18px 10px;
+                padding: 16px 10px;
                 border-radius: 14px;
                 gap: 10px;
             }
@@ -2027,13 +2089,51 @@
         }
 
         @media (max-width: 480px) {
+            #pengenalan.layanan-section {
+                gap: 20px;
+                padding: 30px 14px 50px;
+            }
+            .page-header {
+                max-width: 100%;
+                padding: 0 4px;
+            }
+            .page-header .page-title {
+                font-size: 23px;
+                letter-spacing: -0.5px;
+                line-height: 1.2;
+                margin-bottom: 8px;
+            }
+            .page-header .page-subtitle {
+                font-size: 12.5px;
+                line-height: 1.5;
+                max-width: 100%;
+            }
+            .section-what-is {
+                padding: 0 4px;
+            }
+            .section-what-is .section-tag {
+                font-size: 11px;
+                letter-spacing: 1.5px;
+                margin-bottom: 6px;
+            }
+            .section-what-is .section-title {
+                font-size: 19px;
+                line-height: 1.25;
+                margin-bottom: 8px;
+            }
+            .section-what-is .section-desc {
+                font-size: 12px;
+                line-height: 1.5;
+                max-width: 100%;
+                margin: 0 auto 20px;
+            }
             .flow-diagram {
                 gap: 6px;
             }
             .flow-card {
-                padding: 14px 6px;
+                padding: 13px 6px;
                 border-radius: 12px;
-                gap: 8px;
+                gap: 7px;
             }
             .flow-icon {
                 width: 36px;
@@ -2059,11 +2159,37 @@
         }
 
         @media (max-width: 375px) {
+            #pengenalan.layanan-section {
+                gap: 16px;
+                padding: 24px 10px 46px;
+            }
+            .page-header .page-title {
+                font-size: 21px;
+                margin-bottom: 6px;
+            }
+            .page-header .page-subtitle {
+                font-size: 11.5px;
+                line-height: 1.45;
+            }
+            .section-what-is .section-tag {
+                font-size: 10px;
+                letter-spacing: 1px;
+                margin-bottom: 5px;
+            }
+            .section-what-is .section-title {
+                font-size: 17.5px;
+                margin-bottom: 6px;
+            }
+            .section-what-is .section-desc {
+                font-size: 11px;
+                line-height: 1.45;
+                margin: 0 auto 16px;
+            }
             .flow-diagram {
                 gap: 4px;
             }
             .flow-card {
-                padding: 12px 4px;
+                padding: 11px 4px;
                 border-radius: 10px;
                 gap: 6px;
             }
@@ -2094,29 +2220,55 @@
         }
 
         @media (max-width: 330px) {
+            #pengenalan.layanan-section {
+                gap: 14px;
+                padding: 20px 8px 42px;
+            }
+            .page-header .page-title {
+                font-size: 18px;
+                margin-bottom: 5px;
+            }
+            .page-header .page-subtitle {
+                font-size: 10.5px;
+                line-height: 1.4;
+            }
+            .section-what-is .section-tag {
+                font-size: 9.5px;
+                letter-spacing: 0.8px;
+                margin-bottom: 4px;
+            }
+            .section-what-is .section-title {
+                font-size: 16px;
+                margin-bottom: 5px;
+            }
+            .section-what-is .section-desc {
+                font-size: 10px;
+                line-height: 1.4;
+                margin: 0 auto 14px;
+            }
             .flow-diagram {
                 gap: 3px;
             }
             .flow-card {
-                padding: 10px 3px;
+                padding: 9px 3px;
                 border-radius: 8px;
-                gap: 5px;
+                gap: 4px;
             }
             .flow-icon {
-                width: 28px;
-                height: 28px;
+                width: 27px;
+                height: 27px;
                 border-radius: 7px;
             }
             .flow-icon svg {
+                width: 12px;
+                height: 12px;
+            }
+            .flow-card.ai-center .flow-icon svg {
                 width: 13px;
                 height: 13px;
             }
-            .flow-card.ai-center .flow-icon svg {
-                width: 14px;
-                height: 14px;
-            }
             .flow-text {
-                font-size: 9px;
+                font-size: 8.5px;
                 letter-spacing: 0;
             }
             .flow-arrow svg {
