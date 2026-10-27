@@ -1804,7 +1804,7 @@
 
         .section-desc {
             font-size: 18px;
-            color: rgba(255, 255, 255, 0.75);
+            color: #ffffff;
             max-width: 700px;
             line-height: 1.7;
             margin-bottom: 60px;
