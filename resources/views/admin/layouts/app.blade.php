@@ -1736,13 +1736,17 @@
                 results.classList.remove('visible');
                 input.blur();
             }
-            // Ctrl+K to focus search
-            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        });
+
+        // Ctrl+K to focus search — separate listener on document for reliability
+        document.addEventListener('keydown', function (e) {
+            if ((e.ctrlKey || e.metaKey) && (e.key === 'k' || e.key === 'K' || e.code === 'KeyK')) {
                 e.preventDefault();
+                e.stopPropagation();
                 input.focus();
                 input.select();
             }
-        });
+        }, true);
 
         // Keyboard navigation in results
         input.addEventListener('keydown', function (e) {
