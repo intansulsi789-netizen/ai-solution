@@ -264,7 +264,7 @@ Route::redirect('/admin', '/admin/login');
 Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::get('/login',  [AdminAuthController::class, 'showLogin'])->name('login');
-    Route::post('/login', [AdminAuthController::class, 'login'])->middleware('guest')->name('login.post');
+    Route::post('/login', [AdminAuthController::class, 'login'])->middleware(['guest', 'throttle:15,1'])->name('login.post');
 
     // Protected admin pages — accessible by ALL authenticated admin roles
     Route::middleware('auth')->group(function () {
