@@ -7,7 +7,7 @@
     <meta name="description" content="{{ Str::limit(strip_tags($article['summary'] ?? ''), 160) }}">
 
     @php
-        $canonicalDomain = 'https://aisolution.duckdns.org';
+        $canonicalDomain = 'https://jogjaaisolutions.my.id';
         $canonicalUrl    = $canonicalDomain . '/wawasan/' . $article['slug'];
         $ogImage         = !empty($article['image']) ? (str_starts_with($article['image'], 'http') ? $article['image'] : $canonicalDomain . '/' . ltrim($article['image'], '/')) : $canonicalDomain . '/images/og-default.jpg';
     @endphp

@@ -17,7 +17,7 @@
     $metaTitle = ($cmsSeo && $cmsSeo->meta_title) ? $cmsSeo->meta_title : 'AI Solution - Platform AI Cerdas untuk Semua Pekerjaan';
     $metaDesc  = ($cmsSeo && $cmsSeo->meta_description) ? $cmsSeo->meta_description : 'AI Solution Engine - Platform AI terdepan untuk semua profesi dan industri. Bekerja lebih cepat, lebih cerdas, dan lebih efisien.';
 
-    $canonicalDomain = 'https://aisolution.duckdns.org';
+    $canonicalDomain = 'https://jogjaaisolutions.my.id';
     $canonicalUrl    = $canonicalDomain . '/';
     $ogImage         = $canonicalDomain . '/images/og-default.jpg';
 @endphp

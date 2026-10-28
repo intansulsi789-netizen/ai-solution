@@ -11,7 +11,7 @@
     $metaTitle = ($cmsSeo && $cmsSeo->meta_title) ? 'Wawasan & Artikel - ' . $cmsSeo->meta_title : 'Wawasan & Artikel AI - AI Solution';
     $metaDesc  = ($cmsSeo && $cmsSeo->meta_description) ? $cmsSeo->meta_description : 'Eksplorasi wawasan, berita, dan artikel terkini seputar implementasi kecerdasan buatan untuk akselerasi bisnis dari AI Solution.';
 
-    $canonicalDomain = 'https://aisolution.duckdns.org';
+    $canonicalDomain = 'https://jogjaaisolutions.my.id';
     $canonicalUrl    = $canonicalDomain . '/wawasan';
     $ogImage         = $canonicalDomain . '/images/og-default.jpg';
 @endphp

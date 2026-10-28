@@ -7,7 +7,7 @@
     $waMessage = 'Halo, saya ingin berkonsultasi mengenai layanan ' . $service['title'] . '.';
     $waUrl     = 'https://wa.me/' . $waNumber . '?text=' . rawurlencode($waMessage);
 
-    $canonicalDomain = 'https://aisolution.duckdns.org';
+    $canonicalDomain = 'https://jogjaaisolutions.my.id';
     $canonicalUrl    = $canonicalDomain . '/layanan/' . $service['slug'];
     $serviceImage    = !empty($service['image']) ? (str_starts_with($service['image'], 'http') ? $service['image'] : $canonicalDomain . '/' . ltrim($service['image'], '/')) : $canonicalDomain . '/images/og-default.jpg';
     $serviceMetaDesc = \Illuminate\Support\Str::limit(strip_tags($service['desc'] ?? ''), 160);

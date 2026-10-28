@@ -2,4 +2,4 @@ User-agent: *
 Disallow: /admin
 Allow: /
 
-Sitemap: https://aisolution.duckdns.org/sitemap.xml
+Sitemap: https://jogjaaisolutions.my.id/sitemap.xml

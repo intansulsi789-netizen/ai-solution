@@ -43,7 +43,7 @@ class SeoMetaTagsTest extends TestCase
 
         // Canonical URL
         $response->assertSee('rel="canonical"', false);
-        $response->assertSee('https://aisolution.duckdns.org/', false);
+        $response->assertSee('https://jogjaaisolutions.my.id/', false);
 
         // Favicon
         $response->assertSee('rel="icon"', false);
@@ -69,7 +69,7 @@ class SeoMetaTagsTest extends TestCase
 
         // Canonical URL
         $response->assertSee('rel="canonical"', false);
-        $response->assertSee('https://aisolution.duckdns.org/wawasan', false);
+        $response->assertSee('https://jogjaaisolutions.my.id/wawasan', false);
 
         // Favicon
         $response->assertSee('rel="icon"', false);
@@ -104,7 +104,7 @@ class SeoMetaTagsTest extends TestCase
         $response->assertSee('Test Article Title SEO', false);
         $response->assertSee('This is a test summary', false);
         $response->assertSee('https://example.com/test-image.jpg', false);
-        $response->assertSee('https://aisolution.duckdns.org/wawasan/test-article-title-seo', false);
+        $response->assertSee('https://jogjaaisolutions.my.id/wawasan/test-article-title-seo', false);
 
         // Twitter Card
         $response->assertSee('twitter:card', false);
@@ -215,7 +215,7 @@ class SeoMetaTagsTest extends TestCase
         $response = $this->get('/robots.txt');
         $response->assertStatus(200);
         $response->assertSee('Disallow: /admin', false);
-        $response->assertSee('Sitemap: https://aisolution.duckdns.org/sitemap.xml', false);
+        $response->assertSee('Sitemap: https://jogjaaisolutions.my.id/sitemap.xml', false);
     }
 
     /**
@@ -247,7 +247,7 @@ class SeoMetaTagsTest extends TestCase
         // Open Graph
         $response->assertSee('og:type', false);
         $response->assertSee('og:title', false);
-        $response->assertSee('https://aisolution.duckdns.org/layanan/' . $slug, false);
+        $response->assertSee('https://jogjaaisolutions.my.id/layanan/' . $slug, false);
 
         // Twitter Card
         $response->assertSee('twitter:card', false);
