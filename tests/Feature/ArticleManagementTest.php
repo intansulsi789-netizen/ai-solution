@@ -541,4 +541,101 @@ class ArticleManagementTest extends TestCase
         $publicSearchResponse->assertStatus(200);
         $publicSearchResponse->assertSee('Artikel Khusus Pakar AI');
     }
+
+    public function test_admin_articles_table_is_ordered_chronologically_by_published_at_asc()
+    {
+        $art4Nov = Article::create([
+            'judul'        => 'Artikel Jadwal 4 November ' . uniqid(),
+            'slug'         => 'artikel-jadwal-4-nov-' . uniqid(),
+            'status'       => 'scheduled',
+            'published_at' => Carbon::parse('2026-11-04 11:00:00', 'Asia/Jakarta'),
+            'is_active'    => true,
+        ]);
+
+        $art30Okt = Article::create([
+            'judul'        => 'Artikel Jadwal 30 Oktober ' . uniqid(),
+            'slug'         => 'artikel-jadwal-30-okt-' . uniqid(),
+            'status'       => 'scheduled',
+            'published_at' => Carbon::parse('2026-10-30 09:00:00', 'Asia/Jakarta'),
+            'is_active'    => true,
+        ]);
+
+        $art2Nov = Article::create([
+            'judul'        => 'Artikel Jadwal 2 November ' . uniqid(),
+            'slug'         => 'artikel-jadwal-2-nov-' . uniqid(),
+            'status'       => 'scheduled',
+            'published_at' => Carbon::parse('2026-11-02 14:00:00', 'Asia/Jakarta'),
+            'is_active'    => true,
+        ]);
+
+        $art31Okt = Article::create([
+            'judul'        => 'Artikel Jadwal 31 Oktober ' . uniqid(),
+            'slug'         => 'artikel-jadwal-31-okt-' . uniqid(),
+            'status'       => 'scheduled',
+            'published_at' => Carbon::parse('2026-10-31 10:00:00', 'Asia/Jakarta'),
+            'is_active'    => true,
+        ]);
+
+        $art3Nov = Article::create([
+            'judul'        => 'Artikel Jadwal 3 November ' . uniqid(),
+            'slug'         => 'artikel-jadwal-3-nov-' . uniqid(),
+            'status'       => 'scheduled',
+            'published_at' => Carbon::parse('2026-11-03 08:00:00', 'Asia/Jakarta'),
+            'is_active'    => true,
+        ]);
+
+        $response = $this->actingAs($this->admin)->get(route('admin.articles.index', ['q' => 'Artikel Jadwal']));
+        $response->assertStatus(200);
+
+        $viewArticles = $response->viewData('articles');
+        $this->assertNotNull($viewArticles);
+
+        $titles = $viewArticles->pluck('judul')->all();
+
+        $pos30Okt = array_search($art30Okt->judul, $titles);
+        $pos31Okt = array_search($art31Okt->judul, $titles);
+        $pos2Nov  = array_search($art2Nov->judul, $titles);
+        $pos3Nov  = array_search($art3Nov->judul, $titles);
+        $pos4Nov  = array_search($art4Nov->judul, $titles);
+
+        $this->assertNotFalse($pos30Okt);
+        $this->assertNotFalse($pos31Okt);
+        $this->assertNotFalse($pos2Nov);
+        $this->assertNotFalse($pos3Nov);
+        $this->assertNotFalse($pos4Nov);
+
+        $this->assertTrue($pos30Okt < $pos31Okt, '30 Oktober harus sebelum 31 Oktober');
+        $this->assertTrue($pos31Okt < $pos2Nov, '31 Oktober harus sebelum 2 November');
+        $this->assertTrue($pos2Nov < $pos3Nov, '2 November harus sebelum 3 November');
+        $this->assertTrue($pos3Nov < $pos4Nov, '3 November harus sebelum 4 November');
+    }
+
+    public function test_articles_with_null_published_at_are_placed_after_dated_articles()
+    {
+        $unique = uniqid();
+        $artScheduled = Article::create([
+            'judul'        => "Artikel Uji Bertanggal {$unique}",
+            'slug'         => "artikel-uji-bertanggal-{$unique}",
+            'status'       => 'scheduled',
+            'published_at' => Carbon::parse('2026-11-10 10:00:00', 'Asia/Jakarta'),
+            'is_active'    => true,
+        ]);
+
+        $artDraftNull = Article::create([
+            'judul'        => "Artikel Uji Draft Null {$unique}",
+            'slug'         => "artikel-uji-draft-null-{$unique}",
+            'status'       => 'draft',
+            'published_at' => null,
+            'is_active'    => false,
+        ]);
+
+        $response = $this->actingAs($this->admin)->get(route('admin.articles.index', ['q' => $unique]));
+        $response->assertStatus(200);
+
+        $viewArticles = $response->viewData('articles');
+        $this->assertCount(2, $viewArticles);
+
+        $this->assertEquals("Artikel Uji Bertanggal {$unique}", $viewArticles[0]->judul);
+        $this->assertEquals("Artikel Uji Draft Null {$unique}", $viewArticles[1]->judul);
+    }
 }

@@ -38,8 +38,13 @@ class AdminArticleController extends Controller
             $query->where('kategori', $request->kategori);
         }
 
-        // 10 artikel per halaman
-        $articles = $query->orderBy('created_at', 'desc')->paginate(10)->withQueryString();
+        // 10 artikel per halaman (diurutkan kronologis berdasarkan tanggal/jadwal publikasi terawal)
+        $articles = $query
+            ->orderByRaw('CASE WHEN published_at IS NULL THEN 1 ELSE 0 END ASC')
+            ->orderBy('published_at', 'asc')
+            ->orderBy('created_at', 'desc')
+            ->paginate(10)
+            ->withQueryString();
 
         // Untuk kalender jadwal, gunakan seluruh data artikel
         $allArticlesForCalendar = Article::orderBy('created_at', 'desc')->get();
@@ -63,7 +68,12 @@ class AdminArticleController extends Controller
     public function calendar(Request $request)
     {
         Article::autoPublishOverdue();
-        $articles = Article::orderBy('created_at', 'desc')->paginate(10)->withQueryString();
+        $articles = Article::query()
+            ->orderByRaw('CASE WHEN published_at IS NULL THEN 1 ELSE 0 END ASC')
+            ->orderBy('published_at', 'asc')
+            ->orderBy('created_at', 'desc')
+            ->paginate(10)
+            ->withQueryString();
         $allArticlesForCalendar = Article::orderBy('created_at', 'desc')->get();
         $calendarArticles = $this->formatArticlesForCalendar($allArticlesForCalendar);
         $activeTab = 'calendar';
