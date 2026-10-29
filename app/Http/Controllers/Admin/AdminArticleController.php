@@ -23,7 +23,8 @@ class AdminArticleController extends Controller
             $query->where(function ($w) use ($q) {
                 $w->where('judul', 'like', "%{$q}%")
                   ->orWhere('kategori', 'like', "%{$q}%")
-                  ->orWhere('slug', 'like', "%{$q}%");
+                  ->orWhere('slug', 'like', "%{$q}%")
+                  ->orWhere('author_name', 'like', "%{$q}%");
             });
         }
 
@@ -125,6 +126,7 @@ class AdminArticleController extends Controller
                 'judul'         => $a->judul,
                 'slug'          => $a->slug,
                 'kategori'      => $a->kategori ?: 'Umum',
+                'author_name'   => $a->author_name ?? '',
                 'gambar'        => $imgSrc,
                 'status'        => $status,
                 'status_label'  => match($status) {
@@ -171,6 +173,7 @@ class AdminArticleController extends Controller
             'judul'        => 'required|string|max:255',
             'slug'         => 'required|string|unique:articles,slug|max:255',
             'kategori'     => 'nullable|string|max:100',
+            'author_name'  => 'nullable|string|max:100',
             'source_name'  => 'nullable|string|max:255',
             'source_url'   => 'nullable|url|max:1000',
             'image_type'   => 'nullable|in:upload,url',
@@ -184,6 +187,7 @@ class AdminArticleController extends Controller
             'judul.required'      => 'Judul artikel wajib diisi.',
             'slug.required'       => 'Slug URL artikel wajib diisi.',
             'slug.unique'         => 'Slug sudah digunakan oleh artikel lain.',
+            'author_name.max'     => 'Nama penulis maksimal 100 karakter.',
             'source_url.url'      => 'Format URL sumber tidak valid.',
             'gambar.image'        => 'File yang diunggah harus berupa gambar.',
             'gambar.mimes'        => 'Format gambar harus jpeg, png, jpg, atau webp.',
@@ -202,6 +206,7 @@ class AdminArticleController extends Controller
             'judul',
             'slug',
             'kategori',
+            'author_name',
             'source_name',
             'source_url',
             'ringkasan',
@@ -285,6 +290,7 @@ class AdminArticleController extends Controller
             'judul'        => 'required|string|max:255',
             'slug'         => 'required|string|unique:articles,slug,' . $article->id . '|max:255',
             'kategori'     => 'nullable|string|max:100',
+            'author_name'  => 'nullable|string|max:100',
             'source_name'  => 'nullable|string|max:255',
             'source_url'   => 'nullable|url|max:1000',
             'image_type'   => 'nullable|in:upload,url,current',
@@ -298,6 +304,7 @@ class AdminArticleController extends Controller
             'judul.required'      => 'Judul artikel wajib diisi.',
             'slug.required'       => 'Slug URL artikel wajib diisi.',
             'slug.unique'         => 'Slug sudah digunakan oleh artikel lain.',
+            'author_name.max'     => 'Nama penulis maksimal 100 karakter.',
             'source_url.url'      => 'Format URL sumber tidak valid.',
             'gambar.image'        => 'File yang diunggah harus berupa gambar.',
             'gambar.mimes'        => 'Format gambar harus jpeg, png, jpg, atau webp.',
@@ -316,6 +323,7 @@ class AdminArticleController extends Controller
             'judul',
             'slug',
             'kategori',
+            'author_name',
             'source_name',
             'source_url',
             'ringkasan',

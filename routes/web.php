@@ -49,6 +49,7 @@ $getArticles = function () {
                     'slug'        => $a->slug,
                     'title'       => $a->judul,
                     'category'    => $a->kategori,
+                    'author_name' => $a->author_name ?? null,
                     'date'        => $displayDate,
                     'source_name' => $a->source_name ?? null,
                     'source_url'  => $a->source_url ?? null,
@@ -78,6 +79,7 @@ $getArticles = function () {
                         'slug'        => $a->slug,
                         'title'       => $a->judul,
                         'category'    => $a->kategori,
+                        'author_name' => $a->author_name ?? null,
                         'date'        => $a->tanggal ?: '',
                         'source_name' => null,
                         'source_url'  => null,
@@ -150,7 +152,8 @@ Route::get('/wawasan', function (\Illuminate\Http\Request $request) {
             $w->where('judul', 'like', "%{$q}%")
               ->orWhere('ringkasan', 'like', "%{$q}%")
               ->orWhere('kategori', 'like', "%{$q}%")
-              ->orWhere('isi_artikel', 'like', "%{$q}%");
+              ->orWhere('isi_artikel', 'like', "%{$q}%")
+              ->orWhere('author_name', 'like', "%{$q}%");
         });
     }
 

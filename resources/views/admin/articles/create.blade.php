@@ -108,6 +108,11 @@
             </div>
 
             <div class="form-group">
+                <label class="form-label">Nama Penulis (Opsional)</label>
+                <input type="text" name="author_name" class="form-control" value="{{ old('author_name') }}" placeholder="Contoh: Tim Redaksi AI Solution / Dr. Jane Doe" maxlength="100">
+            </div>
+
+            <div class="form-group full-width">
                 <label class="form-label">Sumber Referensi Artikel (Opsional)</label>
                 <input type="text" name="source_name" class="form-control" value="{{ old('source_name') }}" placeholder="Contoh: Kementerian Perhubungan RI / McKinsey Insight">
             </div>

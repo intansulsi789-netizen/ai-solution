@@ -1106,6 +1106,11 @@
                         <td>
                             <div style="font-weight:600;color:var(--text);margin-bottom:2px;">{{ Str::limit($a->judul, 55) }}</div>
                             <div style="font-size:12px;color:var(--muted);margin-bottom:2px;">/wawasan/{{ $a->slug }}</div>
+                            @if($a->author_name)
+                                <div style="font-size:11.5px;color:var(--cyan);margin-bottom:3px;display:flex;align-items:center;gap:4px;">
+                                    <span>✍️ {{ $a->author_name }}</span>
+                                </div>
+                            @endif
                             @if($a->source_name)
                                 <div class="source-tag">
                                     <span>Sumber:</span>

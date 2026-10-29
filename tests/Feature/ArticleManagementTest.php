@@ -418,7 +418,127 @@ class ArticleManagementTest extends TestCase
         $response->assertSee('checked', false);
         $response->assertSee('2026-12-25T09:00', false);
     }
+
+    public function test_create_article_stores_author_name_successfully()
+    {
+        $payload = [
+            'judul'        => 'Artikel Uji Coba Nama Penulis',
+            'slug'         => 'artikel-uji-coba-nama-penulis',
+            'kategori'     => 'AI & Bisnis',
+            'author_name'  => 'Dr. Budi Santoso, M.Kom',
+            'source_name'  => 'AI Research Lab',
+            'source_url'   => 'https://example.com/research',
+            'image_type'   => 'url',
+            'gambar_url'   => 'https://images.unsplash.com/photo-1518770660439-4636190af475',
+            'ringkasan'    => 'Ringkasan artikel uji coba penulis.',
+            'isi_artikel'  => json_encode(['content' => '<p>Konten artikel</p>', 'takeaway' => 'Takeaway', 'readTime' => '4 mnt']),
+            'status'       => 'published',
+            'is_active'    => '1',
+        ];
+
+        $response = $this->actingAs($this->admin)->post(route('admin.articles.store'), $payload);
+        $response->assertRedirect(route('admin.articles.index'));
+
+        $article = Article::where('slug', 'artikel-uji-coba-nama-penulis')->first();
+        $this->assertNotNull($article);
+        $this->assertEquals('Dr. Budi Santoso, M.Kom', $article->author_name);
+
+        // Halaman detail publik harus menampilkan nama penulis
+        $detailResponse = $this->get('/wawasan/' . $article->slug);
+        $detailResponse->assertStatus(200);
+        $detailResponse->assertSee('Dr. Budi Santoso, M.Kom');
+        $detailResponse->assertSee('Penulis:');
+
+        // Halaman daftar wawasan publik harus menampilkan nama penulis
+        $wawasanResponse = $this->get('/wawasan');
+        $wawasanResponse->assertStatus(200);
+        $wawasanResponse->assertSee('Dr. Budi Santoso, M.Kom');
+    }
+
+    public function test_author_name_validation_fails_when_exceeding_max_length()
+    {
+        $payload = [
+            'judul'        => 'Artikel Validasi Penulis Panjang',
+            'slug'         => 'artikel-validasi-penulis-panjang',
+            'author_name'  => str_repeat('A', 101), // Melebihi 100 karakter
+            'status'       => 'draft',
+        ];
+
+        $response = $this->actingAs($this->admin)->post(route('admin.articles.store'), $payload);
+        $response->assertSessionHasErrors(['author_name']);
+    }
+
+    public function test_edit_article_prefills_and_updates_author_name()
+    {
+        $article = Article::create([
+            'judul'        => 'Artikel Uji Edit Penulis',
+            'slug'         => 'artikel-uji-edit-penulis',
+            'kategori'     => 'Inovasi',
+            'author_name'  => 'Penulis Awal',
+            'status'       => 'published',
+            'published_at' => now('Asia/Jakarta'),
+            'is_active'    => true,
+        ]);
+
+        // Form edit harus menampilkan nama penulis yang sudah tersimpan
+        $editPageResponse = $this->actingAs($this->admin)->get(route('admin.articles.edit', $article->id));
+        $editPageResponse->assertStatus(200);
+        $editPageResponse->assertSee('value="Penulis Awal"', false);
+
+        // Update dengan nama penulis baru
+        $updatePayload = [
+            'judul'        => 'Artikel Uji Edit Penulis Terupdate',
+            'slug'         => 'artikel-uji-edit-penulis',
+            'kategori'     => 'Inovasi',
+            'author_name'  => 'Penulis Baru Yang Telah Diperbarui',
+            'status'       => 'published',
+            'is_active'    => '1',
+        ];
+
+        $updateResponse = $this->actingAs($this->admin)->put(route('admin.articles.update', $article->id), $updatePayload);
+        $updateResponse->assertRedirect(route('admin.articles.index'));
+
+        $article->refresh();
+        $this->assertEquals('Penulis Baru Yang Telah Diperbarui', $article->author_name);
+    }
+
+    public function test_legacy_article_without_author_name_hides_author_info_cleanly()
+    {
+        $article = Article::create([
+            'judul'        => 'Artikel Lama Tanpa Penulis',
+            'slug'         => 'artikel-lama-tanpa-penulis',
+            'kategori'     => 'Arsip',
+            'author_name'  => null,
+            'status'       => 'published',
+            'published_at' => now('Asia/Jakarta'),
+            'is_active'    => true,
+        ]);
+
+        $detailResponse = $this->get('/wawasan/' . $article->slug);
+        $detailResponse->assertStatus(200);
+        $detailResponse->assertDontSee('Penulis:');
+    }
+
+    public function test_search_article_by_author_name()
+    {
+        Article::create([
+            'judul'        => 'Artikel Khusus Pakar AI',
+            'slug'         => 'artikel-khusus-pakar-ai',
+            'kategori'     => 'Riset',
+            'author_name'  => 'Profesor Johanes Wijaya',
+            'status'       => 'published',
+            'published_at' => now('Asia/Jakarta'),
+            'is_active'    => true,
+        ]);
+
+        // Pencarian di admin
+        $adminSearchResponse = $this->actingAs($this->admin)->get(route('admin.articles.index', ['q' => 'Johanes Wijaya']));
+        $adminSearchResponse->assertStatus(200);
+        $adminSearchResponse->assertSee('Artikel Khusus Pakar AI');
+
+        // Pencarian di publik wawasan
+        $publicSearchResponse = $this->get('/wawasan?q=Johanes');
+        $publicSearchResponse->assertStatus(200);
+        $publicSearchResponse->assertSee('Artikel Khusus Pakar AI');
+    }
 }
-
-
-

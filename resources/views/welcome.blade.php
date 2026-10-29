@@ -6161,6 +6161,12 @@
                 <div class="article-content">
                     <div class="article-meta">
                         <span class="article-category">{{ $article['category'] }}</span>
+                        @if(!empty($article['author_name']))
+                            <span class="article-author" style="font-size:12px;color:var(--text-dim, rgba(255,255,255,0.6));display:inline-flex;align-items:center;gap:4px;" title="Penulis">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                {{ $article['author_name'] }}
+                            </span>
+                        @endif
                         @php
                             $dateStr = str_ireplace(
                                 ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'],
@@ -7032,6 +7038,7 @@
                 'keywords' => array_values(array_filter(array_unique(array_merge(
                     explode(' ', strtolower(preg_replace('/[^a-zA-Z0-9 ]/', '', $artTitle))),
                     explode(' ', strtolower(preg_replace('/[^a-zA-Z0-9 ]/', '', $artSummary))),
+                    !empty($art['author_name']) ? explode(' ', strtolower(preg_replace('/[^a-zA-Z0-9 ]/', '', $art['author_name']))) : [],
                     ['artikel', 'wawasan', 'baca', 'berita', 'insight', strtolower($artCategory)]
                 )))),
                 'icon'     => '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>',

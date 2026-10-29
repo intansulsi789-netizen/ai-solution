@@ -1440,6 +1440,13 @@
                             <div class="article-meta">
                                 <span class="article-category">{{ $article->kategori ?: 'AI & Bisnis' }}</span>
                                 <div class="article-date-row">
+                                    @if(!empty($article->author_name))
+                                        <span class="article-author" style="display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--text-dim);" title="Penulis">
+                                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                            {{ $article->author_name }}
+                                        </span>
+                                        <span style="opacity:0.35;">•</span>
+                                    @endif
                                     <span>{{ $article->formatted_date }}</span>
                                 </div>
                             </div>

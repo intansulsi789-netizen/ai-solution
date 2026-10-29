@@ -10,6 +10,7 @@ class Article extends Model
         'judul',
         'slug',
         'kategori',
+        'author_name',
         'source_name',
         'source_url',
         'tanggal',
