@@ -73,6 +73,352 @@
         .form-grid { grid-template-columns: 1fr; gap: 0; }
         .status-cards { grid-template-columns: 1fr; }
     }
+
+    /* ============================================================
+       KALENDER JADWAL ARTIKEL (TAMBAH ARTIKEL)
+       ============================================================ */
+    .form-cal-card {
+        margin-top: 18px;
+        background: rgba(3, 10, 28, 0.75);
+        border: 1px solid rgba(0, 212, 255, 0.18);
+        border-radius: 14px;
+        padding: 20px;
+        backdrop-filter: blur(12px);
+    }
+    .form-cal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 14px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        padding-bottom: 14px;
+    }
+    .form-cal-header-left {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .form-cal-title {
+        font-size: 14px;
+        font-weight: 700;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .form-cal-title-badge {
+        font-size: 11px;
+        font-weight: 600;
+        background: rgba(0, 212, 255, 0.15);
+        color: var(--cyan);
+        border: 1px solid rgba(0, 212, 255, 0.3);
+        padding: 2px 8px;
+        border-radius: 6px;
+    }
+    .form-cal-subtitle {
+        font-size: 12px;
+        color: var(--muted);
+        margin-top: 2px;
+    }
+    .form-cal-nav {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .form-cal-nav-btn {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        color: #fff;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-size: 16px;
+        line-height: 1;
+    }
+    .form-cal-nav-btn:hover {
+        background: rgba(0, 212, 255, 0.15);
+        border-color: var(--cyan);
+        color: var(--cyan);
+    }
+    .form-cal-month-title {
+        font-size: 14px;
+        font-weight: 700;
+        color: #fff;
+        min-width: 140px;
+        text-align: center;
+    }
+    .form-cal-btn-today {
+        padding: 0 12px;
+        height: 32px;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    .form-cal-btn-today:hover {
+        background: rgba(0, 212, 255, 0.1);
+        border-color: var(--cyan);
+        color: var(--cyan);
+    }
+
+    /* Legend Bar */
+    .form-cal-legend {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 12px;
+        background: rgba(0, 0, 0, 0.25);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
+        padding: 8px 14px;
+        margin-bottom: 14px;
+        font-size: 12px;
+    }
+    .form-cal-legend-group {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        flex-wrap: wrap;
+    }
+    .form-cal-legend-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        color: rgba(255, 255, 255, 0.85);
+    }
+    .form-cal-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        display: inline-block;
+    }
+    .form-cal-dot.dot-published {
+        background: #10b981;
+        box-shadow: 0 0 6px rgba(16, 185, 129, 0.7);
+    }
+    .form-cal-dot.dot-scheduled {
+        background: #00d4ff;
+        box-shadow: 0 0 6px rgba(0, 212, 255, 0.7);
+    }
+    .form-cal-dot.dot-empty {
+        background: rgba(255, 255, 255, 0.2);
+        border: 1px dashed rgba(255, 255, 255, 0.5);
+    }
+    .form-cal-legend-hint {
+        color: var(--muted);
+        font-size: 11.5px;
+    }
+
+    /* Grid Layout */
+    .form-cal-grid-header {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 6px;
+        margin-bottom: 6px;
+    }
+    .form-cal-day-header {
+        text-align: center;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: var(--muted);
+        padding: 6px 2px;
+    }
+    .form-cal-day-header.weekend {
+        color: #f87171;
+    }
+    .form-cal-grid-body {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 6px;
+    }
+
+    /* Day Cells */
+    .form-cal-cell {
+        min-height: 72px;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        border-radius: 8px;
+        padding: 6px 7px;
+        display: flex;
+        flex-direction: column;
+        cursor: pointer;
+        position: relative;
+        transition: all 0.18s ease-in-out;
+        user-select: none;
+    }
+    .form-cal-cell:hover {
+        border-color: rgba(0, 212, 255, 0.5);
+        background: rgba(0, 212, 255, 0.05);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    .form-cal-cell.other-month {
+        opacity: 0.35;
+        background: rgba(0, 0, 0, 0.2);
+    }
+    .form-cal-cell.today {
+        border-color: var(--cyan);
+        box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
+    }
+    .form-cal-cell.selected {
+        outline: 2px solid #38bdf8;
+        outline-offset: -2px;
+        box-shadow: 0 0 14px rgba(56, 189, 248, 0.4);
+    }
+
+    /* Ketentuan 2: Tanggal artikel terbit -> Hijau */
+    .form-cal-cell.cal-cell-published {
+        background: rgba(16, 185, 129, 0.14);
+        border-color: rgba(16, 185, 129, 0.45);
+    }
+    .form-cal-cell.cal-cell-published:hover {
+        background: rgba(16, 185, 129, 0.22);
+        border-color: #10b981;
+    }
+
+    /* Ketentuan 3: Tanggal artikel terjadwal -> Biru / Cyan */
+    .form-cal-cell.cal-cell-scheduled {
+        background: rgba(0, 212, 255, 0.14);
+        border-color: rgba(0, 212, 255, 0.45);
+    }
+    .form-cal-cell.cal-cell-scheduled:hover {
+        background: rgba(0, 212, 255, 0.22);
+        border-color: #00d4ff;
+    }
+
+    /* Campuran jika dalam satu tanggal ada terbit & terjadwal */
+    .form-cal-cell.cal-cell-mixed {
+        background: linear-gradient(135deg, rgba(16, 185, 129, 0.14), rgba(0, 212, 255, 0.14));
+        border-color: rgba(0, 212, 255, 0.45);
+    }
+
+    /* Inner cell parts */
+    .form-cal-cell-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 4px;
+    }
+    .form-cal-cell-num {
+        font-size: 12px;
+        font-weight: 700;
+        color: #fff;
+    }
+    .form-cal-today-badge {
+        font-size: 9px;
+        padding: 1px 5px;
+        border-radius: 4px;
+        background: rgba(0, 212, 255, 0.2);
+        color: var(--cyan);
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+    .form-cal-badges-wrap {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        margin-top: auto;
+    }
+    .form-cal-pill {
+        font-size: 10px;
+        padding: 2px 5px;
+        border-radius: 4px;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-weight: 600;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        line-height: 1.2;
+    }
+    .form-cal-pill.pill-published {
+        background: rgba(16, 185, 129, 0.2);
+        color: #34d399;
+        border: 1px solid rgba(16, 185, 129, 0.35);
+    }
+    .form-cal-pill.pill-scheduled {
+        background: rgba(0, 212, 255, 0.2);
+        color: #38bdf8;
+        border: 1px solid rgba(0, 212, 255, 0.35);
+    }
+    .form-cal-cell-empty-hint {
+        font-size: 10px;
+        color: rgba(255, 255, 255, 0.3);
+        margin-top: auto;
+        opacity: 0;
+        transition: opacity 0.15s;
+    }
+    .form-cal-cell:hover .form-cal-cell-empty-hint {
+        opacity: 1;
+        color: var(--cyan);
+    }
+
+    .d-desktop { display: inline; }
+    .d-mobile { display: none; }
+
+    @media (max-width: 768px) {
+        .form-cal-cell { min-height: 56px; padding: 4px 5px; }
+        .form-cal-cell-num { font-size: 11px; }
+        .form-cal-pill { font-size: 9px; padding: 1px 4px; }
+        .form-cal-legend { font-size: 11px; }
+    }
+    @media (max-width: 540px) {
+        .d-desktop { display: none; }
+        .d-mobile { display: inline; }
+        .form-cal-cell { min-height: 48px; padding: 3px 3px; }
+        .form-cal-grid-header { gap: 3px; }
+        .form-cal-grid-body { gap: 3px; }
+        .form-cal-month-title { min-width: 110px; font-size: 13px; }
+        .form-cal-header { flex-direction: column; align-items: stretch; }
+        .form-cal-nav { justify-content: space-between; }
+    }
+
+    /* Light mode overrides for form calendar */
+    html[data-theme="light"] .form-cal-card {
+        background: #f8fafc;
+        border-color: rgba(15, 23, 42, 0.12);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+    }
+    html[data-theme="light"] .form-cal-title { color: #0f172a; }
+    html[data-theme="light"] .form-cal-month-title { color: #0f172a; }
+    html[data-theme="light"] .form-cal-cell {
+        background: #ffffff;
+        border-color: rgba(15, 23, 42, 0.1);
+    }
+    html[data-theme="light"] .form-cal-cell-num { color: #0f172a; }
+    html[data-theme="light"] .form-cal-cell.other-month {
+        background: #f1f5f9;
+        opacity: 0.5;
+    }
+    html[data-theme="light"] .form-cal-legend {
+        background: #ffffff;
+        border-color: rgba(15, 23, 42, 0.08);
+    }
+    html[data-theme="light"] .form-cal-nav-btn {
+        background: #ffffff;
+        border-color: rgba(15, 23, 42, 0.12);
+        color: #0f172a;
+    }
+    html[data-theme="light"] .form-cal-btn-today {
+        background: #ffffff;
+        border-color: rgba(15, 23, 42, 0.12);
+        color: #475569;
+    }
 </style>
 
 <div class="page-header">
@@ -271,6 +617,84 @@
                     <small style="color: var(--muted); font-size: 11.5px; margin-top: 5px; display: block;" id="date-hint">
                         Zona Waktu: WIB (Asia/Jakarta). Artikel terjadwal otomatis tayang setelah waktu tersebut tercapai.
                     </small>
+
+                    <!-- Kalender Jadwal Artikel Langsung di Bawah Input Tanggal Publikasi -->
+                    <div class="form-cal-card" id="form-article-calendar">
+                        <div class="form-cal-header">
+                            <div class="form-cal-header-left">
+                                <div>
+                                    <div class="form-cal-title">
+                                        <span>📅 Kalender Jadwal Artikel</span>
+                                        <span class="form-cal-title-badge">Sinkron Real-Time</span>
+                                    </div>
+                                    <div class="form-cal-subtitle">
+                                        Lihat tanggal yang sudah terisi artikel atau klik tanggal kosong untuk mengisi tanggal publikasi otomatis.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-cal-nav">
+                                <button type="button" class="form-cal-nav-btn" id="form-cal-prev-btn" title="Bulan Sebelumnya" aria-label="Bulan Sebelumnya">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                                </button>
+                                <span class="form-cal-month-title" id="form-cal-month-title">Bulan Tahun</span>
+                                <button type="button" class="form-cal-nav-btn" id="form-cal-next-btn" title="Bulan Berikutnya" aria-label="Bulan Berikutnya">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </button>
+                                <button type="button" class="form-cal-btn-today" id="form-cal-today-btn">Hari Ini</button>
+                            </div>
+                        </div>
+
+                        <!-- Legend Bar / Petunjuk Status -->
+                        <div class="form-cal-legend">
+                            <div class="form-cal-legend-group">
+                                <div class="form-cal-legend-item">
+                                    <span class="form-cal-dot dot-published"></span>
+                                    <span><strong>Hijau</strong>: Sudah Terbit</span>
+                                </div>
+                                <div class="form-cal-legend-item">
+                                    <span class="form-cal-dot dot-scheduled"></span>
+                                    <span><strong>Biru / Cyan</strong>: Terjadwal</span>
+                                </div>
+                                <div class="form-cal-legend-item">
+                                    <span class="form-cal-dot dot-empty"></span>
+                                    <span><strong>Tanpa Warna</strong>: Kosong (Bisa Dipilih)</span>
+                                </div>
+                            </div>
+                            <div class="form-cal-legend-hint">
+                                💡 Klik tanggal kosong untuk memilih dan mengisi jadwal publikasi otomatis.
+                            </div>
+                        </div>
+
+                        <!-- Grid Header Hari -->
+                        <div class="form-cal-grid-header">
+                            <div class="form-cal-day-header weekend">
+                                <span class="d-desktop">Minggu</span><span class="d-mobile">Min</span>
+                            </div>
+                            <div class="form-cal-day-header">
+                                <span class="d-desktop">Senin</span><span class="d-mobile">Sen</span>
+                            </div>
+                            <div class="form-cal-day-header">
+                                <span class="d-desktop">Selasa</span><span class="d-mobile">Sel</span>
+                            </div>
+                            <div class="form-cal-day-header">
+                                <span class="d-desktop">Rabu</span><span class="d-mobile">Rab</span>
+                            </div>
+                            <div class="form-cal-day-header">
+                                <span class="d-desktop">Kamis</span><span class="d-mobile">Kam</span>
+                            </div>
+                            <div class="form-cal-day-header">
+                                <span class="d-desktop">Jumat</span><span class="d-mobile">Jum</span>
+                            </div>
+                            <div class="form-cal-day-header">
+                                <span class="d-desktop">Sabtu</span><span class="d-mobile">Sab</span>
+                            </div>
+                        </div>
+
+                        <!-- Grid Body Tanggal -->
+                        <div class="form-cal-grid-body" id="form-cal-grid-body">
+                            <!-- Di-generate otomatis oleh JavaScript -->
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -578,6 +1002,276 @@
             syncIsiArtikel();
         });
     }
+
+    // ============================================================
+    // KALENDER JADWAL ARTIKEL (TAMBAH ARTIKEL)
+    // ============================================================
+    const calendarArticles = @json($calendarArticles ?? []);
+    const inputPublishedAt = document.getElementById('published_at');
+    const calMonthTitle    = document.getElementById('form-cal-month-title');
+    const calGridBody      = document.getElementById('form-cal-grid-body');
+
+    const calMonthNames = [
+        'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+        'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+    ];
+
+    // Tentukan bulan & tahun awal berdasarkan input published_at atau waktu saat ini
+    const today = new Date();
+    let initialCalDate = new Date();
+    if (inputPublishedAt && inputPublishedAt.value) {
+        const parsedInit = new Date(inputPublishedAt.value);
+        if (!isNaN(parsedInit.getTime())) {
+            initialCalDate = parsedInit;
+        }
+    }
+    let currentCalYear = initialCalDate.getFullYear();
+    let currentCalMonth = initialCalDate.getMonth();
+    let selectedCalDate = (inputPublishedAt && inputPublishedAt.value)
+        ? inputPublishedAt.value.substring(0, 10)
+        : '';
+
+    function getArticlesGroupedByDate() {
+        const map = {};
+        calendarArticles.forEach(a => {
+            if (a.date) {
+                if (!map[a.date]) map[a.date] = [];
+                map[a.date].push(a);
+            }
+        });
+        return map;
+    }
+
+    function formatDateKey(year, month, day) {
+        const y = year;
+        const m = String(month + 1).padStart(2, '0');
+        const d = String(day).padStart(2, '0');
+        return `${y}-${m}-${d}`;
+    }
+
+    function renderScheduleCalendar() {
+        if (!calGridBody || !calMonthTitle) return;
+
+        calMonthTitle.textContent = `${calMonthNames[currentCalMonth]} ${currentCalYear}`;
+        calGridBody.innerHTML = '';
+
+        const articlesMap = getArticlesGroupedByDate();
+
+        // Hari pertama dalam bulan ini (0 = Minggu, 1 = Senin, ...)
+        const firstDayIndex = new Date(currentCalYear, currentCalMonth, 1).getDay();
+        // Jumlah hari dalam bulan ini
+        const daysInMonth = new Date(currentCalYear, currentCalMonth + 1, 0).getDate();
+        // Jumlah hari dalam bulan sebelumnya
+        const prevDaysInMonth = new Date(currentCalYear, currentCalMonth, 0).getDate();
+
+        const todayKey = formatDateKey(today.getFullYear(), today.getMonth(), today.getDate());
+
+        // 1. Tanggal dari bulan sebelumnya
+        for (let i = firstDayIndex - 1; i >= 0; i--) {
+            const dayNum = prevDaysInMonth - i;
+            const prevMonthDate = new Date(currentCalYear, currentCalMonth - 1, dayNum);
+            const dateKey = formatDateKey(prevMonthDate.getFullYear(), prevMonthDate.getMonth(), dayNum);
+            const cell = createFormCalCell(dayNum, dateKey, true, articlesMap[dateKey] || [], dateKey === todayKey);
+            calGridBody.appendChild(cell);
+        }
+
+        // 2. Tanggal bulan saat ini
+        for (let day = 1; day <= daysInMonth; day++) {
+            const dateKey = formatDateKey(currentCalYear, currentCalMonth, day);
+            const isToday = (dateKey === todayKey);
+            const cell = createFormCalCell(day, dateKey, false, articlesMap[dateKey] || [], isToday);
+            calGridBody.appendChild(cell);
+        }
+
+        // 3. Tanggal bulan berikutnya agar genap kelipatan 7
+        const totalRendered = firstDayIndex + daysInMonth;
+        const nextDays = (7 - (totalRendered % 7)) % 7;
+        for (let d = 1; d <= nextDays; d++) {
+            const nextMonthDate = new Date(currentCalYear, currentCalMonth + 1, d);
+            const dateKey = formatDateKey(nextMonthDate.getFullYear(), nextMonthDate.getMonth(), d);
+            const cell = createFormCalCell(d, dateKey, true, articlesMap[dateKey] || [], dateKey === todayKey);
+            calGridBody.appendChild(cell);
+        }
+    }
+
+    function createFormCalCell(dayNum, dateKey, isOtherMonth, articles, isToday) {
+        const cell = document.createElement('div');
+        cell.className = 'form-cal-cell';
+        cell.dataset.date = dateKey;
+
+        if (isOtherMonth) cell.classList.add('other-month');
+        if (isToday) cell.classList.add('today');
+        if (dateKey === selectedCalDate) cell.classList.add('selected');
+
+        // Header nomor hari & badge today
+        const header = document.createElement('div');
+        header.className = 'form-cal-cell-header';
+
+        const numEl = document.createElement('span');
+        numEl.className = 'form-cal-cell-num';
+        numEl.textContent = dayNum;
+        header.appendChild(numEl);
+
+        if (isToday) {
+            const todayPill = document.createElement('span');
+            todayPill.className = 'form-cal-today-badge';
+            todayPill.textContent = 'Hari ini';
+            header.appendChild(todayPill);
+        }
+        cell.appendChild(header);
+
+        // Kategori warna berdasarkan ketentuan:
+        // Ketentuan: Tanggal artikel terbit -> Hijau
+        // Ketentuan: Tanggal artikel terjadwal -> Biru/Cyan
+        // Ketentuan: Tanggal kosong -> tetap normal tanpa warna khusus
+        const badgesWrap = document.createElement('div');
+        badgesWrap.className = 'form-cal-badges-wrap';
+
+        if (articles.length > 0) {
+            const hasPublished = articles.some(a => a.status === 'published' || !a.status);
+            const hasScheduled = articles.some(a => a.status === 'scheduled');
+            const schedCount = articles.filter(a => a.status === 'scheduled').length;
+            const pubCount = articles.filter(a => a.status === 'published' || !a.status).length;
+
+            if (hasPublished && !hasScheduled) {
+                cell.classList.add('cal-cell-published');
+                const pill = document.createElement('span');
+                pill.className = 'form-cal-pill pill-published';
+                pill.innerHTML = `<span class="form-cal-dot dot-published"></span> ${pubCount} Terbit`;
+                badgesWrap.appendChild(pill);
+            } else if (hasScheduled && !hasPublished) {
+                cell.classList.add('cal-cell-scheduled');
+                const pill = document.createElement('span');
+                pill.className = 'form-cal-pill pill-scheduled';
+                pill.innerHTML = `<span class="form-cal-dot dot-scheduled"></span> ${schedCount} Jadwal`;
+                badgesWrap.appendChild(pill);
+            } else if (hasPublished && hasScheduled) {
+                cell.classList.add('cal-cell-mixed');
+                const pillPub = document.createElement('span');
+                pillPub.className = 'form-cal-pill pill-published';
+                pillPub.innerHTML = `<span class="form-cal-dot dot-published"></span> ${pubCount} Terbit`;
+                badgesWrap.appendChild(pillPub);
+
+                const pillSched = document.createElement('span');
+                pillSched.className = 'form-cal-pill pill-scheduled';
+                pillSched.innerHTML = `<span class="form-cal-dot dot-scheduled"></span> ${schedCount} Jadwal`;
+                badgesWrap.appendChild(pillSched);
+            }
+
+            cell.title = `${articles.length} artikel (${dateKey})`;
+        } else {
+            // Tanggal kosong
+            cell.classList.add('cal-cell-empty');
+            const hint = document.createElement('span');
+            hint.className = 'form-cal-cell-empty-hint';
+            hint.textContent = '+ Pilih';
+            badgesWrap.appendChild(hint);
+            cell.title = `Tanggal kosong (Klik untuk memilih ${dateKey})`;
+        }
+
+        cell.appendChild(badgesWrap);
+
+        // Click handler: hanya tanggal kosong yang mengisi input
+        cell.addEventListener('click', function() {
+            handleDateCellClick(dateKey, articles);
+        });
+
+        return cell;
+    }
+
+    function handleDateCellClick(dateKey, articles) {
+        if (articles.length === 0) {
+            selectedCalDate = dateKey;
+
+            // Update selected class di semua sel
+            document.querySelectorAll('.form-cal-cell').forEach(c => {
+                if (c.dataset.date === dateKey) {
+                    c.classList.add('selected');
+                } else {
+                    c.classList.remove('selected');
+                }
+            });
+
+            // Isikan tanggal kosong ke input publikasi
+            applyDateToInput(dateKey);
+        }
+    }
+
+    function applyDateToInput(dateKey) {
+        if (!inputPublishedAt) return;
+
+        let timePart = '09:00';
+        if (inputPublishedAt.value && inputPublishedAt.value.includes('T')) {
+            timePart = inputPublishedAt.value.split('T')[1].substring(0, 5);
+        } else {
+            const now = new Date();
+            const hh = String(now.getHours()).padStart(2, '0');
+            const mm = String(now.getMinutes()).padStart(2, '0');
+            timePart = `${hh}:${mm}`;
+        }
+
+        const newDateTimeVal = `${dateKey}T${timePart}`;
+        inputPublishedAt.value = newDateTimeVal;
+        inputPublishedAt.dispatchEvent(new Event('input', { bubbles: true }));
+        inputPublishedAt.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+
+    // Navigasi Bulan
+    const formCalPrevBtn  = document.getElementById('form-cal-prev-btn');
+    const formCalNextBtn  = document.getElementById('form-cal-next-btn');
+    const formCalTodayBtn = document.getElementById('form-cal-today-btn');
+
+    if (formCalPrevBtn) {
+        formCalPrevBtn.addEventListener('click', function() {
+            currentCalMonth--;
+            if (currentCalMonth < 0) {
+                currentCalMonth = 11;
+                currentCalYear--;
+            }
+            renderScheduleCalendar();
+        });
+    }
+
+    if (formCalNextBtn) {
+        formCalNextBtn.addEventListener('click', function() {
+            currentCalMonth++;
+            if (currentCalMonth > 11) {
+                currentCalMonth = 0;
+                currentCalYear++;
+            }
+            renderScheduleCalendar();
+        });
+    }
+
+    if (formCalTodayBtn) {
+        formCalTodayBtn.addEventListener('click', function() {
+            const now = new Date();
+            currentCalYear = now.getFullYear();
+            currentCalMonth = now.getMonth();
+            renderScheduleCalendar();
+        });
+    }
+
+    // Sinkronisasi jika input published_at diedit manual
+    if (inputPublishedAt) {
+        inputPublishedAt.addEventListener('change', function() {
+            if (this.value) {
+                const parts = this.value.split('T');
+                selectedCalDate = parts[0];
+                const parsed = new Date(this.value);
+                if (!isNaN(parsed.getTime())) {
+                    if (parsed.getFullYear() !== currentCalYear || parsed.getMonth() !== currentCalMonth) {
+                        currentCalYear = parsed.getFullYear();
+                        currentCalMonth = parsed.getMonth();
+                    }
+                }
+                renderScheduleCalendar();
+            }
+        });
+    }
+
+    // Inisialisasi awal render kalender
+    renderScheduleCalendar();
 </script>
 @endpush
 @endsection

@@ -174,7 +174,11 @@ class AdminArticleController extends Controller
 
     public function create()
     {
-        return view('admin.articles.create');
+        Article::autoPublishOverdue();
+        $allArticlesForCalendar = Article::orderBy('created_at', 'desc')->get();
+        $calendarArticles = $this->formatArticlesForCalendar($allArticlesForCalendar);
+
+        return view('admin.articles.create', compact('calendarArticles'));
     }
 
     public function store(Request $request)

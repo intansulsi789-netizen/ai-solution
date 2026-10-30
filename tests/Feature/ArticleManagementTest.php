@@ -419,6 +419,48 @@ class ArticleManagementTest extends TestCase
         $response->assertSee('2026-12-25T09:00', false);
     }
 
+    public function test_create_article_page_provides_calendar_articles_and_renders_schedule_calendar()
+    {
+        $response = $this->actingAs($this->admin)->get(route('admin.articles.create'));
+        $response->assertStatus(200);
+        $response->assertViewHas('calendarArticles');
+        $response->assertSee('Kalender Jadwal Artikel');
+        $response->assertSee('form-article-calendar', false);
+        $response->assertSee('form-cal-grid-body', false);
+        $response->assertSee('Sudah Terbit');
+        $response->assertSee('Terjadwal');
+    }
+
+    public function test_calendar_articles_synchronized_between_calendar_menu_and_create_page()
+    {
+        $syncDate = '2026-11-20';
+        $syncArticle = Article::create([
+            'judul'        => 'Artikel Sinkronisasi Kalender',
+            'slug'         => 'artikel-sinkronisasi-kalender',
+            'status'       => 'scheduled',
+            'published_at' => Carbon::parse($syncDate . ' 11:00:00', 'Asia/Jakarta'),
+            'is_active'    => true,
+        ]);
+
+        $calendarViewResponse = $this->actingAs($this->admin)->get(route('admin.articles.calendar'));
+        $createViewResponse   = $this->actingAs($this->admin)->get(route('admin.articles.create'));
+
+        $calData1 = $calendarViewResponse->viewData('calendarArticles');
+        $calData2 = $createViewResponse->viewData('calendarArticles');
+
+        $this->assertNotEmpty($calData1);
+        $this->assertNotEmpty($calData2);
+
+        $matched1 = $calData1->where('id', $syncArticle->id)->first();
+        $matched2 = $calData2->where('id', $syncArticle->id)->first();
+
+        $this->assertNotNull($matched1);
+        $this->assertNotNull($matched2);
+        $this->assertEquals($matched1['date'], $matched2['date']);
+        $this->assertEquals($matched1['status'], $matched2['status']);
+        $this->assertEquals('2026-11-20', $matched2['date']);
+    }
+
     public function test_create_article_stores_author_name_successfully()
     {
         $payload = [
