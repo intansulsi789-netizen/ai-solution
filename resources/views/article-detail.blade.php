@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $article['title'] }} - AI Solution</title>
+    <title>Jogja AI Solutions</title>
     <meta name="description" content="{{ Str::limit(strip_tags($article['summary'] ?? ''), 160) }}">
 
     @php

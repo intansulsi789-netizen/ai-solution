@@ -28,7 +28,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="{{ $metaDesc }}">
 
-    <title>{{ $metaTitle }}</title>
+    <title>Jogja AI Solutions</title>
 
     <!-- Canonical URL -->
     <link rel="canonical" href="{{ $canonicalUrl }}">

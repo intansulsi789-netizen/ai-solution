@@ -17,7 +17,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $service['title'] }} - AI Solution</title>
+    <title>Jogja AI Solutions</title>
     <meta name="description" content="{{ $serviceMetaDesc }}">
 
     <!-- Canonical URL -->
