@@ -5316,8 +5316,7 @@
         <ul class="nav-links" role="list">
             <li><a href="/#layanan" id="nav-layanan">Layanan</a></li>
             <li>
-                <!-- Nomor diambil dari CMS Kontak (waUrl) -->
-                <a href="{{ $waUrl }}" target="_blank" rel="noopener noreferrer" id="nav-kontak" style="display:inline-flex;align-items:center;gap:6px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>Kontak</a>
+                <a href="/#konsultasi" id="nav-kontak" style="display:inline-flex;align-items:center;gap:6px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>Kontak</a>
             </li>
             <li><a href="/#tentang" id="nav-tentang">Tentang Kami</a></li>
             <li><a href="/#wawasan" id="nav-wawasan">Wawasan</a></li>
@@ -5349,8 +5348,7 @@
     <!-- Mobile menu -->
     <div class="nav-mobile-menu" id="mobile-menu" role="menu">
         <a href="/#layanan" role="menuitem">Layanan</a>
-        <!-- Nomor diambil dari CMS Kontak (waUrl) -->
-        <a href="{{ $waUrl }}" target="_blank" rel="noopener noreferrer" role="menuitem">Kontak</a>
+        <a href="/#konsultasi" role="menuitem">Kontak</a>
         <a href="/#tentang" role="menuitem">Tentang Kami</a>
         <a href="/#wawasan" role="menuitem">Wawasan Bisnis</a>
 
@@ -6209,6 +6207,7 @@
      KONSULTASI SECTION
 ========================================== -->
 <div class="section-divider-line"></div>
+<div id="kontak" style="position:relative;top:-70px;visibility:hidden;"></div>
 
 <section id="konsultasi" class="konsultasi-section">
     <div class="section-top-aurora"></div>
@@ -6223,8 +6222,8 @@
             <div class="konsultasi-telemetry-pill">
                 <div class="pill-dot pill-dot-cyan"></div>
                 <div class="pill-info">
-                    <span class="pill-title">AI_ADVISORY // 24/7</span>
-                    <span class="pill-sub">CONSULTATION READY</span>
+                    <span class="pill-title">AI_ADVISORY // READY</span>
+                    <span class="pill-sub">KONSULTASI AKTIF</span>
                 </div>
             </div>
             
@@ -6295,6 +6294,11 @@
                         {{ $ctaBtnText }} via WA
                     </a>
                 </div>
+
+                <p class="konsultasi-response-note" style="margin-top:16px;font-size:13px;line-height:1.5;color:rgba(255,255,255,0.7);display:flex;align-items:center;justify-content:center;gap:7px;text-align:center;">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;color:#00d4ff;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    <span>Tim AI Solutions siap membantu kebutuhan Anda pada jam operasional dan akan memberikan respons secepat mungkin.</span>
+                </p>
             </div>
         </div>
 
@@ -6319,7 +6323,7 @@
             <div class="konsultasi-response-gauge">
                 <div class="gauge-label">
                     <span>RESPONSE TIME</span>
-                    <span class="gauge-val">&lt; 15 MIN</span>
+                    <span class="gauge-val">JAM OPERASIONAL</span>
                 </div>
                 <div class="gauge-bar"><div class="gauge-fill"></div></div>
             </div>
@@ -6347,7 +6351,7 @@
             <div class="modal-header">
                 <div class="modal-label">KONSULTASI GRATIS</div>
                 <h2 class="modal-title" id="modal-konsultasi-title">Ceritakan Kebutuhan Anda</h2>
-                <p class="modal-subtitle">Isi form berikut dan tim kami akan menghubungi Anda segera.</p>
+                <p class="modal-subtitle">Tim AI Solutions siap membantu kebutuhan Anda pada jam operasional dan akan memberikan respons secepat mungkin.</p>
             </div>
 
             @if($errors->any())
@@ -6845,7 +6849,7 @@
                 </div>
                 <div>
                     <a href="{{ $waUrl }}" target="_blank" rel="noopener noreferrer">Chat via WhatsApp</a><br>
-                    <span style="font-size:12px;color:rgba(255,255,255,0.25);">Respon cepat di jam kerja</span>
+                    <span style="font-size:12px;color:rgba(255,255,255,0.45);">Respons cepat pada jam operasional</span>
                 </div>
             </div>
             @if(isset($cmsContact) && $cmsContact->email)

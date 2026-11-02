@@ -1918,13 +1918,16 @@
                 <div class="cta-box">
                     <h3 class="cta-title">Siap Mengimplementasikan Solusi Ini?</h3>
                     <p class="cta-desc">Hubungi tim konsultan kami untuk mengetahui implementasi teknis dan use-case spesifik untuk industri Anda.</p>
-                    <a href="{{ $waUrl }}" class="btn-cta" target="_blank" rel="noopener noreferrer">
+                    <a href="/#konsultasi" class="btn-cta">
                         Konsultasikan Kebutuhan Anda
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <line x1="5" y1="12" x2="19" y2="12"></line>
                             <polyline points="12 5 19 12 12 19"></polyline>
                         </svg>
                     </a>
+                    <p style="margin-top:14px;font-size:12.5px;color:var(--text-muted);display:flex;align-items:center;justify-content:center;gap:6px;text-align:center;">
+                        <span>Tim AI Solutions siap membantu kebutuhan Anda pada jam operasional dan akan memberikan respons secepat mungkin.</span>
+                    </p>
                 </div>
             </div>
         </div>

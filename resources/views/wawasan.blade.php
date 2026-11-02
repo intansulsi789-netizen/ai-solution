@@ -1386,7 +1386,7 @@
 
             <ul class="nav-links">
                 <li><a href="/#layanan">Layanan</a></li>
-                <li><a href="{{ $waUrl }}" target="_blank" rel="noopener noreferrer">Kontak</a></li>
+                <li><a href="/#konsultasi">Kontak</a></li>
                 <li><a href="/#tentang">Tentang Kami</a></li>
                 <li><a href="{{ route('articles.index') }}" class="active">Wawasan</a></li>
             </ul>
@@ -1509,6 +1509,9 @@
                     <polyline points="12 5 19 12 12 19"></polyline>
                 </svg>
             </a>
+            <p style="margin-top:14px;font-size:12.5px;color:rgba(255,255,255,0.65);display:flex;align-items:center;justify-content:center;gap:6px;text-align:center;">
+                <span>Tim AI Solutions siap membantu kebutuhan Anda pada jam operasional dan akan memberikan respons secepat mungkin.</span>
+            </p>
         </div>
     </section>
 
@@ -1524,7 +1527,7 @@
                 <li><a href="/#layanan">Layanan</a></li>
                 <li><a href="/#tentang">Tentang Kami</a></li>
                 <li><a href="{{ route('articles.index') }}">Wawasan</a></li>
-                <li><a href="{{ $waUrl }}" target="_blank" rel="noopener noreferrer">Kontak</a></li>
+                <li><a href="/#konsultasi">Kontak</a></li>
             </ul>
         </div>
     </footer>
