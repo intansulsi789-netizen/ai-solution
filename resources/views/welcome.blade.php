@@ -903,7 +903,6 @@
         }
 
         html {
-            scroll-behavior: smooth;
             overflow-x: hidden;
         }
 
@@ -943,6 +942,12 @@
             #kontak {
                 scroll-margin-top: 72px;
             }
+        }
+
+        /* Stacking context isolation for heavy blur & aurora sections */
+        .wawasan-section,
+        .konsultasi-section {
+            isolation: isolate;
         }
 
         /* Selective paint containment for background glow elements (lightweight, zero extra GPU layers) */
@@ -7437,8 +7442,65 @@
         }, { passive: true });
     }
 
-    // --- Optimized Smooth Scroll Navigation Controller ---
+    // --- Optimized Adaptive Smooth Scroll Navigation Controller ---
     (function() {
+        let animId = null;
+
+        function stopScroll() {
+            if (animId !== null) {
+                cancelAnimationFrame(animId);
+                animId = null;
+            }
+        }
+
+        // Cancel smooth scroll immediately if user takes over manually
+        window.addEventListener('wheel', stopScroll, { passive: true });
+        window.addEventListener('touchmove', stopScroll, { passive: true });
+        window.addEventListener('keydown', function(e) {
+            if (['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', 'Space'].includes(e.code)) {
+                stopScroll();
+            }
+        }, { passive: true });
+
+        function smoothScrollTo(target) {
+            stopScroll();
+
+            const navbarHeight = window.innerWidth <= 768 ? 72 : 84;
+            const targetRect = target.getBoundingClientRect();
+            const startY = window.pageYOffset || document.documentElement.scrollTop;
+            const targetY = Math.round(targetRect.top + startY - navbarHeight);
+            const distance = targetY - startY;
+
+            if (Math.abs(distance) < 3) return;
+
+            // Adaptive duration: smooth and controlled, prevents GPU raster saturation over long distances
+            // Short (1000px): ~420ms | Medium (2500px): ~650ms | Long (4200px - Wawasan): ~840ms | Extreme (6200px - Kontak): ~980ms
+            const duration = Math.min(1000, Math.max(380, Math.round(Math.sqrt(Math.abs(distance)) * 12.5)));
+            let startTime = null;
+
+            // easeInOutCubic: gentle start, smooth glide, gentle stop
+            function easeInOutCubic(t) {
+                return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+            }
+
+            function step(timestamp) {
+                if (!startTime) startTime = timestamp;
+                const elapsed = timestamp - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const ease = easeInOutCubic(progress);
+
+                window.scrollTo(0, Math.round(startY + (distance * ease)));
+
+                if (progress < 1) {
+                    animId = requestAnimationFrame(step);
+                } else {
+                    animId = null;
+                }
+            }
+
+            animId = requestAnimationFrame(step);
+        }
+
         document.addEventListener('click', function(e) {
             const link = e.target.closest('a[href*="#"]');
             if (!link) return;
@@ -7482,15 +7544,8 @@
                 history.pushState(null, '', hash);
             }
 
-            // Double rAF ensures layout changes (like mobile menu close) have stabilized before measuring
-            requestAnimationFrame(function() {
-                requestAnimationFrame(function() {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                });
-            });
+            // Execute adaptive smooth scroll
+            smoothScrollTo(target);
         });
 
         // Direct URL hash visit on page load
@@ -7501,7 +7556,7 @@
                     if (h === 'kontak') h = 'konsultasi';
                     const el = document.getElementById(h);
                     if (el) {
-                        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        smoothScrollTo(el);
                     }
                 }, 80);
             });
