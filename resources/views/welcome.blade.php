@@ -973,6 +973,7 @@
 
         /* Dynamic rendering optimization during smooth scroll */
         html.is-scrolling-nav .logo-marquee-track,
+        html.is-scrolling-nav .partner-ambient-aura,
         html.is-scrolling-nav .konsultasi-radar-wave *,
         html.is-scrolling-nav .konsultasi-eq-bars *,
         html.is-scrolling-nav .konsultasi-side-svg,
@@ -6157,7 +6158,7 @@
             isScheduling = true;
             setTimeout(function() {
                 scheduleIdle(processQueue);
-            }, 200);
+            }, 600);
             return;
         }
 
@@ -6168,7 +6169,7 @@
                 isScheduling = true;
                 setTimeout(function() {
                     scheduleIdle(processQueue);
-                }, 200);
+                }, 600);
                 return;
             }
 
@@ -7594,28 +7595,30 @@
             document.documentElement.classList.add('is-scrolling-nav');
 
             // Adaptive duration: smooth and controlled, prevents GPU raster saturation over long distances
-            // Short (1000px): ~420ms | Medium (2500px): ~650ms | Long (4200px - Wawasan): ~840ms | Extreme (6200px - Kontak): ~980ms
-            const duration = Math.min(1000, Math.max(380, Math.round(Math.sqrt(Math.abs(distance)) * 12.5)));
+            const duration = Math.min(950, Math.max(380, Math.round(Math.sqrt(Math.abs(distance)) * 12.2)));
             let startTime = null;
 
-            // easeInOutCubic: gentle start, smooth glide, gentle stop
-            function easeInOutCubic(t) {
-                return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+            // easeInOutSine: continuous natural deceleration, glides fluidly through intermediate sections without premature stalling
+            function easeInOutSine(t) {
+                return -(Math.cos(Math.PI * t) - 1) / 2;
             }
 
             function step(timestamp) {
                 if (!startTime) startTime = timestamp;
                 const elapsed = timestamp - startTime;
                 const progress = Math.min(elapsed / duration, 1);
-                const ease = easeInOutCubic(progress);
-
-                window.scrollTo(0, Math.round(startY + (distance * ease)));
+                const ease = easeInOutSine(progress);
 
                 if (progress < 1) {
+                    window.scrollTo(0, Math.round(startY + (distance * ease)));
                     animId = requestAnimationFrame(step);
                 } else {
                     animId = null;
-                    document.documentElement.classList.remove('is-scrolling-nav');
+                    window.scrollTo(0, targetY);
+                    // Settle final frame before unpausing background animations to eliminate end-of-scroll stutter
+                    setTimeout(function() {
+                        document.documentElement.classList.remove('is-scrolling-nav');
+                    }, 50);
                 }
             }
 
