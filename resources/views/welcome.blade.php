@@ -970,6 +970,29 @@
             will-change: transform;
         }
 
+        /* Dynamic rendering optimization during smooth scroll toward Kontak */
+        html.is-scrolling-nav .konsultasi-radar-wave *,
+        html.is-scrolling-nav .konsultasi-eq-bars *,
+        html.is-scrolling-nav .konsultasi-side-svg,
+        html.is-scrolling-nav .konsultasi-side-svg *,
+        html.is-scrolling-nav .konsultasi-side-decor,
+        html.is-scrolling-nav .konsultasi-bg-aurora,
+        html.is-scrolling-nav .konsultasi-glow,
+        html.is-scrolling-nav .gauge-fill,
+        html.is-scrolling-nav .pill-dot,
+        html.is-scrolling-nav .wawasan-top-aurora,
+        html.is-scrolling-nav .wawasan-ambient-glow,
+        html.is-scrolling-nav .wawasan-ambient-glow-purple {
+            animation-play-state: paused !important;
+        }
+
+        html.is-scrolling-nav .konsultasi-card,
+        html.is-scrolling-nav .konsultasi-telemetry-pill,
+        html.is-scrolling-nav .article-card {
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+        }
+
         /* ==========================================
            HERO SECTION - FULL SCREEN
         ========================================== */
@@ -7451,6 +7474,7 @@
                 cancelAnimationFrame(animId);
                 animId = null;
             }
+            document.documentElement.classList.remove('is-scrolling-nav');
         }
 
         // Cancel smooth scroll immediately if user takes over manually
@@ -7468,10 +7492,17 @@
             const navbarHeight = window.innerWidth <= 768 ? 72 : 84;
             const targetRect = target.getBoundingClientRect();
             const startY = window.pageYOffset || document.documentElement.scrollTop;
-            const targetY = Math.round(targetRect.top + startY - navbarHeight);
+            const rawTargetY = Math.round(targetRect.top + startY - navbarHeight);
+
+            // Clamp target position to document scroll bounds so it never overshoots or stalls at bottom
+            const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+            const targetY = Math.min(rawTargetY, maxScroll);
             const distance = targetY - startY;
 
             if (Math.abs(distance) < 3) return;
+
+            // Pause heavy animations and backdrop-filter during scroll
+            document.documentElement.classList.add('is-scrolling-nav');
 
             // Adaptive duration: smooth and controlled, prevents GPU raster saturation over long distances
             // Short (1000px): ~420ms | Medium (2500px): ~650ms | Long (4200px - Wawasan): ~840ms | Extreme (6200px - Kontak): ~980ms
@@ -7495,6 +7526,7 @@
                     animId = requestAnimationFrame(step);
                 } else {
                     animId = null;
+                    document.documentElement.classList.remove('is-scrolling-nav');
                 }
             }
 
