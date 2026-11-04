@@ -970,7 +970,8 @@
             will-change: transform;
         }
 
-        /* Dynamic rendering optimization during smooth scroll toward Kontak */
+        /* Dynamic rendering optimization during smooth scroll */
+        html.is-scrolling-nav .logo-marquee-track,
         html.is-scrolling-nav .konsultasi-radar-wave *,
         html.is-scrolling-nav .konsultasi-eq-bars *,
         html.is-scrolling-nav .konsultasi-side-svg,
