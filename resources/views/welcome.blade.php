@@ -6297,7 +6297,7 @@
 
                 <p class="konsultasi-response-note" style="margin-top:16px;font-size:13px;line-height:1.5;color:rgba(255,255,255,0.7);display:flex;align-items:center;justify-content:center;gap:7px;text-align:center;">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;color:#00d4ff;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                    <span>Tim AI Solutions siap membantu kebutuhan Anda pada jam operasional dan akan memberikan respons secepat mungkin.</span>
+                    <span>Tim AI Solutions siap membantu kebutuhan anda 24/7 setiap saat.</span>
                 </p>
             </div>
         </div>
@@ -6351,7 +6351,7 @@
             <div class="modal-header">
                 <div class="modal-label">KONSULTASI GRATIS</div>
                 <h2 class="modal-title" id="modal-konsultasi-title">Ceritakan Kebutuhan Anda</h2>
-                <p class="modal-subtitle">Tim AI Solutions siap membantu kebutuhan Anda pada jam operasional dan akan memberikan respons secepat mungkin.</p>
+                <p class="modal-subtitle">Tim AI Solutions siap membantu kebutuhan anda 24/7 setiap saat.</p>
             </div>
 
             @if($errors->any())

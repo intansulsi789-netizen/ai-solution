@@ -1510,7 +1510,7 @@
                 </svg>
             </a>
             <p style="margin-top:14px;font-size:12.5px;color:rgba(255,255,255,0.65);display:flex;align-items:center;justify-content:center;gap:6px;text-align:center;">
-                <span>Tim AI Solutions siap membantu kebutuhan Anda pada jam operasional dan akan memberikan respons secepat mungkin.</span>
+                <span>Tim AI Solutions siap membantu kebutuhan anda 24/7 setiap saat.</span>
             </p>
         </div>
     </section>

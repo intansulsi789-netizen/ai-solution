@@ -1209,7 +1209,7 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
             </a>
             <p style="margin-top:14px;font-size:12.5px;color:var(--text-muted);display:flex;align-items:center;justify-content:center;gap:6px;text-align:center;">
-                <span>Tim AI Solutions siap membantu kebutuhan Anda pada jam operasional dan akan memberikan respons secepat mungkin.</span>
+                <span>Tim AI Solutions siap membantu kebutuhan anda 24/7 setiap saat.</span>
             </p>
         </div>
     </div>
