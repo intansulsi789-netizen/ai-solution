@@ -972,8 +972,6 @@
         }
 
         /* Dynamic rendering optimization during smooth scroll */
-        html.is-scrolling-nav .logo-marquee-track,
-        html.is-scrolling-nav .partner-ambient-aura,
         html.is-scrolling-nav .konsultasi-radar-wave *,
         html.is-scrolling-nav .konsultasi-eq-bars *,
         html.is-scrolling-nav .konsultasi-side-svg,
@@ -6051,7 +6049,7 @@
                     @if($src)
                     <div class="logo-item" title="{{ $pNama }}">
                         <img src="{{ $src }}" alt="{{ $pNama }}"
-                             loading="lazy"
+                             loading="eager"
                              crossorigin="anonymous"
                              class="partner-marquee-img"
                              @if($fallbackSrc)
@@ -6111,7 +6109,7 @@
                     @if($src)
                     <div class="logo-item" title="{{ $pNama }}">
                         <img src="{{ $src }}" alt="{{ $pNama }}"
-                             loading="lazy"
+                             loading="eager"
                              crossorigin="anonymous"
                              class="partner-marquee-img"
                              @if($fallbackSrc)
@@ -6280,13 +6278,11 @@
         }
     }
 
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => {
+    window.addEventListener('load', () => {
+        setTimeout(() => {
             document.querySelectorAll('.partner-marquee-img').forEach(autoStripWhiteBg);
-        });
-    } else {
-        document.querySelectorAll('.partner-marquee-img').forEach(autoStripWhiteBg);
-    }
+        }, 2500);
+    });
 })();
 </script>
 
