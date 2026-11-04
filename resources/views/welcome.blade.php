@@ -689,7 +689,8 @@
             border-color: rgba(124, 58, 237, 0.25);
             box-shadow: 0 4px 16px rgba(124, 58, 237, 0.08);
         }
-        html[data-theme="light"] .gauge-label {
+        html[data-theme="light"] .gauge-label,
+        html[data-theme="light"] .gauge-sub {
             color: #64748b;
         }
 
@@ -4320,15 +4321,27 @@
         }
         .gauge-label {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 9px;
-            color: rgba(255, 255, 255, 0.55);
-            font-family: 'Plus Jakarta Sans', monospace;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 2px;
+            text-align: left;
         }
         .gauge-val {
+            font-family: 'Plus Jakarta Sans', monospace;
+            font-size: 10px;
             font-weight: 700;
+            letter-spacing: 0.8px;
             color: #a78bfa;
+            line-height: 1.2;
+            white-space: nowrap;
+        }
+        .gauge-sub,
+        .gauge-label span:not(.gauge-val) {
+            font-size: 9px;
+            color: rgba(255, 255, 255, 0.55);
+            letter-spacing: 0.3px;
+            line-height: 1.2;
+            white-space: nowrap;
         }
         .gauge-bar {
             width: 100%;
@@ -4812,11 +4825,13 @@
                 border-radius: 8px;
                 gap: 3px;
             }
-            .gauge-label {
-                font-size: 8px;
-            }
             .gauge-val {
-                font-size: 8px;
+                font-size: 8.5px;
+                letter-spacing: 0.5px;
+            }
+            .gauge-sub,
+            .gauge-label span:not(.gauge-val) {
+                font-size: 7.5px;
             }
             .gauge-bar {
                 height: 3px;
@@ -5014,6 +5029,13 @@
             .konsultasi-response-gauge {
                 width: 90px;
                 padding: 4px 5px;
+            }
+            .gauge-val {
+                font-size: 7.5px;
+            }
+            .gauge-sub,
+            .gauge-label span:not(.gauge-val) {
+                font-size: 6.5px;
             }
         }
         /* ==========================================
@@ -6464,8 +6486,8 @@
 
             <div class="konsultasi-response-gauge">
                 <div class="gauge-label">
-                    <span>SIAP SETIAP SAAT</span>
                     <span class="gauge-val">LAYANAN 24/7</span>
+                    <span class="gauge-sub">SIAP SETIAP SAAT</span>
                 </div>
                 <div class="gauge-bar"><div class="gauge-fill"></div></div>
             </div>
