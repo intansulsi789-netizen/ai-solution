@@ -986,13 +986,6 @@
             animation-play-state: paused !important;
         }
 
-        html.is-scrolling-nav .konsultasi-card,
-        html.is-scrolling-nav .konsultasi-telemetry-pill,
-        html.is-scrolling-nav .article-card {
-            backdrop-filter: none !important;
-            -webkit-backdrop-filter: none !important;
-        }
-
         /* ==========================================
            HERO SECTION - FULL SCREEN
         ========================================== */
