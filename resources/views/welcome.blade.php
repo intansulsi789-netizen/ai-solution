@@ -904,18 +904,65 @@
 
         html {
             scroll-behavior: smooth;
-        }
-
-        html, body {
             overflow-x: hidden;
-            max-width: 100vw;
         }
 
         body {
+            overflow-x: clip;
+            max-width: 100vw;
             font-family: 'Inter', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
             background-color: var(--navy-900);
             color: var(--white);
             min-height: 100vh;
+        }
+
+        /* Smooth Scroll Section Offsets (prevents navbar overlap & guarantees title visibility) */
+        .services-section,
+        .tentang-section,
+        .wawasan-section,
+        .konsultasi-section,
+        #layanan,
+        #pengenalan,
+        #tentang,
+        #wawasan,
+        #konsultasi,
+        #kontak {
+            scroll-margin-top: 84px;
+        }
+
+        @media (max-width: 768px) {
+            .services-section,
+            .tentang-section,
+            .wawasan-section,
+            .konsultasi-section,
+            #layanan,
+            #pengenalan,
+            #tentang,
+            #wawasan,
+            #konsultasi,
+            #kontak {
+                scroll-margin-top: 72px;
+            }
+        }
+
+        /* Selective paint containment for background glow elements (lightweight, zero extra GPU layers) */
+        .services-ambient-glow-1,
+        .services-ambient-glow-2,
+        .tentang-ambient-glow-1,
+        .tentang-ambient-glow-2,
+        .wawasan-ambient-glow,
+        .wawasan-ambient-glow-purple,
+        .wawasan-ambient-glow-center,
+        .konsultasi-ambient-glow-left,
+        .konsultasi-ambient-glow-right,
+        .footer-aurora-glow-1,
+        .footer-aurora-glow-2 {
+            contain: paint;
+        }
+
+        /* GPU transform optimization only for continuous marquee animation */
+        .logo-marquee-track {
+            will-change: transform;
         }
 
         /* ==========================================
@@ -2281,7 +2328,7 @@
            PAGE 3 / JASA AI SECTION
         ========================================== */
         /* SERVICES SECTION */
-        .services-section { padding: 100px 24px; max-width: 1400px; margin: 0 auto; width: 100%; display: flex; flex-direction: column; align-items: center; position: relative; z-index: 10; scroll-margin-top: 40px; overflow: hidden; }
+        .services-section { padding: 100px 24px; max-width: 1400px; margin: 0 auto; width: 100%; display: flex; flex-direction: column; align-items: center; position: relative; z-index: 10; scroll-margin-top: 84px; overflow: hidden; }
         .services-ambient-glow-1 {
             position: absolute;
             top: 5%;
@@ -7389,6 +7436,77 @@
             navbar.classList.toggle('scrolled', window.scrollY > 30);
         }, { passive: true });
     }
+
+    // --- Optimized Smooth Scroll Navigation Controller ---
+    (function() {
+        document.addEventListener('click', function(e) {
+            const link = e.target.closest('a[href*="#"]');
+            if (!link) return;
+
+            const href = link.getAttribute('href');
+            if (!href || href === '#' || href.startsWith('#!')) return;
+            if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+            if (link.target && link.target !== '_self') return;
+
+            // Extract hash
+            const hashIndex = href.indexOf('#');
+            if (hashIndex === -1) return;
+            const hash = href.substring(hashIndex);
+            if (!hash || hash === '#') return;
+
+            // Resolve target id
+            let targetId = hash.replace(/^#/, '');
+            if (targetId === 'kontak') targetId = 'konsultasi';
+            const target = document.getElementById(targetId) || document.querySelector(hash);
+            if (!target) return;
+
+            // If the link points to a completely different path, allow normal navigation
+            const urlPath = link.pathname || '';
+            const currentPath = window.location.pathname || '';
+            if (urlPath && urlPath !== currentPath && urlPath !== '/' && currentPath !== '/') {
+                return;
+            }
+
+            e.preventDefault();
+
+            // Cleanly close mobile menu if open
+            const mobileMenu = document.getElementById('mobile-menu');
+            const hamburger = document.getElementById('hamburger-btn');
+            if (mobileMenu && mobileMenu.classList.contains('open')) {
+                mobileMenu.classList.remove('open');
+                if (hamburger) hamburger.setAttribute('aria-expanded', 'false');
+            }
+
+            // Update URL hash without instant jump
+            if (history.pushState) {
+                history.pushState(null, '', hash);
+            }
+
+            // Double rAF ensures layout changes (like mobile menu close) have stabilized before measuring
+            requestAnimationFrame(function() {
+                requestAnimationFrame(function() {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                });
+            });
+        });
+
+        // Direct URL hash visit on page load
+        if (window.location.hash) {
+            window.addEventListener('DOMContentLoaded', function() {
+                setTimeout(function() {
+                    let h = window.location.hash.replace(/^#/, '');
+                    if (h === 'kontak') h = 'konsultasi';
+                    const el = document.getElementById(h);
+                    if (el) {
+                        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }, 80);
+            });
+        }
+    })();
 
     // --- Subtle parallax on mouse move (hero bg) ---
     const heroBg = document.querySelector('.hero-bg');
