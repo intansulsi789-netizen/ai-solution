@@ -6,7 +6,10 @@
     <title>Dashboard Admin — AI Solution</title>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/jpeg" href="{{ asset('images/favicon.jpg') }}">
+    <link rel="icon" type="image/png" href="{{ asset('images/favicon.png') }}?v={{ filemtime(public_path('images/favicon.png')) }}">
+    <link rel="icon" type="image/jpeg" href="{{ asset('images/favicon.jpg') }}?v={{ filemtime(public_path('images/favicon.jpg')) }}">
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}?v={{ filemtime(public_path('favicon.ico')) }}">
+    <link rel="apple-touch-icon" href="{{ asset('images/favicon.png') }}">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
