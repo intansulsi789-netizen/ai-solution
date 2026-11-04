@@ -6322,8 +6322,8 @@
 
             <div class="konsultasi-response-gauge">
                 <div class="gauge-label">
-                    <span>RESPONSE TIME</span>
-                    <span class="gauge-val">JAM OPERASIONAL</span>
+                    <span>SIAP SETIAP SAAT</span>
+                    <span class="gauge-val">LAYANAN 24/7</span>
                 </div>
                 <div class="gauge-bar"><div class="gauge-fill"></div></div>
             </div>
