@@ -945,7 +945,8 @@
             }
         }
 
-        /* Stacking context isolation for heavy blur & aurora sections */
+        /* Stacking context isolation for heavy blur, marquee & aurora sections */
+        .partner-section-wrapper,
         .wawasan-section,
         .konsultasi-section {
             isolation: isolate;
@@ -956,6 +957,7 @@
         .services-ambient-glow-2,
         .tentang-ambient-glow-1,
         .tentang-ambient-glow-2,
+        .partner-ambient-aura,
         .wawasan-ambient-glow,
         .wawasan-ambient-glow-purple,
         .wawasan-ambient-glow-center,
@@ -966,12 +968,15 @@
             contain: paint;
         }
 
-        /* GPU transform optimization only for continuous marquee animation */
+        /* GPU transform optimization for continuous marquee animation */
         .logo-marquee-track {
             will-change: transform;
+            transform: translateZ(0);
+            backface-visibility: hidden;
         }
 
         /* Dynamic rendering optimization during smooth scroll */
+        html.is-scrolling-nav .partner-ambient-aura,
         html.is-scrolling-nav .konsultasi-radar-wave *,
         html.is-scrolling-nav .konsultasi-eq-bars *,
         html.is-scrolling-nav .konsultasi-side-svg,
@@ -985,6 +990,11 @@
         html.is-scrolling-nav .wawasan-ambient-glow,
         html.is-scrolling-nav .wawasan-ambient-glow-purple {
             animation-play-state: paused !important;
+        }
+
+        /* Ultra-smooth GPU raster during programmatic navigation: single crisp shadow */
+        html.is-scrolling-nav .logo-item img {
+            filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.45)) !important;
         }
 
         /* ==========================================
@@ -6134,71 +6144,73 @@
     'use strict';
 
     const queue = [];
+    const strippedCache = new Map();
     let isScheduling = false;
+    let lastScrollActivity = 0;
 
-    // Use requestIdleCallback if available, with setTimeout fallback
-    const scheduleIdle = typeof window.requestIdleCallback === 'function'
-        ? function(cb) { return window.requestIdleCallback(cb, { timeout: 1500 }); }
-        : function(cb) {
-            return setTimeout(function() {
-                cb({
-                    didTimeout: false,
-                    timeRemaining: function() { return 15; }
-                });
-            }, 60);
-        };
+    // Track scroll events to guarantee zero processing during any scrolling
+    window.addEventListener('scroll', function() {
+        lastScrollActivity = Date.now();
+    }, { passive: true });
 
-    function processQueue(deadline) {
+    // Use requestIdleCallback if available, otherwise setTimeout fallback
+    function scheduleIdle(cb) {
+        if (typeof window.requestIdleCallback === 'function') {
+            return window.requestIdleCallback(cb);
+        }
+        return setTimeout(function() {
+            cb({
+                didTimeout: false,
+                timeRemaining: function() { return 10; }
+            });
+        }, 80);
+    }
+
+    function processNextQueueItem(deadline) {
         isScheduling = false;
 
-        // If programmatic smooth scroll is currently active, defer processing until scrolling stops
-        if (document.documentElement.classList.contains('is-scrolling-nav')) {
+        // Strictly pause if programmatic smooth scroll is active or page was recently scrolled
+        if (document.documentElement.classList.contains('is-scrolling-nav') || (Date.now() - lastScrollActivity < 1200)) {
             isScheduling = true;
             setTimeout(function() {
-                scheduleIdle(processQueue);
-            }, 600);
+                scheduleIdle(processNextQueueItem);
+            }, 800);
             return;
         }
 
-        // Process images while idle time remains (or at least 1 image per tick)
-        while (queue.length > 0) {
-            // Re-check scroll state before each image
-            if (document.documentElement.classList.contains('is-scrolling-nav')) {
-                isScheduling = true;
-                setTimeout(function() {
-                    scheduleIdle(processQueue);
-                }, 600);
-                return;
-            }
-
-            // Yield if idle time is almost exhausted (unless timed out)
-            if (deadline && typeof deadline.timeRemaining === 'function' && deadline.timeRemaining() < 8 && !deadline.didTimeout) {
-                break;
-            }
-
+        // Process at most 1 image per idle frame to guarantee main thread never locks
+        if (queue.length > 0) {
             const img = queue.shift();
-            if (img) {
+            if (img && img.dataset.bgStripped !== 'done') {
                 stripImageBg(img);
             }
         }
 
-        // If there are still items in the queue, schedule the next idle batch
+        // If items remain, schedule next image on next idle tick
         if (queue.length > 0) {
             isScheduling = true;
-            scheduleIdle(processQueue);
+            scheduleIdle(processNextQueueItem);
         }
     }
 
     function scheduleProcessing() {
         if (!isScheduling) {
             isScheduling = true;
-            scheduleIdle(processQueue);
+            scheduleIdle(processNextQueueItem);
         }
     }
 
     function stripImageBg(img) {
         if (!img || img.dataset.bgStripped === 'done') return;
         img.dataset.bgStripped = 'done';
+
+        const originalSrc = img.src || '';
+
+        // Check if an identical image was already stripped
+        if (strippedCache.has(originalSrc)) {
+            img.src = strippedCache.get(originalSrc);
+            return;
+        }
 
         try {
             const w = img.naturalWidth;
@@ -6241,9 +6253,15 @@
                     const idx = pos * 4;
                     const r = d[idx], g = d[idx+1], b = d[idx+2], a = d[idx+3];
 
-                    if (a === 0 || (r > 205 && g > 205 && b > 205)) {
+                    if (a > 50 && r > 205 && g > 205 && b > 205) {
                         d[idx + 3] = 0;
                         stripped++;
+                        const x = pos % w, y = Math.floor(pos / w);
+                        if (x > 0 && !visited[pos - 1]) floodQueue.push(pos - 1);
+                        if (x < w - 1 && !visited[pos + 1]) floodQueue.push(pos + 1);
+                        if (y > 0 && !visited[pos - w]) floodQueue.push(pos - w);
+                        if (y < h - 1 && !visited[pos + w]) floodQueue.push(pos + w);
+                    } else if (a === 0) {
                         const x = pos % w, y = Math.floor(pos / w);
                         if (x > 0 && !visited[pos - 1]) floodQueue.push(pos - 1);
                         if (x < w - 1 && !visited[pos + 1]) floodQueue.push(pos + 1);
@@ -6254,7 +6272,9 @@
 
                 if (stripped > 0) {
                     ctx.putImageData(imgData, 0, 0);
-                    img.src = canvas.toDataURL('image/png');
+                    const newUrl = canvas.toDataURL('image/png');
+                    strippedCache.set(originalSrc, newUrl);
+                    img.src = newUrl;
                 }
             }
         } catch (err) {
@@ -6281,7 +6301,7 @@
     window.addEventListener('load', () => {
         setTimeout(() => {
             document.querySelectorAll('.partner-marquee-img').forEach(autoStripWhiteBg);
-        }, 2500);
+        }, 4000);
     });
 })();
 </script>
@@ -7591,19 +7611,19 @@
             document.documentElement.classList.add('is-scrolling-nav');
 
             // Adaptive duration: smooth and controlled, prevents GPU raster saturation over long distances
-            const duration = Math.min(950, Math.max(380, Math.round(Math.sqrt(Math.abs(distance)) * 12.2)));
+            const duration = Math.min(880, Math.max(380, Math.round(Math.sqrt(Math.abs(distance)) * 10.8)));
             let startTime = null;
 
-            // easeInOutSine: continuous natural deceleration, glides fluidly through intermediate sections without premature stalling
-            function easeInOutSine(t) {
-                return -(Math.cos(Math.PI * t) - 1) / 2;
+            // easeInOutQuad: smooth acceleration, continuous fluid momentum through intermediate sections without premature stalling, gentle landing
+            function easeInOutQuad(t) {
+                return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
             }
 
             function step(timestamp) {
                 if (!startTime) startTime = timestamp;
                 const elapsed = timestamp - startTime;
                 const progress = Math.min(elapsed / duration, 1);
-                const ease = easeInOutSine(progress);
+                const ease = easeInOutQuad(progress);
 
                 if (progress < 1) {
                     window.scrollTo(0, Math.round(startY + (distance * ease)));
@@ -7614,7 +7634,7 @@
                     // Settle final frame before unpausing background animations to eliminate end-of-scroll stutter
                     setTimeout(function() {
                         document.documentElement.classList.remove('is-scrolling-nav');
-                    }, 50);
+                    }, 60);
                 }
             }
 
