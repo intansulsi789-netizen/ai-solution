@@ -6106,80 +6106,153 @@
     </div>
 </section>
 
-{{-- Automatic White Background Stripper for Partner Logos --}}
+{{-- Automatic White Background Stripper for Partner Logos (Non-blocking Idle Queue) --}}
 <script>
 (function() {
-    function autoStripWhiteBg(img) {
-        if (!img || img.dataset.bgStripped) return;
-        img.dataset.bgStripped = "true";
+    'use strict';
 
-        function process() {
-            try {
-                const w = img.naturalWidth;
-                const h = img.naturalHeight;
-                if (!w || !h || w < 8 || h < 8) return;
+    const queue = [];
+    let isScheduling = false;
 
-                const canvas = document.createElement('canvas');
-                canvas.width = w;
-                canvas.height = h;
-                const ctx = canvas.getContext('2d');
-                ctx.drawImage(img, 0, 0);
-
-                const imgData = ctx.getImageData(0, 0, w, h);
-                const d = imgData.data;
-
-                // Check 4 corners
-                function getCorner(x, y) {
-                    const idx = (y * w + x) * 4;
-                    return [d[idx], d[idx+1], d[idx+2], d[idx+3]];
-                }
-                const corners = [getCorner(0, 0), getCorner(w-1, 0), getCorner(0, h-1), getCorner(w-1, h-1)];
-                let lightCount = 0;
-                corners.forEach(([r, g, b, a]) => {
-                    if (a > 50 && r > 200 && g > 200 && b > 200) lightCount++;
+    // Use requestIdleCallback if available, with setTimeout fallback
+    const scheduleIdle = typeof window.requestIdleCallback === 'function'
+        ? function(cb) { return window.requestIdleCallback(cb, { timeout: 1500 }); }
+        : function(cb) {
+            return setTimeout(function() {
+                cb({
+                    didTimeout: false,
+                    timeRemaining: function() { return 15; }
                 });
+            }, 60);
+        };
 
-                // Only strip if corners are white/light box
-                if (lightCount >= 2) {
-                    const visited = new Uint8Array(w * h);
-                    const queue = [];
-                    for (let x = 0; x < w; x++) { queue.push(x); queue.push((h - 1) * w + x); }
-                    for (let y = 0; y < h; y++) { queue.push(y * w); queue.push(y * w + (w - 1)); }
+    function processQueue(deadline) {
+        isScheduling = false;
 
-                    let stripped = 0;
-                    while (queue.length > 0) {
-                        const pos = queue.pop();
-                        if (visited[pos]) continue;
-                        visited[pos] = 1;
+        // If programmatic smooth scroll is currently active, defer processing until scrolling stops
+        if (document.documentElement.classList.contains('is-scrolling-nav')) {
+            isScheduling = true;
+            setTimeout(function() {
+                scheduleIdle(processQueue);
+            }, 200);
+            return;
+        }
 
-                        const idx = pos * 4;
-                        const r = d[idx], g = d[idx+1], b = d[idx+2], a = d[idx+3];
+        // Process images while idle time remains (or at least 1 image per tick)
+        while (queue.length > 0) {
+            // Re-check scroll state before each image
+            if (document.documentElement.classList.contains('is-scrolling-nav')) {
+                isScheduling = true;
+                setTimeout(function() {
+                    scheduleIdle(processQueue);
+                }, 200);
+                return;
+            }
 
-                        if (a === 0 || (r > 205 && g > 205 && b > 205)) {
-                            d[idx + 3] = 0;
-                            stripped++;
-                            const x = pos % w, y = Math.floor(pos / w);
-                            if (x > 0 && !visited[pos - 1]) queue.push(pos - 1);
-                            if (x < w - 1 && !visited[pos + 1]) queue.push(pos + 1);
-                            if (y > 0 && !visited[pos - w]) queue.push(pos - w);
-                            if (y < h - 1 && !visited[pos + w]) queue.push(pos + w);
-                        }
-                    }
+            // Yield if idle time is almost exhausted (unless timed out)
+            if (deadline && typeof deadline.timeRemaining === 'function' && deadline.timeRemaining() < 8 && !deadline.didTimeout) {
+                break;
+            }
 
-                    if (stripped > 0) {
-                        ctx.putImageData(imgData, 0, 0);
-                        img.src = canvas.toDataURL('image/png');
-                    }
-                }
-            } catch (err) {
-                // Silently fallback if cross-origin canvas is restricted
+            const img = queue.shift();
+            if (img) {
+                stripImageBg(img);
             }
         }
 
+        // If there are still items in the queue, schedule the next idle batch
+        if (queue.length > 0) {
+            isScheduling = true;
+            scheduleIdle(processQueue);
+        }
+    }
+
+    function scheduleProcessing() {
+        if (!isScheduling) {
+            isScheduling = true;
+            scheduleIdle(processQueue);
+        }
+    }
+
+    function stripImageBg(img) {
+        if (!img || img.dataset.bgStripped === 'done') return;
+        img.dataset.bgStripped = 'done';
+
+        try {
+            const w = img.naturalWidth;
+            const h = img.naturalHeight;
+            if (!w || !h || w < 8 || h < 8) return;
+
+            const canvas = document.createElement('canvas');
+            canvas.width = w;
+            canvas.height = h;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0);
+
+            const imgData = ctx.getImageData(0, 0, w, h);
+            const d = imgData.data;
+
+            // Check 4 corners
+            function getCorner(x, y) {
+                const idx = (y * w + x) * 4;
+                return [d[idx], d[idx+1], d[idx+2], d[idx+3]];
+            }
+            const corners = [getCorner(0, 0), getCorner(w-1, 0), getCorner(0, h-1), getCorner(w-1, h-1)];
+            let lightCount = 0;
+            corners.forEach(([r, g, b, a]) => {
+                if (a > 50 && r > 200 && g > 200 && b > 200) lightCount++;
+            });
+
+            // Only strip if corners are white/light box
+            if (lightCount >= 2) {
+                const visited = new Uint8Array(w * h);
+                const floodQueue = [];
+                for (let x = 0; x < w; x++) { floodQueue.push(x); floodQueue.push((h - 1) * w + x); }
+                for (let y = 0; y < h; y++) { floodQueue.push(y * w); floodQueue.push(y * w + (w - 1)); }
+
+                let stripped = 0;
+                while (floodQueue.length > 0) {
+                    const pos = floodQueue.pop();
+                    if (visited[pos]) continue;
+                    visited[pos] = 1;
+
+                    const idx = pos * 4;
+                    const r = d[idx], g = d[idx+1], b = d[idx+2], a = d[idx+3];
+
+                    if (a === 0 || (r > 205 && g > 205 && b > 205)) {
+                        d[idx + 3] = 0;
+                        stripped++;
+                        const x = pos % w, y = Math.floor(pos / w);
+                        if (x > 0 && !visited[pos - 1]) floodQueue.push(pos - 1);
+                        if (x < w - 1 && !visited[pos + 1]) floodQueue.push(pos + 1);
+                        if (y > 0 && !visited[pos - w]) floodQueue.push(pos - w);
+                        if (y < h - 1 && !visited[pos + w]) floodQueue.push(pos + w);
+                    }
+                }
+
+                if (stripped > 0) {
+                    ctx.putImageData(imgData, 0, 0);
+                    img.src = canvas.toDataURL('image/png');
+                }
+            }
+        } catch (err) {
+            // Silently fallback if cross-origin canvas is restricted
+        }
+    }
+
+    function autoStripWhiteBg(img) {
+        if (!img || img.dataset.bgEnqueued) return;
+        img.dataset.bgEnqueued = 'true';
+
+        function onReady() {
+            queue.push(img);
+            scheduleProcessing();
+        }
+
         if (img.complete && img.naturalWidth > 0) {
-            process();
+            onReady();
         } else {
-            img.addEventListener('load', process, { once: true });
+            img.addEventListener('load', onReady, { once: true });
         }
     }
 
