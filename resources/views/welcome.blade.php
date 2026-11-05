@@ -945,6 +945,11 @@
             }
         }
 
+        /* Wawasan mendarat tepat di tepi atas section (navbar tidak fixed, jadi tak perlu ruang navbar) */
+        #wawasan.wawasan-section {
+            scroll-margin-top: 0;
+        }
+
         /* Stacking context isolation for heavy blur, marquee & aurora sections */
         .partner-section-wrapper,
         .wawasan-section,
@@ -6334,7 +6339,7 @@
 ========================================== -->
 <div class="section-divider-line"></div>
 
-<section id="wawasan" class="wawasan-section">
+<section id="wawasan" class="wawasan-section" data-scroll-offset="0">
     <div class="wawasan-top-aurora"></div>
     <div class="wawasan-ambient-glow"></div>
     <div class="wawasan-ambient-glow-purple"></div>
@@ -7628,10 +7633,13 @@
 
             // Posisi tujuan dihitung ulang setiap frame: jika ada layout shift di tengah jalan
             // (gambar/font selesai dimuat), kurva ikut menyesuaikan tanpa lompatan di akhir.
+            // data-scroll-offset pada section = jarak (px) dari atas layar saat mendarat
+            const customOffset = parseInt(target.dataset.scrollOffset, 10);
+
             function resolveTargetY() {
-                const navbarHeight = window.innerWidth <= 768 ? 72 : 84;
+                const offset = !isNaN(customOffset) ? customOffset : (window.innerWidth <= 768 ? 72 : 84);
                 const currentY = window.pageYOffset || root.scrollTop;
-                const rawY = target.getBoundingClientRect().top + currentY - navbarHeight;
+                const rawY = target.getBoundingClientRect().top + currentY - offset;
                 const maxScroll = Math.max(0, root.scrollHeight - window.innerHeight);
                 return Math.max(0, Math.min(rawY, maxScroll));
             }
