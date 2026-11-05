@@ -998,10 +998,20 @@
             animation-play-state: paused !important;
         }
 
-        /* Ultra-smooth GPU raster during programmatic navigation: zero transitions, zero unnecessary filter mutations */
+        /* Ultra-smooth GPU raster during programmatic navigation: zero transitions, zero filters, zero repaints */
         html.is-scrolling-nav .logo-item,
         html.is-scrolling-nav .logo-item img {
             transition: none !important;
+        }
+        html.is-scrolling-nav .logo-item img {
+            filter: none !important;
+        }
+        html.is-scrolling-nav .partner-ambient-aura {
+            filter: none !important;
+            opacity: 0 !important;
+        }
+        html.is-scrolling-nav .partner-section-wrapper {
+            contain: strict !important;
         }
 
         /* ==========================================
@@ -3252,6 +3262,8 @@
             margin-top: 50px;
             margin-bottom: 50px;
             overflow: hidden;
+            content-visibility: auto;
+            contain-intrinsic-size: auto 350px;
         }
         .partner-ambient-aura {
             position: absolute;
@@ -7661,8 +7673,8 @@
                 let progress = Math.min(elapsed / duration, 1);
 
                 // Anti-teleport guard: prevents single-frame position jumps if system/browser stalls
-                if (progress - lastProgress > 0.06 && progress < 1) {
-                    progress = lastProgress + 0.06;
+                if (progress - lastProgress > 0.15 && progress < 1) {
+                    progress = lastProgress + 0.15;
                     startTime = timestamp - Math.round(progress * duration);
                 }
                 lastProgress = progress;
