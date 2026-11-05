@@ -15,11 +15,13 @@ return [
     |
     */
 
-    // Hanya aplikasi Claude (web/desktop/mobile memakai https://claude.ai/api/mcp/auth_callback)
-    // dan Claude Code (loopback localhost) yang boleh mendaftar sebagai client OAuth.
+    // Hanya aplikasi AI berikut yang boleh mendaftar sebagai client OAuth:
+    // - Claude (https://claude.ai/api/mcp/auth_callback) & Claude Code (loopback localhost)
+    // - ChatGPT (https://chatgpt.com/connector/oauth/{id} atau /connector_platform_oauth_redirect)
     'redirect_domains' => [
         'https://claude.ai',
         'https://claude.com',
+        'https://chatgpt.com',
         'http://localhost',
         'http://127.0.0.1',
     ],

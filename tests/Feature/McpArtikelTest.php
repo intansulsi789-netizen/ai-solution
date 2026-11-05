@@ -201,17 +201,21 @@ class McpArtikelTest extends TestCase
         $this->assertSame(url('/oauth/register'), $meta->json('registration_endpoint'));
     }
 
-    public function test_only_claude_redirect_uris_can_register(): void
+    public function test_only_claude_and_chatgpt_redirect_uris_can_register(): void
     {
-        $this->postJson('/oauth/register', [
-            'client_name' => 'Claude',
-            'redirect_uris' => ['https://claude.ai/api/mcp/auth_callback'],
-        ])->assertCreated()->assertJsonPath('token_endpoint_auth_method', 'none');
+        foreach ([
+            'https://claude.ai/api/mcp/auth_callback',
+            'https://chatgpt.com/connector/oauth/abc123XYZ',
+            'https://chatgpt.com/connector_platform_oauth_redirect',
+        ] as $uri) {
+            $this->postJson('/oauth/register', ['client_name' => 'AI', 'redirect_uris' => [$uri]])
+                ->assertCreated()->assertJsonPath('token_endpoint_auth_method', 'none');
+        }
 
-        $this->postJson('/oauth/register', [
-            'client_name' => 'Jahat',
-            'redirect_uris' => ['https://claude.ai.evil.example/callback'],
-        ])->assertStatus(400)->assertJsonPath('error', 'invalid_redirect_uri');
+        foreach (['https://claude.ai.evil.example/callback', 'https://chatgpt.com.evil.example/cb', 'https://evil.example/chatgpt.com'] as $uri) {
+            $this->postJson('/oauth/register', ['client_name' => 'Jahat', 'redirect_uris' => [$uri]])
+                ->assertStatus(400)->assertJsonPath('error', 'invalid_redirect_uri');
+        }
     }
 
     public function test_authorize_page_requires_login_then_shows_consent(): void

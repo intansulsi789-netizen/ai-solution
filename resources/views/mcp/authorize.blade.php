@@ -46,7 +46,7 @@
 </head>
 <body>
 <main class="card">
-    <span class="badge">Connector Claude</span>
+    <span class="badge">Connector AI</span>
     <h1>Izinkan <strong>{{ $client->name }}</strong> mengakses akun Anda?</h1>
     <p>Aplikasi ini akan terhubung ke website AI Solution atas nama akun di bawah ini.</p>
 
@@ -86,7 +86,7 @@
             <button type="submit" class="btn-approve" id="approve-btn">Izinkan</button>
         </form>
     </div>
-    <p class="switch">Bukan akun Anda? Klik Batal, keluar dari admin website, lalu hubungkan ulang dari Claude.</p>
+    <p class="switch">Bukan akun Anda? Klik Batal, keluar dari admin website, lalu hubungkan ulang dari Claude/ChatGPT.</p>
 </main>
 <script>
     document.getElementById('approve-form').addEventListener('submit', function () {
