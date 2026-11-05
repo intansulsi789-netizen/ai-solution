@@ -3273,6 +3273,7 @@
             padding: 24px 0;
             background: radial-gradient(ellipse at center, rgba(0,212,255,0.05) 0%, transparent 75%);
             z-index: 1;
+            transform: translateZ(0);
         }
         .logo-marquee-wrapper::before,
         .logo-marquee-wrapper::after {
@@ -3345,12 +3346,14 @@
             object-fit: contain;
             opacity: 1;
             filter: drop-shadow(0 0 1.2px rgba(255, 255, 255, 0.85)) drop-shadow(0 3px 8px rgba(0, 0, 0, 0.45));
+            transform: translateZ(0);
+            backface-visibility: hidden;
             transition: transform 0.35s ease;
         }
         .logo-item:hover img {
             opacity: 1;
             filter: drop-shadow(0 0 2.5px #ffffff) drop-shadow(0 0 14px rgba(0, 212, 255, 0.5));
-            transform: scale(1.05);
+            transform: scale(1.05) translateZ(0);
             transition: transform 0.35s ease, filter 0.35s ease;
         }
 
@@ -6068,6 +6071,7 @@
                     <div class="logo-item" title="{{ $pNama }}">
                         <img src="{{ $src }}" alt="{{ $pNama }}"
                              loading="eager"
+                             decoding="async"
                              crossorigin="anonymous"
                              class="partner-marquee-img"
                              @if($fallbackSrc)
@@ -6128,6 +6132,7 @@
                     <div class="logo-item" title="{{ $pNama }}">
                         <img src="{{ $src }}" alt="{{ $pNama }}"
                              loading="eager"
+                             decoding="async"
                              crossorigin="anonymous"
                              class="partner-marquee-img"
                              @if($fallbackSrc)
@@ -6214,9 +6219,12 @@
 
         const originalSrc = img.src || '';
 
-        // Check if an identical image was already stripped
+        // Check if an identical image was already stripped or checked
         if (strippedCache.has(originalSrc)) {
-            img.src = strippedCache.get(originalSrc);
+            const cached = strippedCache.get(originalSrc);
+            if (cached) {
+                img.src = cached;
+            }
             return;
         }
 
@@ -6225,21 +6233,32 @@
             const h = img.naturalHeight;
             if (!w || !h || w < 8 || h < 8) return;
 
-            const canvas = document.createElement('canvas');
-            canvas.width = w;
-            canvas.height = h;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0);
+            // Cap canvas to display resolution to eliminate main-thread freeze on huge images
+            const maxW = 320;
+            const maxH = 120;
+            let targetW = w;
+            let targetH = h;
+            if (w > maxW || h > maxH) {
+                const ratio = Math.min(maxW / w, maxH / h);
+                targetW = Math.max(16, Math.round(w * ratio));
+                targetH = Math.max(16, Math.round(h * ratio));
+            }
 
-            const imgData = ctx.getImageData(0, 0, w, h);
+            const canvas = document.createElement('canvas');
+            canvas.width = targetW;
+            canvas.height = targetH;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, targetW, targetH);
+
+            const imgData = ctx.getImageData(0, 0, targetW, targetH);
             const d = imgData.data;
 
             // Check 4 corners
             function getCorner(x, y) {
-                const idx = (y * w + x) * 4;
+                const idx = (y * targetW + x) * 4;
                 return [d[idx], d[idx+1], d[idx+2], d[idx+3]];
             }
-            const corners = [getCorner(0, 0), getCorner(w-1, 0), getCorner(0, h-1), getCorner(w-1, h-1)];
+            const corners = [getCorner(0, 0), getCorner(targetW-1, 0), getCorner(0, targetH-1), getCorner(targetW-1, targetH-1)];
             let lightCount = 0;
             corners.forEach(([r, g, b, a]) => {
                 if (a > 50 && r > 200 && g > 200 && b > 200) lightCount++;
@@ -6247,10 +6266,10 @@
 
             // Only strip if corners are white/light box
             if (lightCount >= 2) {
-                const visited = new Uint8Array(w * h);
+                const visited = new Uint8Array(targetW * targetH);
                 const floodQueue = [];
-                for (let x = 0; x < w; x++) { floodQueue.push(x); floodQueue.push((h - 1) * w + x); }
-                for (let y = 0; y < h; y++) { floodQueue.push(y * w); floodQueue.push(y * w + (w - 1)); }
+                for (let x = 0; x < targetW; x++) { floodQueue.push(x); floodQueue.push((targetH - 1) * targetW + x); }
+                for (let y = 0; y < targetH; y++) { floodQueue.push(y * targetW); floodQueue.push(y * targetW + (targetW - 1)); }
 
                 let stripped = 0;
                 while (floodQueue.length > 0) {
@@ -6264,17 +6283,17 @@
                     if (a > 50 && r > 205 && g > 205 && b > 205) {
                         d[idx + 3] = 0;
                         stripped++;
-                        const x = pos % w, y = Math.floor(pos / w);
+                        const x = pos % targetW, y = Math.floor(pos / targetW);
                         if (x > 0 && !visited[pos - 1]) floodQueue.push(pos - 1);
-                        if (x < w - 1 && !visited[pos + 1]) floodQueue.push(pos + 1);
-                        if (y > 0 && !visited[pos - w]) floodQueue.push(pos - w);
-                        if (y < h - 1 && !visited[pos + w]) floodQueue.push(pos + w);
+                        if (x < targetW - 1 && !visited[pos + 1]) floodQueue.push(pos + 1);
+                        if (y > 0 && !visited[pos - targetW]) floodQueue.push(pos - targetW);
+                        if (y < targetH - 1 && !visited[pos + targetW]) floodQueue.push(pos + targetW);
                     } else if (a === 0) {
-                        const x = pos % w, y = Math.floor(pos / w);
+                        const x = pos % targetW, y = Math.floor(pos / targetW);
                         if (x > 0 && !visited[pos - 1]) floodQueue.push(pos - 1);
-                        if (x < w - 1 && !visited[pos + 1]) floodQueue.push(pos + 1);
-                        if (y > 0 && !visited[pos - w]) floodQueue.push(pos - w);
-                        if (y < h - 1 && !visited[pos + w]) floodQueue.push(pos + w);
+                        if (x < targetW - 1 && !visited[pos + 1]) floodQueue.push(pos + 1);
+                        if (y > 0 && !visited[pos - targetW]) floodQueue.push(pos - targetW);
+                        if (y < targetH - 1 && !visited[pos + targetW]) floodQueue.push(pos + targetW);
                     }
                 }
 
@@ -6283,10 +6302,14 @@
                     const newUrl = canvas.toDataURL('image/png');
                     strippedCache.set(originalSrc, newUrl);
                     img.src = newUrl;
+                } else {
+                    strippedCache.set(originalSrc, null);
                 }
+            } else {
+                strippedCache.set(originalSrc, null);
             }
         } catch (err) {
-            // Silently fallback if cross-origin canvas is restricted
+            strippedCache.set(originalSrc, null);
         }
     }
 
@@ -7625,6 +7648,7 @@
             // Adaptive duration: smooth and controlled, prevents GPU raster saturation over long distances
             const duration = Math.min(880, Math.max(380, Math.round(Math.sqrt(Math.abs(distance)) * 10.8)));
             let startTime = null;
+            let lastProgress = 0;
 
             // easeInOutQuad: smooth acceleration, continuous fluid momentum through intermediate sections without premature stalling, gentle landing
             function easeInOutQuad(t) {
@@ -7634,7 +7658,15 @@
             function step(timestamp) {
                 if (!startTime) startTime = timestamp;
                 const elapsed = timestamp - startTime;
-                const progress = Math.min(elapsed / duration, 1);
+                let progress = Math.min(elapsed / duration, 1);
+
+                // Anti-teleport guard: prevents single-frame position jumps if system/browser stalls
+                if (progress - lastProgress > 0.06 && progress < 1) {
+                    progress = lastProgress + 0.06;
+                    startTime = timestamp - Math.round(progress * duration);
+                }
+                lastProgress = progress;
+
                 const ease = easeInOutQuad(progress);
 
                 if (progress < 1) {
