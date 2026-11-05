@@ -20,6 +20,11 @@ fi
 
 php artisan package:discover --ansi >/dev/null
 php artisan storage:link --force >/dev/null 2>&1 || true
+
+# Key OAuth (Passport) untuk connector MCP: dibuat sekali, disimpan di volume storage
+if [ ! -f /app/storage/oauth-private.key ]; then
+    php artisan passport:keys --no-interaction >/dev/null 2>&1 || true
+fi
 php artisan migrate --force >/dev/null 2>&1 || true
 php artisan articles:publish-scheduled >/dev/null 2>&1 || true
 
