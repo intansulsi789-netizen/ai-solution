@@ -9,6 +9,8 @@ use App\Models\Article;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Str;
+use Laravel\Passport\ClientRepository;
+use Laravel\Passport\Passport;
 use phpseclib4\Crypt\RSA;
 use Tests\TestCase;
 
@@ -81,6 +83,38 @@ class McpArtikelTest extends TestCase
         // Draft tidak tampil publik
         $this->get('/wawasan')->assertDontSee($payload['judul']);
         $this->assertFalse(Article::published()->whereKey($article->id)->exists());
+    }
+
+    public function test_nama_penulis_overrides_shared_account_name(): void
+    {
+        $payload = $this->payload(['nama_penulis' => '  Elsa AISolutions ']);
+
+        ArtikelServer::actingAs($this->writer())->tool(BuatDraftArtikelTool::class, $payload)->assertHasNoErrors();
+
+        $this->assertSame('Elsa AISolutions', Article::where('judul', $payload['judul'])->value('author_name'));
+    }
+
+    public function test_changing_password_revokes_claude_connections(): void
+    {
+        $user = $this->writer();
+        $client = app(ClientRepository::class)->createAuthorizationCodeGrantClient(
+            name: 'Claude', redirectUris: ['https://claude.ai/api/mcp/auth_callback'], confidential: false,
+        );
+        $makeTokens = function () use ($user, $client): string {
+            $id = Str::random(80);
+            Passport::token()->forceFill(['id' => $id, 'user_id' => $user->id, 'client_id' => $client->id, 'scopes' => [], 'revoked' => false, 'expires_at' => now()->addHour()])->save();
+            Passport::refreshToken()->forceFill(['id' => Str::random(80), 'access_token_id' => $id, 'revoked' => false, 'expires_at' => now()->addDays(30)])->save();
+
+            return $id;
+        };
+        $tokenId = $makeTokens();
+
+        $user->update(['name' => 'Ganti Nama Saja']);
+        $this->assertFalse((bool) Passport::token()->find($tokenId)->revoked, 'ganti nama tidak mencabut token');
+
+        $user->update(['password' => 'password-baru-yang-kuat-123']);
+        $this->assertTrue((bool) Passport::token()->find($tokenId)->revoked);
+        $this->assertTrue((bool) Passport::refreshToken()->where('access_token_id', $tokenId)->value('revoked'));
     }
 
     public function test_duplicate_title_is_rejected(): void

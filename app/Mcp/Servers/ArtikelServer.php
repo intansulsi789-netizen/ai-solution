@@ -15,6 +15,10 @@ use Laravel\Mcp\Server\Attributes\Version;
 Connector ini menyimpan artikel ke website AI Solution (jogjaaisolutions.my.id) sebagai DRAFT.
 Draft tidak langsung tayang; admin meninjau lalu menerbitkannya.
 
+Akun website dipakai bersama oleh beberapa penulis. Isi nama_penulis dengan nama penulis
+yang disebut pengguna (format seperti "Rindu AISolutions"). Jika belum disebut, tanyakan sekali
+di awal percakapan sebelum menyimpan artikel.
+
 Alur kerja:
 1. Panggil daftar-artikel dulu untuk melihat judul yang sudah ada dan kategori yang dipakai.
    Hindari topik/judul yang sama atau terlalu mirip. Pakai kategori yang sudah ada bila cocok.

@@ -16,7 +16,7 @@ use Illuminate\Support\Str;
 class ArticleDraftService
 {
     /**
-     * @param  array{judul: string, kategori: string, ringkasan: string, konten_markdown: string, takeaway?: ?string, gambar_url?: ?string, sumber_nama?: ?string, sumber_url?: ?string}  $input
+     * @param  array{judul: string, kategori: string, ringkasan: string, konten_markdown: string, takeaway?: ?string, nama_penulis?: ?string, gambar_url?: ?string, sumber_nama?: ?string, sumber_url?: ?string}  $input
      * @return array{article: Article, notes: list<string>}
      */
     public function createDraft(User $author, array $input): array
@@ -34,7 +34,7 @@ class ArticleDraftService
             'judul' => trim($input['judul']),
             'slug' => $this->uniqueSlug($input['judul']),
             'kategori' => trim($input['kategori']),
-            'author_name' => Str::limit($author->name, 100, ''),
+            'author_name' => Str::limit(trim($input['nama_penulis'] ?? '') ?: $author->name, 100, ''),
             'source_name' => $input['sumber_nama'] ?? null,
             'source_url' => $input['sumber_url'] ?? null,
             'ringkasan' => trim($input['ringkasan']),

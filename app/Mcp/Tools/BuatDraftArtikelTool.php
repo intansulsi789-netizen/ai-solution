@@ -15,7 +15,7 @@ use Laravel\Mcp\Server\Tools\Annotations\IsOpenWorld;
 
 #[Name('buat-draft-artikel')]
 #[Title('Buat Draft Artikel')]
-#[Description('Menyimpan SATU artikel baru ke website AI Solution sebagai DRAFT (tidak langsung tayang; admin yang menerbitkan). Nama penulis otomatis diisi dari akun yang login. Isi artikel ditulis dalam Markdown. Panggil sekali untuk setiap artikel.')]
+#[Description('Menyimpan SATU artikel baru ke website AI Solution sebagai DRAFT (tidak langsung tayang; admin yang menerbitkan). Isi artikel ditulis dalam Markdown. Panggil sekali untuk setiap artikel.')]
 #[IsDestructive(false)]
 #[IsOpenWorld(true)]
 class BuatDraftArtikelTool extends Tool
@@ -28,6 +28,7 @@ class BuatDraftArtikelTool extends Tool
             'ringkasan' => 'required|string|min:30|max:500',
             'konten_markdown' => 'required|string|min:300|max:60000',
             'takeaway' => 'nullable|string|max:500',
+            'nama_penulis' => 'nullable|string|max:100',
             'gambar_url' => 'nullable|url|max:2048',
             'sumber_nama' => 'nullable|string|max:255',
             'sumber_url' => 'nullable|url|max:1000',
@@ -83,6 +84,8 @@ class BuatDraftArtikelTool extends Tool
                 ->required(),
             'takeaway' => $schema->string()->max(500)
                 ->description('Satu kalimat kesimpulan utama (Key Takeaway). Opsional.'),
+            'nama_penulis' => $schema->string()->max(100)
+                ->description('Nama penulis yang tampil di artikel, contoh "Rindu AISolutions". Akun website dipakai bersama, jadi isi dengan nama orang yang menulis/meminta artikel. Jika kosong, dipakai nama akun.'),
             'gambar_url' => $schema->string()->max(2048)
                 ->description('Opsional. URL gambar banner: link langsung gambar (jpg/png/webp), atau link Pinterest/Google Images/halaman artikel yang punya gambar. Pastikan gambar boleh dipakai.'),
             'sumber_nama' => $schema->string()->max(255)
