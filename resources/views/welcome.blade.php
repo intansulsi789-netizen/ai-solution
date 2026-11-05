@@ -976,7 +976,13 @@
         }
 
         /* Dynamic rendering optimization during smooth scroll */
+        html.is-scrolling-nav,
+        html.is-scrolling-nav * {
+            pointer-events: none !important;
+        }
+
         html.is-scrolling-nav .partner-ambient-aura,
+        html.is-scrolling-nav .logo-marquee-track,
         html.is-scrolling-nav .konsultasi-radar-wave *,
         html.is-scrolling-nav .konsultasi-eq-bars *,
         html.is-scrolling-nav .konsultasi-side-svg,
@@ -992,9 +998,10 @@
             animation-play-state: paused !important;
         }
 
-        /* Ultra-smooth GPU raster during programmatic navigation: single crisp shadow */
+        /* Ultra-smooth GPU raster during programmatic navigation: zero transitions, zero unnecessary filter mutations */
+        html.is-scrolling-nav .logo-item,
         html.is-scrolling-nav .logo-item img {
-            filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.45)) !important;
+            transition: none !important;
         }
 
         /* ==========================================
@@ -3323,7 +3330,7 @@
             box-shadow: none;
             backdrop-filter: none;
             -webkit-backdrop-filter: none;
-            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .logo-item:hover {
             transform: translateY(-2px) scale(1.08);
@@ -3338,12 +3345,13 @@
             object-fit: contain;
             opacity: 1;
             filter: drop-shadow(0 0 1.2px rgba(255, 255, 255, 0.85)) drop-shadow(0 3px 8px rgba(0, 0, 0, 0.45));
-            transition: all 0.35s ease;
+            transition: transform 0.35s ease;
         }
         .logo-item:hover img {
             opacity: 1;
             filter: drop-shadow(0 0 2.5px #ffffff) drop-shadow(0 0 14px rgba(0, 212, 255, 0.5));
             transform: scale(1.05);
+            transition: transform 0.35s ease, filter 0.35s ease;
         }
 
         /* ==========================================
@@ -7584,7 +7592,11 @@
         }
 
         // Cancel smooth scroll immediately if user takes over manually
-        window.addEventListener('wheel', stopScroll, { passive: true });
+        window.addEventListener('wheel', function(e) {
+            if (Math.abs(e.deltaY) > 2 || Math.abs(e.deltaX) > 2) {
+                stopScroll();
+            }
+        }, { passive: true });
         window.addEventListener('touchmove', stopScroll, { passive: true });
         window.addEventListener('keydown', function(e) {
             if (['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', 'Space'].includes(e.code)) {
