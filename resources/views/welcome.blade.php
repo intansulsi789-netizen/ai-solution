@@ -968,21 +968,20 @@
             contain: paint;
         }
 
-        /* GPU transform optimization for continuous marquee animation */
+        /* Marquee track = satu layer GPU saja (animasi transform berjalan di compositor) */
         .logo-marquee-track {
             will-change: transform;
-            transform: translateZ(0);
-            backface-visibility: hidden;
         }
 
-        /* Dynamic rendering optimization during smooth scroll */
-        html.is-scrolling-nav,
-        html.is-scrolling-nav * {
-            pointer-events: none !important;
+        /* Selama smooth-scroll navigasi: matikan hover (pointer-events diwariskan, tanpa selector universal
+           agar tidak memicu style-recalc seluruh dokumen saat class di-toggle) */
+        html.is-scrolling-nav body {
+            pointer-events: none;
         }
 
+        /* Jeda animasi dekoratif yang berat. Sengaja TIDAK mengubah filter/ukuran/contain apa pun:
+           perubahan seperti itu memicu re-raster & layout shift tepat di tengah scroll. */
         html.is-scrolling-nav .partner-ambient-aura,
-        html.is-scrolling-nav .logo-marquee-track,
         html.is-scrolling-nav .konsultasi-radar-wave *,
         html.is-scrolling-nav .konsultasi-eq-bars *,
         html.is-scrolling-nav .konsultasi-side-svg,
@@ -996,22 +995,6 @@
         html.is-scrolling-nav .wawasan-ambient-glow,
         html.is-scrolling-nav .wawasan-ambient-glow-purple {
             animation-play-state: paused !important;
-        }
-
-        /* Ultra-smooth GPU raster during programmatic navigation: zero transitions, zero filters, zero repaints */
-        html.is-scrolling-nav .logo-item,
-        html.is-scrolling-nav .logo-item img {
-            transition: none !important;
-        }
-        html.is-scrolling-nav .logo-item img {
-            filter: none !important;
-        }
-        html.is-scrolling-nav .partner-ambient-aura {
-            filter: none !important;
-            opacity: 0 !important;
-        }
-        html.is-scrolling-nav .partner-section-wrapper {
-            contain: strict !important;
         }
 
         /* ==========================================
@@ -3262,8 +3245,6 @@
             margin-top: 50px;
             margin-bottom: 50px;
             overflow: hidden;
-            content-visibility: auto;
-            contain-intrinsic-size: auto 350px;
         }
         .partner-ambient-aura {
             position: absolute;
@@ -3358,14 +3339,12 @@
             object-fit: contain;
             opacity: 1;
             filter: drop-shadow(0 0 1.2px rgba(255, 255, 255, 0.85)) drop-shadow(0 3px 8px rgba(0, 0, 0, 0.45));
-            transform: translateZ(0);
-            backface-visibility: hidden;
             transition: transform 0.35s ease;
         }
         .logo-item:hover img {
             opacity: 1;
             filter: drop-shadow(0 0 2.5px #ffffff) drop-shadow(0 0 14px rgba(0, 212, 255, 0.5));
-            transform: scale(1.05) translateZ(0);
+            transform: scale(1.05);
             transition: transform 0.35s ease, filter 0.35s ease;
         }
 
@@ -7642,54 +7621,55 @@
         function smoothScrollTo(target) {
             stopScroll();
 
-            const navbarHeight = window.innerWidth <= 768 ? 72 : 84;
-            const targetRect = target.getBoundingClientRect();
-            const startY = window.pageYOffset || document.documentElement.scrollTop;
-            const rawTargetY = Math.round(targetRect.top + startY - navbarHeight);
+            const root = document.documentElement;
+            const startY = window.pageYOffset || root.scrollTop;
 
-            // Clamp target position to document scroll bounds so it never overshoots or stalls at bottom
-            const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
-            const targetY = Math.min(rawTargetY, maxScroll);
-            const distance = targetY - startY;
-
-            if (Math.abs(distance) < 3) return;
-
-            // Pause heavy animations and backdrop-filter during scroll
-            document.documentElement.classList.add('is-scrolling-nav');
-
-            // Adaptive duration: smooth and controlled, prevents GPU raster saturation over long distances
-            const duration = Math.min(880, Math.max(380, Math.round(Math.sqrt(Math.abs(distance)) * 10.8)));
-            let startTime = null;
-            let lastProgress = 0;
-
-            // easeInOutQuad: smooth acceleration, continuous fluid momentum through intermediate sections without premature stalling, gentle landing
-            function easeInOutQuad(t) {
-                return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+            // Posisi tujuan dihitung ulang setiap frame: jika ada layout shift di tengah jalan
+            // (gambar/font selesai dimuat), kurva ikut menyesuaikan tanpa lompatan di akhir.
+            function resolveTargetY() {
+                const navbarHeight = window.innerWidth <= 768 ? 72 : 84;
+                const currentY = window.pageYOffset || root.scrollTop;
+                const rawY = target.getBoundingClientRect().top + currentY - navbarHeight;
+                const maxScroll = Math.max(0, root.scrollHeight - window.innerHeight);
+                return Math.max(0, Math.min(rawY, maxScroll));
             }
 
-            function step(timestamp) {
-                if (!startTime) startTime = timestamp;
-                const elapsed = timestamp - startTime;
-                let progress = Math.min(elapsed / duration, 1);
+            const initialDistance = resolveTargetY() - startY;
+            if (Math.abs(initialDistance) < 3) return;
 
-                // Anti-teleport guard: prevents single-frame position jumps if system/browser stalls
-                if (progress - lastProgress > 0.15 && progress < 1) {
-                    progress = lastProgress + 0.15;
-                    startTime = timestamp - Math.round(progress * duration);
-                }
-                lastProgress = progress;
+            root.classList.add('is-scrolling-nav');
 
-                const ease = easeInOutQuad(progress);
+            // Durasi adaptif: jarak jauh diberi waktu lebih lama supaya kecepatan puncak di tengah
+            // tidak terlalu tinggi (kecepatan tinggi = browser kewalahan me-render konten baru).
+            const duration = Math.min(1100, Math.max(450, Math.round(Math.sqrt(Math.abs(initialDistance)) * 13)));
+
+            // easeInOutSine: awal & akhir lembut, kecepatan puncak paling rendah di antara kurva ease-in-out umum
+            function easeInOutSine(t) {
+                return -(Math.cos(Math.PI * t) - 1) / 2;
+            }
+
+            let elapsed = 0;
+            let lastTs = null;
+
+            function step(ts) {
+                // Waktu "virtual": jika satu frame tertunda (main thread sibuk), animasi hanya maju
+                // maksimal ~2 frame, bukan melompat jauh -> gerakan tetap kontinu, tanpa patahan.
+                if (lastTs === null) lastTs = ts;
+                elapsed += Math.min(ts - lastTs, 34);
+                lastTs = ts;
+
+                const progress = Math.min(elapsed / duration, 1);
+                const targetY = resolveTargetY();
 
                 if (progress < 1) {
-                    window.scrollTo(0, Math.round(startY + (distance * ease)));
+                    window.scrollTo(0, startY + (targetY - startY) * easeInOutSine(progress));
                     animId = requestAnimationFrame(step);
                 } else {
                     animId = null;
                     window.scrollTo(0, targetY);
-                    // Settle final frame before unpausing background animations to eliminate end-of-scroll stutter
                     setTimeout(function() {
-                        document.documentElement.classList.remove('is-scrolling-nav');
+                        // Jangan cabut class jika navigasi baru sudah dimulai
+                        if (animId === null) root.classList.remove('is-scrolling-nav');
                     }, 60);
                 }
             }
