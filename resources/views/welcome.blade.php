@@ -6054,7 +6054,7 @@
                                     }
                                 }
                             } else {
-                                $src = asset('storage/' . $pLogo);
+                                $src = \App\Services\ImageThumbnail::url($pLogo, 320, 120);
                             }
                         }
                     @endphp
@@ -6115,7 +6115,7 @@
                                     }
                                 }
                             } else {
-                                $src = asset('storage/' . $pLogo);
+                                $src = \App\Services\ImageThumbnail::url($pLogo, 320, 120);
                             }
                         }
                     @endphp
@@ -6356,8 +6356,10 @@
                 <div class="article-img-wrap">
                     @php
                         $articleImg = $article['image'] ? (str_starts_with($article['image'], 'http') ? $article['image'] : asset('storage/' . $article['image'])) : 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=600';
+                        // Card hanya ~430px: pakai thumbnail agar browser tidak men-decode foto puluhan megapiksel
+                        $articleImg = \App\Services\ImageThumbnail::url($articleImg, 900);
                     @endphp
-                    <img src="{{ $articleImg }}" alt="{{ $article['title'] }}" class="article-img">
+                    <img src="{{ $articleImg }}" alt="{{ $article['title'] }}" class="article-img" decoding="async">
                 </div>
                 <div class="article-content">
                     <div class="article-meta">

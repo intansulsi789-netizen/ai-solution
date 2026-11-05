@@ -27,6 +27,9 @@ RUN npm run build
 
 FROM dunglas/frankenphp:1-php8.3-bookworm AS runtime
 
+# GD (+exif) untuk membuat thumbnail gambar (App\Services\ImageThumbnail)
+RUN install-php-extensions gd exif
+
 RUN cp "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" \
     && printf '%s\n' \
     'upload_max_filesize=8M' \
