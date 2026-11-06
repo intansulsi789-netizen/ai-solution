@@ -269,10 +269,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/login',  [AdminAuthController::class, 'showLogin'])->name('login');
     Route::post('/login', [AdminAuthController::class, 'login'])->middleware(['guest', 'throttle:15,1'])->name('login.post');
 
-    // Protected admin pages — accessible by ALL authenticated admin roles
-    Route::middleware('auth')->group(function () {
+    // Protected admin pages — accessible only by authenticated Admin Website
+    Route::middleware(['auth', 'role:admin_website'])->group(function () {
 
-        // ── Shared: Both admin_website & admin_marketing ──
         Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
 
         Route::get('articles/calendar', [\App\Http\Controllers\Admin\AdminArticleController::class, 'calendar'])->name('articles.calendar');
@@ -289,29 +288,23 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');
 
-        // ── Admin Website only ──
-        Route::middleware('role:admin_website')->group(function () {
-            Route::resource('services', \App\Http\Controllers\Admin\AdminServiceController::class);
-            Route::resource('partners', \App\Http\Controllers\Admin\AdminPartnerController::class);
-            Route::post('/partners-reorder', [\App\Http\Controllers\Admin\AdminPartnerController::class, 'reorder'])->name('partners.reorder');
+        Route::resource('services', \App\Http\Controllers\Admin\AdminServiceController::class);
+        Route::resource('partners', \App\Http\Controllers\Admin\AdminPartnerController::class);
+        Route::post('/partners-reorder', [\App\Http\Controllers\Admin\AdminPartnerController::class, 'reorder'])->name('partners.reorder');
 
-            Route::prefix('cms')->name('cms.')->group(function () {
-                Route::get('/homepage', [\App\Http\Controllers\Admin\AdminCmsHomepageController::class, 'index'])->name('homepage.index');
-                Route::put('/homepage', [\App\Http\Controllers\Admin\AdminCmsHomepageController::class, 'update'])->name('homepage.update');
-                Route::get('/logo', [\App\Http\Controllers\Admin\AdminCmsLogoController::class, 'index'])->name('logo.index');
-                Route::put('/logo', [\App\Http\Controllers\Admin\AdminCmsLogoController::class, 'update'])->name('logo.update');
-                Route::get('/about', [\App\Http\Controllers\Admin\AdminCmsAboutController::class, 'index'])->name('about.index');
-                Route::put('/about', [\App\Http\Controllers\Admin\AdminCmsAboutController::class, 'update'])->name('about.update');
-                Route::get('/contact', [\App\Http\Controllers\Admin\AdminCmsContactController::class, 'index'])->name('contact.index');
-                Route::put('/contact', [\App\Http\Controllers\Admin\AdminCmsContactController::class, 'update'])->name('contact.update');
-            });
+        Route::prefix('cms')->name('cms.')->group(function () {
+            Route::get('/homepage', [\App\Http\Controllers\Admin\AdminCmsHomepageController::class, 'index'])->name('homepage.index');
+            Route::put('/homepage', [\App\Http\Controllers\Admin\AdminCmsHomepageController::class, 'update'])->name('homepage.update');
+            Route::get('/logo', [\App\Http\Controllers\Admin\AdminCmsLogoController::class, 'index'])->name('logo.index');
+            Route::put('/logo', [\App\Http\Controllers\Admin\AdminCmsLogoController::class, 'update'])->name('logo.update');
+            Route::get('/about', [\App\Http\Controllers\Admin\AdminCmsAboutController::class, 'index'])->name('about.index');
+            Route::put('/about', [\App\Http\Controllers\Admin\AdminCmsAboutController::class, 'update'])->name('about.update');
+            Route::get('/contact', [\App\Http\Controllers\Admin\AdminCmsContactController::class, 'index'])->name('contact.index');
+            Route::put('/contact', [\App\Http\Controllers\Admin\AdminCmsContactController::class, 'update'])->name('contact.update');
         });
 
-        // ── Admin Marketing/SEO only ──
-        Route::middleware('role:admin_marketing')->group(function () {
-            Route::get('/seo', [\App\Http\Controllers\Admin\AdminSeoController::class, 'index'])->name('seo.index');
-            Route::put('/seo', [\App\Http\Controllers\Admin\AdminSeoController::class, 'update'])->name('seo.update');
-        });
+        Route::get('/seo', [\App\Http\Controllers\Admin\AdminSeoController::class, 'index'])->name('seo.index');
+        Route::put('/seo', [\App\Http\Controllers\Admin\AdminSeoController::class, 'update'])->name('seo.update');
     });
 
 });

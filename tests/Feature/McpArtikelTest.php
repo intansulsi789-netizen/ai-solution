@@ -34,7 +34,7 @@ class McpArtikelTest extends TestCase
 
     private function writer(): User
     {
-        return User::factory()->create(['name' => 'Rindu Penulis', 'role' => User::ROLE_ADMIN_MARKETING]);
+        return User::factory()->create(['name' => 'Rindu Penulis', 'role' => User::ROLE_ADMIN_WEBSITE]);
     }
 
     private function payload(array $override = []): array

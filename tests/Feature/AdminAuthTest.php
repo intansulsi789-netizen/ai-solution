@@ -94,16 +94,80 @@ class AdminAuthTest extends TestCase
         $this->assertStringContainsString('Terlalu banyak percobaan login', $errors[0]);
     }
 
-    public function test_admin_marketing_can_also_login_with_their_password()
+    public function test_admin_utama_can_login_with_email_and_password()
     {
-        $marketing = User::where('role', User::ROLE_ADMIN_MARKETING)->first();
-        if ($marketing) {
-            RateLimiter::clear('127.0.0.1|admin_login');
-            $response = $this->post(route('admin.login.post'), [
-                'password' => 'password123',
-            ]);
-            $response->assertRedirect(route('admin.dashboard'));
-            $this->assertAuthenticatedAs($marketing);
+        RateLimiter::clear('127.0.0.1|admin_login');
+        $response = $this->post(route('admin.login.post'), [
+            'email'    => 'admin@aisolution.id',
+            'password' => 'onlyadmincangetin',
+        ]);
+        $response->assertRedirect(route('admin.dashboard'));
+        $this->assertAuthenticated();
+    }
+
+    public function test_user_with_marketing_role_gets_403_on_admin_routes()
+    {
+        $marketing = User::where('role', 'admin_marketing')->first();
+        if (!$marketing) {
+            $marketing = User::factory()->create(['role' => 'admin_marketing']);
         }
+
+        $this->actingAs($marketing);
+
+        $response = $this->get(route('admin.dashboard'));
+        $response->assertStatus(403);
+
+        $response = $this->get(route('admin.articles.index'));
+        $response->assertStatus(403);
+
+        $response = $this->get(route('admin.seo.index'));
+        $response->assertStatus(403);
+    }
+
+    public function test_admin_marketing_cannot_login_with_marketing_password()
+    {
+        RateLimiter::clear('127.0.0.1|admin_login');
+        $response = $this->post(route('admin.login.post'), [
+            'email'    => 'marketing@aisolution.com',
+            'password' => 'password123',
+        ]);
+        $response->assertSessionHasErrors(['password']);
+        $this->assertGuest();
+    }
+
+    public function test_admin_utama_has_full_access_to_all_features()
+    {
+        $admin = User::where('role', User::ROLE_ADMIN_WEBSITE)->first() ?? User::first();
+        $this->actingAs($admin);
+
+        // Akses seluruh modul admin
+        $routes = [
+            'admin.dashboard',
+            'admin.services.index',
+            'admin.articles.index',
+            'admin.articles.calendar',
+            'admin.partners.index',
+            'admin.seo.index',
+            'admin.cms.homepage.index',
+            'admin.cms.logo.index',
+            'admin.cms.about.index',
+            'admin.cms.contact.index',
+            'admin.consultations.index',
+            'admin.profile.index',
+        ];
+
+        foreach ($routes as $routeName) {
+            $response = $this->get(route($routeName));
+            $response->assertStatus(200);
+        }
+    }
+
+    public function test_unauthenticated_user_cannot_access_admin_routes()
+    {
+        $response = $this->get(route('admin.dashboard'));
+        $response->assertRedirect(route('admin.login'));
+
+        $response = $this->get(route('admin.seo.index'));
+        $response->assertRedirect(route('admin.login'));
     }
 }

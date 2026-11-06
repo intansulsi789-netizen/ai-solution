@@ -20,7 +20,6 @@ class User extends Authenticatable implements OAuthenticatable
      * Available roles.
      */
     const ROLE_ADMIN_WEBSITE = 'admin_website';
-    const ROLE_ADMIN_MARKETING = 'admin_marketing';
 
     /**
      * The attributes that are mass assignable.
@@ -71,14 +70,6 @@ class User extends Authenticatable implements OAuthenticatable
     public function isAdminWebsite(): bool
     {
         return $this->role === self::ROLE_ADMIN_WEBSITE;
-    }
-
-    /**
-     * Check if user is Admin Marketing/SEO.
-     */
-    public function isAdminMarketing(): bool
-    {
-        return $this->role === self::ROLE_ADMIN_MARKETING;
     }
 
     /**

@@ -1223,10 +1223,12 @@
             -webkit-backdrop-filter: blur(3px);
             z-index: 99;
             opacity: 0;
+            pointer-events: none;
             transition: opacity 0.3s ease;
         }
         #sidebar-overlay.visible {
             opacity: 1;
+            pointer-events: auto;
         }
 
         /* ===========================
@@ -1327,7 +1329,7 @@
         </div>
         <div class="admin-info">
             <div class="admin-name">{{ Auth::user()->name }}</div>
-            <div class="admin-role">{{ Auth::user()->isAdminWebsite() ? 'Admin Website' : 'Admin Marketing/SEO' }}</div>
+            <div class="admin-role">Admin Website</div>
         </div>
     </div>
 
@@ -1345,7 +1347,6 @@
             Dashboard
         </a>
 
-        @if(auth()->user()->hasRole('admin_website'))
         <a href="{{ route('admin.services.index') }}" class="nav-item {{ request()->routeIs('admin.services.*') ? 'active' : '' }}" id="nav-layanan">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
@@ -1354,7 +1355,6 @@
             </svg>
             Layanan AI
         </a>
-        @endif
 
         <a href="{{ route('admin.articles.index') }}" class="nav-item {{ request()->routeIs('admin.articles.*') ? 'active' : '' }}" id="nav-artikel">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1367,7 +1367,6 @@
             Artikel
         </a>
 
-        @if(auth()->user()->hasRole('admin_website'))
         <a href="{{ route('admin.partners.index') }}" class="nav-item {{ request()->routeIs('admin.partners.*') ? 'active' : '' }}" id="nav-partner">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
@@ -1377,10 +1376,7 @@
             </svg>
             Partner / Logo
         </a>
-        @endif
 
-        @if(auth()->user()->hasRole('admin_marketing'))
-        {{-- ===== SEO (Admin Marketing only) ===== --}}
         <a href="{{ route('admin.seo.index') }}" class="nav-item {{ request()->routeIs('admin.seo.*') ? 'active' : '' }}" id="nav-seo">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="11" cy="11" r="8"></circle>
@@ -1388,9 +1384,7 @@
             </svg>
             SEO
         </a>
-        @endif
 
-        @if(auth()->user()->hasRole('admin_website'))
         {{-- ===== CMS / KONTEN WEBSITE ===== --}}
         <div class="nav-section-label">CMS / Konten Website</div>
 
@@ -1435,7 +1429,6 @@
             </a>
 
         </div>
-        @endif
 
         <div class="nav-section-label">Komunikasi</div>
 
@@ -1604,17 +1597,12 @@
         const results = document.getElementById('quick-search-results');
         if (!input || !results) return;
 
-        const userRole = @json(auth()->user()->role);
-        const isWebsite   = (userRole === 'admin_website');
-        const isMarketing = (userRole === 'admin_marketing');
-
-        // Define all menu items with role access, keywords, and routes
+        // Define all menu items with keywords and routes
         const allMenus = [
             {
                 label: 'Dashboard',
                 url: '{{ route("admin.dashboard") }}',
                 category: 'Menu Utama',
-                roles: ['admin_website', 'admin_marketing'],
                 keywords: ['dashboard', 'beranda', 'home', 'utama'],
                 icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>'
             },
@@ -1622,7 +1610,6 @@
                 label: 'Layanan AI',
                 url: '{{ route("admin.services.index") }}',
                 category: 'Menu Utama',
-                roles: ['admin_website'],
                 keywords: ['layanan', 'service', 'jasa', 'ai'],
                 icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>'
             },
@@ -1630,7 +1617,6 @@
                 label: 'Artikel',
                 url: '{{ route("admin.articles.index") }}',
                 category: 'Menu Utama',
-                roles: ['admin_website', 'admin_marketing'],
                 keywords: ['artikel', 'article', 'blog', 'tulisan', 'konten'],
                 icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>'
             },
@@ -1638,7 +1624,6 @@
                 label: 'Partner / Logo',
                 url: '{{ route("admin.partners.index") }}',
                 category: 'Menu Utama',
-                roles: ['admin_website'],
                 keywords: ['partner', 'logo', 'mitra', 'kolaborasi', 'perusahaan'],
                 icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>'
             },
@@ -1646,7 +1631,6 @@
                 label: 'SEO',
                 url: '{{ route("admin.seo.index") }}',
                 category: 'Menu Utama',
-                roles: ['admin_marketing'],
                 keywords: ['seo', 'meta', 'search engine', 'optimasi', 'marketing'],
                 icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>'
             },
@@ -1654,7 +1638,6 @@
                 label: 'CMS Homepage',
                 url: '{{ route("admin.cms.homepage.index") }}',
                 category: 'CMS / Konten',
-                roles: ['admin_website'],
                 keywords: ['homepage', 'cms', 'konten', 'beranda', 'hero', 'halaman utama'],
                 icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>'
             },
@@ -1662,7 +1645,6 @@
                 label: 'CMS Tentang Kami',
                 url: '{{ route("admin.cms.about.index") }}',
                 category: 'CMS / Konten',
-                roles: ['admin_website'],
                 keywords: ['tentang', 'about', 'profil perusahaan', 'ceo', 'cms'],
                 icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>'
             },
@@ -1670,7 +1652,6 @@
                 label: 'CMS CTA / Kontak',
                 url: '{{ route("admin.cms.contact.index") }}',
                 category: 'CMS / Konten',
-                roles: ['admin_website'],
                 keywords: ['kontak', 'contact', 'cta', 'whatsapp', 'wa', 'telepon', 'email', 'cms'],
                 icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.26h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.18 6.18l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>'
             },
@@ -1678,7 +1659,6 @@
                 label: 'Pesan Konsultasi',
                 url: '{{ route("admin.consultations.index") }}',
                 category: 'Komunikasi',
-                roles: ['admin_website', 'admin_marketing'],
                 keywords: ['konsultasi', 'pesan', 'chat', 'inbox', 'komunikasi', 'message'],
                 icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>'
             },
@@ -1686,14 +1666,12 @@
                 label: 'Profil',
                 url: '{{ route("admin.profile.index") }}',
                 category: 'Akun',
-                roles: ['admin_website', 'admin_marketing'],
                 keywords: ['profil', 'profile', 'akun', 'pengaturan', 'foto', 'password'],
                 icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>'
             }
         ];
 
-        // Filter menus by user role
-        const userMenus = allMenus.filter(m => m.roles.includes(userRole));
+        const userMenus = allMenus;
 
         function renderResults(query) {
             const q = query.trim().toLowerCase();

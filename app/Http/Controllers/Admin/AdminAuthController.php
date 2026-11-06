@@ -30,6 +30,7 @@ class AdminAuthController extends Controller
     public function login(Request $request)
     {
         $request->validate([
+            'email'    => ['nullable', 'string'],
             'password' => ['required', 'string'],
         ], [
             'password.required' => 'Password admin wajib diisi.',
@@ -45,15 +46,20 @@ class AdminAuthController extends Controller
             ]);
         }
 
-        // Cari akun Admin Website utama dari database
-        $admin = User::where('role', User::ROLE_ADMIN_WEBSITE)->first()
-            ?? User::where('role', 'admin_website')->first()
-            ?? User::first();
+        // Cari akun Admin Website utama (bisa melalui email jika diisi atau default akun Admin Utama)
+        $email = $request->input('email');
+        if ($email) {
+            $admin = User::where('email', $email)->where('role', User::ROLE_ADMIN_WEBSITE)->first();
+        } else {
+            $admin = User::where('role', User::ROLE_ADMIN_WEBSITE)->first()
+                ?? User::where('role', 'admin_website')->first()
+                ?? User::first();
+        }
 
         if (!$admin) {
             RateLimiter::hit($throttleKey, 60);
             return back()->withErrors([
-                'password' => 'Akun administrator belum terdaftar pada sistem.',
+                'password' => 'Akun administrator belum terdaftar pada sistem atau kredensial tidak sesuai.',
             ]);
         }
 
@@ -62,17 +68,6 @@ class AdminAuthController extends Controller
             RateLimiter::clear($throttleKey);
 
             Auth::login($admin, $request->boolean('remember'));
-            $request->session()->regenerate();
-
-            return redirect()->intended(route('admin.dashboard'));
-        }
-
-        // Verifikasi akun Admin Marketing jika password sesuai (tanpa mengubah data akun)
-        $marketing = User::where('role', User::ROLE_ADMIN_MARKETING)->first();
-        if ($marketing && Hash::check($request->password, $marketing->password)) {
-            RateLimiter::clear($throttleKey);
-
-            Auth::login($marketing, $request->boolean('remember'));
             $request->session()->regenerate();
 
             return redirect()->intended(route('admin.dashboard'));
