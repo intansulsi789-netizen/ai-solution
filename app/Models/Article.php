@@ -28,6 +28,22 @@ class Article extends Model
     ];
 
     /**
+     * The "booted" method of the model.
+     * Menerapkan sanitasi otomatis sebelum penyimpanan artikel untuk mencegah Stored XSS.
+     */
+    protected static function booted()
+    {
+        static::saving(function ($article) {
+            if ($article->isDirty('isi_artikel') && $article->isi_artikel !== null) {
+                $article->isi_artikel = \App\Services\HtmlSanitizer::cleanIsiArtikel($article->isi_artikel);
+            }
+            if ($article->isDirty('ringkasan') && $article->ringkasan !== null) {
+                $article->ringkasan = \App\Services\HtmlSanitizer::cleanPlainText($article->ringkasan);
+            }
+        });
+    }
+
+    /**
      * Otomatis mempublikasikan artikel yang telah melewati jadwal publikasi (WIB).
      */
     public static function autoPublishOverdue(): int

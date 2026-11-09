@@ -56,8 +56,8 @@ $getArticles = function () {
                     'readTime'    => $isi['readTime'] ?? '',
                     'image'       => $a->image_url,
                     'summary'     => $a->ringkasan,
-                    'content'     => $isi['content'] ?? '',
-                    'takeaway'    => $isi['takeaway'] ?? '',
+                    'content'     => \App\Services\HtmlSanitizer::clean($isi['content'] ?? ''),
+                    'takeaway'    => \App\Services\HtmlSanitizer::cleanPlainText($isi['takeaway'] ?? ''),
                 ];
             })->toArray();
     } catch (\Throwable $e) {
@@ -86,8 +86,8 @@ $getArticles = function () {
                         'readTime'    => $isi['readTime'] ?? '',
                         'image'       => $a->image_url,
                         'summary'     => $a->ringkasan,
-                        'content'     => $isi['content'] ?? '',
-                        'takeaway'    => $isi['takeaway'] ?? '',
+                        'content'     => \App\Services\HtmlSanitizer::clean($isi['content'] ?? ''),
+                        'takeaway'    => \App\Services\HtmlSanitizer::cleanPlainText($isi['takeaway'] ?? ''),
                     ];
                 })->toArray();
         } catch (\Throwable $fallbackErr) {

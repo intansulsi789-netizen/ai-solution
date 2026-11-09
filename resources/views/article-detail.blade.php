@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jogja AI Solutions</title>
-    <meta name="description" content="{{ Str::limit(strip_tags($article['summary'] ?? ''), 160) }}">
+    <meta name="description" content="{{ Str::limit(\App\Services\HtmlSanitizer::cleanPlainText($article['summary'] ?? ''), 160) }}">
 
     @php
         $canonicalDomain = 'https://jogjaaisolutions.my.id';
@@ -22,7 +22,7 @@
     <meta property="og:type" content="article">
     <meta property="og:url" content="{{ $canonicalUrl }}">
     <meta property="og:title" content="{{ $article['title'] }} - AI Solution">
-    <meta property="og:description" content="{{ Str::limit(strip_tags($article['summary'] ?? ''), 200) }}">
+    <meta property="og:description" content="{{ Str::limit(\App\Services\HtmlSanitizer::cleanPlainText($article['summary'] ?? ''), 200) }}">
     <meta property="og:image" content="{{ $ogImage }}">
     <meta property="og:site_name" content="AI Solution">
     <meta property="og:locale" content="id_ID">
@@ -31,7 +31,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="{{ $canonicalUrl }}">
     <meta name="twitter:title" content="{{ $article['title'] }} - AI Solution">
-    <meta name="twitter:description" content="{{ Str::limit(strip_tags($article['summary'] ?? ''), 200) }}">
+    <meta name="twitter:description" content="{{ Str::limit(\App\Services\HtmlSanitizer::cleanPlainText($article['summary'] ?? ''), 200) }}">
     <meta name="twitter:image" content="{{ $ogImage }}">
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -1099,7 +1099,7 @@
         <!-- Main Content -->
         <main class="article-main">
             <div class="article-body">
-                {!! $article['content'] !!}
+                {!! \App\Services\HtmlSanitizer::clean($article['content'] ?? '') !!}
             </div>
 
             <!-- Source Reference Box -->

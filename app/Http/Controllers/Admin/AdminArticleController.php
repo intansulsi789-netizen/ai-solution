@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Article;
 use App\Services\ArticleImageService;
+use App\Services\HtmlSanitizer;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -228,6 +229,11 @@ class AdminArticleController extends Controller
             'status',
         ]);
 
+        $data['isi_artikel'] = HtmlSanitizer::cleanIsiArtikel($data['isi_artikel'] ?? null);
+        if (isset($data['ringkasan'])) {
+            $data['ringkasan'] = HtmlSanitizer::cleanPlainText($data['ringkasan']);
+        }
+
         // Penanganan Gambar (Upload vs URL)
         $imageType = $request->input('image_type', 'upload');
         if ($imageType === 'url' && $request->filled('gambar_url')) {
@@ -344,6 +350,11 @@ class AdminArticleController extends Controller
             'isi_artikel',
             'status',
         ]);
+
+        $data['isi_artikel'] = HtmlSanitizer::cleanIsiArtikel($data['isi_artikel'] ?? null);
+        if (isset($data['ringkasan'])) {
+            $data['ringkasan'] = HtmlSanitizer::cleanPlainText($data['ringkasan']);
+        }
 
         // Penanganan Gambar (Pertahankan gambar lama jika tidak diganti)
         $imageType = $request->input('image_type');

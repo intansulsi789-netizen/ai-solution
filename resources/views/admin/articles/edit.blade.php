@@ -211,11 +211,11 @@
                 $iaRaw = old('isi_artikel', $article->isi_artikel);
                 $ia = json_decode($iaRaw, true);
                 if (is_array($ia)) {
-                    $content = $ia['content'] ?? '';
-                    $takeaway = $ia['takeaway'] ?? '';
-                    $readTime = $ia['readTime'] ?? '';
+                    $content = \App\Services\HtmlSanitizer::clean($ia['content'] ?? '');
+                    $takeaway = \App\Services\HtmlSanitizer::cleanPlainText($ia['takeaway'] ?? '');
+                    $readTime = \App\Services\HtmlSanitizer::cleanPlainText($ia['readTime'] ?? '');
                 } else {
-                    $content = $iaRaw ?: '';
+                    $content = \App\Services\HtmlSanitizer::clean($iaRaw ?: '');
                     $takeaway = '';
                     $readTime = '';
                 }

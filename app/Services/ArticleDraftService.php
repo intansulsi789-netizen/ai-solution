@@ -22,7 +22,7 @@ class ArticleDraftService
     public function createDraft(User $author, array $input): array
     {
         $notes = [];
-        $html = $this->markdownToHtml($input['konten_markdown']);
+        $html = HtmlSanitizer::clean($this->markdownToHtml($input['konten_markdown']));
 
         $gambar = null;
         if (! empty($input['gambar_url'])) {
@@ -37,10 +37,10 @@ class ArticleDraftService
             'author_name' => Str::limit(trim($input['nama_penulis'] ?? '') ?: $author->name, 100, ''),
             'source_name' => $input['sumber_nama'] ?? null,
             'source_url' => $input['sumber_url'] ?? null,
-            'ringkasan' => trim($input['ringkasan']),
+            'ringkasan' => HtmlSanitizer::cleanPlainText($input['ringkasan']),
             'isi_artikel' => json_encode([
                 'content' => $html,
-                'takeaway' => trim($input['takeaway'] ?? ''),
+                'takeaway' => HtmlSanitizer::cleanPlainText($input['takeaway'] ?? ''),
                 'readTime' => $this->readTime($html),
             ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
             'gambar' => $gambar,
