@@ -58,6 +58,13 @@
         font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s;
     }
     .upload-btn:hover { background: rgba(0,212,255,0.2); }
+
+    @media (max-width: 768px) {
+        .profile-wrap { flex-direction: column; gap: 20px; }
+        .profile-card { width: 100%; box-sizing: border-box; padding: 24px 16px; }
+        .form-wrap { min-width: 0; width: 100%; box-sizing: border-box; padding: 18px 14px; }
+        .btn-submit { width: 100%; display: block; text-align: center; }
+    }
 </style>
 
 <div class="page-header">

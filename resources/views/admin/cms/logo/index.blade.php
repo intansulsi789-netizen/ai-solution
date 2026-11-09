@@ -207,6 +207,12 @@
         .form-grid { grid-template-columns: 1fr; }
         .mode-cards { grid-template-columns: 1fr; }
     }
+    @media (max-width: 768px) {
+        .form-wrap { padding: 16px 12px; }
+        .preview-stage { position: static; padding: 16px 12px; }
+        .tab-row { max-width: 100%; }
+        .btn-submit { width: 100%; display: block; text-align: center; }
+    }
 </style>
 
 <div class="page-header">

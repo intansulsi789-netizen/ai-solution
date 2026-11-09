@@ -24,6 +24,12 @@
     .status-badge { padding: 4px 10px; border-radius: 100px; font-size: 11px; font-weight: 700; }
     .status-read   { background: rgba(255,255,255,0.1); color: var(--muted); border: 1px solid rgba(255,255,255,0.15); }
     .status-unread { background: rgba(0,212,255,0.15); color: var(--cyan); border: 1px solid rgba(0,212,255,0.3); }
+
+    @media (max-width: 768px) {
+        .table-container { padding: 16px 12px; }
+        .table-header { flex-direction: column; align-items: stretch; gap: 12px; }
+        table { min-width: 580px; }
+    }
 </style>
 
 <div class="page-header">

@@ -76,6 +76,39 @@
     }
     .drag-handle span { display:block; height:2px; background:rgba(255,255,255,0.6); border-radius:2px; }
     .drag-saving { position:fixed; bottom:24px; right:24px; background:rgba(0,212,255,0.18); border:1px solid rgba(0,212,255,0.4); color:var(--cyan); padding:10px 18px; border-radius:10px; font-size:13px; font-weight:600; display:none; z-index:999; }
+
+    @media (max-width: 768px) {
+        .top-bar {
+            flex-direction: column !important;
+            align-items: stretch !important;
+            gap: 14px !important;
+        }
+        .top-bar .btn-primary {
+            width: 100% !important;
+            justify-content: center !important;
+        }
+        .partner-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 10px !important;
+        }
+        .partner-card {
+            padding: 14px 10px 10px !important;
+        }
+        .card-actions {
+            flex-direction: column !important;
+            gap: 6px !important;
+            width: 100% !important;
+        }
+        .card-actions a, .card-actions button {
+            width: 100% !important;
+            padding: 7px 0 !important;
+        }
+    }
+    @media (max-width: 360px) {
+        .partner-grid {
+            grid-template-columns: 1fr !important;
+        }
+    }
 </style>
 
 <div class="top-bar">

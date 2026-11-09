@@ -30,8 +30,9 @@
     .section-title { font-size:16px; font-weight:700; color:var(--cyan); margin-bottom: 24px; border-bottom: 1px solid var(--border); padding-bottom: 12px; }
 
     @media (max-width: 768px) {
-        .form-wrap { padding: 24px; }
+        .form-wrap { padding: 16px 12px; }
         .form-grid { grid-template-columns: 1fr; gap: 0; }
+        .btn-submit { width: 100%; display: block; text-align: center; }
     }
 </style>
 

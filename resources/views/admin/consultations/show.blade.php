@@ -35,6 +35,30 @@
     .btn-back:hover { background: rgba(0,212,255,0.08); color: var(--text); }
     .btn-wa { background:#25D366; color:#fff; padding:10px 20px; border-radius:8px; text-decoration:none; font-weight:600; font-size:14px; display:inline-block; transition:opacity 0.2s; }
     .btn-wa:hover { opacity:0.9; }
+
+    @media (max-width: 768px) {
+        .detail-card {
+            padding: 18px 14px;
+        }
+        .meta-grid {
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+        .msg-box {
+            padding: 16px;
+            font-size: 13.5px;
+        }
+        .detail-card > div:last-child {
+            flex-direction: column !important;
+            align-items: stretch !important;
+            gap: 10px !important;
+        }
+        .btn-back, .btn-wa {
+            width: 100% !important;
+            text-align: center !important;
+            box-sizing: border-box !important;
+        }
+    }
 </style>
 
 <div class="page-header">

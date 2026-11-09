@@ -29,6 +29,13 @@
     .status-badge { padding: 4px 10px; border-radius: 100px; font-size: 11px; font-weight: 700; }
     .status-active { background: rgba(74,222,128,0.15); color: #4ade80; border: 1px solid rgba(74,222,128,0.3); }
     .status-inactive { background: rgba(239,68,68,0.15); color: #fca5a5; border: 1px solid rgba(239,68,68,0.3); }
+
+    @media (max-width: 768px) {
+        .table-container { padding: 16px 12px; }
+        .table-header { flex-direction: column; align-items: stretch; gap: 12px; }
+        .table-header .btn-primary { width: 100%; justify-content: center; }
+        table { min-width: 620px; }
+    }
 </style>
 
 <div class="page-header">

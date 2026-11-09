@@ -21,6 +21,11 @@
     .error-box { background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);color:#fca5a5;padding:16px;border-radius:10px;margin-bottom:24px;font-size:14px; }
     .success-box { background:rgba(74,222,128,0.1);border:1px solid rgba(74,222,128,0.3);color:#4ade80;padding:12px 16px;border-radius:8px;margin-bottom:24px;font-size:14px; }
     .section-title { font-size:16px; font-weight:700; color:var(--cyan); margin-bottom: 24px; border-bottom: 1px solid var(--border); padding-bottom: 12px; }
+
+    @media (max-width: 768px) {
+        .form-wrap { padding: 16px 12px; }
+        .btn-submit { width: 100%; display: block; text-align: center; }
+    }
 </style>
 
 <div class="page-header">

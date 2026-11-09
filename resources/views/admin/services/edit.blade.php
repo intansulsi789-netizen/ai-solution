@@ -170,9 +170,11 @@
     }
 
     @media (max-width: 768px) {
-        .form-container { padding: 24px; }
+        .form-container { padding: 16px 12px; }
         .form-grid { grid-template-columns: 1fr; gap: 0; }
-        .icon-grid { grid-template-columns: repeat(auto-fill, minmax(105px, 1fr)); }
+        .icon-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+        .icon-preview-card { flex-direction: column; align-items: flex-start; gap: 10px; }
+        .btn-cancel, .btn-submit { width: 100%; display: block; text-align: center; margin-right: 0; margin-bottom: 8px; box-sizing: border-box; }
     }
 </style>
 

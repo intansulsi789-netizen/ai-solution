@@ -37,9 +37,10 @@
     }
 
     @media (max-width: 768px) {
-        .form-wrap { padding: 24px; }
+        .form-wrap { padding: 16px 12px; }
         .form-grid { grid-template-columns: 1fr; gap: 0; }
         .photo-preview-wrap { flex-direction: column; align-items: flex-start; }
+        .btn-submit { width: 100%; display: block; text-align: center; }
     }
 </style>
 

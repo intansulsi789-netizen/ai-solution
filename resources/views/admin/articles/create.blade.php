@@ -69,9 +69,13 @@
     .ql-editor.ql-blank::before { color: rgba(255,255,255,0.4); }
 
     @media (max-width: 768px) {
-        .form-wrap { padding: 24px; }
+        .form-wrap { padding: 16px 12px; }
         .form-grid { grid-template-columns: 1fr; gap: 0; }
-        .status-cards { grid-template-columns: 1fr; }
+        .status-cards { grid-template-columns: 1fr; gap: 8px; }
+        .preview-box { flex-direction: column; align-items: flex-start; }
+        .preview-img { width: 100%; max-width: 100%; height: auto; aspect-ratio: 16/9; }
+        .tab-pills { flex-wrap: wrap; }
+        .btn-cancel, .btn-submit { width: 100%; display: block; text-align: center; margin-right: 0; margin-bottom: 8px; box-sizing: border-box; }
     }
 
     /* ============================================================

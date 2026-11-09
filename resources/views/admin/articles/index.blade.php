@@ -998,6 +998,90 @@
         border-color: rgba(15, 23, 42, 0.15);
         color: #0f172a;
     }
+
+    /* ============================================================
+       RESPONSIVE MODAL & TABS FOR MOBILE
+       ============================================================ */
+    @media (max-width: 768px) {
+        .article-nav-tabs {
+            overflow-x: auto !important;
+            -webkit-overflow-scrolling: touch !important;
+            flex-wrap: nowrap !important;
+            gap: 8px !important;
+            padding-bottom: 12px !important;
+            scrollbar-width: none;
+        }
+        .article-nav-tabs::-webkit-scrollbar {
+            display: none;
+        }
+        .article-tab-btn {
+            flex-shrink: 0 !important;
+            white-space: nowrap !important;
+            padding: 8px 14px !important;
+            font-size: 12.5px !important;
+        }
+        .table-header {
+            flex-direction: column !important;
+            align-items: stretch !important;
+            gap: 12px !important;
+        }
+        .table-header > div {
+            width: 100% !important;
+            display: flex;
+            flex-direction: column !important;
+            align-items: stretch !important;
+            gap: 10px !important;
+        }
+        .table-header form {
+            width: 100% !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: stretch !important;
+            gap: 8px !important;
+        }
+        .table-header form input[name="q"],
+        .table-header form select[name="status"] {
+            width: 100% !important;
+            min-width: 0 !important;
+            box-sizing: border-box !important;
+        }
+        .table-header .btn-primary {
+            width: 100% !important;
+            justify-content: center !important;
+        }
+        .cal-container {
+            padding: 16px 12px !important;
+            border-radius: 14px !important;
+        }
+        .cal-toolbar {
+            flex-direction: column !important;
+            align-items: stretch !important;
+            gap: 12px !important;
+        }
+        .cal-nav-group {
+            justify-content: space-between !important;
+            width: 100% !important;
+        }
+        .cal-month-title {
+            font-size: 18px !important;
+            text-align: center !important;
+            min-width: 0 !important;
+        }
+        .cal-legend-bar {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 8px !important;
+            padding: 10px 12px !important;
+        }
+        .cal-modal-card {
+            max-width: 95vw !important;
+            margin: 10px !important;
+        }
+        .cal-modal-header,
+        .cal-modal-body {
+            padding: 14px 16px !important;
+        }
+    }
 </style>
 
 <div class="page-header">
@@ -1222,18 +1306,22 @@
         </div>
 
         <!-- Grid Kalender -->
-        <div class="cal-grid-header">
-            <div class="cal-day-name weekend">Minggu</div>
-            <div class="cal-day-name">Senin</div>
-            <div class="cal-day-name">Selasa</div>
-            <div class="cal-day-name">Rabu</div>
-            <div class="cal-day-name">Kamis</div>
-            <div class="cal-day-name">Jumat</div>
-            <div class="cal-day-name weekend">Sabtu</div>
-        </div>
+        <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;border-radius:12px;">
+            <div style="min-width:540px;">
+                <div class="cal-grid-header">
+                    <div class="cal-day-name weekend">Minggu</div>
+                    <div class="cal-day-name">Senin</div>
+                    <div class="cal-day-name">Selasa</div>
+                    <div class="cal-day-name">Rabu</div>
+                    <div class="cal-day-name">Kamis</div>
+                    <div class="cal-day-name">Jumat</div>
+                    <div class="cal-day-name weekend">Sabtu</div>
+                </div>
 
-        <div class="cal-grid-body" id="cal-grid-body">
-            <!-- Sel kalender dirender melalui JavaScript -->
+                <div class="cal-grid-body" id="cal-grid-body">
+                    <!-- Sel kalender dirender melalui JavaScript -->
+                </div>
+            </div>
         </div>
     </div>
 </div>

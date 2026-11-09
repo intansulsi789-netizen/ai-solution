@@ -83,9 +83,11 @@
     }
 
     @media (max-width: 768px) {
-        .form-wrap { padding: 24px; }
+        .form-wrap { padding: 16px 12px; }
         .form-grid { grid-template-columns: 1fr; gap: 0; }
+        .tab-row { max-width: 100%; }
         .current-logo-card { flex-direction: column; align-items: flex-start; }
+        .btn-cancel, .btn-submit { width: 100%; display: block; text-align: center; margin-right: 0; margin-bottom: 8px; box-sizing: border-box; }
     }
 </style>
 
