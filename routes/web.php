@@ -10,13 +10,15 @@ $getServices = function () {
     return \App\Models\Service::where('is_active', true)->orderBy('nomor')->get()->map(function ($s) {
         $lengkap = json_decode($s->deskripsi_lengkap, true) ?? ['solutions' => [], 'benefits' => []];
         return [
-            'slug'      => $s->slug,
-            'title'     => $s->nama_layanan,
-            'icon'      => $s->icon,
-            'image'     => $s->image,
-            'desc'      => $s->deskripsi_singkat,
-            'solutions' => $lengkap['solutions'] ?? [],
-            'benefits'  => $lengkap['benefits'] ?? [],
+            'id'                 => $s->id,
+            'slug'               => $s->slug,
+            'title'              => $s->nama_layanan,
+            'icon'               => $s->icon,
+            'image'              => $s->image_url,
+            'has_uploaded_image' => $s->has_uploaded_image,
+            'desc'               => $s->deskripsi_singkat,
+            'solutions'          => $lengkap['solutions'] ?? [],
+            'benefits'           => $lengkap['benefits'] ?? [],
         ];
     })->toArray();
 };
@@ -124,14 +126,15 @@ Route::get('/layanan/{slug}', function ($slug) {
     }
 
     $serviceData = [
-        'id'        => $s->id,
-        'slug'      => $s->slug,
-        'title'     => $s->nama_layanan,
-        'icon'      => $s->icon,
-        'image'     => $s->image,
-        'desc'      => $s->deskripsi_singkat,
-        'solutions' => $lengkap['solutions'] ?? [],
-        'benefits'  => $lengkap['benefits'] ?? [],
+        'id'                 => $s->id,
+        'slug'               => $s->slug,
+        'title'              => $s->nama_layanan,
+        'icon'               => $s->icon,
+        'image'              => $s->image_url,
+        'has_uploaded_image' => $s->has_uploaded_image,
+        'desc'               => $s->deskripsi_singkat,
+        'solutions'          => $lengkap['solutions'] ?? [],
+        'benefits'           => $lengkap['benefits'] ?? [],
     ];
 
     return view('service-detail', ['service' => $serviceData]);

@@ -2727,8 +2727,10 @@
         .card-number { position: absolute; top: 20px; right: 24px; font-size: 48px; font-weight: 900; color: rgba(255, 255, 255, 0.04); font-family: 'Plus Jakarta Sans', sans-serif; transition: 0.3s; z-index: 0; }
         .service-card:hover .card-number { color: rgba(0, 168, 255, 0.12); transform: scale(1.1); }
         
-        .card-icon { width: 50px; height: 50px; border-radius: 14px; background: rgba(0, 168, 255, 0.1); display: flex; align-items: center; justify-content: center; margin-bottom: 24px; border: 1px solid rgba(0, 168, 255, 0.2); color: var(--cyan-neon); transition: 0.3s; z-index: 2; position: relative; box-shadow: 0 0 15px rgba(0, 168, 255, 0.15); flex-shrink: 0; }
+        .card-icon { width: 50px; height: 50px; border-radius: 14px; background: rgba(0, 168, 255, 0.1); display: flex; align-items: center; justify-content: center; margin-bottom: 24px; border: 1px solid rgba(0, 168, 255, 0.2); color: var(--cyan-neon); transition: 0.3s; z-index: 2; position: relative; box-shadow: 0 0 15px rgba(0, 168, 255, 0.15); flex-shrink: 0; overflow: hidden; }
+        .card-icon img, .card-icon-img { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; display: block; transition: transform 0.3s ease; }
         .service-card:hover .card-icon { background: linear-gradient(135deg, #00a8ff 0%, #7c3aed 100%); color: white; border-color: transparent; box-shadow: 0 0 25px rgba(0, 168, 255, 0.55); transform: scale(1.08); }
+        .service-card:hover .card-icon img, .service-card:hover .card-icon-img { transform: scale(1.08); }
         
         .card-title { font-size: 18px; font-weight: 700; margin-bottom: 12px; color: var(--white); z-index: 2; position: relative; font-family: 'Plus Jakarta Sans', sans-serif; word-break: break-word; overflow-wrap: break-word; }
         .card-desc { font-size: 14px; color: rgba(255, 255, 255, 0.6); line-height: 1.6; margin-bottom: 24px; flex-grow: 1; z-index: 2; position: relative; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; word-break: break-word; overflow-wrap: break-word; }
@@ -5789,9 +5791,20 @@
         <a href="/layanan/{{ $service['slug'] }}" class="service-card" style="text-decoration: none;">
             <div class="card-number">{{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}</div>
             <div class="card-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="{{ $service['icon'] }}"></path>
-                </svg>
+                @if(!empty($service['has_uploaded_image']) && !empty($service['image']))
+                    <img src="{{ $service['image'] }}" alt="{{ $service['title'] }}" class="card-icon-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+                        <path d="{{ !empty($service['icon']) ? $service['icon'] : 'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5' }}"></path>
+                    </svg>
+                @elseif(!empty($service['icon']))
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="{{ $service['icon'] }}"></path>
+                    </svg>
+                @else
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                    </svg>
+                @endif
             </div>
             <h3 class="card-title">{{ $service['title'] }}</h3>
             <p class="card-desc">{{ \Illuminate\Support\Str::limit($service['desc'], 130) }}</p>

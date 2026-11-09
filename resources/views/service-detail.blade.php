@@ -530,6 +530,14 @@
             box-shadow: 0 0 35px rgba(0, 212, 255, 0.2);
             position: relative;
             backdrop-filter: blur(12px);
+            overflow: hidden;
+        }
+        .detail-icon-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: inherit;
+            display: block;
         }
         .detail-icon-wrap::after {
             content: ''; position: absolute; inset: -1px;
@@ -1752,9 +1760,17 @@
             <!-- Header -->
             <div class="detail-header">
                 <div class="detail-icon-wrap">
-                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="{{ $service['icon'] }}"></path>
-                    </svg>
+                    @if(!empty($service['icon']))
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="{{ $service['icon'] }}"></path>
+                        </svg>
+                    @elseif(!empty($service['image']))
+                        <img src="{{ $service['image'] }}" alt="{{ $service['title'] }}">
+                    @else
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                        </svg>
+                    @endif
                 </div>
                 <div class="badge-layanan">
                     <span class="badge-pulse-dot"></span>
@@ -1770,12 +1786,12 @@
                 <div class="tech-corner corner-bl"></div>
                 <div class="tech-corner corner-br"></div>
                 @php
-                    $imageSrc = asset('images/services/' . $service['slug'] . '.jpg');
-                    if (!empty($service['image'])) {
-                        $imageSrc = Storage::url($service['image']);
+                    $imageSrc = $service['image'] ?? asset('images/services/' . $service['slug'] . '.jpg');
+                    if (empty($imageSrc)) {
+                        $imageSrc = asset('images/ai-hero-bg.jpg');
                     }
                 @endphp
-                <img src="{{ $imageSrc }}" alt="Ilustrasi Layanan {{ $service['title'] }}">
+                <img src="{{ $imageSrc }}" alt="Ilustrasi Layanan {{ $service['title'] }}" onerror="this.onerror=null; this.src='{{ asset('images/ai-hero-bg.jpg') }}';">
                 <div class="image-glow"></div>
                 <div class="hero-image-status-pill">
                     <span class="status-indicator-ping"></span>

@@ -54,7 +54,8 @@
         <table>
             <thead>
                 <tr>
-                    <th style="width: 60px;">No.</th>
+                    <th style="width: 50px;">No.</th>
+                    <th style="width: 80px;">Visual</th>
                     <th>Nama Layanan</th>
                     <th>Slug</th>
                     <th>Status</th>
@@ -65,6 +66,23 @@
                 @foreach($services as $s)
                 <tr>
                     <td>{{ $s->nomor }}</td>
+                    <td>
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <div style="width: 32px; height: 32px; border-radius: 8px; background: rgba(0, 212, 255, 0.1); border: 1px solid rgba(0, 212, 255, 0.2); display: flex; align-items: center; justify-content: center; color: var(--cyan); overflow: hidden; flex-shrink: 0;">
+                                @if($s->has_uploaded_image)
+                                    <img src="{{ $s->image_url }}" alt="" style="width: 100%; height: 100%; object-fit: cover;">
+                                @elseif(!empty($s->icon))
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="{{ $s->icon }}"></path>
+                                    </svg>
+                                @else
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                                    </svg>
+                                @endif
+                            </div>
+                        </div>
+                    </td>
                     <td style="font-weight: 600; color: var(--text);">{{ $s->nama_layanan }}</td>
                     <td><span style="background: rgba(125,125,125,0.12); color: var(--text); padding: 4px 8px; border-radius: 6px; font-size: 12px;">{{ $s->slug }}</span></td>
                     <td>
@@ -85,7 +103,7 @@
                 @endforeach
                 @if($services->isEmpty())
                 <tr>
-                    <td colspan="5" style="text-align: center; padding: 40px; color: var(--muted);">Belum ada data layanan.</td>
+                    <td colspan="6" style="text-align: center; padding: 40px; color: var(--muted);">Belum ada data layanan.</td>
                 </tr>
                 @endif
             </tbody>
