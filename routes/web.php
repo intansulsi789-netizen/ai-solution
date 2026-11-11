@@ -231,15 +231,28 @@ Route::post('/konsultasi', function (\Illuminate\Http\Request $request) {
         'kebutuhan.max'      => 'Deskripsi kebutuhan maksimal 3000 karakter.',
     ]);
 
-    \App\Models\Consultation::create([
-        'nama'      => strip_tags(trim($validated['nama'])),
-        'email'     => strtolower(trim($validated['email'])),
-        'whatsapp'  => !empty($validated['whatsapp']) ? trim($validated['whatsapp']) : null,
-        'kebutuhan' => strip_tags(trim($validated['kebutuhan'])),
-        'is_read'   => false
-    ]);
+    // Mekanisme Idempotensi & Anti-Double-Submit
+    // 1. Menggunakan _submit_token unik per form modal (idempotency key)
+    // 2. Fallback debounce 5 detik untuk pengiriman beruntun tanpa submit token
+    $submitToken = $request->input('_submit_token');
+    $lockKey = !empty($submitToken)
+        ? 'consultation_token:' . $submitToken
+        : 'consultation_hash:' . md5(($request->ip() ?: 'unknown') . '|' . strtolower(trim($validated['email'])) . '|' . trim($validated['kebutuhan']));
 
-    return redirect('/#konsultasi')->with('success', 'Pesan konsultasi Anda berhasil dikirim. Kami akan segera menghubungi Anda.');
+    $ttlSeconds = !empty($submitToken) ? 300 : 5;
+    $isFirstSubmission = \Illuminate\Support\Facades\Cache::add($lockKey, true, now()->addSeconds($ttlSeconds));
+
+    if ($isFirstSubmission) {
+        \App\Models\Consultation::create([
+            'nama'      => strip_tags(trim($validated['nama'])),
+            'email'     => strtolower(trim($validated['email'])),
+            'whatsapp'  => !empty($validated['whatsapp']) ? trim($validated['whatsapp']) : null,
+            'kebutuhan' => strip_tags(trim($validated['kebutuhan'])),
+            'is_read'   => false
+        ]);
+    }
+
+    return redirect('/#konsultasi')->with('success', 'Pesan konsultasi Anda berhasil dikirim.');
 })->name('konsultasi.store');
 
 Route::get('/sitemap.xml', function () {

@@ -6566,7 +6566,11 @@
         <div class="modal-success" id="modal-success-state">
             <div class="modal-success-icon">✓</div>
             <h3>Pesan Terkirim!</h3>
-            <p>{{ session('success') }}<br>Kami akan segera menghubungi Anda.</p>
+            @if(str_contains(session('success'), 'Kami akan segera menghubungi Anda'))
+                <p>{{ session('success') }}</p>
+            @else
+                <p>{{ session('success') }}<br>Kami akan segera menghubungi Anda.</p>
+            @endif
             <button class="btn-close-success" onclick="closeKonsultasiModal()">Tutup</button>
         </div>
         @else
@@ -6593,6 +6597,7 @@
 
             <form action="{{ route('konsultasi.store') }}" method="POST" class="modal-form" id="form-konsultasi-modal">
                 @csrf
+                <input type="hidden" name="_submit_token" value="{{ (string) \Illuminate\Support\Str::uuid() }}">
                 <div class="form-group-c">
                     <label class="form-label-c" for="modal-nama">Nama Lengkap <span style="color:#f87171">*</span></label>
                     <input type="text" id="modal-nama" name="nama" class="form-control-c" required placeholder="Masukkan nama Anda" value="{{ old('nama') }}">
@@ -7820,6 +7825,20 @@
             closeKonsultasiModal();
         }
     });
+
+    // Prevent duplicate form submissions
+    const formKonsultasi = document.getElementById('form-konsultasi-modal');
+    if (formKonsultasi) {
+        formKonsultasi.addEventListener('submit', function() {
+            const btn = document.getElementById('btn-modal-submit');
+            if (btn) {
+                btn.disabled = true;
+                btn.style.opacity = '0.7';
+                btn.style.cursor = 'not-allowed';
+                btn.textContent = 'Mengirim...';
+            }
+        });
+    }
 
     // Auto-open modal if session success or validation errors (form just submitted)
     @if(session('success') || $errors->any())
