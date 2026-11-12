@@ -226,8 +226,10 @@ Route::post('/konsultasi', function (\Illuminate\Http\Request $request) {
         'email.required'     => 'Alamat email wajib diisi.',
         'email.email'        => 'Format alamat email tidak valid.',
         'email.max'          => 'Alamat email maksimal 255 karakter.',
+        'whatsapp.string'    => 'Nomor WhatsApp harus berupa teks yang valid.',
         'whatsapp.max'       => 'Nomor WhatsApp maksimal 20 digit.',
         'kebutuhan.required' => 'Kebutuhan AI Anda wajib diisi.',
+        'kebutuhan.string'   => 'Kebutuhan AI Anda harus berupa teks yang valid.',
         'kebutuhan.max'      => 'Deskripsi kebutuhan maksimal 3000 karakter.',
     ]);
 

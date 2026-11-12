@@ -6600,19 +6600,25 @@
                 <input type="hidden" name="_submit_token" value="{{ (string) \Illuminate\Support\Str::uuid() }}">
                 <div class="form-group-c">
                     <label class="form-label-c" for="modal-nama">Nama Lengkap <span style="color:#f87171">*</span></label>
-                    <input type="text" id="modal-nama" name="nama" class="form-control-c" required placeholder="Masukkan nama Anda" value="{{ old('nama') }}">
+                    <input type="text" id="modal-nama" name="nama" class="form-control-c" required placeholder="Masukkan nama Anda" value="{{ old('nama') }}"
+                        oninvalid="this.setCustomValidity(this.validity.valueMissing ? 'Nama lengkap wajib diisi.' : '')"
+                        oninput="this.setCustomValidity('')">
                 </div>
                 <div class="form-group-c">
                     <label class="form-label-c" for="modal-email">Alamat Email <span style="color:#f87171">*</span></label>
-                    <input type="email" id="modal-email" name="email" class="form-control-c" required placeholder="email@perusahaan.com" value="{{ old('email') }}">
+                    <input type="email" id="modal-email" name="email" class="form-control-c" required placeholder="email@perusahaan.com" value="{{ old('email') }}"
+                        oninvalid="this.setCustomValidity(this.validity.valueMissing ? 'Alamat email wajib diisi.' : 'Format alamat email tidak valid.')"
+                        oninput="this.setCustomValidity('')">
                 </div>
                 <div class="form-group-c">
                     <label class="form-label-c" for="modal-wa">Nomor WhatsApp <span style="color:rgba(255,255,255,0.3);font-weight:400">(Opsional)</span></label>
-                    <input type="text" id="modal-wa" name="whatsapp" class="form-control-c" placeholder="0812xxxx" value="{{ old('whatsapp') }}">
+                    <input type="text" id="modal-wa" name="whatsapp" class="form-control-c" placeholder="0812xxxx" value="{{ old('whatsapp') }}" maxlength="20">
                 </div>
                 <div class="form-group-c">
                     <label class="form-label-c" for="modal-kebutuhan">Kebutuhan AI Anda <span style="color:#f87171">*</span></label>
-                    <textarea id="modal-kebutuhan" name="kebutuhan" class="form-control-c" rows="3" required placeholder="Ceritakan kebutuhan atau masalah bisnis Anda...">{{ old('kebutuhan') }}</textarea>
+                    <textarea id="modal-kebutuhan" name="kebutuhan" class="form-control-c" rows="3" required placeholder="Ceritakan kebutuhan atau masalah bisnis Anda..."
+                        oninvalid="this.setCustomValidity(this.validity.valueMissing ? 'Kebutuhan AI Anda wajib diisi.' : '')"
+                        oninput="this.setCustomValidity('')">{{ old('kebutuhan') }}</textarea>
                 </div>
                 <button type="submit" class="btn-submit-c" id="btn-modal-submit">Kirim Pesan</button>
             </form>
@@ -7837,6 +7843,51 @@
                 btn.style.cursor = 'not-allowed';
                 btn.textContent = 'Mengirim...';
             }
+        });
+    }
+
+    // Pesan validasi bahasa Indonesia untuk HTML5 Form Konsultasi
+    const modalNamaInput = document.getElementById('modal-nama');
+    if (modalNamaInput) {
+        modalNamaInput.addEventListener('invalid', function() {
+            if (this.validity.valueMissing) {
+                this.setCustomValidity('Nama lengkap wajib diisi.');
+            } else {
+                this.setCustomValidity('');
+            }
+        });
+        modalNamaInput.addEventListener('input', function() {
+            this.setCustomValidity('');
+        });
+    }
+
+    const modalEmailInput = document.getElementById('modal-email');
+    if (modalEmailInput) {
+        modalEmailInput.addEventListener('invalid', function() {
+            if (this.validity.valueMissing) {
+                this.setCustomValidity('Alamat email wajib diisi.');
+            } else if (this.validity.typeMismatch) {
+                this.setCustomValidity('Format alamat email tidak valid.');
+            } else {
+                this.setCustomValidity('Format alamat email tidak valid.');
+            }
+        });
+        modalEmailInput.addEventListener('input', function() {
+            this.setCustomValidity('');
+        });
+    }
+
+    const modalKebutuhanInput = document.getElementById('modal-kebutuhan');
+    if (modalKebutuhanInput) {
+        modalKebutuhanInput.addEventListener('invalid', function() {
+            if (this.validity.valueMissing) {
+                this.setCustomValidity('Kebutuhan AI Anda wajib diisi.');
+            } else {
+                this.setCustomValidity('');
+            }
+        });
+        modalKebutuhanInput.addEventListener('input', function() {
+            this.setCustomValidity('');
         });
     }
 

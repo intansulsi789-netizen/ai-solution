@@ -191,4 +191,70 @@ class PublicConsultationFormTest extends TestCase
         $response->assertRedirect('/');
         $response->assertSessionHasErrors(['nama', 'email', 'kebutuhan']);
     }
+
+    /**
+     * Test empty email returns Indonesian validation error message.
+     */
+    public function test_consultation_form_rejects_empty_email_with_indonesian_message()
+    {
+        $response = $this->from('/')->post(route('konsultasi.store'), [
+            'nama'      => 'Budi Santoso',
+            'email'     => '',
+            'whatsapp'  => '08123456789',
+            'kebutuhan' => 'Saya butuh solusi AI untuk otomasi workflow.',
+        ]);
+
+        $response->assertRedirect('/');
+        $response->assertSessionHasErrors([
+            'email' => 'Alamat email wajib diisi.'
+        ]);
+    }
+
+    /**
+     * Test invalid email format returns Indonesian validation error message.
+     */
+    public function test_consultation_form_rejects_invalid_email_format_with_indonesian_message()
+    {
+        // Test non-email string
+        $response1 = $this->from('/')->post(route('konsultasi.store'), [
+            'nama'      => 'Budi Santoso',
+            'email'     => 'bukan-format-email',
+            'whatsapp'  => '08123456789',
+            'kebutuhan' => 'Saya butuh solusi AI untuk otomasi workflow.',
+        ]);
+
+        $response1->assertRedirect('/');
+        $response1->assertSessionHasErrors([
+            'email' => 'Format alamat email tidak valid.'
+        ]);
+
+        // Test email missing domain
+        $response2 = $this->from('/')->post(route('konsultasi.store'), [
+            'nama'      => 'Budi Santoso',
+            'email'     => 'budi@',
+            'whatsapp'  => '08123456789',
+            'kebutuhan' => 'Saya butuh solusi AI untuk otomasi workflow.',
+        ]);
+
+        $response2->assertRedirect('/');
+        $response2->assertSessionHasErrors([
+            'email' => 'Format alamat email tidak valid.'
+        ]);
+    }
+
+    /**
+     * Test HTML5 validation on welcome page has Indonesian validation messages.
+     */
+    public function test_consultation_form_html5_validation_contains_indonesian_messages()
+    {
+        $response = $this->get('/');
+        $response->assertStatus(200);
+
+        $content = $response->getContent();
+        $this->assertStringContainsString('Alamat email wajib diisi.', $content);
+        $this->assertStringContainsString('Format alamat email tidak valid.', $content);
+        $this->assertStringContainsString('Nama lengkap wajib diisi.', $content);
+        $this->assertStringContainsString('Kebutuhan AI Anda wajib diisi.', $content);
+        $this->assertStringContainsString('setCustomValidity', $content);
+    }
 }
