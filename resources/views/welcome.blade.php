@@ -6007,7 +6007,7 @@
 
         <div class="logo-marquee-wrapper">
             @php
-            $rawPartners = isset($partners) ? collect($partners) : \App\Models\Partner::where('is_active', true)->orderBy('urutan', 'asc')->get();
+            $rawPartners = isset($partners) ? collect($partners) : \App\Models\Partner::where('is_active', true)->orderBy('urutan', 'asc')->orderBy('id', 'asc')->get();
             $dbPartners = $rawPartners->filter(function($p) {
                 return is_object($p) ? ($p->is_active ?? true) : ($p['is_active'] ?? true);
             })->values();

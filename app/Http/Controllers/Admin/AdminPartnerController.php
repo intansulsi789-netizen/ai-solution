@@ -12,7 +12,7 @@ class AdminPartnerController extends Controller
 {
     public function index()
     {
-        $partners = Partner::orderBy('urutan')->get();
+        $partners = Partner::orderBy('urutan', 'asc')->orderBy('id', 'asc')->get();
         return view('admin.partners.index', compact('partners'));
     }
 
@@ -25,7 +25,7 @@ class AdminPartnerController extends Controller
     {
         $request->validate([
             'nama'                  => 'required|string|max:150',
-            'urutan'                => 'required|integer|min:0',
+            'urutan'                => 'nullable|integer|min:0',
             'logo_file'             => 'nullable|file|mimes:png,jpeg,jpg,webp,svg|mimetypes:image/png,image/jpeg,image/webp,image/svg+xml|max:5120',
             'logo_url'              => 'nullable|string|max:500',
             'processed_logo_base64' => 'nullable|string',
@@ -72,10 +72,14 @@ class AdminPartnerController extends Controller
             $logoPath = $this->normalizeLogoUrl($request->logo_url);
         }
 
+        $urutan = $request->filled('urutan')
+            ? (int) $request->urutan
+            : ((int) (Partner::max('urutan') ?? 0) + 1);
+
         Partner::create([
             'nama'      => $request->nama,
             'logo'      => $logoPath,
-            'urutan'    => $request->urutan,
+            'urutan'    => $urutan,
             'is_active' => $request->has('is_active'),
         ]);
 
@@ -95,7 +99,7 @@ class AdminPartnerController extends Controller
 
         $request->validate([
             'nama'                  => 'required|string|max:150',
-            'urutan'                => 'required|integer|min:0',
+            'urutan'                => 'nullable|integer|min:0',
             'logo_file'             => 'nullable|file|mimes:png,jpeg,jpg,webp,svg|mimetypes:image/png,image/jpeg,image/webp,image/svg+xml|max:5120',
             'logo_url'              => 'nullable|string|max:500',
             'processed_logo_base64' => 'nullable|string',
@@ -156,10 +160,14 @@ class AdminPartnerController extends Controller
             $logoPath = $this->normalizeLogoUrl($request->logo_url);
         }
 
+        $urutan = $request->filled('urutan')
+            ? (int) $request->urutan
+            : $partner->urutan;
+
         $partner->update([
             'nama'      => $request->nama,
             'logo'      => $logoPath,
-            'urutan'    => $request->urutan,
+            'urutan'    => $urutan,
             'is_active' => $request->has('is_active'),
         ]);
 

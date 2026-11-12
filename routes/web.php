@@ -101,7 +101,7 @@ $getArticles = function () {
 Route::get('/', function () use ($getServices, $getArticles) {
     $services    = $getServices();
     $adminUser   = \App\Models\User::first();
-    $partners    = \App\Models\Partner::where('is_active', true)->orderBy('urutan', 'asc')->get();
+    $partners    = \App\Models\Partner::where('is_active', true)->orderBy('urutan', 'asc')->orderBy('id', 'asc')->get();
     $cmsAbout    = \App\Models\CmsAbout::first();
     $cmsHomepage = \App\Models\CmsHomepage::first();
     $cmsContact  = \App\Models\CmsContact::first();

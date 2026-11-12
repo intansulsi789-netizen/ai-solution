@@ -14,6 +14,20 @@ class Partner extends Model
     ];
 
     /**
+     * Bootstrap model events.
+     * Jika kolom urutan tidak diisi/kosong, otomatis tempatkan di urutan paling akhir.
+     */
+    protected static function booted(): void
+    {
+        static::creating(function ($partner) {
+            if ($partner->urutan === null || $partner->urutan === '') {
+                $maxUrutan = (int) (static::max('urutan') ?? 0);
+                $partner->urutan = $maxUrutan + 1;
+            }
+        });
+    }
+
+    /**
      * Dapatkan URL logo yang valid (otomatis mengganti Clearbit yang sudah tidak aktif ke Unavatar/Google).
      */
     public function getResolvedLogoAttribute(): ?string

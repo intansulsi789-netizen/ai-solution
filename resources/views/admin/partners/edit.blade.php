@@ -116,8 +116,8 @@
 
             <div style="display:flex; gap:16px;">
                 <div class="form-group" style="flex:1;">
-                    <label class="form-label">Urutan Tampil</label>
-                    <input type="number" name="urutan" class="form-control" value="{{ old('urutan', $partner->urutan) }}" min="0">
+                    <label class="form-label">Urutan Tampil <span style="font-size:11px;font-weight:400;text-transform:none;color:var(--muted);">(Opsional)</span></label>
+                    <input type="number" name="urutan" class="form-control" value="{{ old('urutan', $partner->urutan) }}" placeholder="Urutan tampil" min="0">
                 </div>
 
                 <div class="form-group" style="flex:1.2;">
